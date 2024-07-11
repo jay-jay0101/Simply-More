@@ -5,9 +5,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.rosemarythmye.simplymore.item.classes.uniques.Mimicry;
+import net.rosemarythmye.simplymore.item.itemclasses.uniques.Mimicry;
 
 import java.util.UUID;
 

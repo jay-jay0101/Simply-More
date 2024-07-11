@@ -7,12 +7,8 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
-import net.rosemarythmye.simplymore.item.classes.uniques.Mimicry;
 
-import java.util.List;
 import java.util.UUID;
 
 public class Harvest extends StatusEffect {

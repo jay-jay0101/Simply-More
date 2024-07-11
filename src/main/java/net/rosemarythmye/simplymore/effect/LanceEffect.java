@@ -7,9 +7,9 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
-import net.rosemarythmye.simplymore.item.classes.normal.Lance;
-import net.rosemarythmye.simplymore.item.classes.runics.RunicLance;
-import net.rosemarythmye.simplymore.item.classes.uniques.Glimmerstep;
+import net.rosemarythmye.simplymore.item.itemclasses.normal.Lance;
+import net.rosemarythmye.simplymore.item.itemclasses.runics.RunicLance;
+import net.rosemarythmye.simplymore.item.itemclasses.uniques.Glimmerstep;
 
 public class LanceEffect extends StatusEffect {
     public LanceEffect(StatusEffectCategory category, int color) {

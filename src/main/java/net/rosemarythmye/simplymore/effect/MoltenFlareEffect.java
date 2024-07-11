@@ -1,6 +1,5 @@
 package net.rosemarythmye.simplymore.effect;
 
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -8,7 +7,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.rosemarythmye.simplymore.item.classes.uniques.MoltenFlare;
+import net.rosemarythmye.simplymore.item.itemclasses.uniques.MoltenFlare;
 
 import java.util.UUID;
 
