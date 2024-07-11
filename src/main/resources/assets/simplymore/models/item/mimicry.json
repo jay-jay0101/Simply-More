@@ -1,0 +1,9 @@
+{
+  "parent": "simplyswords:item/template_katana",
+  "textures": {
+    "layer0": "simplymore:item/uniques/mimicry"
+  },
+  "overrides": [
+    {"predicate": {"simplymore:mimicry_form": 1},"model": "simplymore:item/mimicry_twisted"}
+  ]
+}

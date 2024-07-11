@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplyswords:runefused_gem"
+    },
+    "title": "Simply More",
+    "description": "New runes have sprung.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

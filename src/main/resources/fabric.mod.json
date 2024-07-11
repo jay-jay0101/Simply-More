@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "simplymore",
+	"version": "${version}",
+	"name": "simplymore",
+	"description": "An addon to SimplySwords which adds even more weapons variety and new uniques!",
+	"authors": [
+		"RosemaryThyme - (Code + Art)",
+		"NotSaneAshley - (Art)"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/simplymore/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.rosemarythmye.simplymore.Simplymore"
+		],
+		"client": [
+			"net.rosemarythmye.simplymore.SimplymoreClient"
+		],
+		"fabric-datagen": [
+			"net.rosemarythmye.simplymore.SimplymoreDataGenerator"
+		]
+	},
+	"mixins": [
+		"simplymore.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"simplyswords": ">=1.55.0-1.20.1"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

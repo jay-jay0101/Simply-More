@@ -1,0 +1,6 @@
+{
+  "parent": "simplymore:item/template/great_katana",
+  "textures": {
+    "layer0": "simplymore:item/uniques/great_slither"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:glimmerstep"
+    },
+    "title": "Glorious Flourish",
+    "description": "Find the unique weapon Glimmerstep.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:glimmerstep"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

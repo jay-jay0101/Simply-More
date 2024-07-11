@@ -1,0 +1,7 @@
+{
+  "parent": "simplyswords:item/template_claymore",
+  "textures": {
+    "layer0": "simplymore:item/lance/runic",
+    "layer1": "simplymore:item/lance/runic_layer"
+  }
+}

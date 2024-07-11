@@ -1,0 +1,7 @@
+{
+  "parent": "simplymore:item/template/great_katana",
+  "textures": {
+    "layer0": "simplymore:item/great_katana/runic",
+    "layer1": "simplymore:item/great_katana/runic_layer"
+  }
+}

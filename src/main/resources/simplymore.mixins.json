@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "net.rosemarythmye.simplymore.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"LivingEntityMixin",
+		"UniqueSwordMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

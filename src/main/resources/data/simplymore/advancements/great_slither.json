@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:great_slither"
+    },
+    "title": "The Mightiest Slayer",
+    "description": "Find the unique weapon Great Slither.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:great_slither"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
