@@ -40,6 +40,12 @@
   "item.simplymore.netherite_backhand_blade": "Netherite Backhand Blade",
   "item.simplymore.runic_backhand_blade": "Runic Backhand Blade",
 
+  "item.simplymore.iron_khopesh": "Iron Khopesh",
+  "item.simplymore.gold_khopesh": "Gold Khopesh",
+  "item.simplymore.diamond_khopesh": "Diamond Khopesh",
+  "item.simplymore.netherite_khopesh": "Netherite Khopesh",
+  "item.simplymore.runic_khopesh": "Runic Khopesh",
+
   "item.simplymore.great_slither": "Great Slither",
   "item.simplymore.great_slither.tooltip1": "Unique Effect: Poisonous Grasp",
   "item.simplymore.great_slither.tooltip2": "Chance on hit to inflict poison.",

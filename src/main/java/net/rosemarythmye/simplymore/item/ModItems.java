@@ -242,6 +242,63 @@ public class ModItems {
             )
     );
 
+    public static final Item IRON_KHOPESH = registerItem(
+            "iron_khopesh",
+            new Sword(
+                    ToolMaterials.IRON,
+                    (int)(iron_modifier - 1),
+                    -2.25f,
+                    new Item.Settings(),
+                    "minecraft:iron_ingot"
+            )
+    );
+
+    public static final Item GOLD_KHOPESH = registerItem(
+            "gold_khopesh",
+            new Sword(
+                    ToolMaterials.GOLD,
+                    (int)(gold_modifier - 1),
+                    -2.25f,
+                    new Item.Settings(),
+                    "minecraft:gold_ingot"
+            )
+    );
+
+    public static final Item DIAMOND_KHOPESH = registerItem(
+            "diamond_khopesh",
+            new Sword(
+                    ToolMaterials.DIAMOND,
+                    (int)(diamond_modifier - 1),
+                    -2.25f,
+                    new Item.Settings(),
+                    "minecraft:diamond"
+            )
+    );
+
+    public static final Item NETHERITE_KHOPESH = registerItem(
+            "netherite_khopesh",
+            new Sword(
+                    ToolMaterials.NETHERITE,
+                    (int)(netherite_modifier - 1),
+                    -2.25f,
+                    new Item.Settings().fireproof(),
+                    "minecraft:netherite_ingot"
+            )
+    );
+
+    public static final Item RUNIC_KHOPESH = registerItem(
+            "runic_khopesh",
+            new RunicSwordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    (int)(runic_modifier - 1),
+                    -2.25f,
+                    new Item.Settings().fireproof()
+            )
+    );
+
+
+
+
 
     public static final Item GREAT_SLITHER = registerItem(
             "great_slither",
@@ -347,7 +404,6 @@ public class ModItems {
         if (FabricLoader.getInstance().isModLoaded("simplyswords")) {
             Simplymore.LOGGER.info("Registering Items for " + Simplymore.ID);
             Registry.register(Registries.ITEM_GROUP, Identifier.of(Simplymore.ID, "items"), ITEM_GROUP);
-            registerModelPredicates();
         }
     }
 
@@ -362,22 +418,27 @@ public class ModItems {
                 entries.add(IRON_GRANDSWORD);
                 entries.add(IRON_BACKHAND_BLADE);
                 entries.add(IRON_LANCE);
+                entries.add(IRON_KHOPESH);
                 entries.add(GOLD_GREAT_KATANA);
                 entries.add(GOLD_GRANDSWORD);
                 entries.add(GOLD_BACKHAND_BLADE);
                 entries.add(GOLD_LANCE);
+                entries.add(GOLD_KHOPESH);
                 entries.add(DIAMOND_GREAT_KATANA);
                 entries.add(DIAMOND_GRANDSWORD);
                 entries.add(DIAMOND_BACKHAND_BLADE);
                 entries.add(DIAMOND_LANCE);
+                entries.add(DIAMOND_KHOPESH);
                 entries.add(NETHERITE_GREAT_KATANA);
                 entries.add(NETHERITE_GRANDSWORD);
                 entries.add(NETHERITE_BACKHAND_BLADE);
                 entries.add(NETHERITE_LANCE);
+                entries.add(NETHERITE_KHOPESH);
                 entries.add(RUNIC_GREAT_KATANA);
                 entries.add(RUNIC_GRANDSWORD);
                 entries.add(RUNIC_BACKHAND_BLADE);
                 entries.add(RUNIC_LANCE);
+                entries.add(RUNIC_KHOPESH);
                 entries.add(GREAT_SLITHER);
                 entries.add(MOLTEN_FLARE);
                 entries.add(GRANDFROST);
@@ -388,17 +449,4 @@ public class ModItems {
                 entries.add(JESTER_PENETRATE);
             })
             .build();
-
-    private static void registerModelPredicates() {
-        ModelPredicateProviderRegistry.register(MIMICRY, new Identifier(Simplymore.ID, "mimicry_form"), (itemStack, clientWorld, livingEntity, a) -> {
-            Object form = itemStack.getOrCreateNbt().get("simplymore:form");
-            if (form==null) return 0f;
-            return form.toString().equals("\"twisted\"")? 1f:0f;
-        });
-
-        ModelPredicateProviderRegistry.register(THEBLOODHARVESTER, new Identifier(Simplymore.ID, "harvest"), (itemStack, clientWorld, livingEntity, a) -> {
-            if (livingEntity == null) return 0f;
-            return livingEntity.hasStatusEffect(ModEffects.HARVEST)? 1f:0f;
-        });
-    }
 }
