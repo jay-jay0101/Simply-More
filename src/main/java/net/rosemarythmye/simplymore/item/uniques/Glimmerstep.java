@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.uniques;
+package net.rosemarythmye.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -18,13 +18,11 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
-import net.rosemarythmye.simplymore.item.itemclasses.UniqueSword;
+import net.rosemarythmye.simplymore.item.UniqueSword;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
-
-import static java.lang.Math.max;
 
 public class Glimmerstep extends UniqueSword {
     int skillCooldown = 1200;
@@ -62,7 +60,7 @@ public class Glimmerstep extends UniqueSword {
 
 
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (!user.getWorld().isClient && user instanceof PlayerEntity player) {
+        if (!user.getWorld().isClient && user instanceof PlayerEntity) {
             ServerWorld serverWorld = ((ServerWorld) world);
             if(remainingUseTicks==this.getMaxUseTime(null)-1) serverWorld.playSound(null,user.getBlockPos(),SoundEvents.BLOCK_BEACON_ACTIVATE,user.getSoundCategory(),1.0f,0.8f);
             serverWorld.spawnParticles(ParticleTypes.GLOW,user.getX(),user.getY()+1,user.getZ(), ((int) Math.floor((double) (60 - remainingUseTicks) / 2)),0.2,0.4,0.2,0.5);

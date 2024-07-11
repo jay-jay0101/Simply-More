@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.normal;
+package net.rosemarythmye.simplymore.item.normal;
 
 import net.minecraft.item.ToolMaterial;
 

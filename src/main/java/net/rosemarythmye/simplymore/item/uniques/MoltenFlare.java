@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.uniques;
+package net.rosemarythmye.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -16,7 +16,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.entity.Eruption;
-import net.rosemarythmye.simplymore.item.itemclasses.UniqueSword;
+import net.rosemarythmye.simplymore.item.UniqueSword;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -58,7 +58,7 @@ public class MoltenFlare extends UniqueSword {
     private void eruption(int radius,LivingEntity target,LivingEntity attacker) {
         ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.LAVA, attacker.getX(), attacker.getY(), attacker.getZ(), 100, 0, 0, 0, 0);
         attacker.getWorld().spawnEntity(new Eruption(attacker.getWorld(),attacker.getX(),attacker.getY(),attacker.getZ(),radius,attacker));
-        attacker.getWorld().playSound((PlayerEntity)null, attacker.getBlockPos(), SoundRegistry.SPELL_FIRE.get(), attacker.getSoundCategory(), 2F, 0.3F);
+        attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundRegistry.SPELL_FIRE.get(), attacker.getSoundCategory(), 2F, 0.3F);
     }
 
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {

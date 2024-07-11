@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.uniques;
+package net.rosemarythmye.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -17,7 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.effect.ModEffects;
-import net.rosemarythmye.simplymore.item.itemclasses.UniqueSword;
+import net.rosemarythmye.simplymore.item.UniqueSword;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -50,7 +50,7 @@ public class TheBloodHarvester extends UniqueSword {
             user.addStatusEffect(new StatusEffectInstance(ModEffects.HARVEST, 300, 0));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
-            user.getWorld().playSound((PlayerEntity) null, user.getBlockPos(), SoundRegistry.MAGIC_SWORD_ATTACK_WITH_BLOOD_04.get(), user.getSoundCategory(), 2F, 0F);
+            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SWORD_ATTACK_WITH_BLOOD_04.get(), user.getSoundCategory(), 2F, 0F);
         }
         return super.use(world, user, hand);
     }

@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.uniques;
+package net.rosemarythmye.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -17,7 +17,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.effect.ModEffects;
-import net.rosemarythmye.simplymore.item.itemclasses.UniqueSword;
+import net.rosemarythmye.simplymore.item.UniqueSword;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -63,7 +63,7 @@ public class Grandfrost extends UniqueSword {
             if(use) {
                 user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
                 if(!user.getWorld().isClient()) ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNOWFLAKE,user.getX(),user.getY()+3,user.getZ(),1000,3,0,3,0.25);
-                user.getWorld().playSound((PlayerEntity)null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
+                user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
 
             }
         }

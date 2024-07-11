@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses;
+package net.rosemarythmye.simplymore.item;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
@@ -32,13 +32,13 @@ public class RuneCarver extends Item {
         switch (type) {
             case "runic":
                 tooltip.add(Text.literal(""));
-                tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip1").formatted(new Formatting[]{Formatting.GRAY, Formatting.ITALIC}));
-                tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip2").formatted(new Formatting[]{Formatting.GRAY, Formatting.ITALIC}));
+                tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
+                tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
                 break;
             case "nether":
                 tooltip.add(Text.literal(""));
-                tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip1").formatted(new Formatting[]{Formatting.GRAY, Formatting.ITALIC}));
-                tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip2").formatted(new Formatting[]{Formatting.GRAY, Formatting.ITALIC}));
+                tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
+                tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
                 break;
         }
     }

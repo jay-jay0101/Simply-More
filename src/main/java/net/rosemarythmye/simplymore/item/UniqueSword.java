@@ -3,11 +3,8 @@
 // (powered by FernFlower decompiler)
 //
 
-package net.rosemarythmye.simplymore.item.itemclasses;
+package net.rosemarythmye.simplymore.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -27,6 +24,10 @@ import net.minecraft.world.World;
 import net.sweenus.simplyswords.api.SimplySwordsAPI;
 import net.sweenus.simplyswords.util.HelperMethods;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class UniqueSword extends SwordItem {
     String iRarity = "UNIQUE";
     String[] repairIngredient;
@@ -42,10 +43,10 @@ public class UniqueSword extends SwordItem {
     }
 
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        List<Item> potentialIngredients = new ArrayList(List.of());
-        Arrays.stream(this.repairIngredient).toList().forEach((repIngredient) -> {
-            potentialIngredients.add((Item) Registries.ITEM.get(new Identifier(repIngredient)));
-        });
+        List<Item> potentialIngredients = new ArrayList<>(List.of());
+        Arrays.stream(this.repairIngredient).toList().forEach(
+                (repIngredient) -> potentialIngredients.add(
+                        Registries.ITEM.get(new Identifier(repIngredient))));
         return potentialIngredients.contains(ingredient.getItem());
     }
 

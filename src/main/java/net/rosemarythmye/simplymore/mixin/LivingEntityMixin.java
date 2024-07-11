@@ -4,10 +4,10 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.rosemarythmye.simplymore.item.itemclasses.normal.GrandSword;
-import net.rosemarythmye.simplymore.item.itemclasses.runics.RunicGrandSword;
-import net.rosemarythmye.simplymore.item.itemclasses.uniques.Grandfrost;
-import net.rosemarythmye.simplymore.item.itemclasses.uniques.MoltenFlare;
+import net.rosemarythmye.simplymore.item.normal.GrandSword;
+import net.rosemarythmye.simplymore.item.runics.RunicGrandSword;
+import net.rosemarythmye.simplymore.item.uniques.Grandfrost;
+import net.rosemarythmye.simplymore.item.uniques.MoltenFlare;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
