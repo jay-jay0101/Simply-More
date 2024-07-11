@@ -7,7 +7,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.rosemarythmye.simplymore.item.itemclasses.uniques.MoltenFlare;
+import net.rosemarythmye.simplymore.item.uniques.MoltenFlare;
 
 import java.util.UUID;
 

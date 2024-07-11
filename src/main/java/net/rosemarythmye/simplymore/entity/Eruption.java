@@ -1,18 +1,11 @@
 package net.rosemarythmye.simplymore.entity;
 
-import com.google.common.collect.Maps;
 import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Ownable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Map;
 
 public class Eruption extends AreaEffectCloudEntity {
     public Eruption(World world, double x, double y, double z, int radius, LivingEntity owner) {

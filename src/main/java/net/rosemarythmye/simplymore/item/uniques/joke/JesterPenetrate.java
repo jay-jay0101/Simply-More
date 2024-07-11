@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.uniques.joke;
+package net.rosemarythmye.simplymore.item.uniques.joke;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -10,7 +10,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
-import net.rosemarythmye.simplymore.item.itemclasses.normal.Lance;
+import net.rosemarythmye.simplymore.item.normal.Lance;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;

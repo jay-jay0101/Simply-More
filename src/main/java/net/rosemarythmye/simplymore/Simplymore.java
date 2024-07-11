@@ -1,7 +1,6 @@
 package net.rosemarythmye.simplymore;
 
 import net.fabricmc.api.ModInitializer;
-
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.item.ModItems;
 import org.slf4j.Logger;

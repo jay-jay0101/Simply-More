@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.uniques;
+package net.rosemarythmye.simplymore.item.uniques;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.client.item.TooltipContext;
@@ -22,7 +22,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.effect.ModEffects;
-import net.rosemarythmye.simplymore.item.itemclasses.UniqueSword;
+import net.rosemarythmye.simplymore.item.UniqueSword;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -78,15 +78,18 @@ public class Mimicry extends UniqueSword {
 
             Object form = stack.getOrCreateNbt().get("simplymore:form");
             if (form==null) super.postHit(stack, target, attacker);
-            form = form.toString();
+            if (form != null) {
+                form = form.toString();
 
-            StatusEffect statusEffect = null;
-            if (this.hitCount % 5 == 0 && form.toString().equals("\"purity\"")) {
-                statusEffect = PositiveEffects[attacker.getRandom().nextInt(PositiveEffects.length)];
-                attacker.addStatusEffect(new StatusEffectInstance(statusEffect,200,1));
-            } else if (this.hitCount % 4 == 0 && form.toString().equals("\"twisted\"")) {
-                statusEffect = NegativeEffects[attacker.getRandom().nextInt(NegativeEffects.length)];
-                target.addStatusEffect(new StatusEffectInstance(statusEffect,200,1));
+
+                StatusEffect statusEffect;
+                if (this.hitCount % 5 == 0 && form.toString().equals("\"purity\"")) {
+                    statusEffect = PositiveEffects[attacker.getRandom().nextInt(PositiveEffects.length)];
+                    attacker.addStatusEffect(new StatusEffectInstance(statusEffect, 200, 1));
+                } else if (this.hitCount % 4 == 0 && form.toString().equals("\"twisted\"")) {
+                    statusEffect = NegativeEffects[attacker.getRandom().nextInt(NegativeEffects.length)];
+                    target.addStatusEffect(new StatusEffectInstance(statusEffect, 200, 1));
+                }
             }
         }
         return super.postHit(stack, target, attacker);
@@ -101,7 +104,7 @@ public class Mimicry extends UniqueSword {
             if (form==null) return TypedActionResult.fail(user.getStackInHand(hand));
             form = form.toString();
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.ELECTRIC_SPARK,user.getX(),user.getY()+0.5,user.getZ(),50,0.5,0.5,0.5,0.25);
-            user.getWorld().playSound((PlayerEntity)null, user.getBlockPos(), SoundRegistry.MAGIC_BOW_CHARGE_SHORT_VERSION.get(), user.getSoundCategory(), 2F, 1F);
+            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_BOW_CHARGE_SHORT_VERSION.get(), user.getSoundCategory(), 2F, 1F);
 
             if (form.equals("\"twisted\"")) user.getStackInHand(hand).getOrCreateNbt().putString("simplymore:form", "purity");
             else user.getStackInHand(hand).getOrCreateNbt().putString("simplymore:form", "twisted");
@@ -141,7 +144,7 @@ public class Mimicry extends UniqueSword {
         form = stack.getOrCreateNbt().get("simplymore:form");
 
         if (selected && entity instanceof PlayerEntity) {
-            if(form.toString().equals("\"twisted\"")) ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(ModEffects.MIMICRY,9999999,0,true,false,false));
+            if(form != null && form.toString().equals("\"twisted\"")) ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(ModEffects.MIMICRY,9999999,0,true,false,false));
             else ((PlayerEntity) entity).removeStatusEffect(ModEffects.MIMICRY);
         }
 

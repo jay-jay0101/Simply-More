@@ -1,4 +1,4 @@
-package net.rosemarythmye.simplymore.item.itemclasses.runics;
+package net.rosemarythmye.simplymore.item.runics;
 
 import net.minecraft.item.ToolMaterial;
 import net.sweenus.simplyswords.item.RunicSwordItem;
