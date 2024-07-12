@@ -31,16 +31,15 @@ public class MoltenFlare extends UniqueSword {
     }
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(!attacker.hasStatusEffect(ModEffects.MOLTEN_FLARE)) {
-
-            if (!attacker.getWorld().isClient()) {
+        if (!attacker.getWorld().isClient()) {
+            if (!attacker.hasStatusEffect(ModEffects.MOLTEN_FLARE)) {
                 if (attacker.getRandom().nextInt(100) <= 20) {
                     eruption(4, target, attacker);
                 }
+            } else {
+                eruption(7, target, attacker);
+                attacker.removeStatusEffect(ModEffects.MOLTEN_FLARE);
             }
-        } else {
-            eruption(7, target, attacker);
-            attacker.removeStatusEffect(ModEffects.MOLTEN_FLARE);
         }
         return super.postHit(stack, target, attacker);
     }
