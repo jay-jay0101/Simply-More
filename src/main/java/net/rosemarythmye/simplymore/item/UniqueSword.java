@@ -41,11 +41,11 @@ public class UniqueSword extends UniqueSwordItem {
         Style COMMON = HelperMethods.getStyle("common");
         Style UNIQUE = HelperMethods.getStyle("unique");
         Style LEGENDARY = HelperMethods.getStyle("legendary");
-        if (true) {
-            return this.iRarity.equals("UNIQUE") ? Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE) : Text.translatable(this.getTranslationKey(stack)).setStyle(COMMON);
-        } else {
+        if (false) {
             this.iRarity = "LEGENDARY";
             return Text.translatable(this.getTranslationKey(stack)).setStyle(LEGENDARY);
+        } else {
+            return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
         }
     }
 }

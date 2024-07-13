@@ -2,7 +2,6 @@ package net.rosemarythmye.simplymore.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -13,7 +12,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.rosemarythmye.simplymore.Simplymore;
-import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.item.normal.GrandSword;
 import net.rosemarythmye.simplymore.item.normal.Lance;
 import net.rosemarythmye.simplymore.item.normal.Sword;
@@ -375,6 +373,17 @@ public class ModItems {
             )
     );
 
+    public static final Item SCARAB_ROLLER = registerItem(
+            "scarab_roller",
+            new ScarabRoller(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    2,
+                    -2.25f,
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -445,6 +454,7 @@ public class ModItems {
                 entries.add(MIMICRY);
                 entries.add(GLIMMERSTEP);
                 entries.add(THEBLOODHARVESTER);
+                entries.add(SCARAB_ROLLER);
 
                 entries.add(JESTER_PENETRATE);
             })
