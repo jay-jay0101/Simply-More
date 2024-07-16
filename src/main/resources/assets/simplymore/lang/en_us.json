@@ -96,6 +96,7 @@
 
   "item.simplymore.scarab_roller": "Scarab Roller",
   "item.simplymore.scarab_roller.tooltip1": "Unique Effect: Dune Rider",
-  "item.simplymore.scarab_roller.tooltip2": "Rush forwards until you hit a wall. Anyone",
-  "item.simplymore.scarab_roller.tooltip3": "you ram into will be damaged and launched back."
+  "item.simplymore.scarab_roller.tooltip2": "Chance on hit to gain resistance.",
+  "item.simplymore.scarab_roller.tooltip3": "Rush forwards until you hit a wall. Anyone",
+  "item.simplymore.scarab_roller.tooltip4": "you ram into will be damaged and launched back."
 }

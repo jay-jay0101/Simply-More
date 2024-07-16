@@ -4,6 +4,8 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -42,16 +44,27 @@ public class ScarabRoller extends UniqueSword {
             return TypedActionResult.consume(itemStack);
         }
     }
+
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (!attacker.getWorld().isClient()) {
+            if (attacker.getRandom().nextInt(100) <= 15) {
+                attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 100, 0), attacker);
+            }
+        }
+        return super.postHit(stack, target, attacker);
+    }
+
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
         Style ABILITY = HelperMethods.getStyle("ability");
         Style TEXT = HelperMethods.getStyle("text");
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip1").setStyle(ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip2").setStyle(TEXT));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip2").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip3").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip4").setStyle(TEXT));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
