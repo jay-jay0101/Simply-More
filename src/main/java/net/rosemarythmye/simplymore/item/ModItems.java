@@ -289,6 +289,60 @@ public class ModItems {
             )
     );
 
+    public static final Item IRON_DAGGER = registerItem(
+            "iron_dagger",
+            new Sword(
+                    ToolMaterials.IRON,
+                    attributes.getDaggerDamageModifier() +3,
+                    (float)attributes.getDaggerSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:iron_ingot"
+            )
+    );
+
+    public static final Item GOLD_DAGGER = registerItem(
+            "gold_dagger",
+            new Sword(
+                    ToolMaterials.GOLD,
+                    attributes.getDaggerDamageModifier() +3,
+                    (float)attributes.getDaggerSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:gold_ingot"
+            )
+    );
+
+    public static final Item DIAMOND_DAGGER = registerItem(
+            "diamond_dagger",
+            new Sword(
+                    ToolMaterials.DIAMOND,
+                    attributes.getDaggerDamageModifier() +3,
+                    (float)attributes.getDaggerSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:diamond"
+            )
+    );
+
+    public static final Item NETHERITE_DAGGER = registerItem(
+            "netherite_dagger",
+            new Sword(
+                    ToolMaterials.NETHERITE,
+                    attributes.getDaggerDamageModifier() +3,
+                    (float)attributes.getDaggerSwingSpeed(),
+                    new Item.Settings().fireproof(),
+                    "minecraft:netherite_ingot"
+            )
+    );
+
+    public static final Item RUNIC_DAGGER = registerItem(
+            "runic_dagger",
+            new RunicSwordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    attributes.getDaggerDamageModifier() +3,
+                    (float)attributes.getDaggerSwingSpeed(),
+                    new Item.Settings().fireproof()
+            )
+    );
+
 
 
 
@@ -423,26 +477,31 @@ public class ModItems {
                 entries.add(IRON_BACKHAND_BLADE);
                 entries.add(IRON_LANCE);
                 entries.add(IRON_KHOPESH);
+                entries.add(IRON_DAGGER);
                 entries.add(GOLD_GREAT_KATANA);
                 entries.add(GOLD_GRANDSWORD);
                 entries.add(GOLD_BACKHAND_BLADE);
                 entries.add(GOLD_LANCE);
                 entries.add(GOLD_KHOPESH);
+                entries.add(GOLD_DAGGER);
                 entries.add(DIAMOND_GREAT_KATANA);
                 entries.add(DIAMOND_GRANDSWORD);
                 entries.add(DIAMOND_BACKHAND_BLADE);
                 entries.add(DIAMOND_LANCE);
                 entries.add(DIAMOND_KHOPESH);
+                entries.add(DIAMOND_DAGGER);
                 entries.add(NETHERITE_GREAT_KATANA);
                 entries.add(NETHERITE_GRANDSWORD);
                 entries.add(NETHERITE_BACKHAND_BLADE);
                 entries.add(NETHERITE_LANCE);
                 entries.add(NETHERITE_KHOPESH);
+                entries.add(NETHERITE_DAGGER);
                 entries.add(RUNIC_GREAT_KATANA);
                 entries.add(RUNIC_GRANDSWORD);
                 entries.add(RUNIC_BACKHAND_BLADE);
                 entries.add(RUNIC_LANCE);
                 entries.add(RUNIC_KHOPESH);
+                entries.add(RUNIC_DAGGER);
                 entries.add(GREAT_SLITHER);
                 entries.add(MOLTEN_FLARE);
                 entries.add(GRANDFROST);

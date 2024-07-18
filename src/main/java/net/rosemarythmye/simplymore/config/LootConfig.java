@@ -8,9 +8,9 @@ public class LootConfig implements ConfigData {
     boolean enableLootInVillages = true;
     boolean enableWitherDropsUnique = true;
     boolean enableDragonDropsUnique = true;
-    double goldLootWeight = 0.009999999776482582;
-    double ironLootWeight = 0.009999999776482582;
-    double diamondLootWeight = 0.004000000189989805;
+    double goldLootWeight = 0.004500000189989805;
+    double ironLootWeight = 0.004500000189989805;
+    double diamondLootWeight = 0.003000000189989805;
     double netheriteLootWeight = 0;
     double runicLootWeight = 0;
     double uniqueLootWeight = 0.0010000000474974513;

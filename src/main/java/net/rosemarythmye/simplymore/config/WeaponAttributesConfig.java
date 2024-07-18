@@ -10,11 +10,13 @@ public class WeaponAttributesConfig implements ConfigData {
     int backhandBladeDamageModifier = -2;
     int lanceDamageModifier = 0;
     int khopeshDamageModifier = -1;
+    int daggerDamageModifier = -2;
     double greatKatanaSwingSpeed = -2.6;
     double grandswordSwingSpeed = -3.5;
     double backhandBladeSwingSpeed = -1.7;
     double lanceSwingSpeed = -3;
     double khopeshSwingSpeed = -2.25;
+    double daggerSwingSpeed = -1.8;
 
     int greatSlitherDamage = 11;
     double greatSlitherSwingSpeed = -2.6;
@@ -149,5 +151,13 @@ public class WeaponAttributesConfig implements ConfigData {
 
     public int getTheBloodHarvesterDamage() {
         return theBloodHarvesterDamage;
+    }
+
+    public double getDaggerSwingSpeed() {
+        return daggerSwingSpeed;
+    }
+
+    public int getDaggerDamageModifier() {
+        return daggerDamageModifier;
     }
 }

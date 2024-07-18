@@ -2,19 +2,14 @@ package net.rosemarythmye.simplymore.util;
 
 import dev.architectury.event.events.common.LootEvent;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.EnchantRandomlyLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.rosemarythmye.simplymore.config.LootConfig;
-import net.rosemarythmye.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythmye.simplymore.config.WrapperConfig;
 import net.rosemarythmye.simplymore.item.ModItems;
-import net.sweenus.simplyswords.config.Config;
-import net.sweenus.simplyswords.config.ConfigDefaultValues;
-import net.sweenus.simplyswords.registry.ItemsRegistry;
 
 public class LootTableModifier {
     static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
@@ -29,7 +24,8 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.IRON_GRANDSWORD))
                         .with(ItemEntry.builder(ModItems.IRON_KHOPESH))
                         .with(ItemEntry.builder(ModItems.IRON_LANCE))
-                        .with(ItemEntry.builder(ModItems.IRON_GREAT_KATANA));
+                        .with(ItemEntry.builder(ModItems.IRON_GREAT_KATANA))
+                        .with(ItemEntry.builder(ModItems.IRON_DAGGER));
                 context.addPool(pool);
             }
         });
@@ -42,7 +38,8 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.GOLD_GRANDSWORD))
                         .with(ItemEntry.builder(ModItems.GOLD_KHOPESH))
                         .with(ItemEntry.builder(ModItems.GOLD_LANCE))
-                        .with(ItemEntry.builder(ModItems.GOLD_GREAT_KATANA));
+                        .with(ItemEntry.builder(ModItems.GOLD_GREAT_KATANA))
+                        .with(ItemEntry.builder(ModItems.GOLD_DAGGER));
                 context.addPool(pool);
             }
         });
@@ -55,7 +52,8 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.DIAMOND_GRANDSWORD))
                         .with(ItemEntry.builder(ModItems.DIAMOND_KHOPESH))
                         .with(ItemEntry.builder(ModItems.DIAMOND_LANCE))
-                        .with(ItemEntry.builder(ModItems.DIAMOND_GREAT_KATANA));
+                        .with(ItemEntry.builder(ModItems.DIAMOND_GREAT_KATANA))
+                        .with(ItemEntry.builder(ModItems.DIAMOND_DAGGER));
                 context.addPool(pool);
             }
         });
@@ -68,7 +66,8 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.NETHERITE_GRANDSWORD))
                         .with(ItemEntry.builder(ModItems.NETHERITE_KHOPESH))
                         .with(ItemEntry.builder(ModItems.NETHERITE_LANCE))
-                        .with(ItemEntry.builder(ModItems.NETHERITE_GREAT_KATANA));
+                        .with(ItemEntry.builder(ModItems.NETHERITE_GREAT_KATANA))
+                        .with(ItemEntry.builder(ModItems.NETHERITE_DAGGER));
                 context.addPool(pool);
             }
         });
@@ -81,7 +80,53 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.RUNIC_GRANDSWORD))
                         .with(ItemEntry.builder(ModItems.RUNIC_KHOPESH))
                         .with(ItemEntry.builder(ModItems.RUNIC_LANCE))
-                        .with(ItemEntry.builder(ModItems.RUNIC_GREAT_KATANA));
+                        .with(ItemEntry.builder(ModItems.RUNIC_GREAT_KATANA))
+                        .with(ItemEntry.builder(ModItems.RUNIC_DAGGER));
+                context.addPool(pool);
+            }
+        });
+
+        LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
+            if (loot.getUniqueLootWeight() > 0 && id.getPath().contains("chests") && (loot.isEnableLootInVillages() || !id.getPath().contains("village"))) {
+                LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder((float)loot.getUniqueLootWeight()));
+                if(loot.isEnableGlimmerstep()) pool.with(ItemEntry.builder(ModItems.GLIMMERSTEP));
+                if(loot.isEnableGrandfrost()) pool.with(ItemEntry.builder(ModItems.GRANDFROST));
+                if(loot.isEnableGreatSlither()) pool.with(ItemEntry.builder(ModItems.GREAT_SLITHER));
+                if(loot.isEnableJesterPenetrate() && loot.isEnableJokeUniqueChestLoot()) pool.with(ItemEntry.builder(ModItems.JESTER_PENETRATE));
+                if(loot.isEnableMimicry()) pool.with(ItemEntry.builder(ModItems.MIMICRY));
+                if(loot.isEnableScarabRoller()) pool.with(ItemEntry.builder(ModItems.SCARAB_ROLLER));
+                if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
+                if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
+                context.addPool(pool);
+            }
+        });
+
+        LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
+            if (loot.isEnableWitherDropsUnique() && id.getPath().equals("entities/wither")) {
+                LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder(0.05f));
+                if(loot.isEnableGlimmerstep()) pool.with(ItemEntry.builder(ModItems.GLIMMERSTEP));
+                if(loot.isEnableGrandfrost()) pool.with(ItemEntry.builder(ModItems.GRANDFROST));
+                if(loot.isEnableGreatSlither()) pool.with(ItemEntry.builder(ModItems.GREAT_SLITHER));
+                if(loot.isEnableJesterPenetrate() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItems.JESTER_PENETRATE));
+                if(loot.isEnableMimicry()) pool.with(ItemEntry.builder(ModItems.MIMICRY));
+                if(loot.isEnableScarabRoller()) pool.with(ItemEntry.builder(ModItems.SCARAB_ROLLER));
+                if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
+                if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
+                context.addPool(pool);
+            }
+        });
+
+        LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
+            if (loot.isEnableDragonDropsUnique() && id.getPath().equals("entities/ender_dragon")) {
+                LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder(0.5f));
+                if(loot.isEnableGlimmerstep()) pool.with(ItemEntry.builder(ModItems.GLIMMERSTEP));
+                if(loot.isEnableGrandfrost()) pool.with(ItemEntry.builder(ModItems.GRANDFROST));
+                if(loot.isEnableGreatSlither()) pool.with(ItemEntry.builder(ModItems.GREAT_SLITHER));
+                if(loot.isEnableJesterPenetrate() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItems.JESTER_PENETRATE));
+                if(loot.isEnableMimicry()) pool.with(ItemEntry.builder(ModItems.MIMICRY));
+                if(loot.isEnableScarabRoller()) pool.with(ItemEntry.builder(ModItems.SCARAB_ROLLER));
+                if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
+                if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
                 context.addPool(pool);
             }
         });
