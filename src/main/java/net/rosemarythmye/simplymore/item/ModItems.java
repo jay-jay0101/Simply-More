@@ -343,6 +343,215 @@ public class ModItems {
             )
     );
 
+    public static final Item IRON_PERNACH = registerItem(
+            "iron_pernach",
+            new Sword(
+                    ToolMaterials.IRON,
+                    attributes.getPernachDamageModifier() +3,
+                    (float)attributes.getPernachSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:iron_ingot"
+            )
+    );
+
+    public static final Item GOLD_PERNACH = registerItem(
+            "gold_pernach",
+            new Sword(
+                    ToolMaterials.GOLD,
+                    attributes.getPernachDamageModifier() +3,
+                    (float)attributes.getPernachSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:gold_ingot"
+            )
+    );
+
+    public static final Item DIAMOND_PERNACH = registerItem(
+            "diamond_pernach",
+            new Sword(
+                    ToolMaterials.DIAMOND,
+                    attributes.getPernachDamageModifier() +3,
+                    (float)attributes.getPernachSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:diamond"
+            )
+    );
+
+    public static final Item NETHERITE_PERNACH = registerItem(
+            "netherite_pernach",
+            new Sword(
+                    ToolMaterials.NETHERITE,
+                    attributes.getPernachDamageModifier() +3,
+                    (float)attributes.getPernachSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:netherite_ingot"
+            )
+    );
+
+    public static final Item RUNIC_PERNACH = registerItem(
+            "runic_pernach",
+            new RunicSwordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    attributes.getPernachDamageModifier() +3,
+                    (float)attributes.getPernachSwingSpeed(),
+                    new Item.Settings()
+            )
+    );
+
+    public static final Item IRON_QUARTERSTAFF = registerItem(
+            "iron_quarterstaff",
+            new Sword(
+                    ToolMaterials.IRON,
+                    attributes.getQuarterstaffDamageModifier() +3,
+                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:iron_ingot"
+            )
+    );
+
+    public static final Item GOLD_QUARTERSTAFF = registerItem(
+            "gold_quarterstaff",
+            new Sword(
+                    ToolMaterials.GOLD,
+                    attributes.getQuarterstaffDamageModifier() +3,
+                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:gold_ingot"
+            )
+    );
+
+    public static final Item DIAMOND_QUARTERSTAFF = registerItem(
+            "diamond_quarterstaff",
+            new Sword(
+                    ToolMaterials.DIAMOND,
+                    attributes.getQuarterstaffDamageModifier() +3,
+                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:diamond"
+            )
+    );
+
+    public static final Item NETHERITE_QUARTERSTAFF = registerItem(
+            "netherite_quarterstaff",
+            new Sword(
+                    ToolMaterials.NETHERITE,
+                    attributes.getQuarterstaffDamageModifier() +3,
+                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    new Item.Settings().fireproof(),
+                    "minecraft:netherite_ingot"
+            )
+    );
+
+    public static final Item RUNIC_QUARTERSTAFF = registerItem(
+            "runic_quarterstaff",
+            new RunicSwordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    attributes.getQuarterstaffDamageModifier() +3,
+                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    new Item.Settings().fireproof()
+            )
+    );
+
+
+    public static final Item IRON_GREAT_SPEAR = registerItem(
+            "iron_great_spear",
+            new Sword(
+                    ToolMaterials.IRON,
+                    attributes.getGreatSpearDamageModifier() +3,
+                    (float)attributes.getGreatSpearSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:iron_ingot"
+            )
+    );
+    public static final Item GOLD_GREAT_SPEAR = registerItem(
+            "gold_great_spear",
+            new Sword(
+                    ToolMaterials.GOLD,
+                    attributes.getGreatSpearDamageModifier() +3,
+                    (float)attributes.getGreatSpearSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:gold_ingot"
+            )
+    );
+    public static final Item DIAMOND_GREAT_SPEAR = registerItem(
+            "diamond_great_spear",
+            new Sword(
+                    ToolMaterials.DIAMOND,
+                    attributes.getGreatSpearDamageModifier() +3,
+                    (float)attributes.getGreatSpearSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:diamond"
+            )
+    );
+    public static final Item NETHERITE_GREAT_SPEAR = registerItem(
+            "netherite_great_spear",
+            new Sword(
+                    ToolMaterials.NETHERITE,
+                    attributes.getGreatSpearDamageModifier() +3,
+                    (float)attributes.getGreatSpearSwingSpeed(),
+                    new Item.Settings().fireproof(),
+                    "minecraft:netherite_ingot"
+            )
+    );
+    public static final Item RUNIC_GREAT_SPEAR = registerItem(
+            "runic_great_spear",
+            new RunicSwordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    attributes.getGreatSpearDamageModifier() +3,
+                    (float)attributes.getGreatSpearSwingSpeed(),
+                    new Item.Settings().fireproof()
+            )
+    );
+
+
+    public static final Item IRON_DEER_HORNS = registerItem(
+            "iron_deer_horns",
+            new Sword(
+                    ToolMaterials.IRON,
+                    attributes.getDeerHornsDamageModifier() +3,
+                    (float)attributes.getDeerHornsSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:iron_ingot"
+            )
+    );
+    public static final Item GOLD_DEER_HORNS = registerItem(
+            "gold_deer_horns",
+            new Sword(
+                    ToolMaterials.GOLD,
+                    attributes.getDeerHornsDamageModifier() +3,
+                    (float)attributes.getDeerHornsSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:gold_ingot"
+            )
+    );
+    public static final Item DIAMOND_DEER_HORNS = registerItem(
+            "diamond_deer_horns",
+            new Sword(
+                    ToolMaterials.DIAMOND,
+                    attributes.getDeerHornsDamageModifier() +3,
+                    (float)attributes.getDeerHornsSwingSpeed(),
+                    new Item.Settings(),
+                    "minecraft:diamond"
+            )
+    );
+    public static final Item NETHERITE_DEER_HORNS = registerItem(
+            "netherite_deer_horns",
+            new Sword(
+                    ToolMaterials.NETHERITE,
+                    attributes.getDeerHornsDamageModifier() +3,
+                    (float)attributes.getDeerHornsSwingSpeed(),
+                    new Item.Settings().fireproof(),
+                    "minecraft:netherite_ingot"
+            )
+    );
+    public static final Item RUNIC_DEER_HORNS = registerItem(
+            "runic_deer_horns",
+            new RunicSwordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    attributes.getDeerHornsDamageModifier() +3,
+                    (float)attributes.getDeerHornsSwingSpeed(),
+                    new Item.Settings().fireproof()
+            )
+    );
 
 
 
@@ -478,30 +687,50 @@ public class ModItems {
                 entries.add(IRON_LANCE);
                 entries.add(IRON_KHOPESH);
                 entries.add(IRON_DAGGER);
+                entries.add(IRON_PERNACH);
+                entries.add(IRON_QUARTERSTAFF);
+                entries.add(IRON_GREAT_SPEAR);
+                entries.add(IRON_DEER_HORNS);
                 entries.add(GOLD_GREAT_KATANA);
                 entries.add(GOLD_GRANDSWORD);
                 entries.add(GOLD_BACKHAND_BLADE);
                 entries.add(GOLD_LANCE);
                 entries.add(GOLD_KHOPESH);
                 entries.add(GOLD_DAGGER);
+                entries.add(GOLD_PERNACH);
+                entries.add(GOLD_QUARTERSTAFF);
+                entries.add(GOLD_GREAT_SPEAR);
+                entries.add(GOLD_DEER_HORNS);
                 entries.add(DIAMOND_GREAT_KATANA);
                 entries.add(DIAMOND_GRANDSWORD);
                 entries.add(DIAMOND_BACKHAND_BLADE);
                 entries.add(DIAMOND_LANCE);
                 entries.add(DIAMOND_KHOPESH);
                 entries.add(DIAMOND_DAGGER);
+                entries.add(DIAMOND_PERNACH);
+                entries.add(DIAMOND_QUARTERSTAFF);
+                entries.add(DIAMOND_GREAT_SPEAR);
+                entries.add(DIAMOND_DEER_HORNS);
                 entries.add(NETHERITE_GREAT_KATANA);
                 entries.add(NETHERITE_GRANDSWORD);
                 entries.add(NETHERITE_BACKHAND_BLADE);
                 entries.add(NETHERITE_LANCE);
                 entries.add(NETHERITE_KHOPESH);
                 entries.add(NETHERITE_DAGGER);
+                entries.add(NETHERITE_PERNACH);
+                entries.add(NETHERITE_QUARTERSTAFF);
+                entries.add(NETHERITE_GREAT_SPEAR);
+                entries.add(NETHERITE_DEER_HORNS);
                 entries.add(RUNIC_GREAT_KATANA);
                 entries.add(RUNIC_GRANDSWORD);
                 entries.add(RUNIC_BACKHAND_BLADE);
                 entries.add(RUNIC_LANCE);
                 entries.add(RUNIC_KHOPESH);
                 entries.add(RUNIC_DAGGER);
+                entries.add(RUNIC_PERNACH);
+                entries.add(RUNIC_QUARTERSTAFF);
+                entries.add(RUNIC_GREAT_SPEAR);
+                entries.add(RUNIC_DEER_HORNS);
                 entries.add(GREAT_SLITHER);
                 entries.add(MOLTEN_FLARE);
                 entries.add(GRANDFROST);

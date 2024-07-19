@@ -52,6 +52,30 @@
   "item.simplymore.netherite_dagger": "Netherite Dagger",
   "item.simplymore.runic_dagger": "Runic Dagger",
 
+  "item.simplymore.iron_pernach": "Iron Pernach",
+  "item.simplymore.gold_pernach": "Gold Pernach",
+  "item.simplymore.diamond_pernach": "Diamond Pernach",
+  "item.simplymore.netherite_pernach": "Netherite Pernach",
+  "item.simplymore.runic_pernach": "Runic Pernach",
+
+  "item.simplymore.iron_great_spear": "Iron Great Spear",
+  "item.simplymore.gold_great_spear": "Gold Great Spear",
+  "item.simplymore.diamond_great_spear": "Diamond Great Spear",
+  "item.simplymore.netherite_great_spear": "Netherite Great Spear",
+  "item.simplymore.runic_great_spear": "Runic Great Spear",
+
+  "item.simplymore.iron_quarterstaff": "Iron Quarterstaff",
+  "item.simplymore.gold_quarterstaff": "Gold Quarterstaff",
+  "item.simplymore.diamond_quarterstaff": "Diamond Quarterstaff",
+  "item.simplymore.netherite_quarterstaff": "Netherite Quarterstaff",
+  "item.simplymore.runic_quarterstaff": "Runic Quarterstaff",
+
+  "item.simplymore.iron_deer_horns": "Iron Deer Horns",
+  "item.simplymore.gold_deer_horns": "Gold Deer Horns",
+  "item.simplymore.diamond_deer_horns": "Diamond Deer Horns",
+  "item.simplymore.netherite_deer_horns": "Netherite Deer Horns",
+  "item.simplymore.runic_deer_horns": "Runic Deer Horns",
+
   "item.simplymore.great_slither": "Great Slither",
   "item.simplymore.great_slither.tooltip1": "Unique Effect: Poisonous Grasp",
   "item.simplymore.great_slither.tooltip2": "Chance on hit to inflict poison.",

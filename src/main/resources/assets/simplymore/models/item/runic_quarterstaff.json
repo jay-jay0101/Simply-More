@@ -1,0 +1,14 @@
+{
+  "parent": "simplyswords:item/template_twinblade",
+  "textures": {
+    "layer0": "simplymore:item/quarterstaff/runic",
+    "layer1": "simplymore:item/quarterstaff/runic_layer"
+  },
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [ 0, 90, -25 ],
+      "translation": [ -1.5, 5.5, 3.5 ],
+      "scale": [ 1, 1, 0.5 ]
+    }
+  }
+}

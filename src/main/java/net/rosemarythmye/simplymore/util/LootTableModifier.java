@@ -25,7 +25,11 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.IRON_KHOPESH))
                         .with(ItemEntry.builder(ModItems.IRON_LANCE))
                         .with(ItemEntry.builder(ModItems.IRON_GREAT_KATANA))
-                        .with(ItemEntry.builder(ModItems.IRON_DAGGER));
+                        .with(ItemEntry.builder(ModItems.IRON_DAGGER))
+                        .with(ItemEntry.builder(ModItems.IRON_PERNACH))
+                        .with(ItemEntry.builder(ModItems.IRON_QUARTERSTAFF))
+                        .with(ItemEntry.builder(ModItems.IRON_GREAT_SPEAR))
+                        .with(ItemEntry.builder(ModItems.IRON_DEER_HORNS));
                 context.addPool(pool);
             }
         });
@@ -39,7 +43,11 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.GOLD_KHOPESH))
                         .with(ItemEntry.builder(ModItems.GOLD_LANCE))
                         .with(ItemEntry.builder(ModItems.GOLD_GREAT_KATANA))
-                        .with(ItemEntry.builder(ModItems.GOLD_DAGGER));
+                        .with(ItemEntry.builder(ModItems.GOLD_DAGGER))
+                        .with(ItemEntry.builder(ModItems.GOLD_PERNACH))
+                        .with(ItemEntry.builder(ModItems.GOLD_QUARTERSTAFF))
+                        .with(ItemEntry.builder(ModItems.GOLD_GREAT_SPEAR))
+                        .with(ItemEntry.builder(ModItems.GOLD_DEER_HORNS));
                 context.addPool(pool);
             }
         });
@@ -53,7 +61,11 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.DIAMOND_KHOPESH))
                         .with(ItemEntry.builder(ModItems.DIAMOND_LANCE))
                         .with(ItemEntry.builder(ModItems.DIAMOND_GREAT_KATANA))
-                        .with(ItemEntry.builder(ModItems.DIAMOND_DAGGER));
+                        .with(ItemEntry.builder(ModItems.DIAMOND_DAGGER))
+                        .with(ItemEntry.builder(ModItems.DIAMOND_PERNACH))
+                        .with(ItemEntry.builder(ModItems.DIAMOND_QUARTERSTAFF))
+                        .with(ItemEntry.builder(ModItems.DIAMOND_GREAT_SPEAR))
+                        .with(ItemEntry.builder(ModItems.DIAMOND_DEER_HORNS));
                 context.addPool(pool);
             }
         });
@@ -67,7 +79,11 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.NETHERITE_KHOPESH))
                         .with(ItemEntry.builder(ModItems.NETHERITE_LANCE))
                         .with(ItemEntry.builder(ModItems.NETHERITE_GREAT_KATANA))
-                        .with(ItemEntry.builder(ModItems.NETHERITE_DAGGER));
+                        .with(ItemEntry.builder(ModItems.NETHERITE_DAGGER))
+                        .with(ItemEntry.builder(ModItems.NETHERITE_PERNACH))
+                        .with(ItemEntry.builder(ModItems.NETHERITE_QUARTERSTAFF))
+                        .with(ItemEntry.builder(ModItems.NETHERITE_GREAT_SPEAR))
+                        .with(ItemEntry.builder(ModItems.NETHERITE_DEER_HORNS));
                 context.addPool(pool);
             }
         });
@@ -81,7 +97,11 @@ public class LootTableModifier {
                         .with(ItemEntry.builder(ModItems.RUNIC_KHOPESH))
                         .with(ItemEntry.builder(ModItems.RUNIC_LANCE))
                         .with(ItemEntry.builder(ModItems.RUNIC_GREAT_KATANA))
-                        .with(ItemEntry.builder(ModItems.RUNIC_DAGGER));
+                        .with(ItemEntry.builder(ModItems.RUNIC_DAGGER))
+                        .with(ItemEntry.builder(ModItems.RUNIC_PERNACH))
+                        .with(ItemEntry.builder(ModItems.RUNIC_QUARTERSTAFF))
+                        .with(ItemEntry.builder(ModItems.RUNIC_GREAT_SPEAR))
+                        .with(ItemEntry.builder(ModItems.RUNIC_DEER_HORNS));
                 context.addPool(pool);
             }
         });

@@ -11,12 +11,20 @@ public class WeaponAttributesConfig implements ConfigData {
     int lanceDamageModifier = 0;
     int khopeshDamageModifier = -1;
     int daggerDamageModifier = -2;
+    int quarterstaffDamageModifier = -2;
+    int pernachDamageModifier = 1;
+    int greatSpearDamageModifier = 3;
+    int deerHornsDamageModifier = -1;
     double greatKatanaSwingSpeed = -2.6;
     double grandswordSwingSpeed = -3.5;
     double backhandBladeSwingSpeed = -1.7;
     double lanceSwingSpeed = -3;
-    double khopeshSwingSpeed = -2.25;
+    double khopeshSwingSpeed = -2.1;
     double daggerSwingSpeed = -1.8;
+    double quarterstaffSwingSpeed = -2;
+    double pernachSwingSpeed = -2.7;
+    double greatSpearSwingSpeed = -3;
+    double deerHornsSwingSpeed = -2;
 
     int greatSlitherDamage = 11;
     double greatSlitherSwingSpeed = -2.6;
@@ -35,7 +43,7 @@ public class WeaponAttributesConfig implements ConfigData {
     int jesterPenetrateDamage = 6;
     double jesterPenetrateSwingSpeed = -3;
     int scarabRollerDamage = 8;
-    double scarabRollerSwingSpeed = -2.25;
+    double scarabRollerSwingSpeed = -2.1;
 
 
     public WeaponAttributesConfig() {
@@ -159,5 +167,37 @@ public class WeaponAttributesConfig implements ConfigData {
 
     public int getDaggerDamageModifier() {
         return daggerDamageModifier;
+    }
+
+    public double getDeerHornsSwingSpeed() {
+        return deerHornsSwingSpeed;
+    }
+
+    public double getGreatSpearSwingSpeed() {
+        return greatSpearSwingSpeed;
+    }
+
+    public double getPernachSwingSpeed() {
+        return pernachSwingSpeed;
+    }
+
+    public double getQuarterstaffSwingSpeed() {
+        return quarterstaffSwingSpeed;
+    }
+
+    public int getDeerHornsDamageModifier() {
+        return deerHornsDamageModifier;
+    }
+
+    public int getGreatSpearDamageModifier() {
+        return greatSpearDamageModifier;
+    }
+
+    public int getPernachDamageModifier() {
+        return pernachDamageModifier;
+    }
+
+    public int getQuarterstaffDamageModifier() {
+        return quarterstaffDamageModifier;
     }
 }
