@@ -9,9 +9,12 @@ import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 )
 @Config.Gui.Background("cloth-config2:transparent")
 public class WrapperConfig extends PartitioningSerializer.GlobalData {
-    @ConfigEntry.Category("uniques")
+    @ConfigEntry.Category("loot")
     @ConfigEntry.Gui.TransitiveObject
     public LootConfig loot = new LootConfig();
+
+    @ConfigEntry.Category("attributes")
+    @ConfigEntry.Gui.TransitiveObject
     public WeaponAttributesConfig weaponAttributes = new WeaponAttributesConfig();
 
     public WrapperConfig() {
