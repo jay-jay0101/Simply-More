@@ -45,8 +45,19 @@ public class WeaponAttributesConfig implements ConfigData {
     int scarabRollerDamage = 8;
     double scarabRollerSwingSpeed = -2.1;
 
+    int blackPearlDamage = 9;
+    double blackPearlSwingSpeed = -2;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getBlackPearlSwingSpeed() {
+        return blackPearlSwingSpeed;
+    }
+
+    public int getBlackPearlDamage() {
+        return blackPearlDamage;
     }
 
     public double getBackhandBladeSwingSpeed() {

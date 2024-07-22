@@ -117,6 +117,7 @@ public class LootTableModifier {
                 if(loot.isEnableScarabRoller()) pool.with(ItemEntry.builder(ModItems.SCARAB_ROLLER));
                 if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
                 if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
+                if(loot.isEnableBlackPearl()) pool.with(ItemEntry.builder(ModItems.BLACK_PEARL));
                 context.addPool(pool);
             }
         });
@@ -132,6 +133,7 @@ public class LootTableModifier {
                 if(loot.isEnableScarabRoller()) pool.with(ItemEntry.builder(ModItems.SCARAB_ROLLER));
                 if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
                 if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
+                if(loot.isEnableBlackPearl()) pool.with(ItemEntry.builder(ModItems.BLACK_PEARL));
                 context.addPool(pool);
             }
         });
@@ -147,6 +149,7 @@ public class LootTableModifier {
                 if(loot.isEnableScarabRoller()) pool.with(ItemEntry.builder(ModItems.SCARAB_ROLLER));
                 if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
                 if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
+                if(loot.isEnableBlackPearl()) pool.with(ItemEntry.builder(ModItems.BLACK_PEARL));
                 context.addPool(pool);
             }
         });

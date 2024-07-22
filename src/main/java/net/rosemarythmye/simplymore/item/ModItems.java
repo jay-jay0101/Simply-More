@@ -642,6 +642,17 @@ public class ModItems {
             )
     );
 
+    public static final Item BLACK_PEARL = registerItem(
+            "black_pearl",
+            new BlackPearl(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getBlackPearlDamage()-6,
+                    (float)attributes.getBlackPearlDamage(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -738,6 +749,7 @@ public class ModItems {
                 entries.add(GLIMMERSTEP);
                 entries.add(THEBLOODHARVESTER);
                 entries.add(SCARAB_ROLLER);
+                entries.add(BLACK_PEARL);
 
                 entries.add(JESTER_PENETRATE);
             })

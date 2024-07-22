@@ -24,6 +24,7 @@ public class LootConfig implements ConfigData {
     boolean enableTheBloodHarvester = true;
     boolean enableScarabRoller = true;
     boolean enableJesterPenetrate = true;
+    boolean enableBlackPearl = true;
 
     public LootConfig() {
     }
@@ -38,6 +39,9 @@ public class LootConfig implements ConfigData {
 
     public boolean isEnableGlimmerstep() {
         return enableGlimmerstep;
+    }
+    public boolean isEnableBlackPearl() {
+        return enableBlackPearl;
     }
 
     public boolean isEnableGrandfrost() {
