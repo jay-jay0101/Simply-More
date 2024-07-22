@@ -85,10 +85,10 @@ public class Mimicry extends UniqueSword {
                 StatusEffect statusEffect;
                 if (this.hitCount % 5 == 0 && form.toString().equals("\"purity\"")) {
                     statusEffect = PositiveEffects[attacker.getRandom().nextInt(PositiveEffects.length)];
-                    attacker.addStatusEffect(new StatusEffectInstance(statusEffect, 200, 1));
+                    attacker.addStatusEffect(new StatusEffectInstance(statusEffect, 250, 0));
                 } else if (this.hitCount % 4 == 0 && form.toString().equals("\"twisted\"")) {
                     statusEffect = NegativeEffects[attacker.getRandom().nextInt(NegativeEffects.length)];
-                    target.addStatusEffect(new StatusEffectInstance(statusEffect, 200, 1));
+                    target.addStatusEffect(new StatusEffectInstance(statusEffect, 250, 0));
                 }
             }
         }

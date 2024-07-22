@@ -646,7 +646,7 @@ public class ModItems {
             "black_pearl",
             new BlackPearl(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
                     attributes.getBlackPearlDamage()-6,
-                    (float)attributes.getBlackPearlDamage(),
+                    (float)attributes.getBlackPearlSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
