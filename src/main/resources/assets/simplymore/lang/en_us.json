@@ -135,5 +135,9 @@
   "item.simplymore.black_pearl.tooltip2": "Chance on hit to steal a positive",
   "item.simplymore.black_pearl.tooltip3": "status effect.",
   "item.simplymore.black_pearl.tooltip4": "Blast forward an explosive cannonball.",
-  "item.simplymore.black_pearl.tooltip5": "This will hurt you if too close."
+  "item.simplymore.black_pearl.tooltip5": "This will hurt you if too close.",
+
+  "item.simplymore.the_pan": "The Pan",
+  "item.simplymore.the_pan.tooltip1": "Unique Effect: Kitchen Magic",
+  "item.simplymore.the_pan.tooltip2": "Chance on hit to knockback the enemy."
 }

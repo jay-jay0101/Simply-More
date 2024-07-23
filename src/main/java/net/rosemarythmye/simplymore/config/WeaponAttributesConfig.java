@@ -48,8 +48,19 @@ public class WeaponAttributesConfig implements ConfigData {
     int blackPearlDamage = 9;
     double blackPearlSwingSpeed = -2;
 
+    int thePanDamage = 4;
+    double thePanSwingSpeed = -2.5;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getThePanSwingSpeed() {
+        return thePanSwingSpeed;
+    }
+
+    public int getThePanDamage() {
+        return thePanDamage;
     }
 
     public double getBlackPearlSwingSpeed() {

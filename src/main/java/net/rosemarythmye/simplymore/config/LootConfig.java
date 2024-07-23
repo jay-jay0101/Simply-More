@@ -25,6 +25,7 @@ public class LootConfig implements ConfigData {
     boolean enableScarabRoller = true;
     boolean enableJesterPenetrate = true;
     boolean enableBlackPearl = true;
+    boolean enableThePan = true;
 
     public LootConfig() {
     }
@@ -40,6 +41,11 @@ public class LootConfig implements ConfigData {
     public boolean isEnableGlimmerstep() {
         return enableGlimmerstep;
     }
+
+    public boolean isEnableThePan() {
+        return enableThePan;
+    }
+
     public boolean isEnableBlackPearl() {
         return enableBlackPearl;
     }

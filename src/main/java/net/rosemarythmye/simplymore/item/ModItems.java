@@ -22,6 +22,7 @@ import net.rosemarythmye.simplymore.item.runics.RunicGrandSword;
 import net.rosemarythmye.simplymore.item.runics.RunicLance;
 import net.rosemarythmye.simplymore.item.uniques.*;
 import net.rosemarythmye.simplymore.item.uniques.joke.JesterPenetrate;
+import net.rosemarythmye.simplymore.item.uniques.joke.ThePan;
 import net.rosemarythmye.simplymore.util.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.item.RunicSwordItem;
 import net.sweenus.simplyswords.registry.ItemsRegistry;
@@ -653,6 +654,17 @@ public class ModItems {
             )
     );
 
+    public static final Item THE_PAN = registerItem(
+            "the_pan",
+            new ThePan(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getThePanDamage()-6,
+                    (float)attributes.getThePanSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -752,6 +764,7 @@ public class ModItems {
                 entries.add(BLACK_PEARL);
 
                 entries.add(JESTER_PENETRATE);
+                entries.add(THE_PAN);
             })
             .build();
 }

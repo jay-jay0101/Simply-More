@@ -118,6 +118,7 @@ public class LootTableModifier {
                 if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
                 if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
                 if(loot.isEnableBlackPearl()) pool.with(ItemEntry.builder(ModItems.BLACK_PEARL));
+                if(loot.isEnableThePan() && loot.isEnableJokeUniqueChestLoot()) pool.with(ItemEntry.builder(ModItems.THE_PAN));
                 context.addPool(pool);
             }
         });
@@ -134,6 +135,7 @@ public class LootTableModifier {
                 if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
                 if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
                 if(loot.isEnableBlackPearl()) pool.with(ItemEntry.builder(ModItems.BLACK_PEARL));
+                if(loot.isEnableThePan() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItems.THE_PAN));
                 context.addPool(pool);
             }
         });
@@ -150,6 +152,7 @@ public class LootTableModifier {
                 if(loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItems.MOLTEN_FLARE));
                 if(loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItems.THEBLOODHARVESTER));
                 if(loot.isEnableBlackPearl()) pool.with(ItemEntry.builder(ModItems.BLACK_PEARL));
+                if(loot.isEnableThePan() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItems.THE_PAN));
                 context.addPool(pool);
             }
         });
