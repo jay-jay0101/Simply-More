@@ -112,7 +112,7 @@ public class BlackPearl extends UniqueSword {
             stepMod = 7;
         }
 
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.ASH, ParticleTypes.ASH, ParticleTypes.LANDING_HONEY, true);
+        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.LANDING_HONEY, ParticleTypes.LANDING_HONEY, ParticleTypes.ASH, true);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }
