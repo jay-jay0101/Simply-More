@@ -3,10 +3,7 @@ package net.rosemarythmye.simplymore;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.util.Identifier;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.item.ModItems;
@@ -28,6 +25,11 @@ public class SimplymoreClient implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(ModItems.THEBLOODHARVESTER, new Identifier(Simplymore.ID, "harvest"), (itemStack, clientWorld, livingEntity, a) -> {
             if (livingEntity == null) return 0f;
             return livingEntity.hasStatusEffect(ModEffects.HARVEST)? 1f:0f;
+        });
+
+        ModelPredicateProviderRegistry.register(ModItems.THEVESSELBREACH, new Identifier(Simplymore.ID, "rage"), (itemStack, clientWorld, livingEntity, a) -> {
+            if (livingEntity == null) return 0f;
+            return livingEntity.hasStatusEffect(ModEffects.RAGE)? 1f:0f;
         });
     }
 }

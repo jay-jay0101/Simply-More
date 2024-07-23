@@ -26,12 +26,17 @@ public class LootConfig implements ConfigData {
     boolean enableJesterPenetrate = true;
     boolean enableBlackPearl = true;
     boolean enableThePan = true;
+    boolean enableTheVesselBreach = true;
 
     public LootConfig() {
     }
 
     public boolean isEnableDragonDropsUnique() {
         return enableDragonDropsUnique;
+    }
+
+    public boolean isEnableTheVesselBreach() {
+        return enableTheVesselBreach;
     }
 
     public boolean isEnableWitherDropsUnique() {

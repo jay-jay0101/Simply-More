@@ -51,8 +51,19 @@ public class WeaponAttributesConfig implements ConfigData {
     int thePanDamage = 4;
     double thePanSwingSpeed = -2.5;
 
+    int theVesselBreachDamage = 6;
+    double theVesselBreachSwingSpeed = -1.8;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getTheVesselBreachSwingSpeed() {
+        return theVesselBreachSwingSpeed;
+    }
+
+    public int getTheVesselBreachDamage() {
+        return theVesselBreachDamage;
     }
 
     public double getThePanSwingSpeed() {

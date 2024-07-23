@@ -8,6 +8,7 @@
   "effect.simplymore.mimicry": "Twisted Form",
   "effect.simplymore.lance_mounted": "Friendship",
   "effect.simplymore.harvest": "Sanguine Harvest",
+  "effect.simplymore.rage": "Adrenaline Rage",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -139,5 +140,14 @@
 
   "item.simplymore.the_pan": "The Pan",
   "item.simplymore.the_pan.tooltip1": "Unique Effect: Kitchen Magic",
-  "item.simplymore.the_pan.tooltip2": "Chance on hit to knockback the enemy."
+  "item.simplymore.the_pan.tooltip2": "Chance on hit to knockback the enemy.",
+
+  "item.simplymore.the_vessel_breach": "The Vessel Breach",
+  "item.simplymore.the_vessel_breach.tooltip1": "Unique Effect: Blood Purger",
+  "item.simplymore.the_vessel_breach.tooltip2": "This weapon has 10% lifesteal.",
+  "item.simplymore.the_vessel_breach.tooltip3": "Cut yourself for 30% of your health to",
+  "item.simplymore.the_vessel_breach.tooltip4": "enter a rage. While enraged, you bleed",
+  "item.simplymore.the_vessel_breach.tooltip5": "but may not take damage otherwise.",
+  "item.simplymore.the_vessel_breach.tooltip6": "You also gain 33% lifesteal and a damage",
+  "item.simplymore.the_vessel_breach.tooltip7": "increase."
 }

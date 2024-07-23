@@ -665,6 +665,17 @@ public class ModItems {
             )
     );
 
+    public static final Item THEVESSELBREACH = registerItem(
+            "the_vessel_breach",
+            new TheVesselBreach(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getTheVesselBreachDamage()-6,
+                    (float)attributes.getTheVesselBreachSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -762,6 +773,7 @@ public class ModItems {
                 entries.add(THEBLOODHARVESTER);
                 entries.add(SCARAB_ROLLER);
                 entries.add(BLACK_PEARL);
+                entries.add(THEVESSELBREACH);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);
