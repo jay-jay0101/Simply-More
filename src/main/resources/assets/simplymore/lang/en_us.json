@@ -149,5 +149,16 @@
   "item.simplymore.the_vessel_breach.tooltip4": "enter a rage. While enraged, you bleed",
   "item.simplymore.the_vessel_breach.tooltip5": "but may not take damage otherwise.",
   "item.simplymore.the_vessel_breach.tooltip6": "You also gain 33% lifesteal and a damage",
-  "item.simplymore.the_vessel_breach.tooltip7": "increase."
+  "item.simplymore.the_vessel_breach.tooltip7": "increase.",
+
+  "item.simplymore.blade_of_the_grotesque": "Blade of the Grotesque",
+  "item.simplymore.blade_of_the_grotesque.tooltip1": "Unique Effect: False Appearance",
+  "item.simplymore.blade_of_the_grotesque.tooltip2": "While held gain slight armour and",
+  "item.simplymore.blade_of_the_grotesque.tooltip3": "knockback resistance.",
+  "item.simplymore.blade_of_the_grotesque.tooltip4": "Solidify for 2 seconds, during which you may not",
+  "item.simplymore.blade_of_the_grotesque.tooltip5": "attack nor move, but gain extra defense.",
+  "item.simplymore.blade_of_the_grotesque.tooltip6": "Petrify anyone who hits you during this time",
+  "item.simplymore.blade_of_the_grotesque.tooltip7": "leaving them unable to attack or move for.",
+  "item.simplymore.blade_of_the_grotesque.tooltip8": "a short duration."
+
 }

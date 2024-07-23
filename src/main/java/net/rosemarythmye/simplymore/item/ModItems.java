@@ -676,6 +676,17 @@ public class ModItems {
             )
     );
 
+    public static final Item BLADEOFTHEGROTESQUE = registerItem(
+            "blade_of_the_grotesque",
+            new BladeOfTheGrotesque(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getBladeOfTheGrotesqueDamage()-6,
+                    (float)attributes.getBladeOfTheGrotesqueSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -774,6 +785,7 @@ public class ModItems {
                 entries.add(SCARAB_ROLLER);
                 entries.add(BLACK_PEARL);
                 entries.add(THEVESSELBREACH);
+                entries.add(BLADEOFTHEGROTESQUE);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

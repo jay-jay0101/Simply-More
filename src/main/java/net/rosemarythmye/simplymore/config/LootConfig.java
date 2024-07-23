@@ -27,8 +27,13 @@ public class LootConfig implements ConfigData {
     boolean enableBlackPearl = true;
     boolean enableThePan = true;
     boolean enableTheVesselBreach = true;
+    boolean enableBladeOfTheGrotesque = true;
 
     public LootConfig() {
+    }
+
+    public boolean isEnableBladeOfTheGrotesque() {
+        return enableBladeOfTheGrotesque;
     }
 
     public boolean isEnableDragonDropsUnique() {

@@ -54,8 +54,19 @@ public class WeaponAttributesConfig implements ConfigData {
     int theVesselBreachDamage = 6;
     double theVesselBreachSwingSpeed = -1.8;
 
+    int bladeOfTheGrotesqueDamage = 12;
+    double bladeOfTheGrotesqueSwingSpeed = -2.8;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getBladeOfTheGrotesqueSwingSpeed() {
+        return bladeOfTheGrotesqueSwingSpeed;
+    }
+
+    public int getBladeOfTheGrotesqueDamage() {
+        return bladeOfTheGrotesqueDamage;
     }
 
     public double getTheVesselBreachSwingSpeed() {
