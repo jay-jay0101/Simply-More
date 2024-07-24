@@ -75,7 +75,7 @@ public class VipersCall extends UniqueSword {
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        if (world.getTime() % 20 == 0 && entity instanceof PlayerEntity player && selected) {
+        if (world.getTime() % 20 == 0 && entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
             for (StatusEffectInstance effect : player.getStatusEffects()) {
                 if (effect.getDuration()<25) {
                     if(effect.getEffectType()==StatusEffects.ABSORPTION) continue;
