@@ -28,8 +28,13 @@ public class LootConfig implements ConfigData {
     boolean enableThePan = true;
     boolean enableTheVesselBreach = true;
     boolean enableBladeOfTheGrotesque = true;
+    boolean enableVipersCall = true;
 
     public LootConfig() {
+    }
+
+    public boolean isEnableVipersCall() {
+        return enableVipersCall;
     }
 
     public boolean isEnableBladeOfTheGrotesque() {

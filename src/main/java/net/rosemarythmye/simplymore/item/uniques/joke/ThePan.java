@@ -4,6 +4,7 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -23,6 +24,7 @@ import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ThePan extends Sword {
 
@@ -34,7 +36,7 @@ public class ThePan extends Sword {
         if (!attacker.getWorld().isClient()) {
             if (attacker.getRandom().nextInt(100) <= 30) {
                 attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.PLAYERS,1,1);
-
+                stack.damage(750,attacker, p -> p.sendToolBreakStatus(attacker.getActiveHand()));
                 double xVelocity = target.getX()-attacker.getX();
                 double zVelocity = target.getZ()-attacker.getZ();
                 double ratioMax = Math.abs(xVelocity)+ Math.abs(zVelocity);

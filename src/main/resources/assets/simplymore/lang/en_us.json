@@ -162,6 +162,15 @@
   "item.simplymore.blade_of_the_grotesque.tooltip5": "attack nor move, but gain extra defense.",
   "item.simplymore.blade_of_the_grotesque.tooltip6": "Petrify anyone who hits you during this time",
   "item.simplymore.blade_of_the_grotesque.tooltip7": "leaving them unable to attack or move for",
-  "item.simplymore.blade_of_the_grotesque.tooltip8": "a short duration."
+  "item.simplymore.blade_of_the_grotesque.tooltip8": "a short duration.",
 
+  "item.simplymore.vipers_call": "Viper's Call",
+  "item.simplymore.vipers_call.tooltip1": "Unique Effect: Unending Venom",
+  "item.simplymore.vipers_call.tooltip2": "While held, status effects that run out stay",
+  "item.simplymore.vipers_call.tooltip3": "active until you unequip the weapon, albiet",
+  "item.simplymore.vipers_call.tooltip4": "at its weakest level.",
+  "item.simplymore.vipers_call.tooltip5": "This effect only occurs if held in the",
+  "item.simplymore.vipers_call.tooltip6": "mainhand.",
+  "item.simplymore.vipers_call.tooltip7": "Summon a large ring around yourself",
+  "item.simplymore.vipers_call.tooltip8": "which damages and poisons enemies."
 }

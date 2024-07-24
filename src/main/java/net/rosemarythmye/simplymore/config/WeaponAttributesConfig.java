@@ -57,8 +57,19 @@ public class WeaponAttributesConfig implements ConfigData {
     int bladeOfTheGrotesqueDamage = 12;
     double bladeOfTheGrotesqueSwingSpeed = -2.8;
 
+    int vipersCallDamage = 6;
+    double vipersCallSwingSpeed = -3;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getVipersCallSwingSpeed() {
+        return vipersCallSwingSpeed;
+    }
+
+    public int getVipersCallDamage() {
+        return vipersCallDamage;
     }
 
     public double getBladeOfTheGrotesqueSwingSpeed() {

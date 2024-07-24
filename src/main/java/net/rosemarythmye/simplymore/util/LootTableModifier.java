@@ -121,6 +121,7 @@ public class LootTableModifier {
                 if(loot.isEnableThePan() && loot.isEnableJokeUniqueChestLoot()) pool.with(ItemEntry.builder(ModItems.THE_PAN));
                 if(loot.isEnableTheVesselBreach()) pool.with(ItemEntry.builder(ModItems.THEVESSELBREACH));
                 if(loot.isEnableBladeOfTheGrotesque()) pool.with(ItemEntry.builder(ModItems.BLADEOFTHEGROTESQUE));
+                if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
                 context.addPool(pool);
             }
         });
@@ -140,6 +141,7 @@ public class LootTableModifier {
                 if(loot.isEnableThePan() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItems.THE_PAN));
                 if(loot.isEnableTheVesselBreach()) pool.with(ItemEntry.builder(ModItems.THEVESSELBREACH));
                 if(loot.isEnableBladeOfTheGrotesque()) pool.with(ItemEntry.builder(ModItems.BLADEOFTHEGROTESQUE));
+                if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
                 context.addPool(pool);
             }
         });
@@ -159,6 +161,7 @@ public class LootTableModifier {
                 if(loot.isEnableThePan() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItems.THE_PAN));
                 if(loot.isEnableTheVesselBreach()) pool.with(ItemEntry.builder(ModItems.THEVESSELBREACH));
                 if(loot.isEnableBladeOfTheGrotesque()) pool.with(ItemEntry.builder(ModItems.BLADEOFTHEGROTESQUE));
+                if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
                 context.addPool(pool);
             }
         });

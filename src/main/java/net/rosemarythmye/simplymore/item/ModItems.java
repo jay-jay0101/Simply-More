@@ -687,6 +687,17 @@ public class ModItems {
             )
     );
 
+    public static final Item VIPERSCALL = registerItem(
+            "vipers_call",
+            new VipersCall(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getVipersCallDamage()-6,
+                    (float)attributes.getVipersCallSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -786,6 +797,7 @@ public class ModItems {
                 entries.add(BLACK_PEARL);
                 entries.add(THEVESSELBREACH);
                 entries.add(BLADEOFTHEGROTESQUE);
+                entries.add(VIPERSCALL);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);
