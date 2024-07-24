@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:diamond"
+    },
+    "Y": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    " YX",
+    "#XX",
+    "   "
+  ],
+  "result": {
+    "item": "simplymore:diamond_great_katana"
+  }
+}

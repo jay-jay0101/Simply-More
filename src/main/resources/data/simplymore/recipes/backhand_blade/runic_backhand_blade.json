@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+"item": "simplymore:netherite_backhand_blade"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+"item": "simplymore:runic_backhand_blade"
+  },
+  "template": {
+"item": "simplyswords:runic_tablet"
+  }
+}

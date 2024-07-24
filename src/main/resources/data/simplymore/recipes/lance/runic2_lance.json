@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+"item": "simplymore:runic_lance"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+"item": "simplymore:runic_lance"
+  },
+  "template": {
+"item": "simplyswords:runic_tablet"
+  }
+}

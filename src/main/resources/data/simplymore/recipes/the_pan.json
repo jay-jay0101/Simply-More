@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": {
+      "item": "minecraft:iron_block"
+    },
+    "Y": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    },
+	"S": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "pattern": [
+    " X ",
+    "XYX",
+    "SX "
+  ],
+  "result": {
+    "item": "simplymore:the_pan"
+  }
+}

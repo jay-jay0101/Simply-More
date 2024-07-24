@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+     "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Y": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "   ",
+    "YX#",
+    "   "
+  ],
+  "result": {
+    "item": "simplymore:gold_dagger"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Y": {
+      "item": "minecraft:iron_nugget"
+    },
+	"S": {
+      "item": "minecraft:golden_sword"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XXX",
+    "XSX"
+  ],
+  "result": {
+    "item": "simplymore:gold_grandsword"
+  }
+}

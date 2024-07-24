@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+"item": "simplymore:netherite_khopesh"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+"item": "simplymore:runic_khopesh"
+  },
+  "template": {
+"item": "simplyswords:runic_tablet"
+  }
+}
