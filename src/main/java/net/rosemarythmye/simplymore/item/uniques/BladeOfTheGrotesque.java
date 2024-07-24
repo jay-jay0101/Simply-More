@@ -2,9 +2,7 @@ package net.rosemarythmye.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -15,12 +13,9 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
-import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.item.UniqueSword;
-import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
@@ -66,8 +61,7 @@ public class BladeOfTheGrotesque extends UniqueSword {
     private static int stepMod = 0;
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-        if(entity instanceof PlayerEntity playerEntity && selected && world.getTime() % 20 == 0) playerEntity.addStatusEffect(new StatusEffectInstance(ModEffects.GROTESQUE,9999999,0,true,false,false));
+        if(world.getTime() % 20 == 0 && entity instanceof PlayerEntity playerEntity && selected) playerEntity.addStatusEffect(new StatusEffectInstance(ModEffects.GROTESQUE,9999999,0,true,false,false));
 
         if (stepMod > 0) {
             --stepMod;

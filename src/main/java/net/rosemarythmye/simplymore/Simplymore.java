@@ -20,8 +20,10 @@ public class Simplymore implements ModInitializer {
 		ModConfigs.registerConfigs();
 
 		ModEffects.registerModEffects();
+
 		ModItems.registerModItems();
+
 		LootTableModifier.registerLootTableChanges();
-		LOGGER.info(ID + "Initialized Successfully!");
+		LOGGER.info(ID + " Initialized Successfully!");
 	}
 }
