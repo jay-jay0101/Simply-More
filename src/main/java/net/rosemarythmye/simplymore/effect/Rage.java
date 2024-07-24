@@ -28,7 +28,7 @@ public class Rage extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int Amplifier) {
         entity.damage(entity.getDamageSources().genericKill(), 1.0F);
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,12,4));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,17,4));
         super.applyUpdateEffect(entity, Amplifier);
     }
 

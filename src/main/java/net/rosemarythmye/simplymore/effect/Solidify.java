@@ -15,7 +15,7 @@ public class Solidify extends FreezeEffect {
         if (!pLivingEntity.getWorld().isClient() && pLivingEntity instanceof PlayerEntity player) {
             for (ItemStack itemstack : pLivingEntity.getHandItems()) {
                 if (!player.getItemCooldownManager().isCoolingDown(itemstack.getItem())) {
-                    player.getItemCooldownManager().set(itemstack.getItem(),5);
+                    player.getItemCooldownManager().set(itemstack.getItem(),1);
                 }
             }
         }

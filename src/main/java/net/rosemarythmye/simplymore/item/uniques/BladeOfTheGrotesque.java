@@ -37,6 +37,8 @@ public class BladeOfTheGrotesque extends UniqueSword {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
             user.addStatusEffect(new StatusEffectInstance(ModEffects.SOLIDIFIED,50));
+            user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.UI_STONECUTTER_TAKE_RESULT, user.getSoundCategory(), 2F, 1F);
+            ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.ASH,user.getX(),user.getEyeY()-0.25,user.getZ(),1000,0.2,0.5,0.2,1);
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
         return super.use(world, user, hand);
@@ -65,7 +67,7 @@ public class BladeOfTheGrotesque extends UniqueSword {
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        if(entity instanceof PlayerEntity && selected) ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(ModEffects.GROTESQUE,9999999,0,true,false,false));
+        if(entity instanceof PlayerEntity playerEntity && selected && world.getTime() % 20 == 0) playerEntity.addStatusEffect(new StatusEffectInstance(ModEffects.GROTESQUE,9999999,0,true,false,false));
 
         if (stepMod > 0) {
             --stepMod;

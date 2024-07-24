@@ -9,6 +9,9 @@
   "effect.simplymore.lance_mounted": "Friendship",
   "effect.simplymore.harvest": "Sanguine Harvest",
   "effect.simplymore.rage": "Adrenaline Rage",
+  "effect.simplymore.grotesque": "Grotesque Resistance",
+  "effect.simplymore.solidified": "Solidified",
+  "effect.simplymore.petrified": "Petrified",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -158,7 +161,7 @@
   "item.simplymore.blade_of_the_grotesque.tooltip4": "Solidify for 2 seconds, during which you may not",
   "item.simplymore.blade_of_the_grotesque.tooltip5": "attack nor move, but gain extra defense.",
   "item.simplymore.blade_of_the_grotesque.tooltip6": "Petrify anyone who hits you during this time",
-  "item.simplymore.blade_of_the_grotesque.tooltip7": "leaving them unable to attack or move for.",
+  "item.simplymore.blade_of_the_grotesque.tooltip7": "leaving them unable to attack or move for",
   "item.simplymore.blade_of_the_grotesque.tooltip8": "a short duration."
 
 }

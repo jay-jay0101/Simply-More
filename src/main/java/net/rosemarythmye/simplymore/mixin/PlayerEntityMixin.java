@@ -18,8 +18,7 @@ public abstract class PlayerEntityMixin {
 	private void attack(Entity target, CallbackInfo info) {
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		if (target instanceof PlayerEntity targetPlayer && targetPlayer.hasStatusEffect(ModEffects.SOLIDIFIED)) {
-			int i = targetPlayer.getStatusEffect(ModEffects.SOLIDIFIED).getDuration();
-			player.addStatusEffect(new StatusEffectInstance(ModEffects.PETRIFIED,i+70),targetPlayer);
+			player.addStatusEffect(new StatusEffectInstance(ModEffects.PETRIFIED,90),targetPlayer);
 
 		}
     }
