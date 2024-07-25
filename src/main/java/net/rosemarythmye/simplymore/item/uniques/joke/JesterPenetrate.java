@@ -11,6 +11,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.item.normal.Lance;
@@ -51,6 +52,9 @@ public class JesterPenetrate extends Lance {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip1").setStyle(ABILITY));
         tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip2").setStyle(TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip3").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip4").setStyle(TEXT));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
@@ -65,10 +69,10 @@ public class JesterPenetrate extends Lance {
 
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(entity instanceof PlayerEntity && selected) {
-            ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0));
-            ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 1));
-            ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0));
+        if(entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 1));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0));
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);

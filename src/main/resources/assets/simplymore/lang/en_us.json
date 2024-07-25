@@ -127,6 +127,8 @@
   "item.simplymore.jester_penetrate": "Jester Penetrate",
   "item.simplymore.jester_penetrate.tooltip1": "Unique Effect: Deadliest Minecraft Player",
   "item.simplymore.jester_penetrate.tooltip2": "While held, gain speed, strength and haste.",
+  "item.simplymore.jester_penetrate.tooltip3": "This effect only occurs if held in the",
+  "item.simplymore.jester_penetrate.tooltip4": "mainhand.",
 
   "item.simplymore.scarab_roller": "Scarab Roller",
   "item.simplymore.scarab_roller.tooltip1": "Unique Effect: Dune Rider",
