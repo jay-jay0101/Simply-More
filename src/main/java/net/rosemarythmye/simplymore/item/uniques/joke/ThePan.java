@@ -9,12 +9,15 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.item.UniqueSword;
@@ -23,13 +26,19 @@ import net.rosemarythmye.simplymore.item.normal.Sword;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class ThePan extends Sword {
 
+
+    String[] repairIngredient;
+
     public ThePan(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
+        this.repairIngredient = new String[]{"minecraft:iron_ingot"};
     }
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -61,6 +70,13 @@ public class ThePan extends Sword {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        List<Item> potentialIngredients = new ArrayList<>(List.of());
+        Arrays.stream(this.repairIngredient).toList().forEach(
+                (repIngredient) -> potentialIngredients.add(
+                        Registries.ITEM.get(new Identifier(repIngredient))));
+        return potentialIngredients.contains(ingredient.getItem());
+    }
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
