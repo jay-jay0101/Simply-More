@@ -1,64 +1,40 @@
-
-Copyright (c) RosemaryThyme | 2024 | All Rights Reserved.
+Copyright (c) 2024, RosemaryThyme. All Rights Reserved.
 
 This License pertains to this software only, and does not extend to the dependency software "SimplySwords".
-Referenced code and assets from SimplySwords are under the discretion of the Timefall Development License.
+Referenced code and assets from SimplySwords are licensed under the [Timefall Development License 1.2](https://github.com/Sweenus/SimplySwords/blob/Architectury-1.20/LICENSE).
 
+DEFINITIONS:
+Software - Any compiled version of the collection of code and assets that come together to create SimplyMore. This includes the .jar files or any other file extensions that may result from recompiling SimplyMore into another language.
 
-- DEFINITIONS -
-(This) Software - The collection of code and assets that come together to create the Simplymore.jar file, as
-well as the file itself.
-
-Assets - Media (Sound, Image, Model) files contained within the software.
+Assets - Media (including, but not limited to: Sound, Image, and Model files) contained within the software.
 
 Content Creation - The producion of video media on sites including, but not limited to, YouTube or Twitch.
 
+The following permissions are hereby granted, below, to any person having a copy of this software and/or its associated files:
 
-Permission is granted to any person(s) having a copy of this software permitting
-the following:
+USAGE
+- You may use this software for public or private use. If used within a Modpack, it may be bundled directly as a file, or done via manifest which would download this software from its respective CurseForge or Modrinth page.
+- You may use this software and its associated art assets for public and private use as a dependency or API.
+- You may not bundle this software within any other software in any way, shape or form.
 
+COPYING & MODIFICATION
+- You may copy this software for private use or to contribute to this software through means of a fork and pull request.
+- You may modify this software for private use or to contribute to this software through means of a fork and pull request. You agree and the rights of any modifications made as means of contribution to this software are transferred to the original copyright holder(s) of this software.
 
-- USAGE -
-You may use this software for public or private use. If used within a Modpack, it may be bundled directly as a file,
-or done via manifest which would download the mod from an official mirror or download link.
+MONITISATION
+- You may not place access to this software or any modified versions (including, but not limited to: early access versions) of this software, behind a paywall.
+- You may not benefit financially or commercially through the selling of code or assets from this software, whether modified or unmodified.
+- You are permitted to monitise works or content created using this software, including but not limited to Content Creation on platforms such as YouTube or Twitch.
 
-Usage of this software as a dependency or API is permitted for both public or private use.
-This software must not be bundled within other software in any form.
+DISTRIBUTION & SUBLICENSING
+- You may not distribute this software.
+- You may not sublicense this software.
 
-Usage of this software's art assets is permitted for public and private use.
+OTHER NOTICES
+- This license is provided with the notion that basic common sense be used when interacting with this software.
+- The copyright holder(s) retain the right to revoke this license at any time for any reason.
+- This license may be changed by copyright holder(s) to permit additional actions upon reasonable request.
 
-Neither author nor artist credit is required for any above permissions, but both are highly encouraged.
-
-
-- COPYING & MODIFICATION -
-You may not copy this software for public nor private use.
-You may fork the repository of this software for the purpose of contributing
-to this software.
-
-You may modify this software for public and private use if, and only if, the original
-copyright holder(s) retain rights over the modification.
-
-
-- MONITISATION -
-You may not place access to this software or any modified versions of this software behind a paywall.
-You may not place early access to modified versions of this software behind a paywall.
-You may not make money off the selling of code nor assets - modified or unmodified -
-from this software.
-
-You are permitted to monitise works or creations created using this software, including but not limited
-to Content Creation.
-
-
-- DISTRIBUTION & SUBLICENSING -
-You may not sublicense this software. Valid licenses must be made by the copyright holder(s).
-You may not distribute this software.
-
-
-- OTHER NOTICES -
-This license is provided with the notion that basic common sense be used when interacting with this software.
-The copyright holder(s) retain the right to revoke this license at any time for any reason.
-
-This license may be changed by copyright holder(s) to permit additional actions upon reasonable request.
-
-This software is provided "as is", without warranty of any kind, express or implied. The copyright holder(s)
-hold no liability in the event that this software is used to cause damage or legal issues.
+INDEMNIFICATION
+- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+- IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
