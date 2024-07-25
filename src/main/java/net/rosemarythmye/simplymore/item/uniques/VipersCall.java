@@ -65,7 +65,7 @@ public class VipersCall extends UniqueSword {
         tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip5").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip6").setStyle(TEXT));
         tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
         tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip7").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip8").setStyle(TEXT));
 
