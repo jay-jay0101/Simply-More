@@ -29,8 +29,13 @@ public class LootConfig implements ConfigData {
     boolean enableTheVesselBreach = true;
     boolean enableBladeOfTheGrotesque = true;
     boolean enableVipersCall = true;
+    boolean enableTimekeeper = true;
 
     public LootConfig() {
+    }
+
+    public boolean isEnableTimekeeper() {
+        return enableTimekeeper;
     }
 
     public boolean isEnableVipersCall() {

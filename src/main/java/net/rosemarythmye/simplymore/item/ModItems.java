@@ -698,6 +698,17 @@ public class ModItems {
             )
     );
 
+    public static final Item TIMEKEEPER = registerItem(
+            "timekeeper",
+            new Timekeeper(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getTimekeeperDamage()-6,
+                    (float)attributes.getTimekeeperSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -798,6 +809,7 @@ public class ModItems {
                 entries.add(THEVESSELBREACH);
                 entries.add(BLADEOFTHEGROTESQUE);
                 entries.add(VIPERSCALL);
+                entries.add(TIMEKEEPER);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

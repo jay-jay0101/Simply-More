@@ -122,6 +122,7 @@ public class LootTableModifier {
                 if(loot.isEnableTheVesselBreach()) pool.with(ItemEntry.builder(ModItems.THEVESSELBREACH));
                 if(loot.isEnableBladeOfTheGrotesque()) pool.with(ItemEntry.builder(ModItems.BLADEOFTHEGROTESQUE));
                 if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
+                if(loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItems.TIMEKEEPER));
                 context.addPool(pool);
             }
         });
@@ -142,6 +143,7 @@ public class LootTableModifier {
                 if(loot.isEnableTheVesselBreach()) pool.with(ItemEntry.builder(ModItems.THEVESSELBREACH));
                 if(loot.isEnableBladeOfTheGrotesque()) pool.with(ItemEntry.builder(ModItems.BLADEOFTHEGROTESQUE));
                 if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
+                if(loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItems.TIMEKEEPER));
                 context.addPool(pool);
             }
         });
@@ -162,6 +164,7 @@ public class LootTableModifier {
                 if(loot.isEnableTheVesselBreach()) pool.with(ItemEntry.builder(ModItems.THEVESSELBREACH));
                 if(loot.isEnableBladeOfTheGrotesque()) pool.with(ItemEntry.builder(ModItems.BLADEOFTHEGROTESQUE));
                 if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
+                if(loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItems.TIMEKEEPER));
                 context.addPool(pool);
             }
         });

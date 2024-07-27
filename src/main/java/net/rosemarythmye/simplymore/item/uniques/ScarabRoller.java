@@ -80,7 +80,7 @@ public class ScarabRoller extends UniqueSword {
 
             if(!user.getWorld().isClient) {
                 for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,user.getBoundingBox().expand(2))) {
-                    if(livingEntity == user) continue;
+                    if(livingEntity == user || livingEntity.isTeammate(user)) continue;
                     double xVelocity = livingEntity.getX()-user.getX();
                     double zVelocity = livingEntity.getZ()-user.getZ();
                     double ratioMax = Math.abs(xVelocity)+ Math.abs(zVelocity);

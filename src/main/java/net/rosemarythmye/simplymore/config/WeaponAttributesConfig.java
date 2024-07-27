@@ -60,8 +60,19 @@ public class WeaponAttributesConfig implements ConfigData {
     int vipersCallDamage = 6;
     double vipersCallSwingSpeed = -3;
 
+    int timekeeperDamage = 9;
+    double timekeeperSwingSpeed = -2;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getTimekeeperSwingSpeed() {
+        return timekeeperSwingSpeed;
+    }
+
+    public int getTimekeeperDamage() {
+        return timekeeperDamage;
     }
 
     public double getVipersCallSwingSpeed() {

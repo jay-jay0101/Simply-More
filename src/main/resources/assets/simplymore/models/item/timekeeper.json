@@ -1,0 +1,35 @@
+{
+  "parent": "simplymore:item/template/khopesh",
+  "textures": {
+    "layer0": "simplymore:item/uniques/timekeeper/timekeeper",
+    "layer1": "simplymore:item/uniques/timekeeper/sun_0"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [ 0, 90, 25 ],
+      "translation": [ 1.13, 3.2, 1.13 ],
+      "scale": [1.3, 1.3, 1]
+    },
+    "firstperson_lefthand": {
+      "rotation": [ 0, -90, -25 ],
+      "translation": [ 1.13, 3.2, 1.13 ],
+      "scale": [1.3, 1.3, 1]
+    }
+  },
+  "overrides": [
+    {"predicate": {"simplymore:sun": 0.01},"model": "simplymore:item/timekeeper_unique/timekeeper_1"},
+    {"predicate": {"simplymore:sun": 0.02},"model": "simplymore:item/timekeeper_unique/timekeeper_2"},
+    {"predicate": {"simplymore:sun": 0.03},"model": "simplymore:item/timekeeper_unique/timekeeper_3"},
+    {"predicate": {"simplymore:sun": 0.04},"model": "simplymore:item/timekeeper_unique/timekeeper_4"},
+    {"predicate": {"simplymore:sun": 0.05},"model": "simplymore:item/timekeeper_unique/timekeeper_5"},
+    {"predicate": {"simplymore:sun": 0.06},"model": "simplymore:item/timekeeper_unique/timekeeper_6"},
+    {"predicate": {"simplymore:sun": 0.07},"model": "simplymore:item/timekeeper_unique/timekeeper_7"},
+    {"predicate": {"simplymore:sun": 0.08},"model": "simplymore:item/timekeeper_unique/timekeeper_8"},
+    {"predicate": {"simplymore:sun": 0.09},"model": "simplymore:item/timekeeper_unique/timekeeper_9"},
+    {"predicate": {"simplymore:sun": 0.10},"model": "simplymore:item/timekeeper_unique/timekeeper_10"},
+    {"predicate": {"simplymore:sun": 0.11},"model": "simplymore:item/timekeeper_unique/timekeeper_11"},
+    {"predicate": {"simplymore:sun": 0.12},"model": "simplymore:item/timekeeper_unique/timekeeper_12"},
+    {"predicate": {"simplymore:sun": 0.13},"model": "simplymore:item/timekeeper_unique/timekeeper_13"},
+    {"predicate": {"simplymore:sun": 0.14},"model": "simplymore:item/timekeeper_unique/timekeeper_14"}
+  ]
+}

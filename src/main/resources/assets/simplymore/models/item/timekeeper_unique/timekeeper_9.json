@@ -1,0 +1,19 @@
+{
+  "parent": "simplymore:item/template/khopesh",
+  "textures": {
+    "layer0": "simplymore:item/uniques/timekeeper/timekeeper",
+    "layer1": "simplymore:item/uniques/timekeeper/sun_9"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [ 0, 90, 25 ],
+      "translation": [ 1.13, 3.2, 1.13 ],
+      "scale": [1.3, 1.3, 1]
+    },
+    "firstperson_lefthand": {
+      "rotation": [ 0, -90, -25 ],
+      "translation": [ 1.13, 3.2, 1.13 ],
+      "scale": [1.3, 1.3, 1]
+    }
+  }
+}
