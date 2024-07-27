@@ -36,7 +36,7 @@ public class TheVesselBreach extends UniqueSword {
                     if (!attacker.hasStatusEffect(ModEffects.RAGE)) {
                         attacker.heal(this.getAttackDamage() / 10);
                     } else {
-                        attacker.heal(this.getAttackDamage() / 3);
+                        attacker.heal(this.getAttackDamage() / 5);
                     }
                 }
             }
