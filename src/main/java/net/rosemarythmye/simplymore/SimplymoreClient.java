@@ -58,7 +58,7 @@ public class SimplymoreClient implements ClientModInitializer {
             if (dayTime<750) return 0.12f;
             if (dayTime<1250) return 0.13f;
             if (dayTime<11250) return 0f;
-            if (dayTime<11750) return 0.1f;
+            if (dayTime<11750) return 0.01f;
             if (dayTime<12250) return 0.02f;
             if (dayTime<12750) return 0.03f;
             if (dayTime<13250) return 0.04f;
