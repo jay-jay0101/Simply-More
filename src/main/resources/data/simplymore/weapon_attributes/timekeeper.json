@@ -1,5 +1,5 @@
 {
-  "parent": "bettercombat:sword",
+  "parent": "simplymore:template_khopesh",
   "attributes": {
     "attack_range": 2.9,
     "two_handed": false,
