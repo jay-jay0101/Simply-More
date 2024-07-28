@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:matterbane"
+    },
+    "title": "Antimatter Disciple",
+    "description": "Find the unique weapon Matterbane.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:matterbane"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -709,6 +709,17 @@ public class ModItems {
             )
     );
 
+    public static final Item MATTERBANE = registerItem(
+            "matterbane",
+            new Matterbane(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getMatterbaneDamage()-6,
+                    (float)attributes.getMatterbaneSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -810,6 +821,7 @@ public class ModItems {
                 entries.add(BLADEOFTHEGROTESQUE);
                 entries.add(VIPERSCALL);
                 entries.add(TIMEKEEPER);
+                entries.add(MATTERBANE);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

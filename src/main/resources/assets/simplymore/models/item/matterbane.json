@@ -1,0 +1,25 @@
+{
+  "parent": "simplyswords:item/template_longsword",
+  "textures": {
+    "layer0": "simplymore:item/uniques/matterbane/red",
+    "layer1": "simplymore:item/uniques/matterbane/red_layer"
+  },
+  "overrides": [
+    {"predicate": {"simplymore:color": 0},"model": "simplymore:item/matterbane_white"},
+    {"predicate": {"simplymore:color": 0.01},"model": "simplymore:item/matterbane_orange"},
+    {"predicate": {"simplymore:color": 0.02},"model": "simplymore:item/matterbane_magenta"},
+    {"predicate": {"simplymore:color": 0.03},"model": "simplymore:item/matterbane_light_blue"},
+    {"predicate": {"simplymore:color": 0.04},"model": "simplymore:item/matterbane_yellow"},
+    {"predicate": {"simplymore:color": 0.05},"model": "simplymore:item/matterbane_lime"},
+    {"predicate": {"simplymore:color": 0.06},"model": "simplymore:item/matterbane_pink"},
+    {"predicate": {"simplymore:color": 0.07},"model": "simplymore:item/matterbane_gray"},
+    {"predicate": {"simplymore:color": 0.08},"model": "simplymore:item/matterbane_light_gray"},
+    {"predicate": {"simplymore:color": 0.09},"model": "simplymore:item/matterbane_cyan"},
+    {"predicate": {"simplymore:color": 0.10},"model": "simplymore:item/matterbane_purple"},
+    {"predicate": {"simplymore:color": 0.11},"model": "simplymore:item/matterbane_blue"},
+    {"predicate": {"simplymore:color": 0.12},"model": "simplymore:item/matterbane_brown"},
+    {"predicate": {"simplymore:color": 0.13},"model": "simplymore:item/matterbane_green"},
+    {"predicate": {"simplymore:color": 0.14},"model": "simplymore:item/matterbane"},
+    {"predicate": {"simplymore:color": 0.15},"model": "simplymore:item/matterbane_black"}
+  ]
+}

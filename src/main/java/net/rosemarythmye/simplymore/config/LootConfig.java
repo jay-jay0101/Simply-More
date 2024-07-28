@@ -30,8 +30,13 @@ public class LootConfig implements ConfigData {
     boolean enableBladeOfTheGrotesque = true;
     boolean enableVipersCall = true;
     boolean enableTimekeeper = true;
+    boolean enableMatterbane = true;
 
     public LootConfig() {
+    }
+
+    public boolean isEnableMatterbane() {
+        return enableMatterbane;
     }
 
     public boolean isEnableTimekeeper() {

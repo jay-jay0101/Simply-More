@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.rosemarythmye.simplymore.config.ModConfigs;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.item.ModItems;
+import net.rosemarythmye.simplymore.recipes.ModRecipes;
 import net.rosemarythmye.simplymore.util.LootTableModifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,8 @@ public class Simplymore implements ModInitializer {
 		ModEffects.registerModEffects();
 
 		ModItems.registerModItems();
+
+		ModRecipes.registerModRecipes();
 
 		LootTableModifier.registerLootTableChanges();
 		LOGGER.info(ID + " Initialized Successfully!");
