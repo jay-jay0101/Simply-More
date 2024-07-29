@@ -124,6 +124,7 @@ public class LootTableModifier {
                 if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
                 if(loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItems.TIMEKEEPER));
                 if(loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItems.MATTERBANE));
+                if(loot.isEnableSmoulderingRuin()) pool.with(ItemEntry.builder(ModItems.SMOULDERING_RUIN));
                 context.addPool(pool);
             }
         });
@@ -146,6 +147,7 @@ public class LootTableModifier {
                 if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
                 if(loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItems.TIMEKEEPER));
                 if(loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItems.MATTERBANE));
+                if(loot.isEnableSmoulderingRuin()) pool.with(ItemEntry.builder(ModItems.SMOULDERING_RUIN));
                 context.addPool(pool);
             }
         });
@@ -168,6 +170,7 @@ public class LootTableModifier {
                 if(loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItems.VIPERSCALL));
                 if(loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItems.TIMEKEEPER));
                 if(loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItems.MATTERBANE));
+                if(loot.isEnableSmoulderingRuin()) pool.with(ItemEntry.builder(ModItems.SMOULDERING_RUIN));
                 context.addPool(pool);
             }
         });

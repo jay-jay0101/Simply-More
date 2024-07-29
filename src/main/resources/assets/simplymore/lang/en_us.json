@@ -12,6 +12,8 @@
   "effect.simplymore.grotesque": "Grotesque Resistance",
   "effect.simplymore.solidified": "Solidified",
   "effect.simplymore.stunned": "Stunned",
+  "effect.simplymore.mistified": "Misty Step",
+  "effect.simplymore.withering_fate": "Withering Fate",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -229,5 +231,18 @@
   "item.simplymore.matterbane.color_brown": "Brown",
   "item.simplymore.matterbane.color_green": "Green",
   "item.simplymore.matterbane.color_red": "Red",
-  "item.simplymore.matterbane.color_black": "Black"
+  "item.simplymore.matterbane.color_black": "Black",
+
+  "item.simplymore.smouldering_ruin": "Smouldering Ruin",
+  "item.simplymore.smouldering_ruin.tooltip1": "Unique Effect: Doomsayer",
+  "item.simplymore.smouldering_ruin.tooltip2": "Chance on hit to inflict wither. If",
+  "item.simplymore.smouldering_ruin.tooltip3": "the target has Withering Fate, add an",
+  "item.simplymore.smouldering_ruin.tooltip4": "additional level of it.",
+  "item.simplymore.smouldering_ruin.tooltip5": "Jump backwards and turn into mist.",
+  "item.simplymore.smouldering_ruin.tooltip6": "If there is a target within 10 blocks",
+  "item.simplymore.smouldering_ruin.tooltip7": "infront of you, teleport to them, leaving",
+  "item.simplymore.smouldering_ruin.tooltip8": "a slash that inflicts Withering Fate.",
+  "item.simplymore.smouldering_ruin.tooltip9": "The target gains a higher level of Withering",
+  "item.simplymore.smouldering_ruin.tooltip10": "fate the higher its maximum hp.",
+  "item.simplymore.smouldering_ruin.tooltip11": "Withering Fate causes reduced maximum hp."
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "simplyswords:item/template_longdagger",
+  "textures": {
+    "layer0": "simplymore:item/uniques/smouldering_ruin/smouldering_ruin",
+    "layer1": "simplymore:item/uniques/smouldering_ruin/smoke"
+  }
+}

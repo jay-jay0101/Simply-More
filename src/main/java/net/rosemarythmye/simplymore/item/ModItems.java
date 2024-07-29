@@ -720,6 +720,17 @@ public class ModItems {
             )
     );
 
+    public static final Item SMOULDERING_RUIN = registerItem(
+            "smouldering_ruin",
+            new SmoulderingRuin(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getSmoulderingRuinDamage()-6,
+                    (float)attributes.getSmoulderingRuinSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -822,6 +833,7 @@ public class ModItems {
                 entries.add(VIPERSCALL);
                 entries.add(TIMEKEEPER);
                 entries.add(MATTERBANE);
+                entries.add(SMOULDERING_RUIN);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

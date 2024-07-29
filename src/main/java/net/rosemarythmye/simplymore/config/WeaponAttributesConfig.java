@@ -65,9 +65,19 @@ public class WeaponAttributesConfig implements ConfigData {
 
     int matterbaneDamage = 9;
     double matterbaneSwingSpeed = -2.4;
+    int smoulderingRuinDamage = 7;
+    double smoulderingRuinSwingSpeed = -1.7;
 
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getSmoulderingRuinSwingSpeed() {
+        return smoulderingRuinSwingSpeed;
+    }
+
+    public int getSmoulderingRuinDamage() {
+        return smoulderingRuinDamage;
     }
 
     public double getMatterbaneSwingSpeed() {

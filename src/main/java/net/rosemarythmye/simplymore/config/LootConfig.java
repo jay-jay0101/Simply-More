@@ -31,8 +31,13 @@ public class LootConfig implements ConfigData {
     boolean enableVipersCall = true;
     boolean enableTimekeeper = true;
     boolean enableMatterbane = true;
+    boolean enableSmoulderingRuin = true;
 
     public LootConfig() {
+    }
+
+    public boolean isEnableSmoulderingRuin() {
+        return enableSmoulderingRuin;
     }
 
     public boolean isEnableMatterbane() {
