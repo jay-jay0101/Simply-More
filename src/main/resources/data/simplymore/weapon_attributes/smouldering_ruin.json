@@ -11,7 +11,7 @@
         "upswing": 0.5,
         "animation": "simplyswords:warglaive_slash_horizontal_right",
         "swing_sound": {
-          "id": "bettercombat:rapier_slash"
+          "id": "simplyswords:elemental_sword_fire_attack_03"
         }
       },
       {
@@ -21,7 +21,7 @@
         "upswing": 0.5,
         "animation": "simplyswords:warglaive_slash_horizontal_left",
         "swing_sound": {
-          "id": "bettercombat:rapier_slash"
+          "id": "simplyswords:elemental_sword_fire_attack_03"
         }
       },
       {
@@ -32,7 +32,7 @@
         "upswing": 0.5,
         "animation": "bettercombat:dual_handed_slash_cross",
         "swing_sound": {
-          "id": "bettercombat:rapier_slash"
+          "id": "simplyswords:elemental_sword_fire_attack_03"
         }
       },
       {
@@ -43,7 +43,7 @@
         "upswing": 0.5,
         "animation": "bettercombat:dual_handed_slash_uncross",
         "swing_sound": {
-          "id": "bettercombat:rapier_slash"
+          "id": "simplyswords:elemental_sword_fire_attack_03"
         }
       }
     ]

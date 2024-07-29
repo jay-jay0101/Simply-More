@@ -93,7 +93,7 @@ public class SmoulderingRuin extends UniqueSword {
             stepMod = 7;
         }
 
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR, true);
+        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.CRIMSON_SPORE, ParticleTypes.CRIMSON_SPORE, ParticleTypes.CRIMSON_SPORE, true);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }
