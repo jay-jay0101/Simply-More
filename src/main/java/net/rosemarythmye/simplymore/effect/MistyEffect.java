@@ -66,7 +66,6 @@ public class MistyEffect extends StatusEffect {
                 player.removeStatusEffect(this);
                 double dXYZ = Math.sqrt(Math.pow(player.getX()-teleportTarget.getX(),2)+Math.pow(player.getY()-teleportTarget.getY(),2)+Math.pow(player.getZ()-teleportTarget.getZ(),2));
                 dXYZ /= 10;
-                player.sendMessage(Text.of(String.valueOf(dXYZ)));
                 for(int i = 0;i<10;i++) {
                     double x = player.getX() + (dX*i*dXYZ);
                     double y = player.getY() + (dY*i*dXYZ);
