@@ -45,7 +45,6 @@ public class ThePan extends Sword {
         if (!attacker.getWorld().isClient()) {
             if (attacker.getRandom().nextInt(100) <= 30) {
                 attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.PLAYERS,1,1);
-                stack.damage(1200,attacker, p -> p.sendToolBreakStatus(attacker.getActiveHand()));
                 double xVelocity = target.getX()-attacker.getX();
                 double zVelocity = target.getZ()-attacker.getZ();
                 double ratioMax = Math.abs(xVelocity)+ Math.abs(zVelocity);

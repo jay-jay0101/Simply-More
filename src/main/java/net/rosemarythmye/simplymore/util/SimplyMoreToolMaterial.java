@@ -8,7 +8,8 @@ import net.minecraft.util.Identifier;
 
 public enum SimplyMoreToolMaterial implements ToolMaterial {
     SIMPLY_MORE_UNIQUE(4, 3270, 15.0F, 5.0F, 30, "simplyswords:runic_tablet"),
-    SIMPLY_MORE_RUNIC(4, 2031, 9.0F, 5.0F, 25, "minecraft:netherite_ingot");
+    SIMPLY_MORE_RUNIC(4, 2031, 9.0F, 5.0F, 25, "minecraft:netherite_ingot"),
+    SIMPLY_MORE_JOKE_UNIQUE(4, 59, 15.0F, 5.0F, 5,"minecraft:air");
 
     private final int miningLevel;
     private final int itemDurability;

@@ -623,7 +623,7 @@ public class ModItems {
     );
     public static final Item JESTER_PENETRATE = registerItem(
             "jester_penetrate",
-            new JesterPenetrate(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+            new JesterPenetrate(SimplyMoreToolMaterial.SIMPLY_MORE_JOKE_UNIQUE,
                     attributes.getJesterPenetrateDamage()-6,
                     (float)attributes.getJesterPenetrateSwingSpeed(),
                     new Item.Settings()
@@ -656,7 +656,7 @@ public class ModItems {
 
     public static final Item THE_PAN = registerItem(
             "the_pan",
-            new ThePan(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+            new ThePan(SimplyMoreToolMaterial.SIMPLY_MORE_JOKE_UNIQUE,
                     attributes.getThePanDamage()-6,
                     (float)attributes.getThePanSwingSpeed(),
                     new Item.Settings()
