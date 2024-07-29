@@ -9,16 +9,14 @@ import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.util.GrieflessExplosionBehavior;
 
 public class BlackPearlFireball extends FireballEntity {
-    private int explosionPower = 1;
-    public BlackPearlFireball(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ, int explosionPower) {
-        super(world, owner, velocityX, velocityY, velocityZ, explosionPower);
-        this.explosionPower = explosionPower;
+    public BlackPearlFireball(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
+        super(world, owner, velocityX, velocityY, velocityZ, 1);
     }
 
     @Override
     protected void onCollision(HitResult hitResult) {
         if (!this.getWorld().isClient) {
-            this.getWorld().createExplosion(this, (DamageSource)null, new GrieflessExplosionBehavior(),this.getX(), this.getY(), this.getZ(), (float) explosionPower,false, World.ExplosionSourceType.MOB);
+            this.getWorld().createExplosion(this, (DamageSource)null, new GrieflessExplosionBehavior(),this.getX(), this.getY(), this.getZ(), 1.25f,false, World.ExplosionSourceType.MOB);
             this.discard();
         }
 

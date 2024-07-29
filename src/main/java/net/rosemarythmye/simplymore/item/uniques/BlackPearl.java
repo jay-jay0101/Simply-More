@@ -77,7 +77,7 @@ public class BlackPearl extends UniqueSword {
             float velocityZ = (float) (Math.sin(yaw) * Math.cos(pitch)) * VelocityPower;
             float velocityY = (float) Math.sin(pitch) * -VelocityPower;
 
-            BlackPearlFireball fireball = new BlackPearlFireball(world,user,velocityX,velocityY,velocityZ,1);
+            BlackPearlFireball fireball = new BlackPearlFireball(world,user,velocityX,velocityY,velocityZ);
             fireball.setPos(user.getX()+(velocityX/2),user.getEyeY()+(velocityY/2),user.getZ()+(velocityZ/2));
             world.spawnEntity(fireball);
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
