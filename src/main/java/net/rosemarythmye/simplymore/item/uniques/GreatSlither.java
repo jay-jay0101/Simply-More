@@ -45,9 +45,12 @@ public class GreatSlither extends UniqueSword {
         if (!user.getWorld().isClient()) {
             for (int i = 1; i < 7; i++) {
                 Vector2d position = new Vector2d(user.getX(), user.getZ());
-                double userRotation = (user.getYaw() + 180) * (Math.PI / 180);
-                Vector2d rotation = new Vector2d(1.2 * i * Math.sin(userRotation), 1.2 * i * Math.cos(userRotation));
-                position = new Vector2d(position.x + rotation.x, position.y - rotation.y);
+                float yaw = (float) Math.toRadians(user.getYaw());
+                double dZ = Math.cos(yaw) * i;
+                double dX = Math.sin(yaw) * -i;
+
+                Vector2d rotation = new Vector2d(1.2*dX, 1.2 * dZ);
+                position = new Vector2d(position.x + rotation.x, position.y + rotation.y);
                 world.spawnEntity(new GreatSlitherFang(world, position.x, user.getY(), position.y, user.getYaw(), 0, user));
             }
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
