@@ -87,8 +87,8 @@ public class Rift extends AreaEffectCloudEntity {
                     ((ServerWorld) this.getWorld()).spawnParticles(smallParticle,this.getX()+(dX*i),this.getY()+(dY*i),this.getZ()+(dZ*i),1,0,0,0,0);
                 }
             } else {
-                if (entity instanceof PlayerEntity player) player.teleport(entity.getX()+(dX/7),entity.getY()+(dY/7),entity.getZ()+(dZ/7));
-                else entity.setVelocity(dX/10,dY/10,dZ/10);
+                entity.setVelocity(dX/10,dY/10,dZ/10);
+                if (entity instanceof PlayerEntity player) player.velocityModified = true;
             }
 
 
