@@ -32,8 +32,13 @@ public class LootConfig implements ConfigData {
     boolean enableTimekeeper = true;
     boolean enableMatterbane = true;
     boolean enableSmoulderingRuin = true;
+    boolean enableStasis = true;
 
     public LootConfig() {
+    }
+
+    public boolean isEnableStasis() {
+        return enableStasis;
     }
 
     public boolean isEnableSmoulderingRuin() {

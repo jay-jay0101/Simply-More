@@ -731,6 +731,17 @@ public class ModItems {
             )
     );
 
+    public static final Item STASIS = registerItem(
+            "stasis",
+            new Stasis(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getStasisDamage()-6,
+                    (float)attributes.getStasisSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -834,6 +845,7 @@ public class ModItems {
                 entries.add(TIMEKEEPER);
                 entries.add(MATTERBANE);
                 entries.add(SMOULDERING_RUIN);
+                entries.add(STASIS);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

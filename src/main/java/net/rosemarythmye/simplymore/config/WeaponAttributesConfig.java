@@ -68,8 +68,19 @@ public class WeaponAttributesConfig implements ConfigData {
     int smoulderingRuinDamage = 7;
     double smoulderingRuinSwingSpeed = -1.7;
 
+    int stasisDamage = 8;
+    double stasisSwingSpeed = -2;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getStasisSwingSpeed() {
+        return stasisSwingSpeed;
+    }
+
+    public int getStasisDamage() {
+        return stasisDamage;
     }
 
     public double getSmoulderingRuinSwingSpeed() {
