@@ -105,7 +105,7 @@ public class Stasis extends UniqueSword {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip1").setStyle(ABILITY));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip3").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip3").setStyle(TEXT));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip4").setStyle(TEXT));
