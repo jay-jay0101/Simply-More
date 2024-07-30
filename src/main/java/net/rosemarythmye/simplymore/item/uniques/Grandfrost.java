@@ -45,7 +45,7 @@ public class Grandfrost extends UniqueSword {
         if (!user.getWorld().isClient()) {
             boolean use = false;
             for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(user.getX()-5,user.getY()-2,user.getZ()-5,user.getX()+5,user.getY()+5,user.getZ()+5))) {
-                if(livingEntity == user) continue;
+                if(livingEntity == user || livingEntity.isTeammate(user)) continue;
                 use = true;
                 double xVelocity = livingEntity.getX()-user.getX();
                 double zVelocity = livingEntity.getZ()-user.getZ();
