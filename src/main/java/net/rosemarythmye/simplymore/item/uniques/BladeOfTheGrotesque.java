@@ -2,6 +2,7 @@ package net.rosemarythmye.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.goal.SkeletonHorseTrapTriggerGoal;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -38,7 +39,6 @@ public class BladeOfTheGrotesque extends UniqueSword {
         }
         return super.use(world, user, hand);
     }
-
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
         Style ABILITY = HelperMethods.getStyle("ability");
