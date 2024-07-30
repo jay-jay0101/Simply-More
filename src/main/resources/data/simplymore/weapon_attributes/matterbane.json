@@ -12,7 +12,8 @@
         "upswing": 0.5,
         "animation": "bettercombat:one_handed_slash_horizontal_right",
         "swing_sound": {
-          "id": "simplyswords:elemental_sword_holy_attack_02"
+          "id": "simplyswords:elemental_sword_holy_attack_02",
+          "volume": 0.4
         }
       },
       {
@@ -22,7 +23,8 @@
         "upswing": 0.5,
         "animation": "bettercombat:one_handed_slash_horizontal_left",
         "swing_sound": {
-          "id": "simplyswords:elemental_sword_holy_attack_02"
+          "id": "simplyswords:elemental_sword_holy_attack_02",
+          "volume": 0.4
         }
       }
     ]
