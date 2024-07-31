@@ -65,7 +65,6 @@ public class Mimicry extends UniqueSword {
             StatusEffects.DARKNESS
     };
 
-    private Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
 
     public Mimicry(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
