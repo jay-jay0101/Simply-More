@@ -29,6 +29,8 @@ public class ModEffects {
     public static final StatusEffect STUNNED = registerEffect("stunned",new Solidify(StatusEffectCategory.HARMFUL,8948877).addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED,"28908fac-dfb9-4cb7-b4e1-e4c55a661730",-99, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE,"6c4be639-f6e6-40ce-a1b7-6374f17d5d85",-9999, EntityAttributeModifier.Operation.ADDITION));
     public static final StatusEffect WITHERING_FATE = registerEffect("withering_fate",new ModStatusEffect(StatusEffectCategory.HARMFUL,2818819).addAttributeModifier(EntityAttributes.GENERIC_MAX_HEALTH,"ebed9986-78c5-4c08-9f2f-05e929ee5fa7",-1, EntityAttributeModifier.Operation.ADDITION));
     public static final StatusEffect MISTIFIED = registerEffect("mistified",new MistyEffect(StatusEffectCategory.BENEFICIAL,0));
+    public static final StatusEffect INSANITY = registerEffect("insanity",new Insanity(StatusEffectCategory.HARMFUL,700).addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE,"e661936a-8747-427f-ab39-86842db4a1a4",-3, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,"d98d2505-522f-4b4a-93e8-98e796c5689b",-0.03, EntityAttributeModifier.Operation.ADDITION));
+    public static final StatusEffect TIDEBREAKER = registerEffect("tidebreaker_rain",new TidebreakerEffect(StatusEffectCategory.BENEFICIAL,700));
     public static void registerModEffects() {
         Simplymore.LOGGER.info("Registering Status Effects for " + Simplymore.ID);
     }

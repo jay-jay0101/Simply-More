@@ -742,6 +742,18 @@ public class ModItems {
             )
     );
 
+    public static final Item TIDEBREAKER = registerItem(
+            "tidebreaker",
+            new Tidebreaker(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getTidebreakerDamage()-6,
+                    (float)attributes.getTidebreakerSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+
 
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
@@ -846,6 +858,7 @@ public class ModItems {
                 entries.add(MATTERBANE);
                 entries.add(SMOULDERING_RUIN);
                 entries.add(STASIS);
+                entries.add(TIDEBREAKER);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

@@ -251,5 +251,14 @@
   "item.simplymore.stasis.tooltip2": "Chance on hit to shock the enemy, rendering",
   "item.simplymore.stasis.tooltip3": "their abilities on cooldown for a few seconds.",
   "item.simplymore.stasis.tooltip4": "After charging, erupt lightning in around you.",
-  "item.simplymore.stasis.tooltip5": "The lightning does not hurt you."
+  "item.simplymore.stasis.tooltip5": "The lightning does not hurt you.",
+
+  "item.simplymore.tidebreaker": "Tidebreaker",
+  "item.simplymore.tidebreaker.tooltip1": "Unique Effect: Drowned God’s Favour",
+  "item.simplymore.tidebreaker.tooltip2": "Chance on hit to cause rainfall around you",
+  "item.simplymore.tidebreaker.tooltip3": "which inflicts insanity. Insanity causes random",
+  "item.simplymore.tidebreaker.tooltip4": "head movements, weakness and slowness.",
+  "item.simplymore.tidebreaker.tooltip5": "Manifest insanity, causing the last person you hit",
+  "item.simplymore.tidebreaker.tooltip6": "to swap places with you, provided you hit them within",
+  "item.simplymore.tidebreaker.tooltip7": "the last 10 seconds and they are within 15 blocks."
 }

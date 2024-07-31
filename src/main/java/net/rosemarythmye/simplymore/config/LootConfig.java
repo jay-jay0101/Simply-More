@@ -33,8 +33,14 @@ public class LootConfig implements ConfigData {
     boolean enableMatterbane = true;
     boolean enableSmoulderingRuin = true;
     boolean enableStasis = true;
+    boolean enableTidebreaker = true;
+
 
     public LootConfig() {
+    }
+
+    public boolean isEnableTidebreaker() {
+        return enableTidebreaker;
     }
 
     public boolean isEnableStasis() {

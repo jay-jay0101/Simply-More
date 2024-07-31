@@ -70,9 +70,19 @@ public class WeaponAttributesConfig implements ConfigData {
 
     int stasisDamage = 8;
     double stasisSwingSpeed = -2;
+    int tidebreakerDamage = 8;
+    double tidebreakerSwingSpeed = -2;
 
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getTidebreakerSwingSpeed() {
+        return tidebreakerSwingSpeed;
+    }
+
+    public int getTidebreakerDamage() {
+        return tidebreakerDamage;
     }
 
     public double getStasisSwingSpeed() {

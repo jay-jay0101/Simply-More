@@ -126,6 +126,7 @@ public class LootTableModifier {
                 if(loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItems.MATTERBANE));
                 if(loot.isEnableSmoulderingRuin()) pool.with(ItemEntry.builder(ModItems.SMOULDERING_RUIN));
                 if(loot.isEnableStasis()) pool.with(ItemEntry.builder(ModItems.STASIS));
+                if(loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItems.TIDEBREAKER));
                 context.addPool(pool);
             }
         });
@@ -150,6 +151,7 @@ public class LootTableModifier {
                 if(loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItems.MATTERBANE));
                 if(loot.isEnableSmoulderingRuin()) pool.with(ItemEntry.builder(ModItems.SMOULDERING_RUIN));
                 if(loot.isEnableStasis()) pool.with(ItemEntry.builder(ModItems.STASIS));
+                if(loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItems.TIDEBREAKER));
                 context.addPool(pool);
             }
         });
@@ -174,6 +176,7 @@ public class LootTableModifier {
                 if(loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItems.MATTERBANE));
                 if(loot.isEnableSmoulderingRuin()) pool.with(ItemEntry.builder(ModItems.SMOULDERING_RUIN));
                 if(loot.isEnableStasis()) pool.with(ItemEntry.builder(ModItems.STASIS));
+                if(loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItems.TIDEBREAKER));
                 context.addPool(pool);
             }
         });
