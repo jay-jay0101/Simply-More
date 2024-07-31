@@ -12,7 +12,7 @@
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "custom",
 	"icon": "assets/simplymore/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -37,6 +37,5 @@
 		"simplyswords": ">=1.55.0-1.20.1"
 	},
 	"suggests": {
-		"another-mod": "*"
 	}
 }
