@@ -70,11 +70,21 @@ public class WeaponAttributesConfig implements ConfigData {
 
     int stasisDamage = 8;
     double stasisSwingSpeed = -2;
-    int tidebreakerDamage = 8;
+    int tidebreakerDamage = 9;
     double tidebreakerSwingSpeed = -2;
+    int ruyiJinguBangDamage = 9;
+    double ruyiJinguBangSwingSpeed = -2;
 
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getRuyiJinguBangSwingSpeed() {
+        return ruyiJinguBangSwingSpeed;
+    }
+
+    public int getRuyiJinguBangDamage() {
+        return ruyiJinguBangDamage;
     }
 
     public double getTidebreakerSwingSpeed() {

@@ -753,6 +753,18 @@ public class ModItems {
             )
     );
 
+    public static final Item RUYI_JINGU_BANG = registerItem(
+            "ruyi_jingu_bang",
+            new RuyiJinguBang(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getRuyiJinguBangDamage()-6,
+                    (float)attributes.getRuyiJinguBangSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+
 
 
     public static final Item RUNEFUSED_CARVER = registerItem(
@@ -859,6 +871,7 @@ public class ModItems {
                 entries.add(SMOULDERING_RUIN);
                 entries.add(STASIS);
                 entries.add(TIDEBREAKER);
+                entries.add(RUYI_JINGU_BANG);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

@@ -262,5 +262,11 @@
   "item.simplymore.tidebreaker.tooltip4": "head movements, weakness and slowness.",
   "item.simplymore.tidebreaker.tooltip5": "Manifest insanity, causing the last person you hit",
   "item.simplymore.tidebreaker.tooltip6": "to swap places with you, provided you hit them within",
-  "item.simplymore.tidebreaker.tooltip7": "the last 10 seconds and they are within 15 blocks."
+  "item.simplymore.tidebreaker.tooltip7": "the last 10 seconds and they are within 15 blocks.",
+
+  "item.simplymore.ruyi_jingu_bang.tooltip1": "Unique Effect: The Monkey King",
+  "item.simplymore.ruyi_jingu_bang": "Ruyi Jingu Bang",
+  "item.simplymore.ruyi_jingu_bang.tooltip2": "Charge up the weapon before dealing a devastating",
+  "item.simplymore.ruyi_jingu_bang.tooltip3": "slam. The longer it charges, the larger the weapon",
+  "item.simplymore.ruyi_jingu_bang.tooltip4": "becomes, increasing the damage and range of the blow."
 }

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:ruyi_jingu_bang"
+    },
+    "title": "Journey to the West",
+    "description": "Find the unique weapon Ruyi Jingu Bang.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:ruyi_jingu_bang"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "parent": "simplyswords:item/template_twinblade",
+  "textures": {
+    "layer0": "simplymore:item/uniques/ruyi_jingu_bang"
+  },
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [ 0, 90, -25 ],
+      "translation": [ 1, 4, 1 ],
+      "scale": [ 1.25, 1.25, 0.75 ]
+    }
+  },
+  "overrides": [
+    {"predicate": {"simplymore:size": 0},"model": "simplymore:item/ruyi_jingu_bang"},
+    {"predicate": {"simplymore:size": 0.1},"model": "simplymore:item/ruyi_jingu_bang_1"},
+    {"predicate": {"simplymore:size": 0.2},"model": "simplymore:item/ruyi_jingu_bang_2"},
+    {"predicate": {"simplymore:size": 0.3},"model": "simplymore:item/ruyi_jingu_bang_3"},
+    {"predicate": {"simplymore:size": 0.4},"model": "simplymore:item/ruyi_jingu_bang_4"},
+    {"predicate": {"simplymore:size": 0.5},"model": "simplymore:item/ruyi_jingu_bang_5"},
+    {"predicate": {"simplymore:size": 0.6},"model": "simplymore:item/ruyi_jingu_bang_6"},
+    {"predicate": {"simplymore:size": 0.7},"model": "simplymore:item/ruyi_jingu_bang_7"},
+    {"predicate": {"simplymore:size": 0.8},"model": "simplymore:item/ruyi_jingu_bang_8"},
+    {"predicate": {"simplymore:size": 0.9},"model": "simplymore:item/ruyi_jingu_bang_9"},
+    {"predicate": {"simplymore:size": 1},"model": "simplymore:item/ruyi_jingu_bang_10"}
+  ]
+}

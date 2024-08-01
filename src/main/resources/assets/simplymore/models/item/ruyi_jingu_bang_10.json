@@ -1,0 +1,28 @@
+{
+  "parent": "simplyswords:item/template_twinblade",
+  "textures": {
+    "layer0": "simplymore:item/uniques/ruyi_jingu_bang"
+  },
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [ 0, 90, -25 ],
+      "translation": [  1, 4, 1 ],
+      "scale": [ 3.75, 3.75, 3 ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [0, -90, 55],
+      "translation": [0, -2.5, 1.5],
+      "scale": [4, 4, 3.25]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, 90, -55],
+      "translation": [0, -2.5, 1.5],
+      "scale": [4,4,3.25]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, -90, 25],
+      "translation": [1, 4, 1],
+      "scale": [3.75, 3.75, 3]
+    }
+  }
+}

@@ -34,9 +34,14 @@ public class LootConfig implements ConfigData {
     boolean enableSmoulderingRuin = true;
     boolean enableStasis = true;
     boolean enableTidebreaker = true;
+    boolean enableRuyiJinguBang = true;
 
 
     public LootConfig() {
+    }
+
+    public boolean isEnableRuyiJinguBang() {
+        return enableRuyiJinguBang;
     }
 
     public boolean isEnableTidebreaker() {

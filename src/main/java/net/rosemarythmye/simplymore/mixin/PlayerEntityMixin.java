@@ -3,6 +3,7 @@ package net.rosemarythmye.simplymore.mixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Hand;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,5 +19,5 @@ public abstract class PlayerEntityMixin {
 			player.addStatusEffect(new StatusEffectInstance(ModEffects.STUNNED,90),targetPlayer);
 
 		}
-    }
+	}
 }
