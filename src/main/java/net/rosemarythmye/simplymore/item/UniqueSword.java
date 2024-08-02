@@ -12,6 +12,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.rosemarythmye.simplymore.item.uniques.idols.Darksent;
+import net.rosemarythmye.simplymore.item.uniques.idols.Holylight;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -38,10 +40,9 @@ public class UniqueSword extends UniqueSwordItem {
 
 
     public Text getName(ItemStack stack) {
-        Style COMMON = HelperMethods.getStyle("common");
         Style UNIQUE = HelperMethods.getStyle("unique");
         Style LEGENDARY = HelperMethods.getStyle("legendary");
-        if (false) {
+        if (stack.getItem() instanceof Holylight || stack.getItem() instanceof Darksent) {
             this.iRarity = "LEGENDARY";
             return Text.translatable(this.getTranslationKey(stack)).setStyle(LEGENDARY);
         } else {

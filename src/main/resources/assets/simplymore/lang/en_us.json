@@ -16,6 +16,8 @@
   "effect.simplymore.withering_fate": "Withering Fate",
   "effect.simplymore.insanity": "Insanity",
   "effect.simplymore.tidebreaker_rain": "Madness Rain",
+  "effect.simplymore.blessing": "Blessing",
+  "effect.simplymore.curse": "Curse",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -264,9 +266,48 @@
   "item.simplymore.tidebreaker.tooltip6": "to swap places with you, provided you hit them within",
   "item.simplymore.tidebreaker.tooltip7": "the last 10 seconds and they are within 15 blocks.",
 
-  "item.simplymore.ruyi_jingu_bang.tooltip1": "Unique Effect: The Monkey King",
   "item.simplymore.ruyi_jingu_bang": "Ruyi Jingu Bang",
+  "item.simplymore.ruyi_jingu_bang.tooltip1": "Unique Effect: The Monkey King",
   "item.simplymore.ruyi_jingu_bang.tooltip2": "Charge up the weapon before dealing a devastating",
   "item.simplymore.ruyi_jingu_bang.tooltip3": "slam. The longer it charges, the larger the weapon",
-  "item.simplymore.ruyi_jingu_bang.tooltip4": "becomes, increasing the damage and range of the blow."
+  "item.simplymore.ruyi_jingu_bang.tooltip4": "becomes, increasing the damage and range of the blow.",
+
+  "item.simplymore.ruptured_idol": "Ruptured Idol",
+  "item.simplymore.ruptured_idol.tooltip1": "A remnant energy resonates within.",
+
+  "item.simplymore.ascended_idol": "Ascended Idol",
+  "item.simplymore.ascended_idol.tooltip1": "Unique Effect: Blessed",
+  "item.simplymore.ascended_idol.tooltip2": "Chance on hit to spread holy water,",
+  "item.simplymore.ascended_idol.tooltip3": "creating an aura of purity in which",
+  "item.simplymore.ascended_idol.tooltip4": "you gain regeneration and have",
+  "item.simplymore.ascended_idol.tooltip5": "negative effects cured.",
+  "item.simplymore.ascended_idol.tooltip6": "An enlightend power harmonizes within.",
+
+  "item.simplymore.holylight": "Holylight",
+  "item.simplymore.holylight.tooltip1": "Unique Effect: Blessed",
+  "item.simplymore.holylight.tooltip2": "Chance on hit to spread holy water,",
+  "item.simplymore.holylight.tooltip3": "creating an aura of purity in which",
+  "item.simplymore.holylight.tooltip4": "you gain regeneration and have",
+  "item.simplymore.holylight.tooltip5": "negative effects cured.",
+  "item.simplymore.holylight.tooltip6": "Grant you and all allies nearby a short",
+  "item.simplymore.holylight.tooltip7": "blessing. If you take damage while it is active,",
+  "item.simplymore.holylight.tooltip8": "nullify it and heal 2 hearts instead.",
+
+  "item.simplymore.tarnished_idol": "Tarnished Idol",
+  "item.simplymore.tarnished_idol.tooltip1": "Unique Effect: Accursed",
+  "item.simplymore.tarnished_idol.tooltip2": "Chance on hit to spread unholy water,",
+  "item.simplymore.tarnished_idol.tooltip3": "creating an aura of corruption which",
+  "item.simplymore.tarnished_idol.tooltip4": "inflicts wither and weakness",
+  "item.simplymore.tarnished_idol.tooltip5": "to enemies within.",
+  "item.simplymore.tarnished_idol.tooltip6": "A fallen power crashes within.",
+
+  "item.simplymore.darksent": "Darksent",
+  "item.simplymore.darksent.tooltip1": "Unique Effect: Accursed",
+  "item.simplymore.darksent.tooltip2": "Chance on hit to spread unholy water,",
+  "item.simplymore.darksent.tooltip3": "creating an aura of corruption which",
+  "item.simplymore.darksent.tooltip4": "inflicts wither and weakness",
+  "item.simplymore.darksent.tooltip5": "to enemies within.",
+  "item.simplymore.darksent.tooltip6": "Curse all enemies nearby for a short",
+  "item.simplymore.darksent.tooltip7": "duration. Cursed enemies are blinded and",
+  "item.simplymore.darksent.tooltip8": "slowed heavily upon taking damage."
 }

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:holylight"
+    },
+    "title": "Darkness Vanquished",
+    "description": "Obtain the unique weapon Holylight.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:ruptured_idol",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:holylight"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

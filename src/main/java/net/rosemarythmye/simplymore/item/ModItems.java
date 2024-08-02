@@ -21,6 +21,7 @@ import net.rosemarythmye.simplymore.item.normal.Sword;
 import net.rosemarythmye.simplymore.item.runics.RunicGrandSword;
 import net.rosemarythmye.simplymore.item.runics.RunicLance;
 import net.rosemarythmye.simplymore.item.uniques.*;
+import net.rosemarythmye.simplymore.item.uniques.idols.*;
 import net.rosemarythmye.simplymore.item.uniques.joke.JesterPenetrate;
 import net.rosemarythmye.simplymore.item.uniques.joke.ThePan;
 import net.rosemarythmye.simplymore.util.SimplyMoreToolMaterial;
@@ -764,6 +765,61 @@ public class ModItems {
             )
     );
 
+    public static final Item RUPTURED_IDOL = registerItem(
+            "ruptured_idol",
+            new RupturedIdol(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getRupturedIdolDamage()-6,
+                    (float)attributes.getRupturedIdolSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item ASCENDED_IDOL = registerItem(
+            "ascended_idol",
+            new AscendedIdol(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getAscendedIdolDamage()-6,
+                    (float)attributes.getAscendedIdolSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item TARNISHED_IDOL = registerItem(
+            "tarnished_idol",
+            new TarnishedIdol(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getTarnishedIdolDamage()-6,
+                    (float)attributes.getTarnishedIdolSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item HOLYLIGHT = registerItem(
+            "holylight",
+            new Holylight(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getHolylightDamage()-6,
+                    (float)attributes.getHolylightSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item DARKSENT = registerItem(
+            "darksent",
+            new Darksent(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getDarksentDamage()-6,
+                    (float)attributes.getDarksentSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
 
 
@@ -872,6 +928,11 @@ public class ModItems {
                 entries.add(STASIS);
                 entries.add(TIDEBREAKER);
                 entries.add(RUYI_JINGU_BANG);
+                entries.add(RUPTURED_IDOL);
+                entries.add(ASCENDED_IDOL);
+                entries.add(TARNISHED_IDOL);
+                entries.add(HOLYLIGHT);
+                entries.add(DARKSENT);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

@@ -128,6 +128,7 @@ public class LootTableModifier {
                 if(loot.isEnableStasis()) pool.with(ItemEntry.builder(ModItems.STASIS));
                 if(loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItems.TIDEBREAKER));
                 if(loot.isEnableRuyiJinguBang()) pool.with(ItemEntry.builder(ModItems.RUYI_JINGU_BANG));
+                if(loot.isEnableRupturedIdol()) pool.with(ItemEntry.builder(ModItems.RUPTURED_IDOL));
                 context.addPool(pool);
             }
         });
@@ -154,6 +155,7 @@ public class LootTableModifier {
                 if(loot.isEnableStasis()) pool.with(ItemEntry.builder(ModItems.STASIS));
                 if(loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItems.TIDEBREAKER));
                 if(loot.isEnableRuyiJinguBang()) pool.with(ItemEntry.builder(ModItems.RUYI_JINGU_BANG));
+                if(loot.isEnableRupturedIdol()) pool.with(ItemEntry.builder(ModItems.RUPTURED_IDOL));
                 context.addPool(pool);
             }
         });
@@ -180,6 +182,7 @@ public class LootTableModifier {
                 if(loot.isEnableStasis()) pool.with(ItemEntry.builder(ModItems.STASIS));
                 if(loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItems.TIDEBREAKER));
                 if(loot.isEnableRuyiJinguBang()) pool.with(ItemEntry.builder(ModItems.RUYI_JINGU_BANG));
+                if(loot.isEnableRupturedIdol()) pool.with(ItemEntry.builder(ModItems.RUPTURED_IDOL));
                 context.addPool(pool);
             }
         });

@@ -35,9 +35,14 @@ public class LootConfig implements ConfigData {
     boolean enableStasis = true;
     boolean enableTidebreaker = true;
     boolean enableRuyiJinguBang = true;
+    boolean enableRupturedIdol = true;
 
 
     public LootConfig() {
+    }
+
+    public boolean isEnableRupturedIdol() {
+        return enableRupturedIdol;
     }
 
     public boolean isEnableRuyiJinguBang() {

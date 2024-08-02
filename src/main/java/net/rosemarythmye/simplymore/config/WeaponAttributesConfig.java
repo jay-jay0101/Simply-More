@@ -74,9 +74,63 @@ public class WeaponAttributesConfig implements ConfigData {
     double tidebreakerSwingSpeed = -2;
     int ruyiJinguBangDamage = 9;
     double ruyiJinguBangSwingSpeed = -2;
+    int rupturedIdolDamage = 10;
+    double rupturedIdolSwingSpeed = -2.7;
+
+    int ascendedIdolDamage = 10;
+    double ascendedIdolSwingSpeed = -2.7;
+
+    int tarnishedIdolDamage = 10;
+    double tarnishedIdolSwingSpeed = -2.7;
+
+    int holylightDamage = 10;
+    double holylightSwingSpeed = -2.7;
+
+    int darksentDamage = 10;
+    double darksentSwingSpeed = -2.7;
 
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getDarksentSwingSpeed() {
+        return darksentSwingSpeed;
+    }
+
+    public int getDarksentDamage() {
+        return darksentDamage;
+    }
+
+    public double getTarnishedIdolSwingSpeed() {
+        return tarnishedIdolSwingSpeed;
+    }
+
+    public int getTarnishedIdolDamage() {
+        return tarnishedIdolDamage;
+    }
+
+    public double getHolylightSwingSpeed() {
+        return holylightSwingSpeed;
+    }
+
+    public int getHolylightDamage() {
+        return holylightDamage;
+    }
+
+    public double getAscendedIdolSwingSpeed() {
+        return ascendedIdolSwingSpeed;
+    }
+
+    public int getAscendedIdolDamage() {
+        return ascendedIdolDamage;
+    }
+
+    public double getRupturedIdolSwingSpeed() {
+        return rupturedIdolSwingSpeed;
+    }
+
+    public int getRupturedIdolDamage() {
+        return rupturedIdolDamage;
     }
 
     public double getRuyiJinguBangSwingSpeed() {
