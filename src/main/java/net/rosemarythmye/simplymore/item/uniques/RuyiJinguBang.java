@@ -138,7 +138,7 @@ public class RuyiJinguBang extends UniqueSword {
             stepMod = 7;
         }
 
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.GLOW, ParticleTypes.GLOW, ParticleTypes.GLOW, true);
+        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.WAX_ON, ParticleTypes.WAX_ON, ParticleTypes.WAX_ON, true);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }
