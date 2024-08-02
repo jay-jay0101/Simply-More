@@ -36,7 +36,7 @@ import java.util.List;
 
 
 public class BoasFang extends UniqueSword {
-    int skillCooldown = 300;
+    int skillCooldown = 600;
 
     public BoasFang(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -81,7 +81,7 @@ public class BoasFang extends UniqueSword {
                     {
                         if(entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
 
-                        entity.damage(user.getDamageSources().playerAttack(user),2);
+                        entity.damage(user.getDamageSources().magic(),5);
                         entity.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,100,0));
                     }
