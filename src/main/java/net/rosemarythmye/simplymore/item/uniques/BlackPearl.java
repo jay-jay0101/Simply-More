@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -69,6 +70,7 @@ public class BlackPearl extends UniqueSword {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
+            user.sendMessage(Text.of(Registries.ITEM.getId(this).toString()));
             float VelocityPower = 3;
             float yaw = (float) Math.toRadians(user.getYaw()+90);
             float pitch = (float) Math.toRadians(user.getPitch());

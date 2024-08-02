@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "item": "minecraft:blaze_powder"
+    },
+    "A": {
+      "item": "minecraft:lava_bucket"
+    },
+    "T": {
+      "item": "minecraft:echo_shard"
+    },
+    "W": {
+      "item": "simplymore:tarnished_idol"
+    },
+    "B": {
+      "item": "minecraft:nether_star"
+    },
+    "D": {
+      "item": "minecraft:magma_block"
+    }
+  },
+  "pattern": [
+    "GAG",
+    "TWT",
+    "DBD"
+  ],
+  "result": {
+    "item": "simplymore:darksent"
+  }
+}
