@@ -37,8 +37,14 @@ public class LootConfig implements ConfigData {
     boolean enableRuyiJinguBang = true;
     boolean enableRupturedIdol = true;
 
+    boolean enableBoasFang = true;
+
 
     public LootConfig() {
+    }
+
+    public boolean isEnableBoasFang() {
+        return enableBoasFang;
     }
 
     public boolean isEnableRupturedIdol() {

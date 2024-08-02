@@ -18,6 +18,7 @@
   "effect.simplymore.tidebreaker_rain": "Madness Rain",
   "effect.simplymore.blessing": "Blessing",
   "effect.simplymore.curse": "Curse",
+  "effect.simplymore.constricted": "Constricted",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -309,5 +310,13 @@
   "item.simplymore.darksent.tooltip5": "to enemies within.",
   "item.simplymore.darksent.tooltip6": "Curse all enemies nearby for a short",
   "item.simplymore.darksent.tooltip7": "duration. Cursed enemies are blinded and",
-  "item.simplymore.darksent.tooltip8": "slowed heavily upon taking damage."
+  "item.simplymore.darksent.tooltip8": "slowed heavily upon taking damage.",
+
+  "item.simplymore.boas_fang": "Boa's Fang",
+  "item.simplymore.boas_fang.tooltip1": "Unique Effect: Deadly Embrace",
+  "item.simplymore.boas_fang.tooltip2": "Chance on hit to constrict enemies.",
+  "item.simplymore.boas_fang.tooltip3": "Constricted enemies begin to suffocate",
+  "item.simplymore.boas_fang.tooltip4": "and are slowed.",
+  "item.simplymore.boas_fang.tooltip5": "Dash backwards and launch a blast of",
+  "item.simplymore.boas_fang.tooltip6": "poison. Gain speed when dashing back."
 }

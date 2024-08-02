@@ -820,6 +820,17 @@ public class ModItems {
             )
     );
 
+    public static final Item BOAS_FANG = registerItem(
+            "boas_fang",
+            new BoasFang(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getBoasFangDamage()-6,
+                    (float)attributes.getBoasFangSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
 
 
@@ -933,6 +944,7 @@ public class ModItems {
                 entries.add(TARNISHED_IDOL);
                 entries.add(HOLYLIGHT);
                 entries.add(DARKSENT);
+                entries.add(BOAS_FANG);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

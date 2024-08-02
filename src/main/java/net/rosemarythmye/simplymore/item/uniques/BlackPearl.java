@@ -70,7 +70,6 @@ public class BlackPearl extends UniqueSword {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
-            user.sendMessage(Text.of(Registries.ITEM.getId(this).toString()));
             float VelocityPower = 3;
             float yaw = (float) Math.toRadians(user.getYaw()+90);
             float pitch = (float) Math.toRadians(user.getPitch());

@@ -89,8 +89,20 @@ public class WeaponAttributesConfig implements ConfigData {
     int darksentDamage = 10;
     double darksentSwingSpeed = -2.7;
 
+    int boasFangDamage = 7;
+
+    double boasFangSwingSpeed = -2.2;
+
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getBoasFangSwingSpeed() {
+        return boasFangSwingSpeed;
+    }
+
+    public int getBoasFangDamage() {
+        return boasFangDamage;
     }
 
     public double getDarksentSwingSpeed() {
