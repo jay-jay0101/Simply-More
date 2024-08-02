@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
@@ -27,6 +28,7 @@ import net.rosemarythmye.simplymore.item.UniqueSword;
 import net.sweenus.simplyswords.item.custom.EmberlashSwordItem;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,8 +73,10 @@ public class BoasFang extends UniqueSword {
                     double y = user.getEyeY();
                     double z = user.getZ();
 
-                    ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNEEZE,x+dX,y+dY,z+dZ,1,0,0,0,0);
-                    user.getWorld().playSound(null,user.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE,SoundCategory.PLAYERS,0.5f,1.5f);
+                    DustParticleEffect particleEffect = new DustParticleEffect(new Vector3f(0.05f,1f,0.1f),1);
+
+                    ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y+dY,z+dZ,1,0,0,0,0);
+                    user.getWorld().playSound(null,user.getBlockPos(), SoundEvents.ENTITY_LLAMA_SPIT,SoundCategory.PLAYERS,1f,0f);
                     for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.25+dX,y-0.25+dY,z-0.25+dZ,x+0.25+dX,y+0.25+dY,z+0.25+dZ)))
                     {
                         if(entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
