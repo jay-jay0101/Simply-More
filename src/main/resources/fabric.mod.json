@@ -10,7 +10,7 @@
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/jay-jay0101/simplymore/tree/main"
 	},
 	"license": "custom",
 	"icon": "assets/simplymore/icon.png",

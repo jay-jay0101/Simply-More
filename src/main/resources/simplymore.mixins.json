@@ -6,8 +6,7 @@
 		"LivingEntityMixin",
 		"UniqueSwordMixin",
 		"MobEntityMixin",
-		"PlayerEntityMixin",
-		"LightningEntityMixin"
+		"PlayerEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
