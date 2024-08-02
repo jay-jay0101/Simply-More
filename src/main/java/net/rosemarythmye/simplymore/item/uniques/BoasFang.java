@@ -80,6 +80,7 @@ public class BoasFang extends UniqueSword {
                     for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.25+dX,y-0.25+dY,z-0.25+dZ,x+0.25+dX,y+0.25+dY,z+0.25+dZ)))
                     {
                         if(entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
+                        if(entity.isBlocking()) continue;
 
                         entity.damage(user.getDamageSources().magic(),5);
                         entity.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
