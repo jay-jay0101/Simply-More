@@ -855,7 +855,7 @@ public class ModItems {
 
     public static final Item SERPENTINE_VALOUR = registerItem(
             "serpentine_valour",
-            new UniqueSword(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+            new SerpentineValour(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
                     attributes.getSerpentineValourDamage()-6,
                     (float)attributes.getSerpentineValourSwingSpeed(),
                     new Item.Settings()

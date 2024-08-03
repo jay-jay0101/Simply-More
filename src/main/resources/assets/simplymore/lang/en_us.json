@@ -352,6 +352,12 @@
   "item.simplymore.earthshatter.tooltip5": "This effect stacks.",
   "item.simplymore.earthshatter.tooltip6": "After a short charge, slam downwards, shattering the ",
   "item.simplymore.earthshatter.tooltip7": "ground around you, causing those hit to be launched,",
-  "item.simplymore.earthshatter.tooltip8": "weakened, slowed and inflcited with armor crunch"
+  "item.simplymore.earthshatter.tooltip8": "weakened, slowed and inflcited with armor crunch",
 
+  "item.simplymore.serpentine_valour": "Serpentine Valour",
+  "item.simplymore.serpentine_valour.tooltip1": "Unique Effect: Fatal Strike",
+  "item.simplymore.serpentine_valour.tooltip2": "This weapon deals 4 additional damage if",
+  "item.simplymore.serpentine_valour.tooltip3": "the target has poison or venom.",
+  "item.simplymore.serpentine_valour.tooltip4": "Summon 4 poison bolts above you which",
+  "item.simplymore.serpentine_valour.tooltip5": "will chase down enemies."
 }

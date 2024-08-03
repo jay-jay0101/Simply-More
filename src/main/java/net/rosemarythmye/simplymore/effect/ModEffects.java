@@ -16,7 +16,6 @@ public class ModEffects {
     static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
     static WeaponAttributesConfig attributes = config.weaponAttributes;
 
-    public static final StatusEffect TOXIC = registerEffect("toxic",new LowPoison(StatusEffectCategory.HARMFUL,10874896));
     public static final StatusEffect VENOM = registerEffect("venom",new VenomPoison(StatusEffectCategory.HARMFUL,7350627));
     public static final StatusEffect MOLTEN_FLARE = registerEffect("molten_flare",new MoltenFlareEffect(StatusEffectCategory.NEUTRAL,13570080).addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED,"9cffce95-2df6-4e81-b2be-e3098ab8232b",0.5, EntityAttributeModifier.Operation.ADDITION));
     public static final StatusEffect CHILL = registerEffect("chill",new Chill(StatusEffectCategory.HARMFUL,10875635));
