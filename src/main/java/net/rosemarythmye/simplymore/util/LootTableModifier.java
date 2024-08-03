@@ -130,6 +130,10 @@ public class LootTableModifier {
                 if(loot.isEnableRuyiJinguBang()) pool.with(ItemEntry.builder(ModItems.RUYI_JINGU_BANG));
                 if(loot.isEnableRupturedIdol()) pool.with(ItemEntry.builder(ModItems.RUPTURED_IDOL));
                 if(loot.isEnableBoasFang()) pool.with(ItemEntry.builder(ModItems.BOAS_FANG));
+                if(loot.isEnableEarthshatter()) pool.with(ItemEntry.builder(ModItems.EARTHSHATTER));
+                if(loot.isEnableSoulForeseer()) pool.with(ItemEntry.builder(ModItems.SOUL_FORESEER));
+                if(loot.isEnableSerpentineValour()) pool.with(ItemEntry.builder(ModItems.SERPENTINE_VALOUR));
+                if(loot.isEnableLustrousMoxie()) pool.with(ItemEntry.builder(ModItems.LUSTROUS_MOXIE));
                 context.addPool(pool);
             }
         });
@@ -158,6 +162,10 @@ public class LootTableModifier {
                 if(loot.isEnableRuyiJinguBang()) pool.with(ItemEntry.builder(ModItems.RUYI_JINGU_BANG));
                 if(loot.isEnableRupturedIdol()) pool.with(ItemEntry.builder(ModItems.RUPTURED_IDOL));
                 if(loot.isEnableBoasFang()) pool.with(ItemEntry.builder(ModItems.BOAS_FANG));
+                if(loot.isEnableEarthshatter()) pool.with(ItemEntry.builder(ModItems.EARTHSHATTER));
+                if(loot.isEnableSoulForeseer()) pool.with(ItemEntry.builder(ModItems.SOUL_FORESEER));
+                if(loot.isEnableSerpentineValour()) pool.with(ItemEntry.builder(ModItems.SERPENTINE_VALOUR));
+                if(loot.isEnableLustrousMoxie()) pool.with(ItemEntry.builder(ModItems.LUSTROUS_MOXIE));
                 context.addPool(pool);
             }
         });
@@ -186,6 +194,10 @@ public class LootTableModifier {
                 if(loot.isEnableRuyiJinguBang()) pool.with(ItemEntry.builder(ModItems.RUYI_JINGU_BANG));
                 if(loot.isEnableRupturedIdol()) pool.with(ItemEntry.builder(ModItems.RUPTURED_IDOL));
                 if(loot.isEnableBoasFang()) pool.with(ItemEntry.builder(ModItems.BOAS_FANG));
+                if(loot.isEnableEarthshatter()) pool.with(ItemEntry.builder(ModItems.EARTHSHATTER));
+                if(loot.isEnableSoulForeseer()) pool.with(ItemEntry.builder(ModItems.SOUL_FORESEER));
+                if(loot.isEnableSerpentineValour()) pool.with(ItemEntry.builder(ModItems.SERPENTINE_VALOUR));
+                if(loot.isEnableLustrousMoxie()) pool.with(ItemEntry.builder(ModItems.LUSTROUS_MOXIE));
                 context.addPool(pool);
             }
         });

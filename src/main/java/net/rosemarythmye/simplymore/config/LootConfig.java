@@ -36,11 +36,31 @@ public class LootConfig implements ConfigData {
     boolean enableTidebreaker = true;
     boolean enableRuyiJinguBang = true;
     boolean enableRupturedIdol = true;
-
     boolean enableBoasFang = true;
+
+    boolean enableEarthshatter = true;
+    boolean enableSoulForeseer = true;
+    boolean enableSerpentineValour = true;
+    boolean enableLustrousMoxie = true;
 
 
     public LootConfig() {
+    }
+
+    public boolean isEnableEarthshatter() {
+        return enableEarthshatter;
+    }
+
+    public boolean isEnableLustrousMoxie() {
+        return enableLustrousMoxie;
+    }
+
+    public boolean isEnableSerpentineValour() {
+        return enableSerpentineValour;
+    }
+
+    public boolean isEnableSoulForeseer() {
+        return enableSoulForeseer;
     }
 
     public boolean isEnableBoasFang() {

@@ -34,6 +34,9 @@ public class ModEffects {
     public static final StatusEffect BLESSING = registerEffect("blessing",new ModStatusEffect(StatusEffectCategory.BENEFICIAL,16709211));
     public static final StatusEffect CURSE = registerEffect("curse",new ModStatusEffect(StatusEffectCategory.HARMFUL,3152180));
     public static final StatusEffect SUFFOCATION = registerEffect("constricted",new Suffocating(StatusEffectCategory.HARMFUL,0).addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,"4a164b82-7d7a-43e4-9a7a-434e238923a7",-0.03, EntityAttributeModifier.Operation.ADDITION));
+    public static final StatusEffect RADIANT_MARK = registerEffect("radiant_mark",new RadiantEffect(StatusEffectCategory.HARMFUL,0));
+    public static final StatusEffect FORESEEN = registerEffect("soul_lock",new SoulForesight(StatusEffectCategory.HARMFUL,0)).addAttributeModifier(EntityAttributes.GENERIC_ARMOR,"8de2ce50-1726-4da1-bb87-fb8a111ee116",-2, EntityAttributeModifier.Operation.ADDITION);
+    public static final StatusEffect ARMOUR_CRUNCH = registerEffect("armor_crunch",new ModStatusEffect(StatusEffectCategory.HARMFUL,9849600));
     public static void registerModEffects() {
         Simplymore.LOGGER.info("Registering Status Effects for " + Simplymore.ID);
     }

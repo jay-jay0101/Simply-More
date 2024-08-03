@@ -831,6 +831,50 @@ public class ModItems {
             )
     );
 
+    public static final Item EARTHSHATTER = registerItem(
+            "earthshatter",
+            new Earthshatter(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getEarthshatterDamage()-6,
+                    (float)attributes.getEarthshatterSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item SOUL_FORESEER = registerItem(
+            "soul_foreseer",
+            new SoulForeseer(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getSoulForeseerDamage()-6,
+                    (float)attributes.getSoulForeseerSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item SERPENTINE_VALOUR = registerItem(
+            "serpentine_valour",
+            new UniqueSword(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getSerpentineValourDamage()-6,
+                    (float)attributes.getSerpentineValourSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item LUSTROUS_MOXIE = registerItem(
+            "lustrous_moxie",
+            new LustrousMoxie(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getLustrousMoxieDamage()-6,
+                    (float)attributes.getLustrousMoxieSwingspeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
 
 
 
@@ -945,6 +989,10 @@ public class ModItems {
                 entries.add(HOLYLIGHT);
                 entries.add(DARKSENT);
                 entries.add(BOAS_FANG);
+                entries.add(EARTHSHATTER);
+                entries.add(SOUL_FORESEER);
+                entries.add(SERPENTINE_VALOUR);
+                entries.add(LUSTROUS_MOXIE);
 
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);

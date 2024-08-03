@@ -19,6 +19,9 @@
   "effect.simplymore.blessing": "Blessing",
   "effect.simplymore.curse": "Curse",
   "effect.simplymore.constricted": "Constricted",
+  "effect.simplymore.radiant_mark": "Radiant Mark",
+  "effect.simplymore.soul_lock": "Soul Lock",
+  "effect.simplymore.armor_crunch": "Armor Crunch",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -318,5 +321,39 @@
   "item.simplymore.boas_fang.tooltip3": "Constricted enemies begin to suffocate",
   "item.simplymore.boas_fang.tooltip4": "and are slowed.",
   "item.simplymore.boas_fang.tooltip5": "Dash backwards and launch a blast of",
-  "item.simplymore.boas_fang.tooltip6": "poison. Gain speed when dashing back."
+  "item.simplymore.boas_fang.tooltip6": "poison. Gain speed when dashing back.",
+
+  "item.simplymore.lustrous_moxie": "Lustrous Moxie",
+  "item.simplymore.lustrous_moxie.tooltip1": "Unique Effect: Radiant Mark",
+  "item.simplymore.lustrous_moxie.tooltip2": "Chance on hit to apply Radiant Mark.",
+  "item.simplymore.lustrous_moxie.tooltip3": "You deal true damage equal to the level of",
+  "item.simplymore.lustrous_moxie.tooltip4": "Radiant Mark on the target on each hit.",
+  "item.simplymore.lustrous_moxie.tooltip5": "Radiant Mark is stackable, but has a lower",
+  "item.simplymore.lustrous_moxie.tooltip6": "duration the more it is applied.",
+  "item.simplymore.lustrous_moxie.tooltip7": "After a short windup, teleport to the",
+  "item.simplymore.lustrous_moxie.tooltip8": "to the closest foe inflicted with Radiant Mark.",
+  "item.simplymore.lustrous_moxie.tooltip9": "Cause an eruption of light that damages and pushes",
+  "item.simplymore.lustrous_moxie.tooltip10": "enemies away. You are stunned after teleporting.",
+
+  "item.simplymore.soul_foreseer": "Soul Foreseer",
+  "item.simplymore.soul_foreseer.tooltip1": "Unique Effect: Soul Foresight",
+  "item.simplymore.soul_foreseer.tooltip2": "Chance on hit to steal and judge an",
+  "item.simplymore.soul_foreseer.tooltip3": "enemy's soul. While the target is without",
+  "item.simplymore.soul_foreseer.tooltip4": "their soul, positive effects are drained much",
+  "item.simplymore.soul_foreseer.tooltip5": "faster. After 8 seconds, their soul is returned.",
+  "item.simplymore.soul_foreseer.tooltip6": "Return a target's soul prematurely, blinding,",
+  "item.simplymore.soul_foreseer.tooltip7": "slowing and teleporting them to you.",
+
+  "item.simplymore.earthshatter": "Earthshatter",
+  "item.simplymore.earthshatter.tooltip1": "Unique Effect: Shattering Edge",
+  "item.simplymore.earthshatter.tooltip2": "This weapon breaks shields.",
+  "item.simplymore.earthshatter.tooltip3": "Chance on hit to inflict Armor Crunch,",
+  "item.simplymore.earthshatter.tooltip4": "making an opponent's armour less effective",
+  "item.simplymore.earthshatter.tooltip5": "This effect stacks.",
+  "item.simplymore.earthshatter.tooltip6": "After a short charge, roar, shattering the ",
+  "item.simplymore.earthshatter.tooltip7": "ground around you, causing those hit to be",
+  "item.simplymore.earthshatter.tooltip8": "weakened, slowed and inflcited with armor crunch",
+  "item.simplymore.earthshatter.tooltip9": "Using the ability again quickly after the first",
+  "item.simplymore.earthshatter.tooltip10": "will shatter the ground again, launching foes upwards."
+
 }

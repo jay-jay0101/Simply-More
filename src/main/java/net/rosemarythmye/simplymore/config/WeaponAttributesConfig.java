@@ -92,9 +92,52 @@ public class WeaponAttributesConfig implements ConfigData {
     int boasFangDamage = 7;
 
     double boasFangSwingSpeed = -2.2;
+    int earthshatterDamage = 12;
+    double earthshatterSwingSpeed = -3.5;
+    int soulForeseerDamage = 9;
+    double soulForeseerSwingSpeed = -2.6;
+    int serpentineValourDamage = 11;
+    double serpentineValourSwingSpeed = -3.4;
+    int lustrousMoxieDamage = 11;
+    double lustrousMoxieSwingspeed = -2.8;
+
+
+
 
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getEarthshatterSwingSpeed() {
+        return earthshatterSwingSpeed;
+    }
+
+    public double getLustrousMoxieSwingspeed() {
+        return lustrousMoxieSwingspeed;
+    }
+
+    public double getSerpentineValourSwingSpeed() {
+        return serpentineValourSwingSpeed;
+    }
+
+    public double getSoulForeseerSwingSpeed() {
+        return soulForeseerSwingSpeed;
+    }
+
+    public int getEarthshatterDamage() {
+        return earthshatterDamage;
+    }
+
+    public int getLustrousMoxieDamage() {
+        return lustrousMoxieDamage;
+    }
+
+    public int getSerpentineValourDamage() {
+        return serpentineValourDamage;
+    }
+
+    public int getSoulForeseerDamage() {
+        return soulForeseerDamage;
     }
 
     public double getBoasFangSwingSpeed() {

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:lustrous_moxie"
+    },
+    "title": "Absolute Radiance",
+    "description": "Find the unique weapon Lustrous Moxie.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:lustrous_moxie"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

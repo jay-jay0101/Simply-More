@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:serpentine_valour"
+    },
+    "title": "Scales of Jade",
+    "description": "Find the unique weapon Serpentine Valour.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:serpentine_valour"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

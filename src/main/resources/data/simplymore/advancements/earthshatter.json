@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:earthshatter"
+    },
+    "title": "The Old Lord",
+    "description": "Find the unique weapon Earthshatter.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:earthshatter"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
