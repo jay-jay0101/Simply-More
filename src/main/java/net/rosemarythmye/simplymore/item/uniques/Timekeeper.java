@@ -31,7 +31,7 @@ import java.util.List;
 
 
 public class Timekeeper extends UniqueSword {
-    int skillCooldown = 600;
+    int skillCooldown = 400;
 
     public Timekeeper(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);

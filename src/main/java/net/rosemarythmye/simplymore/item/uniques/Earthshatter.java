@@ -78,13 +78,14 @@ public class Earthshatter extends UniqueSword {
     private void attack(World world, PlayerEntity player) {
         BlockStateParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.DIRT.getDefaultState());
         ((ServerWorld) player.getWorld()).spawnParticles(particleEffect,player.getX(),player.getY()+1,player.getZ(),500,3,1,3,0);
-        player.getWorld().playSound(null,player.getBlockPos(), SoundEvents.ENTITY_RAVAGER_ROAR,SoundCategory.PLAYERS,1,1);
+        player.getWorld().playSound(null,player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get(),SoundCategory.PLAYERS,1,0);
+        player.getWorld().playSound(null,player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_02.get(),SoundCategory.PLAYERS,1,0);
         player.getWorld().playSound(null,player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_03.get(),SoundCategory.PLAYERS,1,0);
         player.getItemCooldownManager().set(this.getDefaultStack().getItem(),skillCooldown);
 
-        for (LivingEntity livingEntity : player.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(player.getX()-5,player.getY()-2,player.getZ()-5,player.getX()+5,player.getY()+5,player.getZ()+5))) {
+        for (LivingEntity livingEntity : player.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(player.getX()-4,player.getY()-2,player.getZ()-4,player.getX()+4,player.getY()+5,player.getZ()+4))) {
             if(livingEntity == player || livingEntity.isTeammate(player)) continue;
-            livingEntity.damage(player.getDamageSources().playerAttack(player),8);
+            livingEntity.damage(player.getDamageSources().playerAttack(player),15);
             livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.ARMOUR_CRUNCH,160,0));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS,160,1));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,160,1));
@@ -95,7 +96,7 @@ public class Earthshatter extends UniqueSword {
     }
 
     public int getMaxUseTime(ItemStack stack) {
-        return 30;
+        return 40;
     }
 
     public UseAction getUseAction(ItemStack stack) {
@@ -109,8 +110,10 @@ public class Earthshatter extends UniqueSword {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip1").setStyle(ABILITY));
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip2").setStyle(TEXT));
+        tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip3").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip4").setStyle(TEXT));
+        tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip5").setStyle(TEXT));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
