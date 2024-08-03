@@ -1,5 +1,6 @@
 package net.rosemarythmye.simplymore.item.uniques;
 
+import dev.architectury.platform.Mod;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
@@ -68,7 +69,7 @@ public class Earthshatter extends UniqueSword {
 
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (!user.getWorld().isClient && user instanceof PlayerEntity player) {
-            if(remainingUseTicks==this.getMaxUseTime(null)-1) user.getWorld().playSound(null,user.getBlockPos(),SoundEvents.ENTITY_WARDEN_SONIC_CHARGE,user.getSoundCategory(),1.0f,1.2f);
+            if(remainingUseTicks==this.getMaxUseTime(null)-1) user.getWorld().playSound(null,user.getBlockPos(),SoundRegistry.DARK_SWORD_ENCHANT.get(), user.getSoundCategory(),1.0f,1.2f);
             if(remainingUseTicks==1) attack(world, player);
         }
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -84,7 +85,11 @@ public class Earthshatter extends UniqueSword {
         for (LivingEntity livingEntity : player.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(player.getX()-5,player.getY()-2,player.getZ()-5,player.getX()+5,player.getY()+5,player.getZ()+5))) {
             if(livingEntity == player || livingEntity.isTeammate(player)) continue;
             livingEntity.damage(player.getDamageSources().playerAttack(player),8);
+            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.ARMOUR_CRUNCH,160,0));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS,160,1));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,160,1));
             livingEntity.setVelocity(0,1.2,0);
+            livingEntity.velocityModified = true;
         }
         
     }
@@ -112,8 +117,6 @@ public class Earthshatter extends UniqueSword {
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip6").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip7").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip8").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip9").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip10").setStyle(TEXT));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
