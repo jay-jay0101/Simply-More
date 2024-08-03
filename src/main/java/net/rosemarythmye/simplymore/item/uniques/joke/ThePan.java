@@ -54,6 +54,7 @@ public class ThePan extends Sword {
                 zVelocity *= strength/ratioMax;
 
                 target.setVelocity(xVelocity,0.2,zVelocity);
+                target.velocityModified = true;
             }
         }
         return super.postHit(stack, target, attacker);

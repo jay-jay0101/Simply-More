@@ -58,6 +58,7 @@ public class Grandfrost extends UniqueSword {
                 livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.CHILL,200,0));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,200,3));
                 livingEntity.setVelocity(xVelocity,0.4,zVelocity);
+                livingEntity.velocityModified = true;
             }
 
             if(use) {

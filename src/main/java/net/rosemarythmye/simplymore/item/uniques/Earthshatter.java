@@ -1,12 +1,17 @@
 package net.rosemarythmye.simplymore.item.uniques;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -29,7 +34,6 @@ import java.util.List;
 
 public class Earthshatter extends UniqueSword {
     int skillCooldown = 600;
-    int window = 0;
 
     public Earthshatter(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -71,12 +75,18 @@ public class Earthshatter extends UniqueSword {
     }
 
     private void attack(World world, PlayerEntity player) {
-        ((ServerWorld) player.getWorld()).spawnParticles(ParticleTypes.POOF,player.getX(),player.getY(),player.getZ(),500,3,0,3,0);
+        BlockStateParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.DIRT.getDefaultState());
+        ((ServerWorld) player.getWorld()).spawnParticles(particleEffect,player.getX(),player.getY()+1,player.getZ(),500,3,1,3,0);
         player.getWorld().playSound(null,player.getBlockPos(), SoundEvents.ENTITY_RAVAGER_ROAR,SoundCategory.PLAYERS,1,1);
         player.getWorld().playSound(null,player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_03.get(),SoundCategory.PLAYERS,1,0);
-        player.getItemCooldownManager().set(this.getDefaultStack().getItem(),10);
-        player.stopUsingItem();
-        window = 50;
+        player.getItemCooldownManager().set(this.getDefaultStack().getItem(),skillCooldown);
+
+        for (LivingEntity livingEntity : player.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(player.getX()-5,player.getY()-2,player.getZ()-5,player.getX()+5,player.getY()+5,player.getZ()+5))) {
+            if(livingEntity == player || livingEntity.isTeammate(player)) continue;
+            livingEntity.damage(player.getDamageSources().playerAttack(player),8);
+            livingEntity.setVelocity(0,1.2,0);
+        }
+        
     }
 
     public int getMaxUseTime(ItemStack stack) {
@@ -112,16 +122,6 @@ public class Earthshatter extends UniqueSword {
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-
-        if(window>1) {
-            window--;
-        } else if (window==1 && entity instanceof PlayerEntity player) {
-            player.getItemCooldownManager().set(stack.getItem(),skillCooldown);
-            player.stopUsingItem();
-            window = 0;
-            player.getInventory().updateItems();
-        }
-
         if (stepMod > 0) {
             --stepMod;
         }
@@ -130,7 +130,7 @@ public class Earthshatter extends UniqueSword {
             stepMod = 7;
         }
 
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.WAX_OFF, ParticleTypes.WAX_OFF, ParticleTypes.WAX_OFF, true);
+        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.ASH, ParticleTypes.ASH, ParticleTypes.ASH, true);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

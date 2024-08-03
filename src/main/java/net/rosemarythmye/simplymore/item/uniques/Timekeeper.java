@@ -67,6 +67,7 @@ public class Timekeeper extends UniqueSword {
                         for (LivingEntity target : world.getNonSpectatingEntities(LivingEntity.class,new Box(x-0.8,y-0.8,z-0.8,x+0.8,y+0.8,z+0.8))) {
                             if (target.isTeammate(user) || target == user) continue;
                             target.setVelocity(dX * 2.5/i,dY * 2.5/i,dZ * 2.5/i);
+                            target.velocityModified = true;
                             target.setOnFireFor(5);
                             target.damage(user.getDamageSources().onFire(),6);
                             target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,100));
@@ -96,6 +97,7 @@ public class Timekeeper extends UniqueSword {
                             for (LivingEntity target : world.getNonSpectatingEntities(LivingEntity.class, new Box(x - 0.8, y - 5, z - 0.8, x + 0.8, y + 5, z + 0.8))) {
                                 if (target.isTeammate(user) || target == user) continue;
                                 target.setVelocity(0, 1.5, 0);
+                                target.velocityModified = true;
                                 target.damage(user.getDamageSources().magic(), 2);
                                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100,3));
                             }

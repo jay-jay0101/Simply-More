@@ -17,6 +17,7 @@ import net.minecraft.util.Hand;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.item.normal.GrandSword;
 import net.rosemarythmye.simplymore.item.runics.RunicGrandSword;
+import net.rosemarythmye.simplymore.item.uniques.Earthshatter;
 import net.rosemarythmye.simplymore.item.uniques.Grandfrost;
 import net.rosemarythmye.simplymore.item.uniques.MoltenFlare;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +31,7 @@ public abstract class LivingEntityMixin {
 	private boolean disablesShield(boolean originalReturnValue) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		ItemStack mainHandStack = livingEntity.getEquippedStack(EquipmentSlot.MAINHAND);
-		if (mainHandStack.getItem() instanceof RunicGrandSword || mainHandStack.getItem() instanceof GrandSword || mainHandStack.getItem() instanceof MoltenFlare || mainHandStack.getItem() instanceof Grandfrost) return true;
+		if (mainHandStack.getItem() instanceof Earthshatter || mainHandStack.getItem() instanceof RunicGrandSword || mainHandStack.getItem() instanceof GrandSword || mainHandStack.getItem() instanceof MoltenFlare || mainHandStack.getItem() instanceof Grandfrost) return true;
 		return originalReturnValue;
 	}
 

@@ -94,6 +94,7 @@ public class ScarabRoller extends UniqueSword {
                     zVelocity *= strength/ratioMax;
 
                     livingEntity.setVelocity(xVelocity,0.4,zVelocity);
+                    livingEntity.velocityModified = true;
                     if(!livingEntity.isBlocking()) livingEntity.damage(user.getDamageSources().playerAttack(((PlayerEntity) user)),5f);
                 }
 

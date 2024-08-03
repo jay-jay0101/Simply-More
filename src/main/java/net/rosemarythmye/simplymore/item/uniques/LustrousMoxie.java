@@ -68,7 +68,7 @@ public class LustrousMoxie extends UniqueSword {
                 target = livingEntity;
                 target.removeStatusEffect(ModEffects.RADIANT_MARK);
                 use = true;
-                livingEntity.damage(user.getDamageSources().playerAttack(user),6);
+                livingEntity.damage(user.getDamageSources().playerAttack(user),20);
 
                 double xVelocity = livingEntity.getX()-user.getX();
                 double zVelocity = livingEntity.getZ()-user.getZ();
@@ -89,7 +89,7 @@ public class LustrousMoxie extends UniqueSword {
 
                 for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(user.getX()-4,user.getY()-4,user.getZ()-4,user.getX()+4,user.getY()+4,user.getZ()+4))) {
                     if(livingEntity == user || livingEntity.isTeammate(user) || livingEntity == target) continue;
-                    livingEntity.damage(user.getDamageSources().playerAttack(user),6);
+                    livingEntity.damage(user.getDamageSources().playerAttack(user),20);
 
                     double xVelocity = livingEntity.getX()-user.getX();
                     double zVelocity = livingEntity.getZ()-user.getZ();

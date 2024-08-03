@@ -117,6 +117,7 @@ public class RuyiJinguBang extends UniqueSword {
 
                         entity.damage(user.getDamageSources().playerAttack(((PlayerEntity) user)),damage);
                         entity.setVelocity(dX/i,dY/i,dZ/i);
+                        entity.velocityModified = true;
                     }
 
                     ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CLOUD,x+dX,y+dY,z+dZ,15,1,1,1,0.1);
