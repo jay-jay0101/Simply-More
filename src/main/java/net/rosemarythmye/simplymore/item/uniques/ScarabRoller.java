@@ -4,6 +4,7 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -71,6 +72,9 @@ public class ScarabRoller extends UniqueSword {
 
     public static float activeSpeed = 1.2f;
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+
+        if(user.hasStatusEffect(StatusEffects.SLOW_FALLING)) return;
+
         if (user instanceof PlayerEntity) {
             Vector2d currentPos = new Vector2d(user.getX(),user.getZ());
             double userRotation = (user.getYaw() + 180) * (Math.PI / 180);
