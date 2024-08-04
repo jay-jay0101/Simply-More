@@ -1,9 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "simplymore:item/uniques/the_vessel_breach/the_vessel_breach"
-  },
-  "overrides": [
-    {"predicate": {"simplymore:rage": 1},"model": "simplymore:item/the_vessel_breach_rage"}
-  ]
+    "layer0": "simplymore:item/uniques/the_vessel_breach/the_vessel_breach",
+    "layer1": "simplymore:item/uniques/the_vessel_breach/the_vessel_breach_layer1"
+  }
 }

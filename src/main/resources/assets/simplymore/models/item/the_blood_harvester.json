@@ -2,9 +2,7 @@
   "parent": "simplyswords:item/big_handheld",
   "textures": {
     "layer0": "simplymore:item/uniques/the_blood_harvester/the_blood_harvester",
-    "layer1": "simplymore:item/uniques/the_blood_harvester/the_blood_harvester_layer1"
-  },
-  "overrides": [
-    {"predicate": {"simplymore:harvest": 1},"model": "simplymore:item/the_blood_harvester_harvest"}
-  ]
+    "layer1": "simplymore:item/uniques/the_blood_harvester/the_blood_harvester_layer1",
+    "layer2": "simplymore:item/uniques/the_blood_harvester/the_blood_harvester_layer2"
+  }
 }

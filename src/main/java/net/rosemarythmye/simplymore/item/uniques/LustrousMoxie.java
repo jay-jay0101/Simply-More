@@ -68,22 +68,23 @@ public class LustrousMoxie extends UniqueSword {
                 target = livingEntity;
                 target.removeStatusEffect(ModEffects.RADIANT_MARK);
                 use = true;
-                livingEntity.damage(user.getDamageSources().playerAttack(user),20);
+                livingEntity.damage(user.getDamageSources().playerAttack(user),15);
 
                 double xVelocity = livingEntity.getX()-user.getX();
                 double zVelocity = livingEntity.getZ()-user.getZ();
                 double ratioMax = Math.abs(xVelocity)+ Math.abs(zVelocity);
-                float strength = 2.5f;
+                float strength = 2f;
 
                 xVelocity *= strength/ratioMax;
                 zVelocity *= strength/ratioMax;
 
                 livingEntity.setVelocity(xVelocity,0.2,zVelocity);
+                livingEntity.velocityModified = true;
 
             }
 
             if(use) {
-                user.teleport(target.getX(),target.getY(),target.getZ());
+                user.teleport(target.getX(),target.getY(),target.getZ(),false);
                 ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF,user.getX(),user.getY()+2,user.getZ(),500,3,3,3,0);
 
 
@@ -100,9 +101,10 @@ public class LustrousMoxie extends UniqueSword {
                     zVelocity *= strength/ratioMax;
 
                     livingEntity.setVelocity(xVelocity,0.2,zVelocity);
+                    livingEntity.velocityModified = true;
                 }
 
-                user.addStatusEffect(new StatusEffectInstance(ModEffects.STUNNED,30,0));
+                user.addStatusEffect(new StatusEffectInstance(ModEffects.STUNNED_MOXIE,30,0));
                 user.getWorld().playSound(null,user.getBlockPos(),SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
 
                 user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);

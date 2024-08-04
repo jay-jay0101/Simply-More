@@ -94,7 +94,7 @@ public class RuyiJinguBang extends UniqueSword {
                 if(itemUseTime>200) itemUseTime = 200;
 
                 int range = ((int) Math.floor(itemUseTime / 5f));
-                float damage = 8 * (itemUseTime/50f);
+                float damage = 12 * (itemUseTime/50f);
                 float yaw = (float) Math.toRadians(user.getYaw()+90);
                 float pitch = (float) Math.toRadians(user.getPitch());
 

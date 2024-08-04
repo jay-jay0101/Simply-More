@@ -26,8 +26,8 @@ public class SoulForesight extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int Amplifier) {
         for (StatusEffectInstance effect : entity.getStatusEffects()) {
-            if (effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL || effect.getDuration()<=5) continue;
-            entity.setStatusEffect(new StatusEffectInstance(effect.getEffectType(),effect.getDuration()-4,effect.getAmplifier()),entity);
+            if (effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL || effect.getDuration()<=10) continue;
+            entity.setStatusEffect(new StatusEffectInstance(effect.getEffectType(),effect.getDuration()-8,effect.getAmplifier()),entity);
         }
         super.applyUpdateEffect(entity, Amplifier);
     }

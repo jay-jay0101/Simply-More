@@ -16,7 +16,7 @@ public class BlackPearlFireball extends FireballEntity {
     @Override
     protected void onCollision(HitResult hitResult) {
         if (!this.getWorld().isClient) {
-            this.getWorld().createExplosion(this, (DamageSource)null, new GrieflessExplosionBehavior(),this.getX(), this.getY(), this.getZ(), 1.25f,false, World.ExplosionSourceType.MOB);
+            this.getWorld().createExplosion(this, (DamageSource)null, new GrieflessExplosionBehavior(),this.getX(), this.getY(), this.getZ(), 1.8f,false, World.ExplosionSourceType.MOB);
             this.discard();
         }
 

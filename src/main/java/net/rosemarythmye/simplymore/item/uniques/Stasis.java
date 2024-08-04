@@ -80,7 +80,7 @@ public class Stasis extends UniqueSword {
                 LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld);
                 for(LivingEntity entity : player.getWorld().getNonSpectatingEntities(LivingEntity.class, new Box(player.getX()-4,player.getY()-2,player.getZ()-4,player.getX()+4,player.getY()+6,player.getZ()+4))) {
                     if(entity == user || entity.isTeammate(user)) continue;
-                    entity.damage(player.getDamageSources().lightningBolt(),18);
+                    entity.damage(player.getDamageSources().magic(),12);
                     entity.onStruckByLightning(serverWorld,lightningEntity);
                 }
 

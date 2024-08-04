@@ -18,7 +18,7 @@ public class Suffocating extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int Duration, int Amplifier) {
-        int i = 50 >> Amplifier;
+        int i = 25 >> Amplifier;
         return i == 0 || Duration % i == 0;
     }
 

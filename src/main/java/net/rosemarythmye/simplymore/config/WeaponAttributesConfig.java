@@ -16,7 +16,7 @@ public class WeaponAttributesConfig implements ConfigData {
     int greatSpearDamageModifier = 3;
     int deerHornsDamageModifier = -1;
     double greatKatanaSwingSpeed = -2.6;
-    double grandswordSwingSpeed = -3.5;
+    double grandswordSwingSpeed = -3.4;
     double backhandBladeSwingSpeed = -1.7;
     double lanceSwingSpeed = -3;
     double khopeshSwingSpeed = -2.1;
@@ -31,7 +31,7 @@ public class WeaponAttributesConfig implements ConfigData {
     int moltenFlareDamage = 13;
     double moltenFlareSwingSpeed = -3.5;
     int grandfrostDamage = 14;
-    double grandfrostSwingSpeed = -3.5;
+    double grandfrostSwingSpeed = -3.4;
     int mimicryPurityDamage = 8;
     double mimicryPuritySwingSpeed = -2;
     int mimicryTwistedDamageModifier = 2;
@@ -97,9 +97,9 @@ public class WeaponAttributesConfig implements ConfigData {
     int soulForeseerDamage = 9;
     double soulForeseerSwingSpeed = -2.6;
     int serpentineValourDamage = 11;
-    double serpentineValourSwingSpeed = -3.4;
+    double serpentineValourSwingSpeed = -3.3;
     int lustrousMoxieDamage = 11;
-    double lustrousMoxieSwingspeed = -2.8;
+    double lustrousMoxieSwingspeed = -3;
 
 
 

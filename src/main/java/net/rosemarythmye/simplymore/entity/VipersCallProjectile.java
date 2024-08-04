@@ -37,13 +37,13 @@ public class VipersCallProjectile extends AreaEffectCloudEntity {
         for (LivingEntity target : entities) {
             if (target.isAlive() && !target.isInvulnerable() && target != livingEntity && !target.isTeammate(livingEntity)) {
                 if (livingEntity == null) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffects.VENOM,60,0));
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,60,0));
                 } else {
                     if (livingEntity.isTeammate(target)) {
                         return;
                     }
                     target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,60,0));
-                    target.damage(this.getDamageSources().magic(),1.2f);
+                    target.damage(this.getDamageSources().magic(),0.7f);
                 }
             }
         }

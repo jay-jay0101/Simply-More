@@ -23,15 +23,6 @@ public class SimplymoreClient implements ClientModInitializer {
             return form.toString().equals("\"twisted\"") ? 1f : 0f;
         });
 
-        ModelPredicateProviderRegistry.register(ModItems.THEBLOODHARVESTER, new Identifier(Simplymore.ID, "harvest"), (itemStack, clientWorld, livingEntity, a) -> {
-            if (livingEntity == null) return 0f;
-            return livingEntity.hasStatusEffect(ModEffects.HARVEST) ? 1f : 0f;
-        });
-
-        ModelPredicateProviderRegistry.register(ModItems.THEVESSELBREACH, new Identifier(Simplymore.ID, "rage"), (itemStack, clientWorld, livingEntity, a) -> {
-            if (livingEntity == null) return 0f;
-            return livingEntity.hasStatusEffect(ModEffects.RAGE) ? 1f : 0f;
-        });
 
         final int[] randomSprite = {0};
 

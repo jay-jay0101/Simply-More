@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -18,6 +19,7 @@ import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.effect.ModStatusEffect;
 import net.rosemarythmye.simplymore.entity.GreatSlitherFang;
 import net.rosemarythmye.simplymore.item.UniqueSword;
+import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import org.joml.Vector2d;
 
@@ -33,7 +35,7 @@ public class SmoulderingRuin extends UniqueSword {
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextInt(100) <= 10) {
+            if (attacker.getRandom().nextInt(100) <= 25) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 100, 0), attacker);
                 if(target.hasStatusEffect(ModEffects.WITHERING_FATE)) {
                     target.addStatusEffect(new StatusEffectInstance(ModEffects.WITHERING_FATE, target.getStatusEffect(ModEffects.WITHERING_FATE).getDuration(), target.getStatusEffect(ModEffects.WITHERING_FATE).getAmplifier()+1), attacker);
@@ -53,6 +55,7 @@ public class SmoulderingRuin extends UniqueSword {
             double dX = Math.sin(yaw);
             user.setVelocity(dX,1,-dZ);
             user.velocityModified = true;
+            user.getWorld().playSound(null,user.getX(),user.getY(),user.getZ(), SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_FLYBY_01.get(), SoundCategory.PLAYERS,1,1);
             user.addStatusEffect(new StatusEffectInstance(ModEffects.MISTIFIED,10000,0));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }

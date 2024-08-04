@@ -39,7 +39,7 @@ public class SoulForeseer extends UniqueSword {
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if(attacker.getRandom().nextInt(100) <= 28 && !target.hasStatusEffect(ModEffects.FORESEEN)) {
+            if(attacker.getRandom().nextInt(100) <= 30 && !target.hasStatusEffect(ModEffects.FORESEEN)) {
                 attacker.getWorld().playSound(null,attacker.getBlockPos(),SoundRegistry.MAGIC_SHAMANIC_NORDIC_27.get(),SoundCategory.PLAYERS);
                 target.addStatusEffect(new StatusEffectInstance(ModEffects.FORESEEN,160,0));
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING,10,0));
@@ -63,6 +63,7 @@ public class SoulForeseer extends UniqueSword {
                 livingEntity.removeStatusEffect(ModEffects.FORESEEN);
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,80,3));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,80,0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,80,1));
                 livingEntity.teleport(user.getX(),user.getY(),user.getZ());
                 livingEntity.velocityModified = true;
                 use = true;

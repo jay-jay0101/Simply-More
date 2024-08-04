@@ -64,6 +64,8 @@ public class BoasFang extends UniqueSword {
                 float velocityZ = (float) (Math.sin(yaw) * Math.cos(pitch)) * 0.5f;
                 float velocityY = (float) Math.sin(pitch) * -0.5f;
 
+                user.getWorld().playSound(null,user.getBlockPos(), SoundEvents.ENTITY_LLAMA_SPIT,SoundCategory.PLAYERS,1f,0f);
+
                 for(int j = 0; j<14;j++) {
                     double dX = velocityX * j;
                     double dY = velocityY * j;
@@ -76,7 +78,6 @@ public class BoasFang extends UniqueSword {
                     DustParticleEffect particleEffect = new DustParticleEffect(new Vector3f(0.05f,1f,0.1f),1);
 
                     ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y+dY,z+dZ,1,0,0,0,0);
-                    user.getWorld().playSound(null,user.getBlockPos(), SoundEvents.ENTITY_LLAMA_SPIT,SoundCategory.PLAYERS,1f,0f);
                     for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.25+dX,y-0.25+dY,z-0.25+dZ,x+0.25+dX,y+0.25+dY,z+0.25+dZ)))
                     {
                         if(entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
@@ -84,7 +85,7 @@ public class BoasFang extends UniqueSword {
 
                         entity.damage(user.getDamageSources().magic(),5);
                         entity.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
-                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,100,0));
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,120,1));
                     }
                 }
                 user.setVelocity(user.getRotationVector().negate().multiply(2));

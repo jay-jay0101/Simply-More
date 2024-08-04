@@ -24,6 +24,7 @@ import net.rosemarythmye.simplymore.item.UniqueSword;
 import net.sweenus.simplyswords.util.HelperMethods;
 import org.joml.Vector2d;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,12 +67,17 @@ public class ScarabRoller extends UniqueSword {
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
         tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip3").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip4").setStyle(TEXT));
+        tooltip.add(Text.literal(" "));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip5").setStyle(TEXT));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    public static float activeSpeed = 1.2f;
+    public static float activeSpeed = 1f;
+
+    private List<LivingEntity> hit = new ArrayList<>();
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        hit.add(user);
 
         if(user.hasStatusEffect(StatusEffects.SLOW_FALLING)) return;
 
@@ -85,22 +91,24 @@ public class ScarabRoller extends UniqueSword {
             if(!user.getWorld().isClient) {
                 for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,user.getBoundingBox().expand(2))) {
                     if(livingEntity == user || livingEntity.isTeammate(user)) continue;
+                    if(hit.contains(livingEntity)) continue;
                     double xVelocity = livingEntity.getX()-user.getX();
                     double zVelocity = livingEntity.getZ()-user.getZ();
                     double ratioMax = Math.abs(xVelocity)+ Math.abs(zVelocity);
-                    float strength = 0.5f;
+                    float strength = 0.8f;
 
                     xVelocity *= strength/ratioMax;
                     zVelocity *= strength/ratioMax;
 
                     livingEntity.setVelocity(xVelocity,0.4,zVelocity);
                     livingEntity.velocityModified = true;
+                    hit.add(livingEntity);
                     if(!livingEntity.isBlocking()) livingEntity.damage(user.getDamageSources().playerAttack(((PlayerEntity) user)),5f);
                 }
 
                 double moveDistance = Math.abs(user.getX()-currentPos.x)+Math.abs(user.getZ()-currentPos.y);
 
-                if(moveDistance < 1.1) {
+                if(moveDistance < 0.9) {
                     ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.EXPLOSION,user.getX(),user.getY()+0.75,user.getZ(),3,0,0,0,0);
                     user.getWorld().playSound(null, user.getBlockPos(),SoundEvents.ENTITY_GENERIC_EXPLODE,user.getSoundCategory());
                     user.stopUsingItem();
@@ -110,7 +118,7 @@ public class ScarabRoller extends UniqueSword {
         super.usageTick(world, user, stack, remainingUseTicks);
     }
     public int getMaxUseTime(ItemStack stack) {
-        return 600;
+        return 300;
     }
 
     @Override
@@ -119,9 +127,10 @@ public class ScarabRoller extends UniqueSword {
         double userRotation = (user.getYaw() + 180) * (Math.PI / 180);
         Vector2d movement = new Vector2d(activeSpeed * Math.sin(userRotation), -activeSpeed * Math.cos(userRotation));
         user.setVelocity(movement.x,user.getVelocity().getY(),movement.y);
-
+        hit.clear();
         ((PlayerEntity) user).getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
+
     }
 
     public UseAction getUseAction(ItemStack stack) {
@@ -132,6 +141,11 @@ public class ScarabRoller extends UniqueSword {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (stepMod > 0) {
             --stepMod;
+        }
+
+        if(entity instanceof PlayerEntity player && !hit.isEmpty() && !player.isUsingItem()) {
+            hit.clear();
+            player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
 
         if (stepMod <= 0) {

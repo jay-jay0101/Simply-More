@@ -86,7 +86,7 @@ public class Earthshatter extends UniqueSword {
         for (LivingEntity livingEntity : player.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(player.getX()-4,player.getY()-2,player.getZ()-4,player.getX()+4,player.getY()+5,player.getZ()+4))) {
             if(livingEntity == player || livingEntity.isTeammate(player)) continue;
             livingEntity.damage(player.getDamageSources().playerAttack(player),15);
-            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.ARMOUR_CRUNCH,160,0));
+            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffects.ARMOUR_CRUNCH,160,2));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS,160,1));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,160,1));
             livingEntity.setVelocity(0,1.2,0);
