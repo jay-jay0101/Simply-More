@@ -29,7 +29,7 @@ public class WeaponAttributesConfig implements ConfigData {
     int greatSlitherDamage = 11;
     double greatSlitherSwingSpeed = -2.6;
     int moltenFlareDamage = 13;
-    double moltenFlareSwingSpeed = -3.5;
+    double moltenFlareSwingSpeed = -3.6;
     int grandfrostDamage = 14;
     double grandfrostSwingSpeed = -3.4;
     int mimicryPurityDamage = 8;
