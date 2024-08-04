@@ -911,7 +911,7 @@ public class ModItems {
 
 
     private static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(ItemsRegistry.RUNEFUSED_GEM.get()))
+            .icon(() -> new ItemStack(ModItems.RUNEFUSED_CARVER))
             .displayName(Text.translatable("item_group.simplymore"))
             .entries((context, entries) -> {
                 entries.add(RUNEFUSED_CARVER);
