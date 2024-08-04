@@ -1,0 +1,17 @@
+{
+  "name": "Lustrous Moxie [SM]",
+  "icon": "simplymore:lustrous_moxie",
+  "advancement": "simplymore:lustrous_moxie",
+  "category": "simplyswords:category_unique_weapons",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "simplymore:lustrous_moxie",
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()Lustrous Moxie leaves foes in awe of its perfection; the sheer control it has over the light contained within. This entrancing shine is not only elegant, but also fatal, being able to easily penetrate all defences shall it snuff them with its effulgent mark."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This weapon harnesses the power of light to allow it to move itself and its user at incredible speed across battlefields to strike those far away with a beautiful eruption of radiance."
+    }
+  ]
+}

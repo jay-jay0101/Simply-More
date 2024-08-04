@@ -1,0 +1,13 @@
+{
+  "name": "The Pan [SM]",
+  "icon": "simplymore:the_pan",
+  "advancement": "simplymore:the_pan",
+  "category": "simplyswords:category_unique_weapons",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "simplymore:the_pan",
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()The ultimate weapon."
+    }
+  ]
+}

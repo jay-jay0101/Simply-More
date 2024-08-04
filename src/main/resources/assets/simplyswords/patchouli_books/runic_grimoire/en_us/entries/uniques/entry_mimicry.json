@@ -1,0 +1,17 @@
+{
+  "name": "Mimi-cry [SM]",
+  "icon": "simplymore:mimicry",
+  "advancement": "simplymore:mimicry",
+  "category": "simplyswords:category_unique_weapons",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "simplymore:mimicry",
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()Mimi-cry may appear to be a blade impaling the now dead head of a mimic-like creature, but that is not the case. The blade itself is actually the mimic you can see wrapping its long tongue around the sharp edges of the weapon, attempting to play dead."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The mimic, however, seems to have a semblance of loyalty, as if its old wielder tamed the beast. The mimic is able to change the blade to suit the user’s desires. Perhaps due to its past trust, it blindly conforms to new owners."
+    }
+  ]
+}

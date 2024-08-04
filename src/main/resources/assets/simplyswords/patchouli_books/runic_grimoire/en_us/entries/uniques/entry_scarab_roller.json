@@ -1,0 +1,17 @@
+{
+  "name": "Scarab Roller [SM]",
+  "icon": "simplymore:scarab_roller",
+  "advancement": "simplymore:scarab_roller",
+  "category": "simplyswords:category_unique_weapons",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "simplymore:scarab_roller",
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()The Scarab Roller is a seemingly unmagical khopesh imbued with a mystical scarab, an ancient sigil of protection. The scarab is living, magically encasing the weapon in an aura of resistance. The scarab’s carapace oftentimes begins to encase the user,"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "hardening their skin and making it less susceptible to attacks. The scarab's wings are able to propell wielders forwards at great speeds, directly through crowds."
+    }
+  ]
+}

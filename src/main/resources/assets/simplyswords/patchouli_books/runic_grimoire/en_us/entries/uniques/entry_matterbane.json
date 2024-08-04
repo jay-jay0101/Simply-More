@@ -1,0 +1,17 @@
+{
+  "name": "Matterbane [SM]",
+  "icon": "simplymore:matterbane",
+  "advancement": "simplymore:matterbane",
+  "category": "simplyswords:category_unique_weapons",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "simplymore:matterbane",
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()Very little is known about the Matterbane - few know of its existence. Matterbane is a blade consisting of pure plasma, able to burn through anything it touches. In the hand of its true wielder, It has the ability to slit the gaps in spacetime to access"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "new dimensions beyond the human conscience. This causes a rift which destroys euclidean space, causing those trapped within to be unable to leave. The plasma seems to have a colorful reaction to dyes, allowing it to shine different colors."
+    }
+  ]
+}
