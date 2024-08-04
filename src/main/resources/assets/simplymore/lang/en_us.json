@@ -359,5 +359,7 @@
   "item.simplymore.serpentine_valour.tooltip2": "This weapon deals 4 additional damage if",
   "item.simplymore.serpentine_valour.tooltip3": "the target has poison or venom.",
   "item.simplymore.serpentine_valour.tooltip4": "Summon 4 poison bolts above you which",
-  "item.simplymore.serpentine_valour.tooltip5": "will chase down enemies."
+  "item.simplymore.serpentine_valour.tooltip5": "will chase down enemies. Poison bolts",
+  "item.simplymore.serpentine_valour.tooltip6": "will wait 4 seconds before firing if an enemy",
+  "item.simplymore.serpentine_valour.tooltip7": "is within 5 blocks of you when spawning."
 }

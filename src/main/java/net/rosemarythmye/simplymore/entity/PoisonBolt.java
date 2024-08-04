@@ -45,9 +45,6 @@ public class PoisonBolt extends AreaEffectCloudEntity {
     }
 
     public void jutter() {
-        if(this.version>=10) {
-            return;
-        }
 
         LivingEntity target = null;
         double distance = 50;
@@ -60,8 +57,14 @@ public class PoisonBolt extends AreaEffectCloudEntity {
             distance = livingEntity.distanceTo(this);
         }
 
+        if(this.version>=10 && distance>3) {
+            return;
+        }
+
+        if(this.version<0) target = null;
+
         if(target==null) {
-            PoisonBolt replacement = new PoisonBolt(this.getWorld(),this.getX(),this.getY()+1,this.getZ(),this.getOwner(),this.version+1);
+            PoisonBolt replacement = new PoisonBolt(this.getWorld(),this.getX(),this.getY(),this.getZ(),this.getOwner(),this.version+1);
             this.getWorld().spawnEntity(replacement);
             this.discard();
             return;

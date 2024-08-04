@@ -15,6 +15,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythmye.simplymore.effect.ModEffects;
 import net.rosemarythmye.simplymore.entity.GreatSlitherFang;
@@ -49,15 +50,33 @@ public class SerpentineValour extends UniqueSword {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
             for (int i = 1; i < 7; i++) {
-                PoisonBolt shot = new PoisonBolt(user.getWorld(),user.getX()+1,user.getY()+2,user.getZ(),user,0);
-                world.spawnEntity(shot);
-                shot = new PoisonBolt(user.getWorld(),user.getX()-1,user.getY()+2,user.getZ(),user,0);
-                world.spawnEntity(shot);
-                shot = new PoisonBolt(user.getWorld(),user.getX(),user.getY()+2,user.getZ()-1,user,0);
-                world.spawnEntity(shot);
-                shot = new PoisonBolt(user.getWorld(),user.getX(),user.getY()+2,user.getZ()+1,user,0);
-                user.getWorld().playSound(null,user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_VOICE_15.get(), SoundCategory.PLAYERS,0.4f,1);
-                world.spawnEntity(shot);
+
+                boolean wait = false;
+
+                for (LivingEntity target : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(user.getX()-5,user.getY()-5,user.getZ()-5,user.getX()+5,user.getY()+5,user.getZ()+5))) {
+                    if(target == user || target.isTeammate(user)) continue;
+                    wait = true;
+                }
+                if(wait) {
+                    PoisonBolt shot = new PoisonBolt(user.getWorld(), user.getX() + 1, user.getY() + 2, user.getZ(), user, -2);
+                    world.spawnEntity(shot);
+                    shot = new PoisonBolt(user.getWorld(), user.getX() - 1, user.getY() + 2, user.getZ(), user, -2);
+                    world.spawnEntity(shot);
+                    shot = new PoisonBolt(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() - 1, user, -2);
+                    world.spawnEntity(shot);
+                    shot = new PoisonBolt(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() + 1, user, -2);
+                    world.spawnEntity(shot);
+                } else {
+                    PoisonBolt shot = new PoisonBolt(user.getWorld(), user.getX() + 1, user.getY() + 2, user.getZ(), user, 0);
+                    world.spawnEntity(shot);
+                    shot = new PoisonBolt(user.getWorld(), user.getX() - 1, user.getY() + 2, user.getZ(), user, 0);
+                    world.spawnEntity(shot);
+                    shot = new PoisonBolt(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() - 1, user, 0);
+                    world.spawnEntity(shot);
+                    shot = new PoisonBolt(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() + 1, user, 0);
+                    world.spawnEntity(shot);
+                }
+                user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_VOICE_15.get(), SoundCategory.PLAYERS, 0.4f, 1);
             }
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
@@ -77,6 +96,8 @@ public class SerpentineValour extends UniqueSword {
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
         tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip4").setStyle(TEXT));
         tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip5").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip6").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip7").setStyle(TEXT));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
