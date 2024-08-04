@@ -3,6 +3,7 @@ package net.rosemarythmye.simplymore.item.uniques.idols;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -17,7 +18,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 
-public class AscendedIdol extends UniqueSword {
+public class AscendedIdol extends SwordItem {
 
     public AscendedIdol(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -32,6 +33,11 @@ public class AscendedIdol extends UniqueSword {
             }
         }
         return super.postHit(stack, target, attacker);
+    }
+
+    public Text getName(ItemStack stack) {
+        Style UNIQUE = HelperMethods.getStyle("unique");
+        return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
     }
 
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {

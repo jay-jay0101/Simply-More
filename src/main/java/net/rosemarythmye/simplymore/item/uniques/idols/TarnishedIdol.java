@@ -3,6 +3,7 @@ package net.rosemarythmye.simplymore.item.uniques.idols;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -18,7 +19,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 
-public class TarnishedIdol extends UniqueSword {
+public class TarnishedIdol extends SwordItem {
 
     public TarnishedIdol(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -48,5 +49,10 @@ public class TarnishedIdol extends UniqueSword {
         tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip6").setStyle(TEXT));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+    }
+
+    public Text getName(ItemStack stack) {
+        Style UNIQUE = HelperMethods.getStyle("unique");
+        return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
     }
 }

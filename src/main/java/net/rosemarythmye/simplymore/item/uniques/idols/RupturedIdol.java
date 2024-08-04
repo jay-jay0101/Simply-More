@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -25,7 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class RupturedIdol extends UniqueSword {
+public class RupturedIdol extends SwordItem {
 
     public RupturedIdol(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -36,5 +37,10 @@ public class RupturedIdol extends UniqueSword {
         tooltip.add(Text.translatable("item.simplymore.ruptured_idol.tooltip1").setStyle(TEXT));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+    }
+
+    public Text getName(ItemStack stack) {
+        Style UNIQUE = HelperMethods.getStyle("unique");
+        return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
     }
 }
