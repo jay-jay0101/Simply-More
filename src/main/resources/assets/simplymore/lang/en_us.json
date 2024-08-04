@@ -145,7 +145,7 @@
   "item.simplymore.scarab_roller.tooltip2": "Chance on hit to gain resistance.",
   "item.simplymore.scarab_roller.tooltip3": "Rush forwards until you hit a wall. Anyone",
   "item.simplymore.scarab_roller.tooltip4": "you ram into will be damaged and launched back.",
-  "item.simplymore.scarab_roller.tooltip5": "You may not hit the same entity twice in one run.",
+  "item.simplymore.scarab_roller.tooltip5": "You may not hit the same entity twice in one rush.",
 
   "item.simplymore.black_pearl": "Black Pearl",
   "item.simplymore.black_pearl.tooltip1": "Unique Effect: Plunder",
