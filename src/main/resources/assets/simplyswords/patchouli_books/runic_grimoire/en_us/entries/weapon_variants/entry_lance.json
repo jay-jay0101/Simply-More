@@ -6,7 +6,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "simplymore:iron_lance",
-      "text": "$(#0BE334)Item Added In Simply More$(br2)$()Commonly used in the olden era, it was said lances were used to pierce and pull people along the ground as the wielder ran around on horseback. While weilded without a secondary armament in the other hand, lances gain a boost in damage."
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()Commonly used in the olden era, it was said lances were used to pierce and pull people along the ground as the wielder ran around on horseback. While weilded without a secondary armament in the other hand and while on a mount, lances gain a boost in damage."
     },
     {
       "type": "patchouli:crafting",
