@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuraOfPurity extends AreaEffectCloudEntity {
@@ -29,11 +30,17 @@ public class AuraOfPurity extends AreaEffectCloudEntity {
         for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
             if (target.isAlive()) {
                 if(target != owner && !target.isTeammate(owner)) continue;
+                List<StatusEffectInstance> removeList = new ArrayList<>();
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION,15,0));
                 for (StatusEffectInstance effect : target.getStatusEffects()) {
-                    if(effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL) target.removeStatusEffect(effect.getEffectType());
+                    if(effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL) removeList.add(effect);
+                }
+
+                for(StatusEffectInstance effect : removeList) {
+                    target.removeStatusEffect(effect.getEffectType());
                 }
             }
+
         }
     }
 
