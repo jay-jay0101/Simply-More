@@ -1,13 +1,13 @@
 {
 	"required": true,
-	"package": "net.rosemarythmye.simplymore.mixin",
+	"package": "net.rosemarythyme.simplymore.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"LivingEntityMixin",
-		"UniqueSwordMixin",
-		"MobEntityMixin",
-		"PlayerEntityMixin"
-	],
+      "LivingEntityMixin",
+      "MobEntityMixin",
+      "PlayerEntityMixin",
+      "UniqueSwordMixin"
+    ],
 	"injectors": {
 		"defaultRequire": 1
 	}
