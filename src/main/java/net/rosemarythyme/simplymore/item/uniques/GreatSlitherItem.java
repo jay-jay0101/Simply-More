@@ -16,8 +16,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.GreatSlitherFangEntity;
 import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
-import org.joml.Vector2d;
 
 import java.util.List;
 
@@ -29,6 +29,7 @@ public class GreatSlitherItem extends UniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
             if (attacker.getRandom().nextInt(100) <= 25) {
@@ -39,26 +40,31 @@ public class GreatSlitherItem extends UniqueSwordItem {
         return super.postHit(stack, target, attacker);
     }
 
-
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!user.getWorld().isClient()) {
-            for (int i = 1; i < 7; i++) {
-                Vector2d position = new Vector2d(user.getX(), user.getZ());
-                float yaw = (float) Math.toRadians(user.getYaw());
-                double dZ = Math.cos(yaw) * i;
-                double dX = Math.sin(yaw) * -i;
-
-                Vector2d rotation = new Vector2d(1.2*dX, 1.2 * dZ);
-                position = new Vector2d(position.x + rotation.x, position.y + rotation.y);
-                world.spawnEntity(new GreatSlitherFangEntity(world, position.x, user.getY(), position.y, user.getYaw(), 0, user));
-            }
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+        if (user.getWorld().isClient()) {
+            return super.use(world, user, hand);
         }
+
+        double yawAngle = Math.toRadians(user.getYaw());
+        double cosYaw = Math.cos(yawAngle);
+        double sinYaw = Math.sin(yawAngle);
+
+        for (int distanceMultiplier = 1; distanceMultiplier < 7; distanceMultiplier++) {
+            double offsetX = -distanceMultiplier * sinYaw;
+            double offsetZ = distanceMultiplier * cosYaw;
+
+            double spawnX = user.getX() + 1.2 * offsetX;
+            double spawnZ = user.getZ() + 1.2 * offsetZ;
+
+            world.spawnEntity(new GreatSlitherFangEntity(world, spawnX, user.getY(), spawnZ, user.getYaw(), 0, user));
+        }
+
+        user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         return super.use(world, user, hand);
     }
 
-
+    @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
         Style ABILITY = HelperMethods.getStyle("ability");
@@ -74,18 +80,10 @@ public class GreatSlitherItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
-
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

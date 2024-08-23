@@ -14,8 +14,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
@@ -57,20 +58,20 @@ public class BladeOfTheGrotesqueItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
-
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(world.getTime() % 20 == 0 && entity instanceof PlayerEntity playerEntity && selected) playerEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.GROTESQUE,9999999,0,true,false,false));
+        if(world.getTime() % 20 == 0 && entity instanceof PlayerEntity playerEntity && selected)
+            playerEntity.addStatusEffect(
+                    new StatusEffectInstance(
+                            ModEffectsRegistry.GROTESQUE,
+                            9999999,
+                            0,
+                            true,
+                            false,
+                            false)
+            );
 
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

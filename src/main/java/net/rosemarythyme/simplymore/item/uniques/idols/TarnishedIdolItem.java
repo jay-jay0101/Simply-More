@@ -44,7 +44,6 @@ public class TarnishedIdolItem extends SwordItem {
         return super.postHit(stack, target, attacker);
     }
 
-    // TODO: This method should be redone in order to allow for it to make use of a lang file. This will allow for translations to be added.
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style TEXT = HelperMethods.getStyle("text");

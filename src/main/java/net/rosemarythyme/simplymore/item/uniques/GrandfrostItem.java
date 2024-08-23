@@ -15,9 +15,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -30,43 +32,54 @@ public class GrandfrostItem extends UniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (attacker.getRandom().nextInt(100) <= 25 || target.isBlocking()) {
+                if (attacker.getRandom().nextBetween(1, 100) <= 25 || target.isBlocking()) {
                     target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL, 140, 0), attacker);
                 }
             }
         return super.postHit(stack, target, attacker);
     }
 
-
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!user.getWorld().isClient()) {
-            boolean use = false;
-            for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(user.getX()-5,user.getY()-2,user.getZ()-5,user.getX()+5,user.getY()+5,user.getZ()+5))) {
-                if(livingEntity == user || livingEntity.isTeammate(user)) continue;
-                use = true;
-                double xVelocity = livingEntity.getX()-user.getX();
-                double zVelocity = livingEntity.getZ()-user.getZ();
-                double ratioMax = Math.abs(xVelocity)+ Math.abs(zVelocity);
-                float strength = 3.5f;
+        if (user.getWorld().isClient()) {
+            return super.use(world, user, hand);
+        }
 
-                xVelocity *= strength/ratioMax;
-                zVelocity *= strength/ratioMax;
+        Box box = new Box(user.getX() - 5, user.getY() - 2, user.getZ() - 5, user.getX() + 5, user.getY() + 5, user.getZ() + 5);
+        List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
-                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL,200,0));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,200,3));
-                livingEntity.setVelocity(xVelocity,0.4,zVelocity);
+        if (livingEntities.size() > 1) {
+            for (LivingEntity livingEntity : livingEntities) {
+                if (livingEntity == user || livingEntity.isTeammate(user)) {
+                    continue;
+                }
+
+                Vec3d userPosition = user.getPos();
+                Vec3d entityPosition = livingEntity.getPos();
+
+                double deltaX = entityPosition.getX() - userPosition.getX();
+                double deltaZ = entityPosition.getZ() - userPosition.getZ();
+                double distance = Math.hypot(deltaX, deltaZ);
+
+                if (distance == 0) {
+                    return super.use(world, user, hand);
+                }
+
+                float knockbackStrength = 3.5f;
+                double normalizedDeltaX = deltaX / distance;
+                double normalizedDeltaZ = deltaZ / distance;
+
+                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL, 200, 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 3));
+                livingEntity.setVelocity(normalizedDeltaX * knockbackStrength, 0.4, normalizedDeltaZ * knockbackStrength);
                 livingEntity.velocityModified = true;
             }
-
-            if(use) {
-                user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
-                if(!user.getWorld().isClient()) ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNOWFLAKE,user.getX(),user.getY()+3,user.getZ(),1000,3,0,3,0.25);
-                user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
-
-            }
+            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNOWFLAKE, user.getX(), user.getY() + 3, user.getZ(), 1000, 3, 0, 3, 0.25);
+            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
         }
         return super.use(world, user, hand);
     }
@@ -88,18 +101,10 @@ public class GrandfrostItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
-
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

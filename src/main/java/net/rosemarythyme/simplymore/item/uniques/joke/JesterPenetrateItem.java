@@ -47,7 +47,6 @@ public class JesterPenetrateItem extends LanceItem {
         };
     }
 
-    // TODO: This method should be redone in order to allow for it to make use of a lang file. This will allow for translations to be added.
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style ABILITY = HelperMethods.getStyle("ability");
@@ -73,7 +72,8 @@ public class JesterPenetrateItem extends LanceItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
+        if(world.getTime() % 20 == 0
+                && entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 1));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0));

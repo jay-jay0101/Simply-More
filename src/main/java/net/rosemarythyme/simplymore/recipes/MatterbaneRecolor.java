@@ -17,8 +17,8 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.Simplymore;
-import net.rosemarythyme.simplymore.item.uniques.MatterbaneItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.item.uniques.MatterbaneItem;
 
 public class MatterbaneRecolor extends SpecialCraftingRecipe {
     public MatterbaneRecolor(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
@@ -68,6 +68,7 @@ public class MatterbaneRecolor extends SpecialCraftingRecipe {
         return i == 1 && j == 1;
     }
 
+    // TODO: Check the code here and clarify variable names
     public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
         ItemStack itemStack = ItemStack.EMPTY;
         DyeItem dyeItem = (DyeItem)Items.WHITE_DYE;

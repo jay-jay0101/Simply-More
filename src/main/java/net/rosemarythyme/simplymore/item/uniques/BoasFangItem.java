@@ -19,8 +19,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 import org.joml.Vector3f;
 
@@ -34,6 +35,7 @@ public class BoasFangItem extends UniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
             if(attacker.getRandom().nextInt(100) <= 20) {
@@ -92,6 +94,7 @@ public class BoasFangItem extends UniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
         Style ABILITY = HelperMethods.getStyle("ability");
@@ -109,18 +112,10 @@ public class BoasFangItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
-
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.SPORE_BLOSSOM_AIR, ParticleTypes.SPORE_BLOSSOM_AIR, ParticleTypes.SPORE_BLOSSOM_AIR, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

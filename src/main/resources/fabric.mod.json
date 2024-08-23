@@ -17,13 +17,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.rosemarythmye.simplymore.Simplymore"
+			"net.rosemarythyme.simplymore.Simplymore"
 		],
 		"client": [
-			"net.rosemarythmye.simplymore.SimplymoreClient"
+			"net.rosemarythyme.simplymore.SimplymoreClient"
 		],
 		"fabric-datagen": [
-			"net.rosemarythmye.simplymore.SimplymoreDataGenerator"
+			"net.rosemarythyme.simplymore.SimplymoreDataGenerator"
 		]
 	},
 	"mixins": [

@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.normal.SimplyMoreSwordItem;
 import net.sweenus.simplyswords.util.HelperMethods;
@@ -31,25 +32,57 @@ public class ThePanItem extends SimplyMoreSwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextInt(100) <= 30) {
-                attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.PLAYERS,1,1);
-                double xVelocity = target.getX()-attacker.getX();
-                double zVelocity = target.getZ()-attacker.getZ();
-                double ratioMax = Math.abs(xVelocity)+ Math.abs(zVelocity);
-                float strength = 20f;
-
-                xVelocity *= strength/ratioMax;
-                zVelocity *= strength/ratioMax;
-
-                target.setVelocity(xVelocity,0.2,zVelocity);
-                target.velocityModified = true;
-            }
+        // Check if the game is running on the client side.
+        // If so, we don't need to handle the knockback effect or sound playback.
+        if (attacker.getWorld().isClient()) {
+            // Call the superclass's postHit method to handle any default behavior.
+            return super.postHit(stack, target, attacker);
         }
-        return super.postHit(stack, target, attacker);
+
+        // Check if the attacker's random number generator returns a value greater than 30.
+        // If so, we don't apply the knockback effect.
+        // This is, functionally, the same as checking if the attacker's random number generator returns a value less than or equal to 30.
+        if (attacker.getRandom().nextBetween(1, 100) > 30) {
+            // Call the superclass's postHit method to handle any default behavior.
+            return super.postHit(stack, target, attacker);
+        }
+
+        // Get the positions of the target and attacker entities.
+        Vec3d targetPosition = target.getPos();
+        Vec3d attackerPosition = attacker.getPos();
+
+        // Calculate the difference in x and z coordinates between the target and attacker positions.
+        double deltaX = targetPosition.getX() - attackerPosition.getX();
+        double deltaZ = targetPosition.getZ() - attackerPosition.getZ();
+
+        // Calculate the distance between the target and attacker positions using the Pythagorean theorem.
+        double distance = Math.hypot(deltaX, deltaZ);
+
+        // Check if the distance is zero.
+        // If so, we don't apply the knockback effect.
+        if (distance == 0) {
+            // Call the superclass's postHit method to handle any default behavior.
+            return super.postHit(stack, target, attacker);
+        }
+
+        // Define the knockback strength.
+        float knockbackStrength = 20f;
+
+        // Normalize the delta x and z values to get the direction of the knockback.
+        double normalizedDeltaX = deltaX / distance;
+        double normalizedDeltaZ = deltaZ / distance;
+
+        // Apply the knockback effect to the target entity.
+        target.setVelocity(normalizedDeltaX * knockbackStrength, 0.2, normalizedDeltaZ * knockbackStrength);
+        target.velocityModified = true;
+
+        // Play the sound effect at the attacker's position.
+        attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.PLAYERS, 1, 1);
+
+        // Return true to indicate that the method handled the hit.
+        return true;
     }
 
-    // TODO: This method should be redone in order to allow for it to make use of a lang file. This will allow for translations to be added.
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style ABILITY = HelperMethods.getStyle("ability");
