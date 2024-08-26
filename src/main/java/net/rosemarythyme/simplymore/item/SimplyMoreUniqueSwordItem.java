@@ -14,17 +14,18 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.item.uniques.idols.DarksentItem;
 import net.rosemarythyme.simplymore.item.uniques.idols.HolyLightItem;
+import net.sweenus.simplyswords.item.UniqueSwordItem;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UniqueSwordItem extends net.sweenus.simplyswords.item.UniqueSwordItem {
+public class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     String iRarity = "UNIQUE";
     String[] repairIngredient;
 
-    public UniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Item.Settings settings) {
+    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Item.Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings.fireproof());
         this.repairIngredient = new String[]{"simplyswords:runic_tablet"};
     }

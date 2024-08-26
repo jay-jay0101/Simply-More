@@ -16,7 +16,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.BlackPearlFireballEntity;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
@@ -24,7 +24,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 
-public class BlackPearlItem extends UniqueSwordItem {
+public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 180;
 
     public BlackPearlItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {

@@ -15,15 +15,16 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 
-public class SmoulderingRuinItem extends UniqueSwordItem {
+public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 800;
 
     public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -32,10 +33,15 @@ public class SmoulderingRuinItem extends UniqueSwordItem {
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextInt(100) <= 25) {
+            if (attacker.getRandom().nextBetween(1, 100) <= 25) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 100, 0), attacker);
                 if(target.hasStatusEffect(ModEffectsRegistry.WITHERING_FATE)) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.WITHERING_FATE, target.getStatusEffect(ModEffectsRegistry.WITHERING_FATE).getDuration(), target.getStatusEffect(ModEffectsRegistry.WITHERING_FATE).getAmplifier()+1), attacker);
+                    target.addStatusEffect(
+                            new StatusEffectInstance(
+                                    ModEffectsRegistry.WITHERING_FATE,
+                                    target.getStatusEffect(ModEffectsRegistry.WITHERING_FATE).getDuration(),
+                                    target.getStatusEffect(ModEffectsRegistry.WITHERING_FATE).getAmplifier() + 1
+                            ), attacker);
                 }
             }
         }
@@ -82,18 +88,10 @@ public class SmoulderingRuinItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.CRIMSON_SPORE, ParticleTypes.CRIMSON_SPORE, ParticleTypes.CRIMSON_SPORE, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

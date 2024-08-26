@@ -14,14 +14,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.VipersCallProjectileAreaEffectCloudEntity;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 
-public class VipersCallItem extends UniqueSwordItem {
+public class VipersCallItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 1200;
 
     public VipersCallItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -59,7 +60,6 @@ public class VipersCallItem extends UniqueSwordItem {
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
-    private static int stepMod = 0;
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
@@ -72,15 +72,8 @@ public class VipersCallItem extends UniqueSwordItem {
             }
         }
 
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.ASH, ParticleTypes.ASH, ParticleTypes.ASH, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

@@ -15,35 +15,34 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.EruptionAreaEffectCloudEntity;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 
-public class MoltenFlareItem extends UniqueSwordItem {
+public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 300;
 
     public MoltenFlareItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient()) {
-            if (!attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
-                if (attacker.getRandom().nextInt(100) <= 20) {
-                    eruption(4, target, attacker);
-                }
-            } else {
-                eruption(7, target, attacker);
+        if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
+
+        if (attacker.getRandom().nextBetween(1, 100) <= 20) {
+            eruption(attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE) ? 7 : 4, attacker);
+            if (attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
                 attacker.removeStatusEffect(ModEffectsRegistry.MOLTEN_FLARE);
             }
         }
         return super.postHit(stack, target, attacker);
     }
-
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
@@ -54,12 +53,13 @@ public class MoltenFlareItem extends UniqueSwordItem {
         return super.use(world, user, hand);
     }
 
-    private void eruption(int radius,LivingEntity target,LivingEntity attacker) {
+    private void eruption(int radius, LivingEntity attacker) {
         ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.LAVA, attacker.getX(), attacker.getY(), attacker.getZ(), 100, 0, 0, 0, 0);
         attacker.getWorld().spawnEntity(new EruptionAreaEffectCloudEntity(attacker.getWorld(),attacker.getX(),attacker.getY(),attacker.getZ(),radius,attacker));
         attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundRegistry.SPELL_FIRE.get(), attacker.getSoundCategory(), 2F, 0.3F);
     }
 
+    @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
         Style ABILITY = HelperMethods.getStyle("ability");
@@ -76,18 +76,10 @@ public class MoltenFlareItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

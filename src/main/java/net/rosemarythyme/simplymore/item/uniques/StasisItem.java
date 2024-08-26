@@ -20,12 +20,13 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
-public class StasisItem extends UniqueSwordItem {
+public class StasisItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 700;
     int onHitCooldown = 80;
 
@@ -36,7 +37,7 @@ public class StasisItem extends UniqueSwordItem {
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (attacker.getRandom().nextInt(100) <= 20) {
+                if (attacker.getRandom().nextBetween(1, 100) <= 20) {
                     attacker.getWorld().playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.PLAYERS,0.5f,2f);
                     ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),50,0.15,0.25,0.15,0.1);
                     if (target instanceof PlayerEntity playerTarget) {
@@ -118,18 +119,9 @@ public class StasisItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
-
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.GLOW, ParticleTypes.GLOW, ParticleTypes.GLOW, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.GLOW);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

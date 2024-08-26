@@ -12,16 +12,16 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 
-public class HolyLightItem extends UniqueSwordItem {
+public class HolyLightItem extends SimplyMoreUniqueSwordItem {
 
     int skillCooldown = 800;
 

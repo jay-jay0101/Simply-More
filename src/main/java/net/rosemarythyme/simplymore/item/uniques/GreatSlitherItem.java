@@ -15,14 +15,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.GreatSlitherFangEntity;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 
-public class GreatSlitherItem extends UniqueSwordItem {
+public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 200;
 
     public GreatSlitherItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -32,7 +32,7 @@ public class GreatSlitherItem extends UniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextInt(100) <= 25) {
+            if (attacker.getRandom().nextBetween(1, 100) <= 25) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 90, 0), attacker);
             }
         }

@@ -19,8 +19,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 import org.joml.Vector3f;
@@ -28,7 +28,7 @@ import org.joml.Vector3f;
 import java.util.List;
 
 
-public class BoasFangItem extends UniqueSwordItem {
+public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 600;
 
     public BoasFangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -38,7 +38,7 @@ public class BoasFangItem extends UniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if(attacker.getRandom().nextInt(100) <= 20) {
+            if(attacker.getRandom().nextBetween(1, 100) <= 20) {
                 target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SUFFOCATION,120));
             }
         }

@@ -17,15 +17,16 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 
-public class SoulForeseerItem extends UniqueSwordItem {
+public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 100;
     public SoulForeseerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -33,7 +34,7 @@ public class SoulForeseerItem extends UniqueSwordItem {
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if(attacker.getRandom().nextInt(100) <= 30 && !target.hasStatusEffect(ModEffectsRegistry.FORESEEN)) {
+            if(attacker.getRandom().nextBetween(1, 100) <= 30 && !target.hasStatusEffect(ModEffectsRegistry.FORESEEN)) {
                 attacker.getWorld().playSound(null,attacker.getBlockPos(),SoundRegistry.MAGIC_SHAMANIC_NORDIC_27.get(),SoundCategory.PLAYERS);
                 target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.FORESEEN,160,0));
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING,10,0));
@@ -89,18 +90,9 @@ public class SoulForeseerItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
-
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.SOUL, ParticleTypes.SCULK_SOUL, ParticleTypes.WARPED_SPORE, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SOUL, ParticleTypes.SCULK_SOUL, ParticleTypes.WARPED_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

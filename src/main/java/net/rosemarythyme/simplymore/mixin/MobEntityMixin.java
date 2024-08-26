@@ -14,7 +14,8 @@ public abstract class MobEntityMixin {
 	@ModifyReturnValue(at = @At("RETURN"), method = "tryAttack")
 	private boolean tryAttack(boolean originalReturnValue, Entity target) {
 		MobEntity mobEntity = (MobEntity) (Object) this;
-		if(mobEntity.hasStatusEffect(ModEffectsRegistry.STUNNED)) return false;
+		if(mobEntity.hasStatusEffect(ModEffectsRegistry.STUNNED))
+			return false;
 		if (originalReturnValue && target instanceof PlayerEntity player && player.hasStatusEffect(ModEffectsRegistry.SOLIDIFIED)) {
 			mobEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED,90),player);
 		}

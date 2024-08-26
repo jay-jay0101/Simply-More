@@ -16,12 +16,12 @@ import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.Simplymore;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.uniques.MatterbaneItem;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 
-public class MatterbaneRecolor extends SpecialCraftingRecipe {
-    public MatterbaneRecolor(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
+public class MatterbaneRecolorRecipe extends SpecialCraftingRecipe {
+    public MatterbaneRecolorRecipe(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
         super(identifier, craftingRecipeCategory);
     }
     private static final String[] colours = {
@@ -69,30 +69,30 @@ public class MatterbaneRecolor extends SpecialCraftingRecipe {
     }
 
     // TODO: Check the code here and clarify variable names
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        DyeItem dyeItem = (DyeItem)Items.WHITE_DYE;
+    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
+        ItemStack matterbaneItemStack = ItemStack.EMPTY;
+        DyeItem dyeItem = (DyeItem) Items.WHITE_DYE;
 
-        for(int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack2 = recipeInputInventory.getStack(i);
-            if (!itemStack2.isEmpty()) {
-                Item item = itemStack2.getItem();
-                if (item instanceof MatterbaneItem) {
-                    itemStack = itemStack2;
-                } else if (item instanceof DyeItem) {
-                    dyeItem = (DyeItem)item;
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack inputStack = inventory.getStack(i);
+            if (!inputStack.isEmpty()) {
+                Item inputItem = inputStack.getItem();
+                if (inputItem instanceof MatterbaneItem) {
+                    matterbaneItemStack = inputStack;
+                } else if (inputItem instanceof DyeItem) {
+                    dyeItem = (DyeItem) inputItem;
                 }
             }
         }
 
-        ItemStack itemStack3 = new ItemStack(ModItemsRegistry.MATTERBANE);
-        if (itemStack.hasNbt()) {
-            itemStack3.setNbt(itemStack.getNbt().copy());
+        ItemStack recoloredMatterbane = new ItemStack(ModItemsRegistry.MATTERBANE);
+        if (matterbaneItemStack.hasNbt() && matterbaneItemStack.getNbt() != null) {
+            recoloredMatterbane.setNbt(matterbaneItemStack.getNbt().copy());
         }
 
-        itemStack3.getOrCreateNbt().putInt("simplymore:color",getIndex(colours,dyeItem.getColor().getName()));
+        recoloredMatterbane.getOrCreateNbt().putInt("simplymore:color",getIndex(colours,dyeItem.getColor().getName()));
 
-        return itemStack3;
+        return recoloredMatterbane;
     }
 
     public static int getIndex(String[] array, String target) {
@@ -109,7 +109,7 @@ public class MatterbaneRecolor extends SpecialCraftingRecipe {
     }
 
     public Identifier getId() {
-        return new Identifier(Simplymore.ID, "matterbane_recolor");
+        return new Identifier(SimplyMore.ID, "matterbane_recolor");
     }
 
     public RecipeSerializer<?> getSerializer() {return RecipeSerializer.ARMOR_DYE;}

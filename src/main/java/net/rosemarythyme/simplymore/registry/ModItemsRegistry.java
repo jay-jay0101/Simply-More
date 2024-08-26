@@ -12,7 +12,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
-import net.rosemarythyme.simplymore.Simplymore;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.item.RuneCarverItem;
@@ -35,7 +35,7 @@ public class ModItemsRegistry {
             "iron_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGreatKatanaDamageModifier() +3,
+                    attributes.getGreatKatanaDamageModifier() + 3,
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -45,7 +45,7 @@ public class ModItemsRegistry {
             "gold_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGreatKatanaDamageModifier() +3,
+                    attributes.getGreatKatanaDamageModifier() + 3,
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -55,7 +55,7 @@ public class ModItemsRegistry {
             "diamond_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGreatKatanaDamageModifier() +3,
+                    attributes.getGreatKatanaDamageModifier() + 3,
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -65,7 +65,7 @@ public class ModItemsRegistry {
             "netherite_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGreatKatanaDamageModifier() +3,
+                    attributes.getGreatKatanaDamageModifier() + 3,
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -76,7 +76,7 @@ public class ModItemsRegistry {
             "runic_great_katana",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGreatKatanaDamageModifier() +3,
+                    attributes.getGreatKatanaDamageModifier() + 3,
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -87,7 +87,7 @@ public class ModItemsRegistry {
             "iron_grandsword",
             new GrandSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGrandswordDamageModifier() +3,
+                    attributes.getGrandswordDamageModifier() + 3,
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -97,7 +97,7 @@ public class ModItemsRegistry {
             "gold_grandsword",
             new GrandSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGrandswordDamageModifier() +3,
+                    attributes.getGrandswordDamageModifier() + 3,
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -107,7 +107,7 @@ public class ModItemsRegistry {
             "diamond_grandsword",
             new GrandSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGrandswordDamageModifier() +3,
+                    attributes.getGrandswordDamageModifier() + 3,
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -117,7 +117,7 @@ public class ModItemsRegistry {
             "netherite_grandsword",
             new GrandSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGrandswordDamageModifier() +3,
+                    attributes.getGrandswordDamageModifier() + 3,
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -128,7 +128,7 @@ public class ModItemsRegistry {
             "runic_grandsword",
             new RunicGrandSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGrandswordDamageModifier() +3,
+                    attributes.getGrandswordDamageModifier() + 3,
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -140,7 +140,7 @@ public class ModItemsRegistry {
             "iron_backhand_blade", 
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getBackhandBladeDamageModifier() +3,
+                    attributes.getBackhandBladeDamageModifier() + 3,
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -149,7 +149,7 @@ public class ModItemsRegistry {
     public static final Item GOLD_BACKHAND_BLADE = registerItem("gold_backhand_blade",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getBackhandBladeDamageModifier() +3,
+                    attributes.getBackhandBladeDamageModifier() + 3,
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -159,7 +159,7 @@ public class ModItemsRegistry {
             "diamond_backhand_blade",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getBackhandBladeDamageModifier() +3,
+                    attributes.getBackhandBladeDamageModifier() + 3,
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -169,7 +169,7 @@ public class ModItemsRegistry {
             "netherite_backhand_blade",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getBackhandBladeDamageModifier() +3,
+                    attributes.getBackhandBladeDamageModifier() + 3,
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -180,7 +180,7 @@ public class ModItemsRegistry {
             "runic_backhand_blade", 
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getBackhandBladeDamageModifier() +3,
+                    attributes.getBackhandBladeDamageModifier() + 3,
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -191,7 +191,7 @@ public class ModItemsRegistry {
             "iron_lance",
             new LanceItem(
                     ToolMaterials.IRON,
-                    attributes.getLanceDamageModifier() +3,
+                    attributes.getLanceDamageModifier() + 3,
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -201,7 +201,7 @@ public class ModItemsRegistry {
             "gold_lance",
             new LanceItem(
                     ToolMaterials.GOLD,
-                    attributes.getLanceDamageModifier() +3,
+                    attributes.getLanceDamageModifier() + 3,
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"));
@@ -209,7 +209,7 @@ public class ModItemsRegistry {
             "diamond_lance",
             new LanceItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getLanceDamageModifier() +3,
+                    attributes.getLanceDamageModifier() + 3,
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -219,7 +219,7 @@ public class ModItemsRegistry {
             "netherite_lance",
             new LanceItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getLanceDamageModifier() +3,
+                    attributes.getLanceDamageModifier() + 3,
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -230,7 +230,7 @@ public class ModItemsRegistry {
             "runic_lance",
             new RunicLanceItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getLanceDamageModifier() +3,
+                    attributes.getLanceDamageModifier() + 3,
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -241,7 +241,7 @@ public class ModItemsRegistry {
             "iron_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getKhopeshDamageModifier() +3,
+                    attributes.getKhopeshDamageModifier() + 3,
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -252,7 +252,7 @@ public class ModItemsRegistry {
             "gold_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getKhopeshDamageModifier() +3,
+                    attributes.getKhopeshDamageModifier() + 3,
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -263,7 +263,7 @@ public class ModItemsRegistry {
             "diamond_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getKhopeshDamageModifier() +3,
+                    attributes.getKhopeshDamageModifier() + 3,
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -274,7 +274,7 @@ public class ModItemsRegistry {
             "netherite_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getKhopeshDamageModifier() +3,
+                    attributes.getKhopeshDamageModifier() + 3,
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -285,7 +285,7 @@ public class ModItemsRegistry {
             "runic_khopesh",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getKhopeshDamageModifier() +3,
+                    attributes.getKhopeshDamageModifier() + 3,
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -295,7 +295,7 @@ public class ModItemsRegistry {
             "iron_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getDaggerDamageModifier() +3,
+                    attributes.getDaggerDamageModifier() + 3,
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -306,7 +306,7 @@ public class ModItemsRegistry {
             "gold_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getDaggerDamageModifier() +3,
+                    attributes.getDaggerDamageModifier() + 3,
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -317,7 +317,7 @@ public class ModItemsRegistry {
             "diamond_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getDaggerDamageModifier() +3,
+                    attributes.getDaggerDamageModifier() + 3,
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -328,7 +328,7 @@ public class ModItemsRegistry {
             "netherite_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getDaggerDamageModifier() +3,
+                    attributes.getDaggerDamageModifier() + 3,
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -339,7 +339,7 @@ public class ModItemsRegistry {
             "runic_dagger",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getDaggerDamageModifier() +3,
+                    attributes.getDaggerDamageModifier() + 3,
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -349,7 +349,7 @@ public class ModItemsRegistry {
             "iron_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getPernachDamageModifier() +3,
+                    attributes.getPernachDamageModifier() + 3,
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -360,7 +360,7 @@ public class ModItemsRegistry {
             "gold_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getPernachDamageModifier() +3,
+                    attributes.getPernachDamageModifier() + 3,
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -371,7 +371,7 @@ public class ModItemsRegistry {
             "diamond_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getPernachDamageModifier() +3,
+                    attributes.getPernachDamageModifier() + 3,
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -382,7 +382,7 @@ public class ModItemsRegistry {
             "netherite_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getPernachDamageModifier() +3,
+                    attributes.getPernachDamageModifier() + 3,
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:netherite_ingot"
@@ -393,7 +393,7 @@ public class ModItemsRegistry {
             "runic_pernach",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getPernachDamageModifier() +3,
+                    attributes.getPernachDamageModifier() + 3,
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings()
             )
@@ -403,7 +403,7 @@ public class ModItemsRegistry {
             "iron_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getQuarterstaffDamageModifier() +3,
+                    attributes.getQuarterstaffDamageModifier() + 3,
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -414,7 +414,7 @@ public class ModItemsRegistry {
             "gold_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getQuarterstaffDamageModifier() +3,
+                    attributes.getQuarterstaffDamageModifier() + 3,
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -425,7 +425,7 @@ public class ModItemsRegistry {
             "diamond_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getQuarterstaffDamageModifier() +3,
+                    attributes.getQuarterstaffDamageModifier() + 3,
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -436,7 +436,7 @@ public class ModItemsRegistry {
             "netherite_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getQuarterstaffDamageModifier() +3,
+                    attributes.getQuarterstaffDamageModifier() + 3,
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -447,7 +447,7 @@ public class ModItemsRegistry {
             "runic_quarterstaff",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getQuarterstaffDamageModifier() +3,
+                    attributes.getQuarterstaffDamageModifier() + 3,
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -458,7 +458,7 @@ public class ModItemsRegistry {
             "iron_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGreatSpearDamageModifier() +3,
+                    attributes.getGreatSpearDamageModifier() + 3,
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -468,7 +468,7 @@ public class ModItemsRegistry {
             "gold_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGreatSpearDamageModifier() +3,
+                    attributes.getGreatSpearDamageModifier() + 3,
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -478,7 +478,7 @@ public class ModItemsRegistry {
             "diamond_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGreatSpearDamageModifier() +3,
+                    attributes.getGreatSpearDamageModifier() + 3,
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -488,7 +488,7 @@ public class ModItemsRegistry {
             "netherite_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGreatSpearDamageModifier() +3,
+                    attributes.getGreatSpearDamageModifier() + 3,
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -498,7 +498,7 @@ public class ModItemsRegistry {
             "runic_great_spear",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGreatSpearDamageModifier() +3,
+                    attributes.getGreatSpearDamageModifier() + 3,
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -509,7 +509,7 @@ public class ModItemsRegistry {
             "iron_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getDeerHornsDamageModifier() +3,
+                    attributes.getDeerHornsDamageModifier() + 3,
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -519,7 +519,7 @@ public class ModItemsRegistry {
             "gold_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getDeerHornsDamageModifier() +3,
+                    attributes.getDeerHornsDamageModifier() + 3,
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -529,7 +529,7 @@ public class ModItemsRegistry {
             "diamond_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getDeerHornsDamageModifier() +3,
+                    attributes.getDeerHornsDamageModifier() + 3,
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -539,7 +539,7 @@ public class ModItemsRegistry {
             "netherite_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getDeerHornsDamageModifier() +3,
+                    attributes.getDeerHornsDamageModifier() + 3,
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -549,7 +549,7 @@ public class ModItemsRegistry {
             "runic_deer_horns",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getDeerHornsDamageModifier() +3,
+                    attributes.getDeerHornsDamageModifier() + 3,
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -562,7 +562,7 @@ public class ModItemsRegistry {
             "great_slither",
             new GreatSlitherItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getGreatSlitherDamage()-6,
+                    attributes.getGreatSlitherDamage() - 6,
                     (float)attributes.getGreatSlitherSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -573,7 +573,7 @@ public class ModItemsRegistry {
             "molten_flare",
             new MoltenFlareItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getMoltenFlareDamage()-6,
+                    attributes.getMoltenFlareDamage() - 6,
                     (float)attributes.getMoltenFlareSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -584,7 +584,7 @@ public class ModItemsRegistry {
             "grandfrost",
             new GrandfrostItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getGrandfrostDamage()-6,
+                    attributes.getGrandfrostDamage() - 6,
                     (float)attributes.getGrandfrostSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -595,7 +595,7 @@ public class ModItemsRegistry {
             "mimicry",
             new MimicryItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getMimicryPurityDamage()-6,
+                    attributes.getMimicryPurityDamage() - 6,
                     (float)attributes.getMimicryPuritySwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -605,7 +605,7 @@ public class ModItemsRegistry {
     public static final Item GLIMMERSTEP = registerItem(
             "glimmerstep",
             new GlimmerstepItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getGlimmerstepDamage()-6,
+                    attributes.getGlimmerstepDamage() - 6,
                     (float)attributes.getGlimmerstepSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -615,7 +615,7 @@ public class ModItemsRegistry {
     public static final Item THEBLOODHARVESTER = registerItem(
             "the_blood_harvester",
             new TheBloodHarvesterItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTheBloodHarvesterDamage()-6,
+                    attributes.getTheBloodHarvesterDamage() - 6,
                     (float)attributes.getTheBloodHarvesterSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -625,7 +625,7 @@ public class ModItemsRegistry {
     public static final Item JESTER_PENETRATE = registerItem(
             "jester_penetrate",
             new JesterPenetrateItem(SimplyMoreToolMaterial.SIMPLY_MORE_JOKE_UNIQUE,
-                    attributes.getJesterPenetrateDamage()-6,
+                    attributes.getJesterPenetrateDamage() - 6,
                     (float)attributes.getJesterPenetrateSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -636,7 +636,7 @@ public class ModItemsRegistry {
     public static final Item SCARAB_ROLLER = registerItem(
             "scarab_roller",
             new ScarabRollerItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getScarabRollerDamage()-6,
+                    attributes.getScarabRollerDamage() - 6,
                     (float)attributes.getScarabRollerSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -647,7 +647,7 @@ public class ModItemsRegistry {
     public static final Item BLACK_PEARL = registerItem(
             "black_pearl",
             new BlackPearlItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getBlackPearlDamage()-6,
+                    attributes.getBlackPearlDamage() - 6,
                     (float)attributes.getBlackPearlSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -658,7 +658,7 @@ public class ModItemsRegistry {
     public static final Item THE_PAN = registerItem(
             "the_pan",
             new ThePanItem(SimplyMoreToolMaterial.SIMPLY_MORE_JOKE_UNIQUE,
-                    attributes.getThePanDamage()-6,
+                    attributes.getThePanDamage() - 6,
                     (float)attributes.getThePanSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -669,7 +669,7 @@ public class ModItemsRegistry {
     public static final Item THEVESSELBREACH = registerItem(
             "the_vessel_breach",
             new TheVesselBreachItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTheVesselBreachDamage()-6,
+                    attributes.getTheVesselBreachDamage() - 6,
                     (float)attributes.getTheVesselBreachSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -680,7 +680,7 @@ public class ModItemsRegistry {
     public static final Item BLADEOFTHEGROTESQUE = registerItem(
             "blade_of_the_grotesque",
             new BladeOfTheGrotesqueItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getBladeOfTheGrotesqueDamage()-6,
+                    attributes.getBladeOfTheGrotesqueDamage() - 6,
                     (float)attributes.getBladeOfTheGrotesqueSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -691,7 +691,7 @@ public class ModItemsRegistry {
     public static final Item VIPERSCALL = registerItem(
             "vipers_call",
             new VipersCallItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getVipersCallDamage()-6,
+                    attributes.getVipersCallDamage() - 6,
                     (float)attributes.getVipersCallSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -702,7 +702,7 @@ public class ModItemsRegistry {
     public static final Item TIMEKEEPER = registerItem(
             "timekeeper",
             new TimekeeperItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTimekeeperDamage()-6,
+                    attributes.getTimekeeperDamage() - 6,
                     (float)attributes.getTimekeeperSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -713,7 +713,7 @@ public class ModItemsRegistry {
     public static final Item MATTERBANE = registerItem(
             "matterbane",
             new MatterbaneItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getMatterbaneDamage()-6,
+                    attributes.getMatterbaneDamage() - 6,
                     (float)attributes.getMatterbaneSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -724,7 +724,7 @@ public class ModItemsRegistry {
     public static final Item SMOULDERING_RUIN = registerItem(
             "smouldering_ruin",
             new SmoulderingRuinItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getSmoulderingRuinDamage()-6,
+                    attributes.getSmoulderingRuinDamage() - 6,
                     (float)attributes.getSmoulderingRuinSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -735,7 +735,7 @@ public class ModItemsRegistry {
     public static final Item STASIS = registerItem(
             "stasis",
             new StasisItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getStasisDamage()-6,
+                    attributes.getStasisDamage() - 6,
                     (float)attributes.getStasisSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -746,7 +746,7 @@ public class ModItemsRegistry {
     public static final Item TIDEBREAKER = registerItem(
             "tidebreaker",
             new TidebreakerItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTidebreakerDamage()-6,
+                    attributes.getTidebreakerDamage() - 6,
                     (float)attributes.getTidebreakerSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -757,7 +757,7 @@ public class ModItemsRegistry {
     public static final Item RUYI_JINGU_BANG = registerItem(
             "ruyi_jingu_bang",
             new RuyiJinguBangItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getRuyiJinguBangDamage()-6,
+                    attributes.getRuyiJinguBangDamage() - 6,
                     (float)attributes.getRuyiJinguBangSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -768,7 +768,7 @@ public class ModItemsRegistry {
     public static final Item RUPTURED_IDOL = registerItem(
             "ruptured_idol",
             new RupturedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getRupturedIdolDamage()-6,
+                    attributes.getRupturedIdolDamage() - 6,
                     (float)attributes.getRupturedIdolSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -779,7 +779,7 @@ public class ModItemsRegistry {
     public static final Item ASCENDED_IDOL = registerItem(
             "ascended_idol",
             new AscendedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getAscendedIdolDamage()-6,
+                    attributes.getAscendedIdolDamage() - 6,
                     (float)attributes.getAscendedIdolSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -790,7 +790,7 @@ public class ModItemsRegistry {
     public static final Item TARNISHED_IDOL = registerItem(
             "tarnished_idol",
             new TarnishedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTarnishedIdolDamage()-6,
+                    attributes.getTarnishedIdolDamage() - 6,
                     (float)attributes.getTarnishedIdolSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -801,7 +801,7 @@ public class ModItemsRegistry {
     public static final Item HOLYLIGHT = registerItem(
             "holylight",
             new HolyLightItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getHolylightDamage()-6,
+                    attributes.getHolylightDamage() - 6,
                     (float)attributes.getHolylightSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -812,7 +812,7 @@ public class ModItemsRegistry {
     public static final Item DARKSENT = registerItem(
             "darksent",
             new DarksentItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getDarksentDamage()-6,
+                    attributes.getDarksentDamage() - 6,
                     (float)attributes.getDarksentSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -823,7 +823,7 @@ public class ModItemsRegistry {
     public static final Item BOAS_FANG = registerItem(
             "boas_fang",
             new BoasFangItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getBoasFangDamage()-6,
+                    attributes.getBoasFangDamage() - 6,
                     (float)attributes.getBoasFangSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -834,7 +834,7 @@ public class ModItemsRegistry {
     public static final Item EARTHSHATTER = registerItem(
             "earthshatter",
             new EarthshatterItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getEarthshatterDamage()-6,
+                    attributes.getEarthshatterDamage() - 6,
                     (float)attributes.getEarthshatterSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -845,7 +845,7 @@ public class ModItemsRegistry {
     public static final Item SOUL_FORESEER = registerItem(
             "soul_foreseer",
             new SoulForeseerItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getSoulForeseerDamage()-6,
+                    attributes.getSoulForeseerDamage() - 6,
                     (float)attributes.getSoulForeseerSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -856,7 +856,7 @@ public class ModItemsRegistry {
     public static final Item SERPENTINE_VALOUR = registerItem(
             "serpentine_valour",
             new SerpentineValourItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getSerpentineValourDamage()-6,
+                    attributes.getSerpentineValourDamage() - 6,
                     (float)attributes.getSerpentineValourSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -867,7 +867,7 @@ public class ModItemsRegistry {
     public static final Item LUSTROUS_MOXIE = registerItem(
             "lustrous_moxie",
             new LustrousMoxieItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getLustrousMoxieDamage()-6,
+                    attributes.getLustrousMoxieDamage() - 6,
                     (float)attributes.getLustrousMoxieSwingspeed(),
                     new Item.Settings()
                             .fireproof()
@@ -897,15 +897,14 @@ public class ModItemsRegistry {
     );
 
     public static Item registerItem (String name, Item item) {
-        return Registry.register(Registries.ITEM, new Identifier(Simplymore.ID, name),item);
+        return Registry.register(Registries.ITEM, new Identifier(SimplyMore.ID, name),item);
     }
     public static void registerModItems() {
         if (FabricLoader.getInstance().isModLoaded("simplyswords")) {
-            Simplymore.LOGGER.info("Registering Items for " + Simplymore.ID);
-            Registry.register(Registries.ITEM_GROUP, Identifier.of(Simplymore.ID, "items"), ITEM_GROUP);
+            SimplyMore.LOGGER.info("Registering Items for " + SimplyMore.ID);
+            Registry.register(Registries.ITEM_GROUP, Identifier.of(SimplyMore.ID, "items"), ITEM_GROUP);
         }
     }
-
 
     private static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(ModItemsRegistry.RUNEFUSED_CARVER))

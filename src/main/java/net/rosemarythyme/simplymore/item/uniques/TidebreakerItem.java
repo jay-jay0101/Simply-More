@@ -15,15 +15,16 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.UniqueSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 
-public class TidebreakerItem extends UniqueSwordItem {
+public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
 
     int lastHitTime;
 
@@ -37,7 +38,7 @@ public class TidebreakerItem extends UniqueSwordItem {
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextInt(100) <= 25) {
+            if (attacker.getRandom().nextBetween(1, 100) <= 25) {
                 if(!attacker.hasStatusEffect(ModEffectsRegistry.TIDEBREAKER)) {
                     attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.TIDEBREAKER, 300, 0), attacker);
                 }
@@ -99,24 +100,16 @@ public class TidebreakerItem extends UniqueSwordItem {
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    private static int stepMod = 0;
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stepMod > 0) {
-            --stepMod;
-        }
-
         if(!world.isClient) {
             lastHitTime++;
 
             if(lastHitTime>200) lastHit = null;
 
         }
-        if (stepMod <= 0) {
-            stepMod = 7;
-        }
-
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER, true);
+        int stepMod = 0;
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

@@ -5,17 +5,18 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.util.Identifier;
+import net.rosemarythyme.simplymore.item.uniques.MatterbaneItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 
 @Environment(EnvType.CLIENT)
-public class SimplymoreClient implements ClientModInitializer {
+public class SimplyMoreClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         registerModelPredicates();
     }
 
     private static void registerModelPredicates() {
-        ModelPredicateProviderRegistry.register(ModItemsRegistry.MIMICRY, new Identifier(Simplymore.ID, "mimicry_form"), (itemStack, clientWorld, livingEntity, a) -> {
+        ModelPredicateProviderRegistry.register(ModItemsRegistry.MIMICRY, new Identifier(SimplyMore.ID, "mimicry_form"), (itemStack, clientWorld, livingEntity, a) -> {
             Object form = itemStack.getOrCreateNbt().get("simplymore:form");
             if (form == null) return 0f;
             return form.toString().equals("\"twisted\"") ? 1f : 0f;
@@ -24,7 +25,7 @@ public class SimplymoreClient implements ClientModInitializer {
 
         final int[] randomSprite = {0};
 
-        ModelPredicateProviderRegistry.register(ModItemsRegistry.TIMEKEEPER, new Identifier(Simplymore.ID, "sun"), (itemStack, clientWorld, livingEntity, a) -> {
+        ModelPredicateProviderRegistry.register(ModItemsRegistry.TIMEKEEPER, new Identifier(SimplyMore.ID, "sun"), (itemStack, clientWorld, livingEntity, a) -> {
 
             if (clientWorld == null) return 0f;
 
@@ -60,24 +61,15 @@ public class SimplymoreClient implements ClientModInitializer {
             return 0.11f;
         });
 
-        ModelPredicateProviderRegistry.register(ModItemsRegistry.MATTERBANE, new Identifier(Simplymore.ID, "color"), (itemStack, clientWorld, livingEntity, a) -> {
+        ModelPredicateProviderRegistry.register(ModItemsRegistry.MATTERBANE, new Identifier(SimplyMore.ID, "color"), (itemStack, clientWorld, livingEntity, a) -> {
 
             Object color = itemStack.getOrCreateNbt().get("simplymore:color");
-            if (color == null) color = "14";
-            else color = color.toString().replaceAll("\"","");
-
-            try {
-                color = Integer.parseInt((String) color);
-            } catch (NumberFormatException e) {
-                color = 14;
-            }
-
-            if ((int) color < 0 || (int) color > 15) color = 14;
+            color = MatterbaneItem.getMatterbaneColor(color);
             color = (float) ((int) color);
             return (float) color / 100f;
         });
 
-        ModelPredicateProviderRegistry.register(ModItemsRegistry.RUYI_JINGU_BANG, new Identifier(Simplymore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {
+        ModelPredicateProviderRegistry.register(ModItemsRegistry.RUYI_JINGU_BANG, new Identifier(SimplyMore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {
 
             if(livingEntity==null) return 0f;
             if(livingEntity.getActiveItem()!=itemStack) return 0f;
