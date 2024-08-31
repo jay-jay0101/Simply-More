@@ -20,7 +20,7 @@ public class MimicryEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
-        if(!(livingEntity.getMainHandStack().getItem() instanceof MimicryItem))
+        if (!(livingEntity.getMainHandStack().getItem() instanceof MimicryItem))
             livingEntity.removeStatusEffect(this);
         super.applyUpdateEffect(livingEntity, amplifier);
     }

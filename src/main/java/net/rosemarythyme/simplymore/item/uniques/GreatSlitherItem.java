@@ -65,25 +65,26 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip4").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
-    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip4").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

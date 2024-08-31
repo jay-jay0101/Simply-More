@@ -48,20 +48,6 @@ public class JesterPenetrateItem extends LanceItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip4").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
-    @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
         List<Item> potentialIngredients = new ArrayList<>(List.of());
         Arrays.stream(this.repairIngredient).toList().forEach(
@@ -72,7 +58,7 @@ public class JesterPenetrateItem extends LanceItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(world.getTime() % 20 == 0
+        if (world.getTime() % 20 == 0
                 && entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 1));
@@ -80,5 +66,20 @@ public class JesterPenetrateItem extends LanceItem {
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip4").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

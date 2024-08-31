@@ -31,6 +31,7 @@ import net.sweenus.simplyswords.item.RunicSwordItem;
 public class ModItemsRegistry {
     static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
     static WeaponAttributesConfig attributes = config.weaponAttributes;
+
     public static final Item IRON_GREAT_KATANA = registerItem(
             "iron_great_katana",
             new SimplyMoreSwordItem(

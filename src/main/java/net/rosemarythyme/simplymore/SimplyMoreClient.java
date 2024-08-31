@@ -71,21 +71,23 @@ public class SimplyMoreClient implements ClientModInitializer {
 
         ModelPredicateProviderRegistry.register(ModItemsRegistry.RUYI_JINGU_BANG, new Identifier(SimplyMore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {
 
-            if(livingEntity==null) return 0f;
-            if(livingEntity.getActiveItem()!=itemStack) return 0f;
+            if (livingEntity == null)
+                return 0f;
+            if (livingEntity.getActiveItem() != itemStack)
+                return 0f;
 
             int itemUseTime = livingEntity.getItemUseTime();
 
-            if(itemUseTime<20) return 0f;
-            if(itemUseTime<40) return 0.1f;
-            if(itemUseTime<60) return 0.2f;
-            if(itemUseTime<80) return 0.3f;
-            if(itemUseTime<100) return 0.4f;
-            if(itemUseTime<120) return 0.5f;
-            if(itemUseTime<140) return 0.6f;
-            if(itemUseTime<160) return 0.7f;
-            if(itemUseTime<180) return 0.8f;
-            if(itemUseTime<200) return 0.9f;
+            if (itemUseTime < 20) return 0f;
+            if (itemUseTime < 40) return 0.1f;
+            if (itemUseTime < 60) return 0.2f;
+            if (itemUseTime < 80) return 0.3f;
+            if (itemUseTime < 100) return 0.4f;
+            if (itemUseTime < 120) return 0.5f;
+            if (itemUseTime < 140) return 0.6f;
+            if (itemUseTime < 160) return 0.7f;
+            if (itemUseTime < 180) return 0.8f;
+            if (itemUseTime < 200) return 0.9f;
             return 1f;
 
         });

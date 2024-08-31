@@ -74,20 +74,21 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style TEXT = HelperMethods.getStyle("text");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
+        Style textStyle = HelperMethods.getStyle("text");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip5").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip6").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip7").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip8").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip8").setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

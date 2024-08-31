@@ -24,12 +24,12 @@ import java.util.List;
 public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 500;
 
-
     public BladeOfTheGrotesqueItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
             user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SOLIDIFIED,50));
@@ -39,27 +39,11 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         }
         return super.use(world, user, hand);
     }
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip6").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip7").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip8").setStyle(TEXT));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
 
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(world.getTime() % 20 == 0 && entity instanceof PlayerEntity playerEntity && selected)
+        if (world.getTime() % 20 == 0 && entity instanceof PlayerEntity playerEntity && selected)
             playerEntity.addStatusEffect(
                     new StatusEffectInstance(
                             ModEffectsRegistry.GROTESQUE,
@@ -73,5 +57,26 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip8").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

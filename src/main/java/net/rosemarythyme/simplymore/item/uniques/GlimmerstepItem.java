@@ -101,26 +101,27 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
-    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

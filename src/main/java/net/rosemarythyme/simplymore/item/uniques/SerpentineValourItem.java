@@ -32,76 +32,107 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
+    /*
+     Using LivingEntity#setHealth() is not recommended as it can, and likely will, cause issues when calculating damage
+     As such, using LivingEntity#damage() is recommended. If there is a need to bypass armour, using
+        LivingEntity#getDamageSources().magic() is recommended
+    */
+
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient()) {
-            if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(ModEffectsRegistry.VENOM)) {
-                target.setHealth(target.getHealth()-4);
-            }
+        if (attacker.getWorld().isClient())
+            return super.postHit(stack, target, attacker);
+
+        if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(ModEffectsRegistry.VENOM)) {
+            target.timeUntilRegen = 0;
+            target.damage(target.getDamageSources().generic(), 4);
         }
 
         return super.postHit(stack, target, attacker);
     }
 
-
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
-            for (int i = 1; i < 7; i++) {
+            Box entitySearchBox = new Box(
+                    user.getX() - 5,
+                    user.getY() - 5,
+                    user.getZ() - 5,
+                    user.getX() + 5,
+                    user.getY() + 5,
+                    user.getZ() + 5
+            );
 
-                boolean wait = false;
+            boolean hasEnemies = user.getWorld().getNonSpectatingEntities(LivingEntity.class, entitySearchBox).stream()
+                    .anyMatch(entity -> entity != user && !entity.isTeammate(user));
 
-                for (LivingEntity target : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(user.getX()-5,user.getY()-5,user.getZ()-5,user.getX()+5,user.getY()+5,user.getZ()+5))) {
-                    if(target == user || target.isTeammate(user)) continue;
-                    wait = true;
-                }
-                if(wait) {
-                    PoisonBoltAreaEffectCloudEntity shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX() + 1, user.getY() + 2, user.getZ(), user, -2);
-                    world.spawnEntity(shot);
-                    shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX() - 1, user.getY() + 2, user.getZ(), user, -2);
-                    world.spawnEntity(shot);
-                    shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() - 1, user, -2);
-                    world.spawnEntity(shot);
-                    shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() + 1, user, -2);
-                    world.spawnEntity(shot);
-                } else {
-                    PoisonBoltAreaEffectCloudEntity shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX() + 1, user.getY() + 2, user.getZ(), user, 0);
-                    world.spawnEntity(shot);
-                    shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX() - 1, user.getY() + 2, user.getZ(), user, 0);
-                    world.spawnEntity(shot);
-                    shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() - 1, user, 0);
-                    world.spawnEntity(shot);
-                    shot = new PoisonBoltAreaEffectCloudEntity(user.getWorld(), user.getX(), user.getY() + 2, user.getZ() + 1, user, 0);
-                    world.spawnEntity(shot);
-                }
-                user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_VOICE_15.get(), SoundCategory.PLAYERS, 0.4f, 1);
+            int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
+
+            // Loop through the four cardinal directions (north, south, east, west)
+            for (int j = 0; j < 4; j++) {
+                /*
+                 Calculate the offset for the x-coordinate based on the current direction
+                 j % 2 == 0 means we're on an even iteration (0 or 2), which corresponds to the x-axis
+                 j / 2 == 0 means we're on the first even iteration (0), which corresponds to the west direction (-1)
+                 j / 2 == 1 means we're on the second even iteration (2), which corresponds to the east direction (1)
+                */
+                int offsetX = j % 2 == 0
+                        ? (j / 2 == 0 ? -1 : 1)
+                        : 0;
+
+                /*
+                 Calculate the offset for the z-coordinate based on the current direction
+                 j % 2 == 1 means we're on an odd iteration (1 or 3), which corresponds to the z-axis
+                 j / 2 == 0 means we're on the first odd iteration (1), which corresponds to the north direction (-1)
+                 j / 2 == 1 means we're on the second odd iteration (3), which corresponds to the south direction (1)
+                */
+                int offsetZ = j % 2 == 1
+                        ? (j / 2 == 0 ? -1 : 1)
+                        : 0;
+
+                // Create a new PoisonBoltAreaEffectCloudEntity at the calculated position
+                PoisonBoltAreaEffectCloudEntity entity = new PoisonBoltAreaEffectCloudEntity(
+                        user.getWorld(),
+                        user.getX() + offsetX,  // Add the x-offset to the user's x-coordinate
+                        user.getY() + 2,           // Keep the y-coordinate constant (2 blocks above the user)
+                        user.getZ() + offsetZ,     // Add the z-offset to the user's z-coordinate
+                        user,
+                        poisonBoltAreaEffectCloudEntityBehavior
+                );
+
+                // Spawn the entity in the world
+                world.spawnEntity(entity);
             }
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_VOICE_15.get(), SoundCategory.PLAYERS, 0.4f, 1);
         }
+        user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         return super.use(world, user, hand);
     }
 
-
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip6").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip7").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip7").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

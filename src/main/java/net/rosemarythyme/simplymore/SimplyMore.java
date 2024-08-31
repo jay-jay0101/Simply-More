@@ -14,6 +14,7 @@ public class SimplyMore implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("simplymore");
 	public static final String ID = "simplymore";
+
 	@Override
 	public void onInitialize() {
 		ModConfigs.registerConfigs();
@@ -25,6 +26,7 @@ public class SimplyMore implements ModInitializer {
 		ModRecipes.registerModRecipes();
 
 		LootTableModifier.registerLootTableChanges();
+
 		LOGGER.info(ID + " Initialized Successfully!");
 	}
 }

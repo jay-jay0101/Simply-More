@@ -51,16 +51,17 @@ public class AscendedIdolItem extends SwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style TEXT = net.sweenus.simplyswords.util.HelperMethods.getStyle("text");
-        Style ABILITY = net.sweenus.simplyswords.util.HelperMethods.getStyle("ability");
+        Style textStyle = net.sweenus.simplyswords.util.HelperMethods.getStyle("text");
+        Style abilityStyle = net.sweenus.simplyswords.util.HelperMethods.getStyle("ability");
+
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip5").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip6").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip6").setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

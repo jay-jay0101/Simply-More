@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package net.rosemarythyme.simplymore.item;
 
 import net.minecraft.item.Item;
@@ -30,6 +25,7 @@ public class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
         this.repairIngredient = new String[]{"simplyswords:runic_tablet"};
     }
 
+    @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
         List<Item> potentialIngredients = new ArrayList<>(List.of());
         Arrays.stream(this.repairIngredient).toList().forEach(
@@ -38,7 +34,7 @@ public class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
         return potentialIngredients.contains(ingredient.getItem());
     }
 
-
+    @Override
     public Text getName(ItemStack stack) {
         Style UNIQUE = HelperMethods.getStyle("unique");
         Style LEGENDARY = HelperMethods.getStyle("legendary");

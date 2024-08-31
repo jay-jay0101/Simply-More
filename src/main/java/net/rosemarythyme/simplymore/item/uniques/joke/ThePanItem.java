@@ -84,17 +84,6 @@ public class ThePanItem extends SimplyMoreSwordItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip2").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
-    @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
         List<Item> potentialIngredients = new ArrayList<>(List.of());
         Arrays.stream(this.repairIngredient).toList().forEach(
@@ -106,5 +95,17 @@ public class ThePanItem extends SimplyMoreSwordItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip2").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

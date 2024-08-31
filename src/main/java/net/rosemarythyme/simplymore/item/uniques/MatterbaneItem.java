@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.RiftAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.sweenus.simplyswords.util.HelperMethods;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -72,9 +71,10 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
         Object color = itemStack.getOrCreateNbt().get("simplymore:color");
         color = getMatterbaneColor(color);
 
@@ -84,34 +84,33 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             color = colours[14];
 
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip2").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip2").setStyle(textStyle));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip6").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip6").setStyle(textStyle));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip7").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip8").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip8").setStyle(textStyle));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip9").append(Text.translatable("item.simplymore.matterbane.color_" + color)).setStyle(ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip9").append(Text.translatable("item.simplymore.matterbane.color_" + color)).setStyle(abilityStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 
-    @NotNull
-    public static Object getMatterbaneColor(Object color) {
-        if (color == null) color = "14";
-        else color = color.toString().replaceAll("\"","");
+    public static int getMatterbaneColor(Object color) {
+        if (color == null) return 14;
+        String colorString = color.toString().replaceAll("\"", "");
+        int colorInt;
         try {
-            color = Integer.parseInt((String) color);
+            colorInt = Integer.parseInt(colorString);
         } catch (NumberFormatException e) {
-            color = 14;
+            return 14;
         }
-        if ((int) color < 0 || (int) color > 15) color = 14;
-        return color;
+        return Math.max(0, Math.min(colorInt, 15));
     }
 
 }

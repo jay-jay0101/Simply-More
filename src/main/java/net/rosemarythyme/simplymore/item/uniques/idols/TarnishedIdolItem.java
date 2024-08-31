@@ -44,24 +44,25 @@ public class TarnishedIdolItem extends SwordItem {
         return super.postHit(stack, target, attacker);
     }
 
-    @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style TEXT = HelperMethods.getStyle("text");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip6").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
     public Text getName(ItemStack stack) {
         Style UNIQUE = HelperMethods.getStyle("unique");
         return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style textStyle = HelperMethods.getStyle("text");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.tarnished_idol.tooltip6").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

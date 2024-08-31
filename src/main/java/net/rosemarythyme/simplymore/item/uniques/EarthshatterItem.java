@@ -78,9 +78,9 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (!user.getWorld().isClient && user instanceof PlayerEntity player) {
-            if(remainingUseTicks == this.getMaxUseTime(null) - 1)
+            if (remainingUseTicks == this.getMaxUseTime(null) - 1)
                 user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.DARK_SWORD_ENCHANT.get(), user.getSoundCategory(), 1.0f, 1.2f);
-            if(remainingUseTicks == 1)
+            if (remainingUseTicks == 1)
                 attack(world, player);
         }
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -131,31 +131,32 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip6").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip7").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip8").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
-    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip8").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

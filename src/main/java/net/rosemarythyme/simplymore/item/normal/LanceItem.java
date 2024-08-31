@@ -22,7 +22,7 @@ public class LanceItem extends SimplyMoreSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(entity.getVehicle() instanceof LivingEntity
+        if (entity.getVehicle() instanceof LivingEntity
                 && selected
                 && ((PlayerEntity) entity).getStackInHand(Hand.OFF_HAND).getItem().getAttributeModifiers(EquipmentSlot.MAINHAND)
                     .get(EntityAttributes.GENERIC_ATTACK_DAMAGE).isEmpty()) {

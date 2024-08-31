@@ -1,7 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 
 package net.rosemarythyme.simplymore.recipes;
 
@@ -68,7 +64,6 @@ public class MatterbaneRecolorRecipe extends SpecialCraftingRecipe {
         return i == 1 && j == 1;
     }
 
-    // TODO: Check the code here and clarify variable names
     public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
         ItemStack matterbaneItemStack = ItemStack.EMPTY;
         DyeItem dyeItem = (DyeItem) Items.WHITE_DYE;

@@ -100,7 +100,7 @@ public class SimplyMoreHelperMethods {
     }
 
     public static void simplyMore$applyBlessingOrCurse(DamageSource source, CallbackInfo info, LivingEntity livingEntity) {
-        if(!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.BLESSING)) {
+        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.BLESSING)) {
 
             livingEntity.removeStatusEffect(ModEffectsRegistry.BLESSING);
 
@@ -113,7 +113,7 @@ public class SimplyMoreHelperMethods {
             return;
         }
 
-        if(!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.CURSE)) {
+        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.CURSE)) {
 
             livingEntity.removeStatusEffect(ModEffectsRegistry.CURSE);
 

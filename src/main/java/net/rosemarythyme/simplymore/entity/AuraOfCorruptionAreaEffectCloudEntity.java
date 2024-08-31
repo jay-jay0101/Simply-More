@@ -24,8 +24,8 @@ public class AuraOfCorruptionAreaEffectCloudEntity extends AreaEffectCloudEntity
         LivingEntity owner = this.getOwner();
         for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
             if (target.isAlive()) {
-                if(target == owner || target.isTeammate(owner)) continue;
-                if(!target.hasStatusEffect(StatusEffects.WITHER)) target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,20,1));
+                if (target == owner || target.isTeammate(owner)) continue;
+                if (!target.hasStatusEffect(StatusEffects.WITHER)) target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,20,1));
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS,40,0));
             }
         }

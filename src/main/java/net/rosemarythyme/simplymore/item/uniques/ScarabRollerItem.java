@@ -55,6 +55,7 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
+
         /* Technically, the more efficient way to do this would be to use `attacker.getRandom().nextInt(x)`. But,
          *  you need to consider that the counting starts at `0` and not `1`. As such, a way to think about this is
          *  that the less than sign is an arrow that points the intended proc percentage towards the number that the
@@ -63,10 +64,15 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
          * if (attacker.getRandom().nextInt(100) < 15) {
          *  ...
          * }
+         *
+         * If this is a change that you want, you can do a find and replace with CRTL + SHIFT + R and search for
+         *  ".getRandom().nextBetween(1, 100) <=" and replace it with ".getRandom().nextInt(100) <". Do not include the
+         *  quotation marks in the search or the replacement.
          */
         if (attacker.getRandom().nextBetween(1, 100) <= 15) {
             attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 100, 0), attacker);
         }
+
         return super.postHit(stack, target, attacker);
     }
 
@@ -150,7 +156,7 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        if(entity instanceof PlayerEntity player && !hitEntities.isEmpty() && !player.isUsingItem()) {
+        if (entity instanceof PlayerEntity player && !hitEntities.isEmpty() && !player.isUsingItem()) {
             hitEntities.clear();
             player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
@@ -162,18 +168,19 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip2").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip2").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip4").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip5").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.scarab_roller.tooltip5").setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

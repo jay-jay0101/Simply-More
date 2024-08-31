@@ -29,8 +29,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
-
-
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
             VipersCallProjectileAreaEffectCloudEntity chakram = new VipersCallProjectileAreaEffectCloudEntity(user.getWorld(),user.getX(),user.getEyeY()-0.6,user.getZ(),user);
@@ -41,32 +40,13 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip6").setStyle(TEXT));
-        tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip7").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip8").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
         if (world.getTime() % 20 == 0 && entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
             for (StatusEffectInstance effect : player.getStatusEffects()) {
                 if (effect.getDuration()<25) {
-                    if(effect.getEffectType()==StatusEffects.ABSORPTION) continue;
+                    if (effect.getEffectType()==StatusEffects.ABSORPTION) continue;
                     player.addStatusEffect(new StatusEffectInstance(effect.getEffectType(),25,0));
                 }
             }
@@ -75,5 +55,27 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.literal(" "));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.literal(" "));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip8").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

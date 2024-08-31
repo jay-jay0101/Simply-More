@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 	@ModifyReturnValue(at = @At("RETURN"), method = "disablesShield")
-	private boolean disablesShield(boolean originalReturnValue) {
+	private boolean simplyMore$disablesShield(boolean originalReturnValue) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		ItemStack mainHandStack = livingEntity.getEquippedStack(EquipmentSlot.MAINHAND);
 		if (mainHandStack.getItem() instanceof EarthshatterItem || mainHandStack.getItem() instanceof RunicGrandSwordItem || mainHandStack.getItem() instanceof GrandSwordItem || mainHandStack.getItem() instanceof MoltenFlareItem || mainHandStack.getItem() instanceof GrandfrostItem) return true;
@@ -27,7 +27,7 @@ public abstract class LivingEntityMixin {
 	}
 
 	@Inject(at = @At("HEAD"), method = "applyDamage", cancellable = true)
-	private void applyDamage(DamageSource source, float amount, CallbackInfo info) {
+	private void simplyMore$applyDamage(DamageSource source, float amount, CallbackInfo info) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		SimplyMoreHelperMethods.simplyMore$applyBlessingOrCurse(source, info, livingEntity);
 	}

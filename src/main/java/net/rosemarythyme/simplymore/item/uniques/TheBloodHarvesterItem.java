@@ -31,9 +31,10 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if(!(target instanceof ArmorStandEntity)) {
+                if (!(target instanceof ArmorStandEntity)) {
                     if (!attacker.hasStatusEffect(ModEffectsRegistry.HARVEST)) {
                         attacker.heal(this.getAttackDamage() / 10);
                     } else {
@@ -45,7 +46,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
         return super.postHit(stack, target, attacker);
     }
 
-
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
             user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.HARVEST, 300, 0));
@@ -56,27 +57,29 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
-
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip6").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip6").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

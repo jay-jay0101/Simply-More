@@ -35,6 +35,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
                 if (attacker.getRandom().nextBetween(1, 100) <= 20) {
@@ -52,7 +53,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         return super.postHit(stack, target, attacker);
     }
 
-
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
@@ -63,65 +64,91 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         }
     }
 
-
-    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (!user.getWorld().isClient && user instanceof PlayerEntity player) {
-            ServerWorld serverWorld = ((ServerWorld) world);
-            if(remainingUseTicks % 4 == 0) serverWorld.playSound(null,user.getX(),user.getY(),user.getZ(),SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER,SoundCategory.PLAYERS,0.5f,1f);
-            if(remainingUseTicks==1) {
-                for (int i = 0; i < 30; i++) {
-                    int dX = user.getRandom().nextInt(9)-5;
-                    int dZ = user.getRandom().nextInt(9)-5;
-                    BlockPos pos = user.getBlockPos();
-                    pos = new BlockPos(pos.getX()+dX,pos.getY(),pos.getZ()+dZ);
-                    LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld);
-                    if (lightningEntity != null) {
-                        lightningEntity.refreshPositionAfterTeleport(pos.getX(),pos.getY(),pos.getZ());
-                        lightningEntity.setCosmetic(true);
-                        serverWorld.spawnEntity(lightningEntity);
-                    }
-                }
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld);
-                for(LivingEntity entity : player.getWorld().getNonSpectatingEntities(LivingEntity.class, new Box(player.getX()-4,player.getY()-2,player.getZ()-4,player.getX()+4,player.getY()+6,player.getZ()+4))) {
-                    if(entity == user || entity.isTeammate(user)) continue;
-                    entity.damage(player.getDamageSources().magic(),12);
-                    entity.onStruckByLightning(serverWorld,lightningEntity);
-                }
-
-                player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+    @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingTicks) {
+        if (!world.isClient() && user instanceof PlayerEntity player) {
+            ServerWorld serverWorld = (ServerWorld) world;
+            if (remainingTicks % 4 == 0) {
+                world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.PLAYERS, 0.5f, 1f);
+            }
+            if (remainingTicks == 1) {
+                createLightningStrike(player, serverWorld);
+                damageAndElectrifyEnemies(user, player, serverWorld);
+                player.getItemCooldownManager().set(stack.getItem(), skillCooldown);
             }
         }
-        super.usageTick(world, user, stack, remainingUseTicks);
+        super.usageTick(world, user, stack, remainingTicks);
     }
 
+    private void createLightningStrike(PlayerEntity player, ServerWorld world) {
+        for (int i = 0; i < 30; i++) {
+            int randomX = player.getRandom().nextInt(9) - 5;
+            int randomZ = player.getRandom().nextInt(9) - 5;
+            BlockPos position = player.getBlockPos().add(randomX, 0, randomZ);
+            LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
+            if (lightning != null) {
+                lightning.refreshPositionAfterTeleport(position.getX(), position.getY(), position.getZ());
+                lightning.setCosmetic(true);
+                world.spawnEntity(lightning);
+            }
+        }
+        Box box = new Box(player.getX() - 4, player.getY() - 2, player.getZ() - 4, player.getX() + 4, player.getY() + 6, player.getZ() + 4);
+        for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
+            LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
+            if (entity == player || entity.isTeammate(player)) {
+                continue;
+            }
+            entity.damage(player.getDamageSources().magic(), 12);
+            entity.onStruckByLightning(world, lightning);
+        }
+    }
+
+    private void damageAndElectrifyEnemies(LivingEntity user, PlayerEntity player, ServerWorld world) {
+        Box box = new Box(user.getX() - 4, user.getY() - 2, user.getZ() - 4, user.getX() + 4, user.getY() + 6, user.getZ() + 4);
+        for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
+            if (entity == user || entity.isTeammate(user)) {
+                continue;
+            }
+            entity.damage(player.getDamageSources().magic(), 12);
+            entity.onStruckByLightning(world, null);
+        }
+    }
+
+    @Override
     public int getMaxUseTime(ItemStack stack) {
         return 60;
     }
 
+
+    @Override
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.SPEAR;
     }
 
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip5").setStyle(TEXT));
-
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-    }
-
+    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         int stepMod = 0;
         SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.GLOW);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip5").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

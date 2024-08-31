@@ -36,12 +36,13 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if(target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK)) {
-                target.damage(attacker.getDamageSources().magic(),target.getStatusEffect(ModEffectsRegistry.RADIANT_MARK).getAmplifier() + 1);
+            StatusEffectInstance radiantMarkEffect = target.getStatusEffect(ModEffectsRegistry.RADIANT_MARK);
+            if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK) && radiantMarkEffect != null) {
+                target.damage(attacker.getDamageSources().magic(),radiantMarkEffect.getAmplifier() + 1);
             }
             if (attacker.getRandom().nextBetween(1, 100) <= 20) {
-                if(target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK)) {
-                    int amplifier = target.getStatusEffect(ModEffectsRegistry.RADIANT_MARK).getAmplifier() + 1;
+                if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK) && radiantMarkEffect != null) {
+                    int amplifier = radiantMarkEffect.getAmplifier() + 1;
                     int duration = 240 - (amplifier * 40);
                     target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.RADIANT_MARK, duration, amplifier), attacker);
                 } else {
@@ -58,8 +59,8 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         }
 
         locateAndTeleportToRadiantMarkedTarget(user);
-        damageAndKnockbackRadiantMarkedTarget(user.getAttacking(), user, 15, 2f);
-        damageAndKnockbackNearbyNonRadiantMarkedEntities(user, 5, 20, 2.5f);
+        damageAndKnockbackRadiantMarkedTarget(user.getAttacking(), user);
+        damageAndKnockbackNearbyNonRadiantMarkedEntities(user);
 
         user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE,30,0));
         user.getWorld().playSound(null,user.getBlockPos(),SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
@@ -81,19 +82,19 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         }
     }
 
-    private void damageAndKnockbackRadiantMarkedTarget(LivingEntity targetEntity, PlayerEntity user, int damage, float knockbackStrength) {
+    private void damageAndKnockbackRadiantMarkedTarget(LivingEntity targetEntity, PlayerEntity user) {
         if (targetEntity == user.getAttacking()) {
             targetEntity.removeStatusEffect(ModEffectsRegistry.RADIANT_MARK);
-            knockbackAndDamageEntity(targetEntity, user, damage, knockbackStrength);
+            knockbackAndDamageEntity(targetEntity, user, 15, (float) 2.0);
         }
     }
 
-    private void damageAndKnockbackNearbyNonRadiantMarkedEntities(PlayerEntity user, int radius, int damage, float knockbackStrength) {
-        Box box = new Box(user.getX() - radius,user.getY() - radius,user.getZ() - radius,user.getX() + radius,user.getY() + radius,user.getZ() + radius);
+    private void damageAndKnockbackNearbyNonRadiantMarkedEntities(PlayerEntity user) {
+        Box box = new Box(user.getX() - 5,user.getY() - 5,user.getZ() - 5,user.getX() + 5,user.getY() + 5,user.getZ() + 5);
         List<LivingEntity> nearbyLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         for (LivingEntity livingEntity : nearbyLivingEntities) {
             nearbyLivingEntities.remove(user.getAttacking());
-            knockbackAndDamageEntity(livingEntity, user, damage, knockbackStrength);
+            knockbackAndDamageEntity(livingEntity, user, 20, (float) 2.5);
         }
     }
 
@@ -132,7 +133,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (!user.getWorld().isClient && user instanceof PlayerEntity player) {
-             if(remainingUseTicks == 1)
+             if (remainingUseTicks == 1)
                  attack(player);
         }
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -157,22 +158,23 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style RIGHTCLICK = HelperMethods.getStyle("rightclick");
-        Style ABILITY = HelperMethods.getStyle("ability");
-        Style TEXT = HelperMethods.getStyle("text");
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip1").setStyle(ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip2").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip3").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip4").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip5").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip6").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip6").setStyle(textStyle));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(RIGHTCLICK));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip7").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip8").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip9").setStyle(TEXT));
-        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip10").setStyle(TEXT));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip8").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip9").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip10").setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

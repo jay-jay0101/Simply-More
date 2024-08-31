@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
 	@Inject(at = @At("RETURN"), method = "attack")
-	private void attack(Entity target, CallbackInfo info) {
+	private void simplyMore$attack(Entity target, CallbackInfo info) {
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		if (target instanceof PlayerEntity targetPlayer && targetPlayer.hasStatusEffect(ModEffectsRegistry.SOLIDIFIED)) {
 			player.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED,90),targetPlayer);
@@ -23,7 +23,7 @@ public abstract class PlayerEntityMixin {
 	}
 
 	@Inject(at = @At("HEAD"), method = "applyDamage", cancellable = true)
-	private void applyDamage(DamageSource source, float amount, CallbackInfo info) {
+	private void simplyMore$applyDamage(DamageSource source, float amount, CallbackInfo info) {
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		SimplyMoreHelperMethods.simplyMore$applyBlessingOrCurse(source, info, player);
 	}
