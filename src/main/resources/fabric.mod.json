@@ -12,18 +12,18 @@
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/jay-jay0101/simplymore/tree/main"
 	},
-	"license": "custom",
+	"license": "All Rights Reserved",
 	"icon": "assets/simplymore/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.rosemarythmye.simplymore.Simplymore"
+          "net.rosemarythyme.simplymore.SimplyMore"
 		],
 		"client": [
-			"net.rosemarythmye.simplymore.SimplymoreClient"
+			"net.rosemarythyme.simplymore.SimplyMoreClient"
 		],
 		"fabric-datagen": [
-			"net.rosemarythmye.simplymore.SimplymoreDataGenerator"
+			"net.rosemarythyme.simplymore.SimplyMoreDataGenerator"
 		]
 	},
 	"mixins": [
