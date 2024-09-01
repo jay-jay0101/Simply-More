@@ -114,8 +114,8 @@ public class SimplyMoreHelperMethods {
 
             livingEntity.getWorld().playSound(null,livingEntity.getBlockPos(), SoundEvents.ENTITY_ALLAY_ITEM_TAKEN, SoundCategory.PLAYERS);
             ((ServerWorld) livingEntity.getWorld()).spawnParticles(ParticleTypes.SCULK_SOUL,livingEntity.getX(),livingEntity.getY()+1,livingEntity.getZ(),50,0.25,0.5,0.25,0.1);
-            livingEntity.damage(source, amount * 0.5f);
-            livingEntity.timeUntilRegen = 0;
+            livingEntity.damage(source, amount * 1.5f);
+            info.cancel();
         }
     }
 }
