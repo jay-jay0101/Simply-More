@@ -50,15 +50,12 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
-            return TypedActionResult.fail(itemStack);
-        } else {
-            user.setCurrentHand(hand);
-            return TypedActionResult.consume(itemStack);
-        }
+        user.setCurrentHand(hand);
+        return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
+                ? TypedActionResult.fail(itemStack)
+                : TypedActionResult.consume(itemStack);
     }
 
-    // This *should* be, functionally the same as what you had. This is just a bit more efficient. PLEASE TEST
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (user.getWorld().isClient || !(user instanceof PlayerEntity)) {
@@ -68,8 +65,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
         ServerWorld serverWorld = ((ServerWorld) world);
         int ticksUntilUseEnd = this.getMaxUseTime(stack) - remainingUseTicks;
-
-        if (ticksUntilUseEnd == 1) {
+        if (remainingUseTicks == 1) {
             user.dismountVehicle();
             teleportAndPlayEffect(serverWorld, user);
         } else if (ticksUntilUseEnd == 0) {

@@ -52,10 +52,14 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
         List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
         if (livingEntities.size() > 1) {
+            boolean isNonTeammateNearby = false;
+
             for (LivingEntity livingEntity : livingEntities) {
                 if (livingEntity == user || livingEntity.isTeammate(user)) {
                     continue;
                 }
+
+                isNonTeammateNearby = true;
 
                 Vec3d userPosition = user.getPos();
                 Vec3d entityPosition = livingEntity.getPos();
@@ -77,9 +81,11 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
                 livingEntity.setVelocity(normalizedDeltaX * knockbackStrength, 0.4, normalizedDeltaZ * knockbackStrength);
                 livingEntity.velocityModified = true;
             }
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
-            ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNOWFLAKE, user.getX(), user.getY() + 3, user.getZ(), 1000, 3, 0, 3, 0.25);
-            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
+            if(isNonTeammateNearby) {
+                user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+                ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNOWFLAKE, user.getX(), user.getY() + 3, user.getZ(), 1000, 3, 0, 3, 0.25);
+                user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
+            }
         }
         return super.use(world, user, hand);
     }

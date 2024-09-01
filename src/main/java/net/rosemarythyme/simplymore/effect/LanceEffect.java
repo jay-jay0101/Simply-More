@@ -9,6 +9,7 @@ import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.normal.LanceItem;
 import net.rosemarythyme.simplymore.item.runics.RunicLanceItem;
 import net.rosemarythyme.simplymore.item.uniques.GlimmerstepItem;
+import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 
 public class LanceEffect extends StatusEffect {
 
@@ -20,7 +21,6 @@ public class LanceEffect extends StatusEffect {
     public void applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
         if (!isLanceInMainHand(livingEntity) || !isRidingLivingEntity(livingEntity) || !isOffHandEmpty(livingEntity))
             livingEntity.removeStatusEffect(this);
-
         super.applyUpdateEffect(livingEntity, amplifier);
     }
 

@@ -17,13 +17,6 @@ public class ModEffectsRegistry {
     static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
     static WeaponAttributesConfig attributes = config.weaponAttributes;
 
-    static String genericAttackSpeedUUID            = "FA233E1C-4180-4865-B01B-BCCE9785ACA3";
-    static String genericAttackDamageUUID           = "CB3F55D3-645C-4F38-A497-9C13A33DB5CF";
-    static String genericMoveSpeedUUID              = "662A6B8D-DA3E-4C1C-8813-96EA6097278D";
-    // I used the UUID for chestplate for the genericArmorUUID because, why not?
-    static String genericArmorUUID                  = "9F3D476D-C118-4544-8365-64846904B48E";
-    static String genericKnockbackResistanceUUID    = "0-1-438D-0-28D34";
-
     public static final StatusEffect VENOM = registerEffect(
             "venom",
             new VenomPoisonEffect(StatusEffectCategory.HARMFUL,7350627)
@@ -33,7 +26,7 @@ public class ModEffectsRegistry {
             new MoltenFlareEffect(StatusEffectCategory.NEUTRAL,13570080)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            genericAttackSpeedUUID,
+                            "f53f18d4-ac4d-4010-aa0a-7d2d25050c66",
                             0.6,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -47,12 +40,12 @@ public class ModEffectsRegistry {
             new MimicryEffect(StatusEffectCategory.NEUTRAL,0)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            genericAttackSpeedUUID,
+                            "ccb60c0e-fcc8-4a37-bcf7-fc4644dd6160",
                             attributes.getMimicryTwistedSwingSpeedModifier(),
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            genericAttackDamageUUID,
+                            "f6de8d23-a536-43f7-8363-434609ae6e5b",
                             attributes.getMimicryTwistedDamageModifier(),
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -62,8 +55,8 @@ public class ModEffectsRegistry {
             new LanceEffect(StatusEffectCategory.NEUTRAL,0)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            genericAttackDamageUUID,
-                            3,
+                            "82a0acc0-2b8f-4ecb-89e6-8d9ae55c5777",
+                            5,
                             EntityAttributeModifier.Operation.ADDITION
                     )
     );
@@ -72,12 +65,12 @@ public class ModEffectsRegistry {
             new HarvestEffect(StatusEffectCategory.BENEFICIAL,7865862)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            genericAttackSpeedUUID,
+                            "c05d986c-5c04-434d-b5b0-72fc4b4151ab",
                             0.8,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            genericMoveSpeedUUID,
+                            "443724ff-b478-4f43-bcea-ea4037d87d0c",
                             0.04,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -87,12 +80,12 @@ public class ModEffectsRegistry {
             new RageEffect(StatusEffectCategory.NEUTRAL,7865862)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            genericAttackDamageUUID,
+                            "3e0c2338-1d22-4375-a70d-856dc5d2a0a6",
                             1.5,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            genericMoveSpeedUUID,
+                            "b33f3caf-876d-4809-a55e-5647809cad16",
                             0.04,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -102,12 +95,12 @@ public class ModEffectsRegistry {
             new GrotesqueEffect(StatusEffectCategory.NEUTRAL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
-                            genericArmorUUID,
+                            "3c943533-dab6-4f42-9195-21ca6838bb0b",
                             3,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
-                            genericKnockbackResistanceUUID,
+                            "28a24cb0-f23b-49f7-9a46-a2776e7fb94d",
                             0.225,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -117,17 +110,17 @@ public class ModEffectsRegistry {
             new SolidifyEffect(StatusEffectCategory.NEUTRAL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
-                            genericArmorUUID,
+                            "695fbd36-b9e1-452d-8f41-2f850a4ccf6a",
                             10,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            genericAttackSpeedUUID,
+                            "8976a053-b499-4fba-9dcb-432c4694fbbb",
                             -99,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            genericAttackDamageUUID,
+                            "1f3ea85b-ab38-435f-858a-b508aefdeefe",
                             -9999,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -137,16 +130,16 @@ public class ModEffectsRegistry {
             new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
-                            genericArmorUUID,
+                            "f00fd930-1cd9-4524-a375-0d50225d323f",
                             10,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            genericAttackSpeedUUID,
+                            "25b787e4-eb31-4257-95b2-e3962ccc1ea7",
                             -99, EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            genericAttackDamageUUID,
+                            "3a55dc27-08d0-4575-a6fc-b896f2c347b2",
                             -9999,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -156,12 +149,12 @@ public class ModEffectsRegistry {
             new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            genericAttackSpeedUUID,
+                            "61b06328-fb0c-4d7c-ba2f-cdb8b370224c",
                             -99,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            genericAttackDamageUUID,
+                            "e8940579-765e-4458-928d-e430e50713c1",
                             -9999,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -183,11 +176,11 @@ public class ModEffectsRegistry {
             new InsanityEffect(StatusEffectCategory.HARMFUL,700)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            genericAttackDamageUUID,
+                            "1ce784a4-a543-4436-a0fe-376bea83d30e",
                             -3, EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            genericMoveSpeedUUID,
+                            "42d45eb0-2230-48b0-9288-a3be65e15cf1",
                             -0.03,
                             EntityAttributeModifier.Operation.ADDITION)
     );
@@ -208,7 +201,7 @@ public class ModEffectsRegistry {
             new SuffocatingEffect(StatusEffectCategory.HARMFUL,0)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            genericMoveSpeedUUID,
+                            "a6f03a84-1731-4558-9bf5-265f0d1dd84c",
                             -0.03,
                             EntityAttributeModifier.Operation.ADDITION
                     )
@@ -226,7 +219,7 @@ public class ModEffectsRegistry {
             new ModStatusEffect(StatusEffectCategory.HARMFUL,9849600)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
-                            genericArmorUUID,
+                            "ec7aa674-2cba-464e-973b-2a26e7ff5c4a",
                             -2,
                             EntityAttributeModifier.Operation.ADDITION
             )

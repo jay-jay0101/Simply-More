@@ -71,6 +71,11 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
             distance = entityDistance;
         }
 
+        // Check if the version is less than 0
+        if (version < 0) {
+            target = null;
+        }
+
         // Check if a target was found
         if (target == null) {
             // Create a new entity to replace this one
@@ -83,11 +88,6 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
         // Check if the version is greater than or equal to 10 and the distance is greater than 3
         if (version >= 10 && distance > 3) {
             return;
-        }
-
-        // Check if the version is less than 0
-        if (version < 0) {
-            target = null;
         }
 
         // Check if the distance is greater than 3

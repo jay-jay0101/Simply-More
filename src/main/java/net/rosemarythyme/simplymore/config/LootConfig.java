@@ -6,14 +6,14 @@ import me.shedaniel.autoconfig.annotation.Config;
 @Config(name="loot")
 public class LootConfig implements ConfigData {
     boolean enableLootInVillages = true;
-    boolean enableWitherDropsUnique = true;
-    boolean enableDragonDropsUnique = true;
     double goldLootWeight = 0.004500000189989805;
     double ironLootWeight = 0.004500000189989805;
     double diamondLootWeight = 0.003000000189989805;
     double netheriteLootWeight = 0;
     double runicLootWeight = 0;
     double uniqueLootWeight = 0.0010000000474974513;
+    double witherUniqueWeight = 0.05;
+    double enderDragonUniqueWeight = 0.5;
     boolean enableJokeUniqueBossDrops = false;
     boolean enableJokeUniqueChestLoot = true;
     boolean enableGreatSlither = true;
@@ -49,6 +49,14 @@ public class LootConfig implements ConfigData {
 
     public boolean isEnableEarthshatter() {
         return enableEarthshatter;
+    }
+
+    public double getEnderDragonUniqueWeight() {
+        return enderDragonUniqueWeight;
+    }
+
+    public double getWitherUniqueWeight() {
+        return witherUniqueWeight;
     }
 
     public boolean isEnableLustrousMoxie() {
@@ -103,16 +111,8 @@ public class LootConfig implements ConfigData {
         return enableBladeOfTheGrotesque;
     }
 
-    public boolean isEnableDragonDropsUnique() {
-        return enableDragonDropsUnique;
-    }
-
     public boolean isEnableTheVesselBreach() {
         return enableTheVesselBreach;
-    }
-
-    public boolean isEnableWitherDropsUnique() {
-        return enableWitherDropsUnique;
     }
 
     public boolean isEnableGlimmerstep() {

@@ -15,109 +15,110 @@ public class WeaponAttributesConfig implements ConfigData {
     int pernachDamageModifier = 1;
     int greatSpearDamageModifier = 3;
     int deerHornsDamageModifier = -1;
-    double greatKatanaSwingSpeed = -2.6;
-    double grandswordSwingSpeed = -3.4;
-    double backhandBladeSwingSpeed = -1.7;
-    double lanceSwingSpeed = -3;
-    double khopeshSwingSpeed = -2.1;
-    double daggerSwingSpeed = -1.8;
-    double quarterstaffSwingSpeed = -2;
-    double pernachSwingSpeed = -2.7;
-    double greatSpearSwingSpeed = -3;
-    double deerHornsSwingSpeed = -2;
+
+    double greatKatanaSwingSpeed = 1.4;
+    double grandswordSwingSpeed = 0.6;
+    double backhandBladeSwingSpeed = 2.3;
+    double lanceSwingSpeed = 1.0;
+    double khopeshSwingSpeed = 1.9;
+    double daggerSwingSpeed = 2.2;
+    double quarterstaffSwingSpeed = 2.0;
+    double pernachSwingSpeed = 1.3;
+    double greatSpearSwingSpeed = 1.0;
+    double deerHornsSwingSpeed = 2.0;
 
     int greatSlitherDamage = 11;
-    double greatSlitherSwingSpeed = -2.6;
+    double greatSlitherSwingSpeed = 1.4;
     int moltenFlareDamage = 13;
-    double moltenFlareSwingSpeed = -3.6;
+    double moltenFlareSwingSpeed = 0.6;
     int grandfrostDamage = 14;
-    double grandfrostSwingSpeed = -3.4;
+    double grandfrostSwingSpeed = 0.6;
     int mimicryPurityDamage = 8;
-    double mimicryPuritySwingSpeed = -2;
+    double mimicryPuritySwingSpeed = 2.0;
     int mimicryTwistedDamageModifier = 2;
-    double mimicryTwistedSwingSpeedModifier = -0.6;
+    double mimicryTwistedSwingSpeedModifier = 3.4;
     int glimmerstepDamage = 9;
-    double glimmerstepSwingSpeed = -3;
+    double glimmerstepSwingSpeed = 1.0;
     int theBloodHarvesterDamage = 8;
-    double theBloodHarvesterSwingSpeed = -2.4;
+    double theBloodHarvesterSwingSpeed = 1.6;
     int jesterPenetrateDamage = 6;
-    double jesterPenetrateSwingSpeed = -3;
+    double jesterPenetrateSwingSpeed = 1.0;
     int scarabRollerDamage = 8;
-    double scarabRollerSwingSpeed = -2.1;
+    double scarabRollerSwingSpeed = 1.9;
 
     int blackPearlDamage = 9;
-    double blackPearlSwingSpeed = -2;
+    double blackPearlSwingSpeed = 2.0;
 
     int thePanDamage = 4;
-    double thePanSwingSpeed = -2.5;
+    double thePanSwingSpeed = 1.5;
 
     int theVesselBreachDamage = 6;
-    double theVesselBreachSwingSpeed = -1.8;
+    double theVesselBreachSwingSpeed = 2.2;
 
     int bladeOfTheGrotesqueDamage = 12;
-    double bladeOfTheGrotesqueSwingSpeed = -2.8;
+    double bladeOfTheGrotesqueSwingSpeed = 1.2;
 
     int vipersCallDamage = 6;
-    double vipersCallSwingSpeed = -3;
+    double vipersCallSwingSpeed = 1.0;
 
     int timekeeperDamage = 8;
-    double timekeeperSwingSpeed = -2;
+    double timekeeperSwingSpeed = 2.0;
 
     int matterbaneDamage = 9;
-    double matterbaneSwingSpeed = -2.4;
+    double matterbaneSwingSpeed = 1.6;
+
     int smoulderingRuinDamage = 7;
-    double smoulderingRuinSwingSpeed = -1.7;
+    double smoulderingRuinSwingSpeed = 2.3;
 
     int stasisDamage = 8;
-    double stasisSwingSpeed = -2;
+    double stasisSwingSpeed = 2.0;
     int tidebreakerDamage = 9;
-    double tidebreakerSwingSpeed = -2;
+    double tidebreakerSwingSpeed = 2.0;
     int ruyiJinguBangDamage = 9;
-    double ruyiJinguBangSwingSpeed = -2;
+    double ruyiJinguBangSwingSpeed = 2.0;
     int rupturedIdolDamage = 10;
-    double rupturedIdolSwingSpeed = -2.7;
+    double rupturedIdolSwingSpeed = 1.3;
 
     int ascendedIdolDamage = 10;
-    double ascendedIdolSwingSpeed = -2.7;
+    double ascendedIdolSwingSpeed = 1.3;
 
     int tarnishedIdolDamage = 10;
-    double tarnishedIdolSwingSpeed = -2.7;
+    double tarnishedIdolSwingSpeed = 1.3;
 
     int holylightDamage = 10;
-    double holylightSwingSpeed = -2.7;
+    double holylightSwingSpeed = 1.3;
 
     int darksentDamage = 10;
-    double darksentSwingSpeed = -2.7;
+    double darksentSwingSpeed = 1.3;
 
     int boasFangDamage = 7;
-
-    double boasFangSwingSpeed = -2.2;
+    double boasFangSwingSpeed = 1.8;
     int earthshatterDamage = 12;
-    double earthshatterSwingSpeed = -3.5;
+    double earthshatterSwingSpeed = 0.6;
     int soulForeseerDamage = 9;
-    double soulForeseerSwingSpeed = -2.6;
+    double soulForeseerSwingSpeed = 1.4;
     int serpentineValourDamage = 11;
-    double serpentineValourSwingSpeed = -3.3;
+    double serpentineValourSwingSpeed = 0.7;
     int lustrousMoxieDamage = 11;
-    double lustrousMoxieSwingspeed = -3;
+    double lustrousMoxieSwingspeed = 1.0;
 
     public WeaponAttributesConfig() {
     }
 
     public double getEarthshatterSwingSpeed() {
-        return earthshatterSwingSpeed;
+        return earthshatterSwingSpeed - 4.0;
     }
 
     public double getLustrousMoxieSwingspeed() {
-        return lustrousMoxieSwingspeed;
+        return lustrousMoxieSwingspeed - 4.0;
     }
 
     public double getSerpentineValourSwingSpeed() {
-        return serpentineValourSwingSpeed;
+        return serpentineValourSwingSpeed - 4.0;
     }
 
     public double getSoulForeseerSwingSpeed() {
-        return soulForeseerSwingSpeed;
+        return soulForeseerSwingSpeed - 4.0;
     }
 
     public int getEarthshatterDamage() {
@@ -137,7 +138,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getBoasFangSwingSpeed() {
-        return boasFangSwingSpeed;
+        return boasFangSwingSpeed - 4.0;
     }
 
     public int getBoasFangDamage() {
@@ -145,7 +146,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getDarksentSwingSpeed() {
-        return darksentSwingSpeed;
+        return darksentSwingSpeed - 4.0;
     }
 
     public int getDarksentDamage() {
@@ -153,7 +154,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getTarnishedIdolSwingSpeed() {
-        return tarnishedIdolSwingSpeed;
+        return tarnishedIdolSwingSpeed - 4.0;
     }
 
     public int getTarnishedIdolDamage() {
@@ -161,7 +162,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getHolylightSwingSpeed() {
-        return holylightSwingSpeed;
+        return holylightSwingSpeed - 4.0;
     }
 
     public int getHolylightDamage() {
@@ -169,7 +170,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getAscendedIdolSwingSpeed() {
-        return ascendedIdolSwingSpeed;
+        return ascendedIdolSwingSpeed - 4.0;
     }
 
     public int getAscendedIdolDamage() {
@@ -177,7 +178,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getRupturedIdolSwingSpeed() {
-        return rupturedIdolSwingSpeed;
+        return rupturedIdolSwingSpeed - 4.0;
     }
 
     public int getRupturedIdolDamage() {
@@ -185,7 +186,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getRuyiJinguBangSwingSpeed() {
-        return ruyiJinguBangSwingSpeed;
+        return ruyiJinguBangSwingSpeed - 4.0;
     }
 
     public int getRuyiJinguBangDamage() {
@@ -193,7 +194,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getTidebreakerSwingSpeed() {
-        return tidebreakerSwingSpeed;
+        return tidebreakerSwingSpeed - 4.0;
     }
 
     public int getTidebreakerDamage() {
@@ -201,7 +202,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getStasisSwingSpeed() {
-        return stasisSwingSpeed;
+        return stasisSwingSpeed - 4.0;
     }
 
     public int getStasisDamage() {
@@ -209,7 +210,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getSmoulderingRuinSwingSpeed() {
-        return smoulderingRuinSwingSpeed;
+        return smoulderingRuinSwingSpeed - 4.0;
     }
 
     public int getSmoulderingRuinDamage() {
@@ -217,7 +218,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getMatterbaneSwingSpeed() {
-        return matterbaneSwingSpeed;
+        return matterbaneSwingSpeed - 4.0;
     }
 
     public int getMatterbaneDamage() {
@@ -225,7 +226,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getTimekeeperSwingSpeed() {
-        return timekeeperSwingSpeed;
+        return timekeeperSwingSpeed - 4.0;
     }
 
     public int getTimekeeperDamage() {
@@ -233,7 +234,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getVipersCallSwingSpeed() {
-        return vipersCallSwingSpeed;
+        return vipersCallSwingSpeed - 4.0;
     }
 
     public int getVipersCallDamage() {
@@ -241,7 +242,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getBladeOfTheGrotesqueSwingSpeed() {
-        return bladeOfTheGrotesqueSwingSpeed;
+        return bladeOfTheGrotesqueSwingSpeed - 4.0;
     }
 
     public int getBladeOfTheGrotesqueDamage() {
@@ -249,7 +250,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getTheVesselBreachSwingSpeed() {
-        return theVesselBreachSwingSpeed;
+        return theVesselBreachSwingSpeed - 4.0;
     }
 
     public int getTheVesselBreachDamage() {
@@ -257,7 +258,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getThePanSwingSpeed() {
-        return thePanSwingSpeed;
+        return thePanSwingSpeed - 4.0;
     }
 
     public int getThePanDamage() {
@@ -265,7 +266,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getBlackPearlSwingSpeed() {
-        return blackPearlSwingSpeed;
+        return blackPearlSwingSpeed - 4.0;
     }
 
     public int getBlackPearlDamage() {
@@ -273,59 +274,59 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getBackhandBladeSwingSpeed() {
-        return backhandBladeSwingSpeed;
+        return backhandBladeSwingSpeed - 4.0;
     }
 
     public double getGlimmerstepSwingSpeed() {
-        return glimmerstepSwingSpeed;
+        return glimmerstepSwingSpeed - 4.0;
     }
 
     public double getGrandfrostSwingSpeed() {
-        return grandfrostSwingSpeed;
+        return grandfrostSwingSpeed - 4.0;
     }
 
     public double getGrandswordSwingSpeed() {
-        return grandswordSwingSpeed;
+        return grandswordSwingSpeed - 4.0;
     }
 
     public double getGreatKatanaSwingSpeed() {
-        return greatKatanaSwingSpeed;
+        return greatKatanaSwingSpeed - 4.0;
     }
 
     public double getGreatSlitherSwingSpeed() {
-        return greatSlitherSwingSpeed;
+        return greatSlitherSwingSpeed - 4.0;
     }
 
     public double getJesterPenetrateSwingSpeed() {
-        return jesterPenetrateSwingSpeed;
+        return jesterPenetrateSwingSpeed - 4.0;
     }
 
     public double getKhopeshSwingSpeed() {
-        return khopeshSwingSpeed;
+        return khopeshSwingSpeed - 4.0;
     }
 
     public double getLanceSwingSpeed() {
-        return lanceSwingSpeed;
+        return lanceSwingSpeed - 4.0;
     }
 
     public double getMimicryPuritySwingSpeed() {
-        return mimicryPuritySwingSpeed;
+        return mimicryPuritySwingSpeed - 4.0;
     }
 
     public double getMimicryTwistedSwingSpeedModifier() {
-        return mimicryTwistedSwingSpeedModifier;
+        return mimicryTwistedSwingSpeedModifier - 4.0;
     }
 
     public double getMoltenFlareSwingSpeed() {
-        return moltenFlareSwingSpeed;
+        return moltenFlareSwingSpeed - 4.0;
     }
 
     public double getScarabRollerSwingSpeed() {
-        return scarabRollerSwingSpeed;
+        return scarabRollerSwingSpeed - 4.0;
     }
 
     public double getTheBloodHarvesterSwingSpeed() {
-        return theBloodHarvesterSwingSpeed;
+        return theBloodHarvesterSwingSpeed - 4.0;
     }
 
     public int getBackhandBladeDamageModifier() {
@@ -385,7 +386,7 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getDaggerSwingSpeed() {
-        return daggerSwingSpeed;
+        return daggerSwingSpeed - 4.0;
     }
 
     public int getDaggerDamageModifier() {
@@ -393,19 +394,19 @@ public class WeaponAttributesConfig implements ConfigData {
     }
 
     public double getDeerHornsSwingSpeed() {
-        return deerHornsSwingSpeed;
+        return deerHornsSwingSpeed - 4.0;
     }
 
     public double getGreatSpearSwingSpeed() {
-        return greatSpearSwingSpeed;
+        return greatSpearSwingSpeed - 4.0;
     }
 
     public double getPernachSwingSpeed() {
-        return pernachSwingSpeed;
+        return pernachSwingSpeed - 4.0;
     }
 
     public double getQuarterstaffSwingSpeed() {
-        return quarterstaffSwingSpeed;
+        return quarterstaffSwingSpeed - 4.0;
     }
 
     public int getDeerHornsDamageModifier() {

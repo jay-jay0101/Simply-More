@@ -35,11 +35,9 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        if (attacker.getRandom().nextBetween(1, 100) <= 20) {
+        if (attacker.getRandom().nextBetween(1, 100) <= 20 || attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
             eruption(attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE) ? 7 : 4, attacker);
-            if (attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
-                attacker.removeStatusEffect(ModEffectsRegistry.MOLTEN_FLARE);
-            }
+            attacker.removeStatusEffect(ModEffectsRegistry.MOLTEN_FLARE);
         }
         return super.postHit(stack, target, attacker);
     }

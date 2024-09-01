@@ -28,18 +28,13 @@ public class RuneCarverItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-
-        switch (type) {
-            case "runic":
-                tooltip.add(Text.literal(""));
-                tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
-                tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
-                break;
-            case "nether":
-                tooltip.add(Text.literal(""));
-                tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
-                tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
-                break;
+        tooltip.add(Text.literal(""));
+        if (type.equals("runic")) {
+            tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
+            tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
+        } else {
+            tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
+            tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
         }
     }
 

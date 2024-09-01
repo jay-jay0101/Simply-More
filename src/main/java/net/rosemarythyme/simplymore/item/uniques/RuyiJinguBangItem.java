@@ -31,15 +31,10 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
-    /*
-     * Refactored the `use` method to improve efficiency and conciseness.
-     *  Removed the unnecessary `setCurrentHand` method call as the `hand` parameter is already being passed.
-     *  Replaced the `if-else` statement with a ternary operator to express the logic in a more concise way.
-     *      Ternary operators are highly optimised and can significantly improve the performance of your code.
-     */
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+        user.setCurrentHand(hand);
         return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
                 ? TypedActionResult.fail(itemStack)
                 : TypedActionResult.consume(itemStack);

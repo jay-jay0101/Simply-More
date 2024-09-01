@@ -3,14 +3,15 @@
 	"id": "simplymore",
 	"version": "${version}",
 	"name": "simplymore",
-	"description": "An addon to SimplySwords which adds even more weapons variety and new uniques!",
+	"description": "An addon to Simply Swords which adds even more weapons variety and new uniques!",
 	"authors": [
 		"RosemaryThyme - (Code + Art)",
-		"NotSaneAshley - (Art)"
+		"NotSaneAshley - (Art)",
+		"chronosacaria - (Code Review)"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/jay-jay0101/simplymore/tree/main"
+		"sources": "https://github.com/jay-jay0101/Simply-More/tree/main"
 	},
 	"license": "All Rights Reserved",
 	"icon": "assets/simplymore/icon.png",

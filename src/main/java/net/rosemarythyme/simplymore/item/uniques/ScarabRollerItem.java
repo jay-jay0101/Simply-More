@@ -29,7 +29,7 @@ import java.util.List;
 
 
 public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 300;
+    int skillCooldown = 200;
     private final List<LivingEntity> hitEntities = new ArrayList<>();
     float activeSpeed = 1f;
 
@@ -37,15 +37,10 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
-    /*
-     * Refactored the `use` method to improve efficiency and conciseness.
-     *  Removed the unnecessary `setCurrentHand` method call as the `hand` parameter is already being passed.
-     *  Replaced the `if-else` statement with a ternary operator to express the logic in a more concise way.
-     *      Ternary operators are highly optimised and can significantly improve the performance of your code.
-     */
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+        user.setCurrentHand(hand);
         return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
                 ? TypedActionResult.fail(itemStack)
                 : TypedActionResult.consume(itemStack);
@@ -56,19 +51,6 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        /* Technically, the more efficient way to do this would be to use `attacker.getRandom().nextInt(x)`. But,
-         *  you need to consider that the counting starts at `0` and not `1`. As such, a way to think about this is
-         *  that the less than sign is an arrow that points the intended proc percentage towards the number that the
-         *  percentage should be taken from. See example below.
-         *
-         * if (attacker.getRandom().nextInt(100) < 15) {
-         *  ...
-         * }
-         *
-         * If this is a change that you want, you can do a find and replace with CRTL + SHIFT + R and search for
-         *  ".getRandom().nextBetween(1, 100) <=" and replace it with ".getRandom().nextInt(100) <". Do not include the
-         *  quotation marks in the search or the replacement.
-         */
         if (attacker.getRandom().nextBetween(1, 100) <= 15) {
             attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 100, 0), attacker);
         }

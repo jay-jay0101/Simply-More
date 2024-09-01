@@ -48,7 +48,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         if (!isFixedTime && currentTime < 13000) {
             spawnFlameAttack(world, user, playerX, playerY, playerZ);
         } else {
-            spawnWindAttack(world, user, playerX, playerY, playerZ);
+            spawnWindAttack(world, user, playerX, user.getY(), playerZ);
         }
         
         user.getItemCooldownManager().set(this.getDefaultStack().getItem(), calculateCooldown(currentTime, isFixedTime));

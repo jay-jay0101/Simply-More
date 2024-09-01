@@ -109,27 +109,27 @@ public class LootTableModifier {
         LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
             if (loot.getUniqueLootWeight() > 0 && id.getPath().contains("chests") && (loot.isEnableLootInVillages() || !id.getPath().contains("village"))) {
                 LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder((float)loot.getUniqueLootWeight()));
-                lootTableContents(context, pool);
+                lootTableContents(context, pool,loot.isEnableJokeUniqueChestLoot());
             }
         });
 
         LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
-            if (loot.isEnableWitherDropsUnique() && id.getPath().equals("entities/wither")) {
-                LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder(0.05f));
-                lootTableContents(context, pool);
+            if (loot.getWitherUniqueWeight() > 0 && id.getPath().equals("entities/wither")) {
+                LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder((float) loot.getWitherUniqueWeight()));
+                lootTableContents(context, pool, loot.isEnableJokeUniqueBossDrops());
             }
         });
 
         LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
-            if (loot.isEnableDragonDropsUnique() && id.getPath().equals("entities/ender_dragon")) {
-                LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder(0.5f));
-                lootTableContents(context, pool);
+            if (loot.getWitherUniqueWeight() > 0 && id.getPath().equals("entities/ender_dragon")) {
+                LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(RandomChanceLootCondition.builder((float) loot.getEnderDragonUniqueWeight()));
+                lootTableContents(context, pool, loot.isEnableJokeUniqueBossDrops());
             }
         });
 
     }
 
-    private static void lootTableContents(LootEvent.LootTableModificationContext context, LootPool.Builder pool) {
+    private static void lootTableContents(LootEvent.LootTableModificationContext context, LootPool.Builder pool, boolean isAllowJokeUniques) {
         if (loot.isEnableBlackPearl()) pool.with(ItemEntry.builder(ModItemsRegistry.BLACK_PEARL));
         if (loot.isEnableBladeOfTheGrotesque()) pool.with(ItemEntry.builder(ModItemsRegistry.BLADEOFTHEGROTESQUE));
         if (loot.isEnableBoasFang()) pool.with(ItemEntry.builder(ModItemsRegistry.BOAS_FANG));
@@ -137,7 +137,7 @@ public class LootTableModifier {
         if (loot.isEnableGlimmerstep()) pool.with(ItemEntry.builder(ModItemsRegistry.GLIMMERSTEP));
         if (loot.isEnableGrandfrost()) pool.with(ItemEntry.builder(ModItemsRegistry.GRANDFROST));
         if (loot.isEnableGreatSlither()) pool.with(ItemEntry.builder(ModItemsRegistry.GREAT_SLITHER));
-        if (loot.isEnableJesterPenetrate() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItemsRegistry.JESTER_PENETRATE));
+        if (loot.isEnableJesterPenetrate() && isAllowJokeUniques) pool.with(ItemEntry.builder(ModItemsRegistry.JESTER_PENETRATE));
         if (loot.isEnableLustrousMoxie()) pool.with(ItemEntry.builder(ModItemsRegistry.LUSTROUS_MOXIE));
         if (loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItemsRegistry.MATTERBANE));
         if (loot.isEnableMimicry()) pool.with(ItemEntry.builder(ModItemsRegistry.MIMICRY));
@@ -150,7 +150,7 @@ public class LootTableModifier {
         if (loot.isEnableSoulForeseer()) pool.with(ItemEntry.builder(ModItemsRegistry.SOUL_FORESEER));
         if (loot.isEnableStasis()) pool.with(ItemEntry.builder(ModItemsRegistry.STASIS));
         if (loot.isEnableTheBloodHarvester()) pool.with(ItemEntry.builder(ModItemsRegistry.THEBLOODHARVESTER));
-        if (loot.isEnableThePan() && loot.isEnableJokeUniqueBossDrops()) pool.with(ItemEntry.builder(ModItemsRegistry.THE_PAN));
+        if (loot.isEnableThePan() && isAllowJokeUniques) pool.with(ItemEntry.builder(ModItemsRegistry.THE_PAN));
         if (loot.isEnableTheVesselBreach()) pool.with(ItemEntry.builder(ModItemsRegistry.THEVESSELBREACH));
         if (loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItemsRegistry.TIDEBREAKER));
         if (loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItemsRegistry.TIMEKEEPER));

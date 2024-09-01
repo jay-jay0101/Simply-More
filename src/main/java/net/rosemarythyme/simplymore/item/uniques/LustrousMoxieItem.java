@@ -58,47 +58,53 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             return;
         }
 
-        locateAndTeleportToRadiantMarkedTarget(user);
-        damageAndKnockbackRadiantMarkedTarget(user.getAttacking(), user);
-        damageAndKnockbackNearbyNonRadiantMarkedEntities(user);
+        LivingEntity target = locateRadiantMarkedTarget(user);
 
-        user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE,30,0));
-        user.getWorld().playSound(null,user.getBlockPos(),SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
-        user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+        if(target != null) {
+            damageAndKnockbackAndTeleportToRadiantMarkedTarget(target, user);
+            damageAndKnockbackNearbyNonRadiantMarkedEntities(target, user);
+
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE, 30, 0));
+            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
+            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+        }
     }
 
-    private void locateAndTeleportToRadiantMarkedTarget(PlayerEntity user) {
+    private LivingEntity locateRadiantMarkedTarget(PlayerEntity user) {
         Box box = new Box(user.getX() - 20,user.getY() - 20,user.getZ() - 20,user.getX() + 20,user.getY() + 20,user.getZ() + 20);
         List<LivingEntity> potentiallyMarkedLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK)).findAny().orElse(null);
 
         if (markedEntity == null || (markedEntity == user || markedEntity.isTeammate(user))) {
-            return;
+            return null;
         }
 
-        if (potentiallyMarkedLivingEntities.size() > 1) {
-            user.teleport(markedEntity.getX(), markedEntity.getY(), markedEntity.getZ(), false);
-            ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 2, user.getZ(), 500, 3, 3, 3, 0);
-        }
+        return markedEntity;
     }
 
-    private void damageAndKnockbackRadiantMarkedTarget(LivingEntity targetEntity, PlayerEntity user) {
+    private void damageAndKnockbackAndTeleportToRadiantMarkedTarget(LivingEntity targetEntity, PlayerEntity user) {
         if (targetEntity == user.getAttacking()) {
+            user.teleport(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ(), false);
+            ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 2, user.getZ(), 500, 3, 3, 3, 0);
             targetEntity.removeStatusEffect(ModEffectsRegistry.RADIANT_MARK);
             knockbackAndDamageEntity(targetEntity, user, 15, (float) 2.0);
         }
     }
 
-    private void damageAndKnockbackNearbyNonRadiantMarkedEntities(PlayerEntity user) {
+    private void damageAndKnockbackNearbyNonRadiantMarkedEntities(LivingEntity targetEntity, PlayerEntity user) {
         Box box = new Box(user.getX() - 5,user.getY() - 5,user.getZ() - 5,user.getX() + 5,user.getY() + 5,user.getZ() + 5);
         List<LivingEntity> nearbyLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
+        nearbyLivingEntities.remove(targetEntity);
         for (LivingEntity livingEntity : nearbyLivingEntities) {
-            nearbyLivingEntities.remove(user.getAttacking());
             knockbackAndDamageEntity(livingEntity, user, 20, (float) 2.5);
         }
     }
 
     private void knockbackAndDamageEntity(LivingEntity targetEntity, PlayerEntity user, int damage, float knockbackStrength) {
+        if(targetEntity==user || targetEntity.isTeammate(user)) {
+            return;
+        }
+
         targetEntity.damage(user.getDamageSources().playerAttack(user), damage);
 
         Vec3d userPosition = user.getPos();
@@ -122,12 +128,10 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
-            return TypedActionResult.fail(itemStack);
-        } else {
-            user.setCurrentHand(hand);
-            return TypedActionResult.consume(itemStack);
-        }
+        user.setCurrentHand(hand);
+        return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
+                ? TypedActionResult.fail(itemStack)
+                : TypedActionResult.consume(itemStack);
     }
 
     @Override

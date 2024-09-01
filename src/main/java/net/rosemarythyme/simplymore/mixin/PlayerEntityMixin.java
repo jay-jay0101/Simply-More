@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin {
 	@Inject(at = @At("HEAD"), method = "applyDamage", cancellable = true)
 	private void simplyMore$applyDamage(DamageSource source, float amount, CallbackInfo info) {
 		PlayerEntity player = (PlayerEntity) (Object) this;
-		SimplyMoreHelperMethods.simplyMore$applyBlessingOrCurse(source, info, player);
+		SimplyMoreHelperMethods.simplyMore$applyBlessingOrCurse(amount, source, info, player);
 	}
 
 }

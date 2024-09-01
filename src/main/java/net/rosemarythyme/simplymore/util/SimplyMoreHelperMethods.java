@@ -3,8 +3,6 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -25,14 +23,7 @@ import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.UUID;
-
 public class SimplyMoreHelperMethods {
-    public static StatusEffect simplyMore$addAttributeModifier(StatusEffect statusEffect, EntityAttribute attribute, String uuid, double amount, EntityAttributeModifier.Operation operation) {
-        EntityAttributeModifier entityAttributeModifier = new EntityAttributeModifier(UUID.fromString(uuid), statusEffect::getTranslationKey, amount, operation);
-        statusEffect.getAttributeModifiers().put(attribute, entityAttributeModifier);
-        return statusEffect;
-    }
 
     public static void simplyMore$setAreaEffectCloudParameters(AreaEffectCloudEntity areaEffectCloudEntity, ParticleEffect particleEffect, int radius, float radiusGrowth, int radiusOnUse, LivingEntity owner, int duration) {
         if (areaEffectCloudEntity != null) {
@@ -57,7 +48,7 @@ public class SimplyMoreHelperMethods {
     }
 
     public static void simplyMore$IdolHitEffects(LivingEntity attacker, ParticleEffect particleEffect, int particleCount, double deltaX, double deltaY, double deltaZ, double particleSpeed, AreaEffectCloudEntity auraEntity) {
-        if (!attacker.getWorld().isClient() && attacker.getRandom().nextBetween(1, 100) <= 10) {
+        if (!attacker.getWorld().isClient() && attacker.getRandom().nextBetween(1, 100) <= 15) {
             ((ServerWorld) attacker.getWorld()).spawnParticles(particleEffect, attacker.getX(), attacker.getY() + 1, attacker.getZ(), particleCount, deltaX, deltaY, deltaZ, particleSpeed);
             attacker.getWorld().spawnEntity(auraEntity);
             attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BUCKET_FILL, attacker.getSoundCategory(), 2.0F, 0.3F);
@@ -66,9 +57,10 @@ public class SimplyMoreHelperMethods {
 
     public static void simplyMore$IdolUseEffects(Item item, PlayerEntity user, StatusEffect statusEffect, int duration, SoundEvent soundEvent, float soundVolume, float soundPitch, ParticleEffect particleEffect, int particleCount, double deltaX, double deltaY, double deltaZ, double particleSpeed, int skillCooldown) {
         if (!user.getWorld().isClient()) {
+            boolean isPositive = statusEffect.isBeneficial();
             Box box = new Box(user.getX() - 10, user.getY() - 10, user.getZ() - 10, user.getX() + 10, user.getY() + 10, user.getZ() + 10);
             for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                if (livingEntity == user || livingEntity.isTeammate(user)) continue;
+                if ((livingEntity == user || livingEntity.isTeammate(user)) != isPositive) continue;
 
                 livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, duration));
             }
@@ -99,7 +91,7 @@ public class SimplyMoreHelperMethods {
         HelperMethods.createFootfalls(entity, stack, world, stepMod, particleEffect, sprintParticleEffect, passiveParticleEffect, true);
     }
 
-    public static void simplyMore$applyBlessingOrCurse(DamageSource source, CallbackInfo info, LivingEntity livingEntity) {
+    public static void simplyMore$applyBlessingOrCurse(float amount, DamageSource source, CallbackInfo info, LivingEntity livingEntity) {
         if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.BLESSING)) {
 
             livingEntity.removeStatusEffect(ModEffectsRegistry.BLESSING);
@@ -120,9 +112,10 @@ public class SimplyMoreHelperMethods {
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,100,3));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,100,0));
 
-
             livingEntity.getWorld().playSound(null,livingEntity.getBlockPos(), SoundEvents.ENTITY_ALLAY_ITEM_TAKEN, SoundCategory.PLAYERS);
             ((ServerWorld) livingEntity.getWorld()).spawnParticles(ParticleTypes.SCULK_SOUL,livingEntity.getX(),livingEntity.getY()+1,livingEntity.getZ(),50,0.25,0.5,0.25,0.1);
+            livingEntity.damage(source, amount * 0.5f);
+            livingEntity.timeUntilRegen = 0;
         }
     }
 }

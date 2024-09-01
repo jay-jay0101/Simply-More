@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "applyDamage", cancellable = true)
 	private void simplyMore$applyDamage(DamageSource source, float amount, CallbackInfo info) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
-		SimplyMoreHelperMethods.simplyMore$applyBlessingOrCurse(source, info, livingEntity);
+		SimplyMoreHelperMethods.simplyMore$applyBlessingOrCurse(amount, source, info, livingEntity);
 	}
 
 }

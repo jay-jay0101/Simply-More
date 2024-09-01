@@ -25,7 +25,7 @@ public class VipersCallProjectileAreaEffectCloudEntity extends AreaEffectCloudEn
 
         List<LivingEntity> entities = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox());
         for (LivingEntity target : entities) {
-            if (target.isAlive() && !target.isInvulnerable() && !target.isTeammate(livingEntity)) {
+            if (target.isAlive() && !target.isInvulnerable() && target!=livingEntity && !target.isTeammate(livingEntity)) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 60, 0));
                 target.damage(this.getDamageSources().magic(), 0.7f);
             }

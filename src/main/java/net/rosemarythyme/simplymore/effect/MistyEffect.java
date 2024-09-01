@@ -1,8 +1,6 @@
 package net.rosemarythyme.simplymore.effect;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -15,8 +13,6 @@ import net.minecraft.util.math.Box;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 
-import java.util.UUID;
-
 public class MistyEffect extends StatusEffect {
 
 
@@ -24,12 +20,6 @@ public class MistyEffect extends StatusEffect {
         super(category, color);
     }
 
-
-    public StatusEffect addAttributeModifier(EntityAttribute attribute, String uuid, double amount, EntityAttributeModifier.Operation operation) {
-        EntityAttributeModifier entityAttributeModifier = new EntityAttributeModifier(UUID.fromString(uuid), this::getTranslationKey, amount, operation);
-        this.getAttributeModifiers().put(attribute, entityAttributeModifier);
-        return this;
-    }
 
     @Override
     public void applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {

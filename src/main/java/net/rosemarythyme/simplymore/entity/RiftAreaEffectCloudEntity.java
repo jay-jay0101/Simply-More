@@ -73,9 +73,9 @@ public class RiftAreaEffectCloudEntity extends AreaEffectCloudEntity {
             double entityDistanceZ = entity.getZ() - getZ();
 
             if (distanceSquared < 100) {
-                entityDistanceX /= -20;
-                entityDistanceY /= -20;
-                entityDistanceZ /= -20;
+                entityDistanceX /= 20;
+                entityDistanceY /= 20;
+                entityDistanceZ /= 20;
 
                 entity.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10));
                 entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 1));
@@ -85,7 +85,7 @@ public class RiftAreaEffectCloudEntity extends AreaEffectCloudEntity {
                 }
             } else {
 
-                entity.setVelocity(entityDistanceX / 10, entityDistanceY / 10, entityDistanceZ / 10);
+                entity.setVelocity(entityDistanceX / -10, entityDistanceY / -10, entityDistanceZ / -10);
                 if (entity instanceof PlayerEntity player) {
                     player.velocityModified = true;
                 }

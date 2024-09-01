@@ -67,12 +67,10 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
-            return TypedActionResult.fail(itemStack);
-        } else {
-            user.setCurrentHand(hand);
-            return TypedActionResult.consume(itemStack);
-        }
+        user.setCurrentHand(hand);
+        return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
+                ? TypedActionResult.fail(itemStack)
+                : TypedActionResult.consume(itemStack);
     }
 
     @Override

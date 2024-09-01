@@ -89,6 +89,7 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip7").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip8").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip9").setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

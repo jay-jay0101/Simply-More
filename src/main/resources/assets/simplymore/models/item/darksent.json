@@ -2,8 +2,7 @@
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "simplymore:item/uniques/idols/darksent_wings",
-    "layer1": "simplymore:item/uniques/idols/darksent",
-    "layer2": "simplymore:item/uniques/idols/darksent_tail"
+    "layer1": "simplymore:item/uniques/idols/darksent"
   },
   "display": {
     "thirdperson_righthand": {
