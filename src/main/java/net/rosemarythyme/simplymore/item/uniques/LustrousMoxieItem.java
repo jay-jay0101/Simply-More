@@ -96,7 +96,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         List<LivingEntity> nearbyLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         nearbyLivingEntities.remove(targetEntity);
         for (LivingEntity livingEntity : nearbyLivingEntities) {
-            knockbackAndDamageEntity(livingEntity, user, 20, (float) 2.5);
+            knockbackAndDamageEntity(livingEntity, user, 10, (float) 2.5);
         }
     }
 
