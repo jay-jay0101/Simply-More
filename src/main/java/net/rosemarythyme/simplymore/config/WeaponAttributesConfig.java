@@ -25,7 +25,7 @@ public class WeaponAttributesConfig implements ConfigData {
     double quarterstaffSwingSpeed = 2.0;
     double pernachSwingSpeed = 1.3;
     double greatSpearSwingSpeed = 1.0;
-    double deerHornsSwingSpeed = 2.0;
+    double deerHornsSwingSpeed = 2.1;
 
     int greatSlitherDamage = 11;
     double greatSlitherSwingSpeed = 1.4;
@@ -73,7 +73,7 @@ public class WeaponAttributesConfig implements ConfigData {
     int stasisDamage = 8;
     double stasisSwingSpeed = 2.0;
     int tidebreakerDamage = 9;
-    double tidebreakerSwingSpeed = 2.0;
+    double tidebreakerSwingSpeed = 2.1;
     int ruyiJinguBangDamage = 9;
     double ruyiJinguBangSwingSpeed = 2.0;
     int rupturedIdolDamage = 10;
