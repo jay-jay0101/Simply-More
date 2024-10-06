@@ -31,53 +31,6 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
-    /*
-    1. Random number generation:
-        Original code:      attacker.getRandom().nextInt(100) is called multiple times.
-        Suggested code:     int randomNumber = attacker.getRandom().nextBetween(1, 100); is called once and stored in a
-                                variable and provides a number between 1 and 100.
-        Difference:         The suggested code is more efficient because it generates a random number only once, whereas
-                                the original code generates a new random number every time it's needed. Whilst, in this
-                                case, the number is generated only once, it is often better to define a random as a
-                                variable that can be referenced, as needed, rather tha having to generate it each time.
-                                In this situation it is less relevant, but making it a habit can make it easier to use
-                                randoms in such a manner when needed.
-
-    2. Filtering beneficial effects:
-        Original code:      Uses a for loop to iterate over all effects and checks each one to see if it's beneficial.
-        Suggested code:     Uses a Stream to filter the list of effects and collect the beneficial ones into a new list.
-        Difference:         The suggested code is more concise and potentially more efficient, especially for large lists
-                                of effects. The Stream API is designed to handle large datasets and can take advantage of
-                                parallel processing. Also, in a modded environment, there can be a massive number of
-                                effects on a player. Taking advantage of the Stream API, one can more efficiently get
-                                the same information that would be provided via the original for loop.
-
-    3. Creating a new StatusEffectInstance:
-        Original code:      Creates a new StatusEffectInstance with the same effect type, duration, and amplifier as the
-                                plundered effect, but with some modifications (e.g., capping the amplifier at 4).
-        Suggested code:     Creates a new StatusEffectInstance with the same effect type, but with a new duration and
-                                amplifier that are calculated based on the plundered effect's values.
-        Difference:         The suggested code is more explicit about what values are being used to create the new
-                                effect instance. It also uses the Math.min function to ensure that the duration and
-                                amplifier are capped at the desired values.
-
-    4. Adding the new effect to the attacker:
-        Original code:      attacker.addStatusEffect(plunderedEffect);
-        Suggested code:     attacker.addStatusEffect(newEffect);
-        Difference:         The suggested code adds the new effect instance to the attacker, whereas the original code
-                                adds the plundered effect instance. This is because the suggested code creates a new effect
-                                instance with the desired values, whereas the original code modifies the plundered
-                                effect instance. This also prevents issues with reapplication of the status effect
-                                that is plundered, which can happen in heavily modded environments.
-
-    In terms of performance, the suggested code is likely to be more efficient than the original code, especially for large
-    lists of effects. The use of Stream API and the reduction of random number generation can lead to significant
-    performance improvements.
-
-    In terms of functionality, both codes achieve the same goal: they "plunder" a beneficial effect from the target and
-    add it to the attacker, with some modifications to the effect's values. However, the suggested code is more explicit
-    and concise in its implementation, making it easier to understand and maintain.
-    */
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
