@@ -26,7 +26,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 500;
+    int skillCooldown = effect.getBlizzardCooldown();
 
     public GrandfrostItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -35,8 +35,8 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (attacker.getRandom().nextBetween(1, 100) <= 25 || target.isBlocking()) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL, 140, 0), attacker);
+                if (attacker.getRandom().nextBetween(1, 100) <= effect.getChillingChance() || target.isBlocking()) {
+                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL, effect.getChillingTime(), 0), attacker);
                 }
             }
         return super.postHit(stack, target, attacker);
@@ -47,8 +47,8 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
         if (user.getWorld().isClient()) {
             return super.use(world, user, hand);
         }
-
-        Box box = new Box(user.getX() - 5, user.getY() - 2, user.getZ() - 5, user.getX() + 5, user.getY() + 5, user.getZ() + 5);
+        int boxSize = effect.getBlizzardRange();
+        Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
         List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
         if (livingEntities.size() > 1) {
@@ -72,12 +72,12 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
                     return super.use(world, user, hand);
                 }
 
-                float knockbackStrength = 3.5f;
+                float knockbackStrength = effect.getBlizzardStrength();
                 double normalizedDeltaX = deltaX / distance;
                 double normalizedDeltaZ = deltaZ / distance;
 
-                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL, 200, 0));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 3));
+                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL, effect.getBlizzardEffectTime(), 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getBlizzardEffectTime(), 3));
                 livingEntity.setVelocity(normalizedDeltaX * knockbackStrength, 0.4, normalizedDeltaZ * knockbackStrength);
                 livingEntity.velocityModified = true;
             }
@@ -90,10 +90,10 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

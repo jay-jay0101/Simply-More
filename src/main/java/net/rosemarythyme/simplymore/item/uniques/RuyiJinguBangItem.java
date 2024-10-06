@@ -25,7 +25,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 700;
+    int skillCooldown = effect.getRuyiCooldown();
 
     public RuyiJinguBangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -84,7 +84,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
                     float userY = (float) user.getY();
                     float userZ = (float) user.getZ();
 
-                    user.getWorld().playSound(null, userX + offsetX, userY + offsetY, userZ + offsetZ, SoundRegistry.DARK_SWORD_BLOCK.get(), SoundCategory.PLAYERS, 1, 1);
+                    user.getWorld().playSound(null, userX + offsetX, userY + offsetY, userZ + offsetZ, SoundRegistry.DARK_SWORD_BLOCK.get(), SoundCategory.PLAYERS, 0.2f, 1);
 
                     Box box = new Box(userX - 1 + offsetX, userY - 1 + offsetY, userZ - 1 + offsetZ, userX + 1 + offsetX, userY + 1 + offsetY, userZ + 1 + offsetZ);
                     DamageSource damageSource = player.getDamageSources().playerAttack(player);
@@ -102,10 +102,10 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
         }
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.WAX_ON);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.WAX_ON);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

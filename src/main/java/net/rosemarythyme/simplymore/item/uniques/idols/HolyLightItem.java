@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques.idols;
 
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class HolyLightItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = 800;
+    int skillCooldown = effect.getHolylightCooldown();
 
     public HolyLightItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -88,8 +89,16 @@ public class HolyLightItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.holylight.tooltip8").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.holylight.tooltip8",
+                effect.getBlessingHeal()/2).setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+    }
+
+    int stepMod = 0;
+    @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

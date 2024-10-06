@@ -22,7 +22,8 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 500;
+    int skillCooldown = effect.getSolidifyCooldown();
+    int skillLength = effect.getSolidifySelfStunTime();
 
     public BladeOfTheGrotesqueItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -32,7 +33,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SOLIDIFIED,50));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SOLIDIFIED,skillLength));
             user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.UI_STONECUTTER_TAKE_RESULT, user.getSoundCategory(), 2F, 1F);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.ASH,user.getX(),user.getEyeY()-0.25,user.getZ(),1000,0.2,0.5,0.2,1);
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
@@ -40,6 +41,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
@@ -54,8 +56,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
                             false)
             );
 
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -71,7 +72,8 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip4",
+                SimplyMoreHelperMethods.translateTicks(skillLength)).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip5").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip7").setStyle(textStyle));

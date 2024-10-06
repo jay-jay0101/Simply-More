@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques.idols;
 
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -23,10 +24,17 @@ import java.util.List;
 
 public class DarksentItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = 800;
+    int skillCooldown = effect.getDarksentCooldown();
 
     public DarksentItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
+    }
+
+    int stepMod = 0;
+    @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
@@ -89,7 +97,8 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip7").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip8").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip9").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip9",
+                SimplyMoreHelperMethods.toPercentage(effect.getCurseDamageMultiplier())).setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

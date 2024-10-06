@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.item.uniques.joke;
 
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -14,6 +15,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
+import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.item.normal.SimplyMoreSwordItem;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -24,6 +27,8 @@ import java.util.List;
 public class ThePanItem extends SimplyMoreSwordItem {
 
     String[] repairIngredient;
+    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
+    protected static UniqueEffectConfig effect = config.uniqueEffects;
 
     public ThePanItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -42,7 +47,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
         // Check if the attacker's random number generator returns a value greater than 30.
         // If so, we don't apply the knockback effect.
         // This is, functionally, the same as checking if the attacker's random number generator returns a value less than or equal to 30.
-        if (attacker.getRandom().nextBetween(1, 100) > 30) {
+        if (attacker.getRandom().nextBetween(1, 100) > effect.getBonkChance()) {
             // Call the superclass's postHit method to handle any default behavior.
             return super.postHit(stack, target, attacker);
         }
@@ -66,7 +71,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
         }
 
         // Define the knockback strength.
-        float knockbackStrength = 20f;
+        float knockbackStrength = effect.getBonkStrength();
 
         // Normalize the delta x and z values to get the direction of the knockback.
         double normalizedDeltaX = deltaX / distance;

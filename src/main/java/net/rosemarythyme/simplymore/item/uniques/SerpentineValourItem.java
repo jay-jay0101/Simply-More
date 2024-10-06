@@ -26,7 +26,7 @@ import java.util.List;
 
 
 public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 700;
+    int skillCooldown = effect.getPoisonBoltCooldown();
 
     public SerpentineValourItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -45,7 +45,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
 
         if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(ModEffectsRegistry.VENOM)) {
             target.timeUntilRegen = 0;
-            target.damage(target.getDamageSources().generic(), 4);
+            target.damage(target.getDamageSources().generic(), effect.getPoisonedTargetDamageBuff());
         }
 
         return super.postHit(stack, target, attacker);
@@ -109,10 +109,10 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

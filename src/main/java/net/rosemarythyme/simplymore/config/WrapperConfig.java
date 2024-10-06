@@ -17,6 +17,11 @@ public class WrapperConfig extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Gui.TransitiveObject
     public WeaponAttributesConfig weaponAttributes = new WeaponAttributesConfig();
 
+
+    @ConfigEntry.Category("unique_effects")
+    @ConfigEntry.Gui.TransitiveObject
+    public UniqueEffectConfig uniqueEffects = new UniqueEffectConfig();
+
     public WrapperConfig() {
     }
 }

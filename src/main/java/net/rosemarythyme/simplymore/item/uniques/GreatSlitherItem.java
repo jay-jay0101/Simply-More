@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 200;
+    int skillCooldown = effect.getSlitherFangsCooldown();
 
     public GreatSlitherItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -32,8 +32,8 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= 25) {
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 90, 0), attacker);
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getSlitherPoisonChance()) {
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, effect.getSlitherPoisonTime(), 0), attacker);
             }
         }
 
@@ -50,7 +50,7 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
         double cosYaw = Math.cos(yawAngle);
         double sinYaw = Math.sin(yawAngle);
 
-        for (int distanceMultiplier = 1; distanceMultiplier < 7; distanceMultiplier++) {
+        for (int distanceMultiplier = 1; distanceMultiplier < effect.getSlitherFangsRange(); distanceMultiplier++) {
             double offsetX = -distanceMultiplier * sinYaw;
             double offsetZ = distanceMultiplier * cosYaw;
 
@@ -64,10 +64,10 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
+import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.effect.*;
@@ -16,6 +17,7 @@ import net.rosemarythyme.simplymore.effect.*;
 public class ModEffectsRegistry {
     static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
     static WeaponAttributesConfig attributes = config.weaponAttributes;
+    static UniqueEffectConfig effects = config.uniqueEffects;
 
     public static final StatusEffect VENOM = registerEffect(
             "venom",
@@ -27,7 +29,7 @@ public class ModEffectsRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             "f53f18d4-ac4d-4010-aa0a-7d2d25050c66",
-                            0.6,
+                            effects.getExecutingSliceSwingSpeedBonus(),
                             EntityAttributeModifier.Operation.ADDITION
                     )
     );
@@ -96,7 +98,7 @@ public class ModEffectsRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             "3c943533-dab6-4f42-9195-21ca6838bb0b",
-                            3,
+                            effects.getGrotesqueHeldArmorBuff(),
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
@@ -111,7 +113,7 @@ public class ModEffectsRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             "695fbd36-b9e1-452d-8f41-2f850a4ccf6a",
-                            10,
+                            effects.getSolidifyAttackerStunnedArmorBuff(),
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
@@ -131,7 +133,7 @@ public class ModEffectsRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             "f00fd930-1cd9-4524-a375-0d50225d323f",
-                            10,
+                            effects.getSolidifySelfStunnedArmorBuff(),
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,

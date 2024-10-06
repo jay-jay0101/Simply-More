@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 800;
+    int skillCooldown = effect.getRuinCooldown();
 
     public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -34,8 +34,8 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient() && attacker.getRandom().nextInt(100) <= 25) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 100, 0), attacker);
+        if (!attacker.getWorld().isClient() && attacker.getRandom().nextBetween(1,100) <= effect.getWitherChance()) {
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.getWitherTime(), 0), attacker);
             StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(ModEffectsRegistry.WITHERING_FATE);
             if (targetWitheringFateStatus != null) {
                 target.addStatusEffect(
@@ -68,10 +68,10 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.CRIMSON_SPORE);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

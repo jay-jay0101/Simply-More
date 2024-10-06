@@ -1,12 +1,14 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -15,6 +17,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.RiftAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
@@ -40,7 +43,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             "black"
     };
 
-    int skillCooldown = 1200;
+    int skillCooldown = effect.getRiftCooldown();
 
     public MatterbaneItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -62,11 +65,18 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= 15) {
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 20, 1), attacker);
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getLevitationChance()) {
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, effect.getLevitationTime(), 1), attacker);
             }
         }
         return super.postHit(stack, target, attacker);
+    }
+
+    int stepMod = 0;
+    @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override

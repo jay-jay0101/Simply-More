@@ -25,6 +25,16 @@
       "rotation": [ 0, 0, 0 ],
       "translation": [ 0, 0, 0 ],
       "scale": [1.2,1.2,1.2]
+    },
+    "fixed": {
+      "rotation": [ 0, 0, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [1.5,1.5,1.5]
+    },
+    "ground": {
+      "rotation": [ 0, 0, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [1.2,1.2,1.2]
     }
   }
 }

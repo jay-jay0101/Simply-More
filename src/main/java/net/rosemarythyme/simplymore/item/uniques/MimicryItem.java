@@ -80,17 +80,17 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
             NbtElement form = stack.getOrCreateNbt().get(FORM_STRING);
             if (form != null) {
                 String formString = form.toString();
-                if (hitCount % 5 == 0 && formString.equals("\"" + PURITY_FORM + "\"")) {
+                if (hitCount % effect.getPurityHitsNeeded() == 0 && formString.equals("\"" + PURITY_FORM + "\"")) {
                     attacker.addStatusEffect(
                             new StatusEffectInstance(
                                     positiveEffectsList.get(target.getRandom().nextInt(positiveEffectsList.size())),
-                                    250,
+                                    effect.getPurityEffectTime(),
                                     0));
-                } else if (hitCount % 4 == 0 && formString.equals("\"" + TWISTED_FORM + "\"")) {
+                } else if (hitCount % effect.getTwistedHitsNeeded() == 0 && formString.equals("\"" + TWISTED_FORM + "\"")) {
                     attacker.addStatusEffect(
                             new StatusEffectInstance(
                                     negativeEffectsList.get(target.getRandom().nextInt(negativeEffectsList.size())),
-                                    250,
+                                    effect.getTwistedEffectTime(),
                                     0));
                 }
             }
@@ -119,6 +119,8 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
+
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         NbtElement form = stack.getOrCreateNbt().get(FORM_STRING);
@@ -144,8 +146,7 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ENCHANT);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ENCHANT);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -159,10 +160,14 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
         NbtElement form = itemStack.getOrCreateNbt().get(FORM_STRING);
         String formString = form != null ? form.toString().replaceAll("\"","") : "purity";
 
+        int hitsRequired = formString.equals("purity") ?
+                effect.getPurityHitsNeeded():
+                effect.getTwistedHitsNeeded();
+
         tooltip.add(Text.translatable("item.simplymore.mimicry_" + formString + ".tooltip1").setStyle(formStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip2").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry_" + formString + ".tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry_" + formString + ".tooltip3",hitsRequired).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.mimicry_" + formString + ".tooltip4").setStyle(textStyle));

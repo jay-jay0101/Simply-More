@@ -29,9 +29,9 @@ import java.util.List;
 
 
 public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 200;
+    int skillCooldown = effect.getRollCooldown();
     private final List<LivingEntity> hitEntities = new ArrayList<>();
-    float activeSpeed = 1f;
+    float activeSpeed = effect.getRollSpeed();
 
     public ScarabRollerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -51,8 +51,8 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        if (attacker.getRandom().nextBetween(1, 100) <= 15) {
-            attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 100, 0), attacker);
+        if (attacker.getRandom().nextBetween(1, 100) <= effect.getResistanceChance()) {
+            attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, effect.getResistanceTime(), 0), attacker);
         }
 
         return super.postHit(stack, target, attacker);
@@ -60,11 +60,8 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (user.hasStatusEffect(StatusEffects.SLOW_FALLING)) {
-            return;
-        }
 
-        if (!(user instanceof PlayerEntity player)) {
+        if (!(user instanceof PlayerEntity player) || player.hasStatusEffect(StatusEffects.SLOW_FALLING)) {
             return;
         }
 
@@ -73,7 +70,7 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
 
         Vector2d movement = new Vector2d(activeSpeed * Math.sin(userRotation), -activeSpeed * Math.cos(userRotation));
 
-        user.move(MovementType.SHULKER, new Vec3d(movement.x, 0, movement.y));
+        user.move(MovementType.SELF, new Vec3d(movement.x, 0, movement.y));
 
         if (!world.isClient) {
             hitEntities.add(user);
@@ -90,22 +87,22 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
 
                 xVelocity *= strength / ratioMax;
                 zVelocity *= strength / ratioMax;
-
                 entity.setVelocity(xVelocity, 0.4, zVelocity);
                 entity.velocityModified = true;
 
+
                 hitEntities.add(entity);
                 if (!entity.isBlocking()) {
-                    entity.damage(player.getDamageSources().playerAttack(player), 5f);
+                    entity.damage(player.getDamageSources().playerAttack(player), effect.getRollDamage());
                 }
             }
 
             double moveDistance = currentPosition.distance(user.getX(), user.getZ());
 
-            if (moveDistance < 0.9) {
+            if (moveDistance < activeSpeed * 0.9f) {
                 ((ServerWorld) world).spawnParticles(ParticleTypes.EXPLOSION, user.getX(), user.getY() + 0.75, user.getZ(), 3, 0, 0, 0, 0);
                 world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, user.getSoundCategory());
-                user.stopUsingItem();
+                player.stopUsingItem();
             }
         }
 
@@ -114,7 +111,7 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return 300;
+        return effect.getRollMaxDuration();
     }
 
     @Override
@@ -135,16 +132,17 @@ public class ScarabRollerItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
         if (entity instanceof PlayerEntity player && !hitEntities.isEmpty() && !player.isUsingItem()) {
             hitEntities.clear();
+            player.stopUsingItem();
             player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
 
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

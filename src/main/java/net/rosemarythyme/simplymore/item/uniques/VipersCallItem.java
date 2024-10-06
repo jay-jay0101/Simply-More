@@ -27,7 +27,7 @@ import java.util.List;
 
 
 public class VipersCallItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 1200;
+    int skillCooldown = effect.getChakramCooldown();
 
     public String[] effectBlacklist =
     {
@@ -52,6 +52,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
@@ -64,8 +65,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

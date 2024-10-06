@@ -25,7 +25,8 @@ import java.util.List;
 
 
 public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 180;
+    int skillCooldown = effect.getCannonballCooldown();
+    int plunderChance = effect.getPlunderChance();
 
     public BlackPearlItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -36,7 +37,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
             int randomNumber = attacker.getRandom().nextBetween(1, 100);
-            if (randomNumber <= 10) {
+            if (randomNumber <= plunderChance) {
                 List<StatusEffectInstance> positiveEffects = target.getStatusEffects().stream()
                         .filter(effect -> effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL)
                         .toList();
@@ -87,10 +88,10 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LANDING_HONEY, ParticleTypes.LANDING_HONEY, ParticleTypes.ASH);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LANDING_HONEY, ParticleTypes.LANDING_HONEY, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -29,7 +29,7 @@ import java.util.List;
 
 
 public class BoasFangItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 600;
+    int skillCooldown = effect.getSpitCooldown();
 
     public BoasFangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -38,8 +38,8 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= 20) {
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SUFFOCATION,120));
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getSuffocationChance()) {
+                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SUFFOCATION,effect.getSuffocationTime()));
             }
         }
         return super.postHit(stack, target, attacker);
@@ -77,15 +77,15 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
                         if (entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
                         if (entity.isBlocking()) continue;
 
-                        entity.damage(user.getDamageSources().magic(),5);
+                        entity.damage(user.getDamageSources().magic(),effect.getSpitDamage());
                         entity.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
-                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,120,1));
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,effect.getSpitPoisonTime(),1));
                     }
                 }
-                user.setVelocity(user.getRotationVector().negate().multiply(2));
+                user.setVelocity(user.getRotationVector().negate().multiply(effect.getSpitSelfKnockback()));
                 user.setVelocity(user.getVelocity().x, 0.0, user.getVelocity().z);
                 user.velocityModified = true;
-                user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED,80,1));
+                user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED,effect.getSpitSpeedTime(),1));
             }
 
 
@@ -93,11 +93,11 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
         }
         return super.use(world, user, hand);
     }
-
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SPORE_BLOSSOM_AIR);
+
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

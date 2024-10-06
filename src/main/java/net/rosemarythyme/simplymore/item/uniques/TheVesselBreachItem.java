@@ -25,7 +25,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 1800;
+    int skillCooldown = effect.getRageCooldown();
 
     public TheVesselBreachItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -36,9 +36,9 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
             if (!attacker.getWorld().isClient()) {
                 if (!(target instanceof ArmorStandEntity)) {
                     if (!attacker.hasStatusEffect(ModEffectsRegistry.RAGE)) {
-                        attacker.heal(this.getAttackDamage() / 10);
+                        attacker.heal(this.getAttackDamage() * effect.getVesselLifesteal());
                     } else {
-                        attacker.heal(this.getAttackDamage() * 0.28f);
+                        attacker.heal(this.getAttackDamage() * effect.getVesselRageLifesteal());
                     }
                 }
             }
@@ -49,8 +49,8 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
-            user.damage(user.getDamageSources().genericKill(), user.getMaxHealth()*0.3f);
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.RAGE, 200, 0));
+            user.damage(user.getDamageSources().genericKill(), user.getMaxHealth()*effect.getRageStartupDamagePercentage());
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.RAGE, effect.getRageTime(), 0));
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,12,4));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
@@ -59,10 +59,10 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -74,13 +74,16 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip2",
+                SimplyMoreHelperMethods.toPercentage(effect.getVesselLifesteal())).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip3",
+                SimplyMoreHelperMethods.toPercentage(effect.getRageStartupDamagePercentage())).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip4").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip6",
+                SimplyMoreHelperMethods.toPercentage(effect.getVesselRageLifesteal())).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip7").setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);

@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 300;
+    int skillCooldown = effect.getExecutingSliceCooldown();
 
     public MoltenFlareItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -35,8 +35,10 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        if (attacker.getRandom().nextBetween(1, 100) <= 20 || attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
-            eruption(attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE) ? 7 : 4, attacker);
+        if (attacker.getRandom().nextBetween(1, 100) <= effect.getEruptionChance() || attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
+            eruption(attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE) ?
+                    effect.getEruptionRadiusEmpowered():
+                    effect.getEruptionRadius(), attacker);
             attacker.removeStatusEffect(ModEffectsRegistry.MOLTEN_FLARE);
         }
         return super.postHit(stack, target, attacker);
@@ -57,10 +59,10 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
         attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundRegistry.SPELL_FIRE.get(), attacker.getSoundCategory(), 2F, 0.3F);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -27,7 +27,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 400;
+    int skillCooldown = effect.getRadiantTeleportCooldown();
 
     public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -40,7 +40,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK) && radiantMarkEffect != null) {
                 target.damage(attacker.getDamageSources().magic(),radiantMarkEffect.getAmplifier() + 1);
             }
-            if (attacker.getRandom().nextBetween(1, 100) <= 20) {
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getRadiantMarkChance()) {
                 if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK) && radiantMarkEffect != null) {
                     int amplifier = radiantMarkEffect.getAmplifier() + 1;
                     int duration = 240 - (amplifier * 40);
@@ -64,14 +64,15 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             damageAndKnockbackAndTeleportToRadiantMarkedTarget(target, user);
             damageAndKnockbackNearbyNonRadiantMarkedEntities(target, user);
 
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE, 30, 0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE, effect.getRadiantTeleportStunTime(), 0));
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
     }
 
     private LivingEntity locateRadiantMarkedTarget(PlayerEntity user) {
-        Box box = new Box(user.getX() - 20,user.getY() - 20,user.getZ() - 20,user.getX() + 20,user.getY() + 20,user.getZ() + 20);
+        int boxRange = effect.getRadiantTeleportRange();
+        Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> potentiallyMarkedLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK)).findAny().orElse(null);
 
@@ -87,20 +88,21 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             user.teleport(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ(), false);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 2, user.getZ(), 500, 3, 3, 3, 0);
             targetEntity.removeStatusEffect(ModEffectsRegistry.RADIANT_MARK);
-            knockbackAndDamageEntity(targetEntity, user, 15, (float) 2.0);
+            knockbackAndDamageEntity(targetEntity, user, effect.getRadiantTeleportTargetDamage());
         }
     }
 
     private void damageAndKnockbackNearbyNonRadiantMarkedEntities(LivingEntity targetEntity, PlayerEntity user) {
-        Box box = new Box(user.getX() - 5,user.getY() - 5,user.getZ() - 5,user.getX() + 5,user.getY() + 5,user.getZ() + 5);
+        int boxRange = effect.getRadiantTeleportAOERange();
+        Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> nearbyLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         nearbyLivingEntities.remove(targetEntity);
         for (LivingEntity livingEntity : nearbyLivingEntities) {
-            knockbackAndDamageEntity(livingEntity, user, 10, (float) 2.5);
+            knockbackAndDamageEntity(livingEntity, user, effect.getRadiantTeleportAOEDamage());
         }
     }
 
-    private void knockbackAndDamageEntity(LivingEntity targetEntity, PlayerEntity user, int damage, float knockbackStrength) {
+    private void knockbackAndDamageEntity(LivingEntity targetEntity, PlayerEntity user, float damage) {
         if(targetEntity==user || targetEntity.isTeammate(user)) {
             return;
         }
@@ -121,7 +123,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         double normalizedDeltaX = deltaX / distance;
         double normalizedDeltaZ = deltaZ / distance;
 
-        targetEntity.setVelocity(normalizedDeltaX * knockbackStrength, 0.2, normalizedDeltaZ * knockbackStrength);
+        targetEntity.setVelocity(normalizedDeltaX * effect.getRadiantTeleportAOEKnockback(), 0.2, normalizedDeltaZ * effect.getRadiantTeleportAOEKnockback());
         targetEntity.velocityModified = true;
     }
 
@@ -152,11 +154,10 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.SPEAR;
     }
-
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.WAX_OFF);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.WAX_OFF);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

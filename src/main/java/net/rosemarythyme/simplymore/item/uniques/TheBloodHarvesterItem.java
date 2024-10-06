@@ -25,7 +25,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 1800;
+    int skillCooldown = effect.getHarvestCooldown();
 
     public TheBloodHarvesterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -36,10 +36,10 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
             if (!attacker.getWorld().isClient()) {
                 if (!(target instanceof ArmorStandEntity)) {
                     if (!attacker.hasStatusEffect(ModEffectsRegistry.HARVEST)) {
-                        attacker.heal(this.getAttackDamage() / 10);
+                        attacker.heal(this.getAttackDamage() * effect.getHarvesterLifesteal());
                     } else {
-                        attacker.heal(this.getAttackDamage() / 5);
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,80,0));
+                        attacker.heal(this.getAttackDamage() * effect.getHarvesterHarvestLifesteal());
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,effect.getHarvestWitherTime(),0));
                     }
                 }
             }
@@ -49,7 +49,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.HARVEST, 300, 0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.HARVEST, effect.getHarvestTime(), 0));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SWORD_ATTACK_WITH_BLOOD_04.get(), user.getSoundCategory(), 2F, 0F);
@@ -57,10 +57,10 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -72,11 +72,14 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip2",
+                SimplyMoreHelperMethods.toPercentage(effect.getHarvesterLifesteal())).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3",
+                SimplyMoreHelperMethods.translateTicks(effect.getHarvestTime())).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip4",
+                SimplyMoreHelperMethods.toPercentage(effect.getHarvesterHarvestLifesteal())).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip5").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip6").setStyle(textStyle));
 

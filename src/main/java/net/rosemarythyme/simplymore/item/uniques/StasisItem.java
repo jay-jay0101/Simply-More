@@ -27,8 +27,8 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class StasisItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 700;
-    int onHitCooldown = 80;
+    int skillCooldown = effect.getLightningCooldown();
+    int onHitCooldown = effect.getStagnationTime();
 
 
     public StasisItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -38,7 +38,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (attacker.getRandom().nextBetween(1, 100) <= 20) {
+                if (attacker.getRandom().nextBetween(1, 100) <= effect.getStagnationChance()) {
                     attacker.getWorld().playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.PLAYERS,0.5f,2f);
                     ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),50,0.15,0.25,0.15,0.1);
                     if (target instanceof PlayerEntity playerTarget) {
@@ -92,31 +92,23 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
                 world.spawnEntity(lightning);
             }
         }
-        Box box = new Box(player.getX() - 4, player.getY() - 2, player.getZ() - 4, player.getX() + 4, player.getY() + 6, player.getZ() + 4);
-        for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
-            LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
-            if (entity == player || entity.isTeammate(player)) {
-                continue;
-            }
-            entity.damage(player.getDamageSources().magic(), 12);
-            entity.onStruckByLightning(world, lightning);
-        }
     }
 
     private void damageAndElectrifyEnemies(LivingEntity user, PlayerEntity player, ServerWorld world) {
-        Box box = new Box(user.getX() - 4, user.getY() - 2, user.getZ() - 4, user.getX() + 4, user.getY() + 6, user.getZ() + 4);
+        int boxRange = effect.getLightningRange();
+        Box box = new Box(user.getX() - boxRange, user.getY() - 2, user.getZ() - boxRange, user.getX() + boxRange, user.getY() + boxRange*2, user.getZ() + boxRange);
         for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
             if (entity == user || entity.isTeammate(user)) {
                 continue;
             }
-            entity.damage(player.getDamageSources().magic(), 12);
+            entity.damage(player.getDamageSources().magic(), effect.getLightningDamage());
             entity.onStruckByLightning(world, null);
         }
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return 60;
+        return effect.getLightningWindup();
     }
 
 
@@ -125,10 +117,10 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.GLOW);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.GLOW);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

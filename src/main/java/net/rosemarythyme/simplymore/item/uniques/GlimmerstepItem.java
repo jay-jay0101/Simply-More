@@ -26,7 +26,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 1200;
+    int skillCooldown = effect.getTeleportCooldown();
 
     public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -39,9 +39,11 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        int chance = attacker.getVehicle() instanceof LivingEntity ? 30 : 5;
+        int chance = attacker.getVehicle() instanceof LivingEntity ?
+                effect.getMountedBlindnessChance():
+                effect.getUnmountedBlindnessChance();
         if (attacker.getRandom().nextBetween(1, 100) <= chance) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60, 0), attacker);
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getBlindnessTime(), 0), attacker);
         }
 
         return super.postHit(stack, target, attacker);
@@ -77,7 +79,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     }
 
     private void teleportAndPlayEffect(ServerWorld serverWorld, LivingEntity user) {
-        Position blockPos = user.raycast(31, 0, false).getPos();
+        Position blockPos = user.raycast(effect.getTeleportDistance()+1, 0, false).getPos();
         user.teleport(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
         serverWorld.playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_NORDIC_21.get(), user.getSoundCategory(), 0.1f, 1f);
@@ -88,7 +90,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return 60;
+        return effect.getTeleportWindUpTime();
     }
 
     @Override
@@ -96,10 +98,10 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -115,8 +117,9 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4",
+                SimplyMoreHelperMethods.translateTicks(effect.getTeleportWindUpTime())).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5",effect.getTeleportDistance()).setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

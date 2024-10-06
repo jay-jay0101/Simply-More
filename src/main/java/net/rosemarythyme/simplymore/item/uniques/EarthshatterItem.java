@@ -30,7 +30,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 600;
+    int skillCooldown = effect.getSlamCooldown();
 
     public EarthshatterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -39,7 +39,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= 15) {
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getArmorCrunchChance()) {
                 StatusEffectInstance armourCrunchEffect = target.getStatusEffect(ModEffectsRegistry.ARMOUR_CRUNCH);
                 if (armourCrunchEffect != null) {
                     int amplifier = armourCrunchEffect.getAmplifier() + 1;
@@ -110,9 +110,10 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         for (LivingEntity livingEntity : serverWorld.getNonSpectatingEntities(LivingEntity.class, box)) {
             if (livingEntity == player || livingEntity.isTeammate(player)) continue;
             livingEntity.damage(damageSource, 15);
-            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.ARMOUR_CRUNCH, 160, 2));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 160, 1));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 160, 1));
+            int effectTime = effect.getSlamEffectTime();
+            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.ARMOUR_CRUNCH, effectTime, 2));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, effectTime, 1));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effectTime, 1));
             livingEntity.setVelocity(0, 1.2, 0);
             livingEntity.velocityModified = true;
         }
@@ -128,10 +129,10 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -26,7 +26,7 @@ import java.util.List;
 
 
 public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = 400;
+    int skillCooldown = effect.getTimekeeperBaseCooldown();
 
     public TimekeeperItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -81,8 +81,8 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                 entity.setVelocity(distanceX * 2.5 / i, distanceY * 2.5 / i, distanceZ * 2.5 / i);
                 entity.velocityModified = true;
                 entity.setOnFireFor(5);
-                entity.damage(player.getDamageSources().onFire(), 6);
-                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100));
+                entity.damage(player.getDamageSources().onFire(), effect.getDayDamage());
+                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getDayActiveBlindnessTime()));
             }
         }
         world.playSound(null, playerX, playerY, playerZ, SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get(), SoundCategory.PLAYERS, 1, 1);
@@ -112,8 +112,8 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                         continue;
                     entity.setVelocity(0, 1.5, 0);
                     entity.velocityModified = true;
-                    entity.damage(player.getDamageSources().magic(), 2);
-                    entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 3));
+                    entity.damage(player.getDamageSources().magic(), effect.getNightDamage());
+                    entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getNightActiveSlownessTime(), 3));
                 }
             }
         }
@@ -128,7 +128,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= 20) {
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getTimekeeperOnHitChance()) {
                 long dayTime = Math.abs(attacker.getWorld().getTimeOfDay() % 24000);
                 boolean isFixedTime  = attacker.getWorld().getDimension().hasFixedTime();
 
@@ -147,7 +147,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         world.spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),20,0.7,0.7,0.7,0);
         for (LivingEntity passiveTarget : attacker.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(attacker.getX()-30,attacker.getY()-30,attacker.getZ()-30,attacker.getX()+30,attacker.getY()+30,attacker.getZ()+30))) {
             if (passiveTarget == attacker) continue;
-            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 70, 0), attacker);
+            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, effect.getDayPassiveEffectTime(), 0), attacker);
         }
     }
 
@@ -156,10 +156,10 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         world.spawnParticles(ParticleTypes.SQUID_INK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),20,0.7,0.7,0.7,0);
         for (LivingEntity passiveTarget : attacker.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(attacker.getX()-10,attacker.getY()-10,attacker.getZ()-10,attacker.getX()+10,attacker.getY()+10,attacker.getZ()+10))) {
             if (passiveTarget == attacker) continue;
-            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 70, 0), attacker);
+            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, effect.getNightPassiveEffectTime(), 0), attacker);
         }
-        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, 70, 0), attacker);
-        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 70, 1), attacker);
+        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, effect.getNightPassiveEffectTime(), 0), attacker);
+        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, effect.getNightPassiveEffectTime(), 1), attacker);
     }
 
     private void applyRandomEffect(LivingEntity entity, ServerWorld world) {
@@ -178,19 +178,13 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         }
     }
 
+    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        int stepMod = 0;
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
-    /* Because Tooltips are on so many items, and this tooltip changes based on time, it is imperative to reduce
-     *  the number of checks being made in order to reduce the potential calculation load for changing the tooltip.
-     *  As such, the check for if the `world` is `null` has been placed at the top and is only needed to be checked
-     *  once. From that point on, it is not needed to be checked every time the tooltip is changed; only when the
-     *  change needs to be made.
-     */
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
         Style rightClickStyle = HelperMethods.getStyle("rightclick");

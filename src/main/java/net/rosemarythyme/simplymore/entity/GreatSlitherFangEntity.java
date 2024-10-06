@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.entity;
 
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -8,6 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
+import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 
 public class GreatSlitherFangEntity extends EvokerFangsEntity {
@@ -77,18 +80,23 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
         }
     }
 
+    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
+    protected static UniqueEffectConfig effect = config.uniqueEffects;
+
     private void damage(LivingEntity target) {
+        float damageAmount = effect.getSlitherFangsDamage();
+        int venomTime = effect.getSlitherFangsVenomTime();
         if (target.isAlive() && !target.isInvulnerable() && target != owner) {
             if (owner == null) {
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, 90, 0), null);
-                target.damage(getDamageSources().playerAttack(null), 4.0F);
+                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, venomTime, 0), null);
+                target.damage(getDamageSources().playerAttack(null), damageAmount);
             } else {
                 if (owner.isTeammate(target)) {
                     return;
                 }
 
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, 90, 0), owner);
-                target.damage(getDamageSources().playerAttack(((PlayerEntity) owner)), 4.0F);
+                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, venomTime, 0), owner);
+                target.damage(getDamageSources().playerAttack(((PlayerEntity) owner)), damageAmount);
             }
         }
     }
