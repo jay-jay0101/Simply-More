@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "simplymore",
 	"version": "${version}",
-	"name": "simplymore",
+	"name": "Simply More",
 	"description": "An addon to Simply Swords which adds even more weapons variety and new uniques!",
 	"authors": [
 		"RosemaryThyme - (Code + Art)",
@@ -10,7 +10,6 @@
 		"chronosacaria - (Code Review)"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/jay-jay0101/Simply-More/tree/main"
 	},
 	"license": "All Rights Reserved",

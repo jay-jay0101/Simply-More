@@ -2,9 +2,20 @@ package net.rosemarythyme.simplymore.config;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name="weapon_attributes")
 public class WeaponAttributesConfig implements ConfigData {
+    int ironWeaponDamageModifier = 0;
+    int goldWeaponDamageModifier = 0;
+    int diamondWeaponDamageModifier = 0;
+    int netheriteWeaponDamageModifier = 0;
+    int runicWeaponDamageModifier = 0;
+
+    @Comment("Stick N Stone Compat")
+            int woodenWeaponDamageModifier = 0;
+            int stoneWeaponDamageModifier = 0;
+
     int greatKatanaDamageModifier = 1;
     int grandswordDamageModifier = 6;
     int backhandBladeDamageModifier = -2;
@@ -423,5 +434,33 @@ public class WeaponAttributesConfig implements ConfigData {
 
     public int getQuarterstaffDamageModifier() {
         return quarterstaffDamageModifier;
+    }
+
+    public int getDiamondWeaponDamageModifier() {
+        return diamondWeaponDamageModifier;
+    }
+
+    public int getGoldWeaponDamageModifier() {
+        return goldWeaponDamageModifier;
+    }
+
+    public int getIronWeaponDamageModifier() {
+        return ironWeaponDamageModifier;
+    }
+
+    public int getNetheriteWeaponDamageModifier() {
+        return netheriteWeaponDamageModifier;
+    }
+
+    public int getRunicWeaponDamageModifier() {
+        return runicWeaponDamageModifier;
+    }
+
+    public int getStoneWeaponDamageModifier() {
+        return stoneWeaponDamageModifier;
+    }
+
+    public int getWoodenWeaponDamageModifier() {
+        return woodenWeaponDamageModifier;
     }
 }

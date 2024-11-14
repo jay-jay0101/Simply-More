@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stone_sword"
+    },
+	"M": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "B": {
+      "tag": "minecraft:stone_buttons"
+    }
+  },
+  "pattern": [
+    "BMB",
+    "MMM",
+    "MSM"
+  ],
+  "result": {
+    "item": "simplymore:stone_grandsword"
+  }
+}

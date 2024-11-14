@@ -25,6 +25,7 @@ import net.rosemarythyme.simplymore.item.uniques.*;
 import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
+import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.item.RunicSwordItem;
 
@@ -36,7 +37,7 @@ public class ModItemsRegistry {
             "iron_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGreatKatanaDamageModifier() + 3,
+                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -46,7 +47,7 @@ public class ModItemsRegistry {
             "gold_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGreatKatanaDamageModifier() + 3,
+                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -56,7 +57,7 @@ public class ModItemsRegistry {
             "diamond_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGreatKatanaDamageModifier() + 3,
+                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -66,7 +67,7 @@ public class ModItemsRegistry {
             "netherite_great_katana",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGreatKatanaDamageModifier() + 3,
+                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -77,7 +78,7 @@ public class ModItemsRegistry {
             "runic_great_katana",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGreatKatanaDamageModifier() + 3,
+                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getGreatKatanaSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -88,7 +89,7 @@ public class ModItemsRegistry {
             "iron_grandsword",
             new GrandSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGrandswordDamageModifier() + 3,
+                    attributes.getGrandswordDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -98,7 +99,7 @@ public class ModItemsRegistry {
             "gold_grandsword",
             new GrandSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGrandswordDamageModifier() + 3,
+                    attributes.getGrandswordDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -108,7 +109,7 @@ public class ModItemsRegistry {
             "diamond_grandsword",
             new GrandSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGrandswordDamageModifier() + 3,
+                    attributes.getGrandswordDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -118,7 +119,7 @@ public class ModItemsRegistry {
             "netherite_grandsword",
             new GrandSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGrandswordDamageModifier() + 3,
+                    attributes.getGrandswordDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -129,7 +130,7 @@ public class ModItemsRegistry {
             "runic_grandsword",
             new RunicGrandSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGrandswordDamageModifier() + 3,
+                    attributes.getGrandswordDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getGrandswordSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -141,7 +142,7 @@ public class ModItemsRegistry {
             "iron_backhand_blade", 
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getBackhandBladeDamageModifier() + 3,
+                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -150,7 +151,7 @@ public class ModItemsRegistry {
     public static final Item GOLD_BACKHAND_BLADE = registerItem("gold_backhand_blade",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getBackhandBladeDamageModifier() + 3,
+                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -160,7 +161,7 @@ public class ModItemsRegistry {
             "diamond_backhand_blade",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getBackhandBladeDamageModifier() + 3,
+                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -170,7 +171,7 @@ public class ModItemsRegistry {
             "netherite_backhand_blade",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getBackhandBladeDamageModifier() + 3,
+                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -181,7 +182,7 @@ public class ModItemsRegistry {
             "runic_backhand_blade", 
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getBackhandBladeDamageModifier() + 3,
+                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getBackhandBladeSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -192,7 +193,7 @@ public class ModItemsRegistry {
             "iron_lance",
             new LanceItem(
                     ToolMaterials.IRON,
-                    attributes.getLanceDamageModifier() + 3,
+                    attributes.getLanceDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -202,7 +203,7 @@ public class ModItemsRegistry {
             "gold_lance",
             new LanceItem(
                     ToolMaterials.GOLD,
-                    attributes.getLanceDamageModifier() + 3,
+                    attributes.getLanceDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"));
@@ -210,7 +211,7 @@ public class ModItemsRegistry {
             "diamond_lance",
             new LanceItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getLanceDamageModifier() + 3,
+                    attributes.getLanceDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -220,7 +221,7 @@ public class ModItemsRegistry {
             "netherite_lance",
             new LanceItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getLanceDamageModifier() + 3,
+                    attributes.getLanceDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings()
                             .fireproof(),
@@ -231,7 +232,7 @@ public class ModItemsRegistry {
             "runic_lance",
             new RunicLanceItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getLanceDamageModifier() + 3,
+                    attributes.getLanceDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getLanceSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
@@ -242,7 +243,7 @@ public class ModItemsRegistry {
             "iron_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getKhopeshDamageModifier() + 3,
+                    attributes.getKhopeshDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -253,7 +254,7 @@ public class ModItemsRegistry {
             "gold_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getKhopeshDamageModifier() + 3,
+                    attributes.getKhopeshDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -264,7 +265,7 @@ public class ModItemsRegistry {
             "diamond_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getKhopeshDamageModifier() + 3,
+                    attributes.getKhopeshDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -275,7 +276,7 @@ public class ModItemsRegistry {
             "netherite_khopesh",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getKhopeshDamageModifier() + 3,
+                    attributes.getKhopeshDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -286,7 +287,7 @@ public class ModItemsRegistry {
             "runic_khopesh",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getKhopeshDamageModifier() + 3,
+                    attributes.getKhopeshDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getKhopeshSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -296,7 +297,7 @@ public class ModItemsRegistry {
             "iron_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getDaggerDamageModifier() + 3,
+                    attributes.getDaggerDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -307,7 +308,7 @@ public class ModItemsRegistry {
             "gold_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getDaggerDamageModifier() + 3,
+                    attributes.getDaggerDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -318,7 +319,7 @@ public class ModItemsRegistry {
             "diamond_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getDaggerDamageModifier() + 3,
+                    attributes.getDaggerDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -329,7 +330,7 @@ public class ModItemsRegistry {
             "netherite_dagger",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getDaggerDamageModifier() + 3,
+                    attributes.getDaggerDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -340,7 +341,7 @@ public class ModItemsRegistry {
             "runic_dagger",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getDaggerDamageModifier() + 3,
+                    attributes.getDaggerDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getDaggerSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -350,7 +351,7 @@ public class ModItemsRegistry {
             "iron_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getPernachDamageModifier() + 3,
+                    attributes.getPernachDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -361,7 +362,7 @@ public class ModItemsRegistry {
             "gold_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getPernachDamageModifier() + 3,
+                    attributes.getPernachDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -372,7 +373,7 @@ public class ModItemsRegistry {
             "diamond_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getPernachDamageModifier() + 3,
+                    attributes.getPernachDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -383,7 +384,7 @@ public class ModItemsRegistry {
             "netherite_pernach",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getPernachDamageModifier() + 3,
+                    attributes.getPernachDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:netherite_ingot"
@@ -394,7 +395,7 @@ public class ModItemsRegistry {
             "runic_pernach",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getPernachDamageModifier() + 3,
+                    attributes.getPernachDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getPernachSwingSpeed(),
                     new Item.Settings()
             )
@@ -404,7 +405,7 @@ public class ModItemsRegistry {
             "iron_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getQuarterstaffDamageModifier() + 3,
+                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -415,7 +416,7 @@ public class ModItemsRegistry {
             "gold_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getQuarterstaffDamageModifier() + 3,
+                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -426,7 +427,7 @@ public class ModItemsRegistry {
             "diamond_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getQuarterstaffDamageModifier() + 3,
+                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -437,7 +438,7 @@ public class ModItemsRegistry {
             "netherite_quarterstaff",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getQuarterstaffDamageModifier() + 3,
+                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -448,7 +449,7 @@ public class ModItemsRegistry {
             "runic_quarterstaff",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getQuarterstaffDamageModifier() + 3,
+                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getQuarterstaffSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -459,7 +460,7 @@ public class ModItemsRegistry {
             "iron_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGreatSpearDamageModifier() + 3,
+                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -469,7 +470,7 @@ public class ModItemsRegistry {
             "gold_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGreatSpearDamageModifier() + 3,
+                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -479,7 +480,7 @@ public class ModItemsRegistry {
             "diamond_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGreatSpearDamageModifier() + 3,
+                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -489,7 +490,7 @@ public class ModItemsRegistry {
             "netherite_great_spear",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGreatSpearDamageModifier() + 3,
+                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -499,7 +500,7 @@ public class ModItemsRegistry {
             "runic_great_spear",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGreatSpearDamageModifier() + 3,
+                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getGreatSpearSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -510,7 +511,7 @@ public class ModItemsRegistry {
             "iron_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getDeerHornsDamageModifier() + 3,
+                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:iron_ingot"
@@ -520,7 +521,7 @@ public class ModItemsRegistry {
             "gold_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getDeerHornsDamageModifier() + 3,
+                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:gold_ingot"
@@ -530,7 +531,7 @@ public class ModItemsRegistry {
             "diamond_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getDeerHornsDamageModifier() + 3,
+                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings(),
                     "minecraft:diamond"
@@ -540,7 +541,7 @@ public class ModItemsRegistry {
             "netherite_deer_horns",
             new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getDeerHornsDamageModifier() + 3,
+                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
@@ -550,7 +551,7 @@ public class ModItemsRegistry {
             "runic_deer_horns",
             new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getDeerHornsDamageModifier() + 3,
+                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
                     (float)attributes.getDeerHornsSwingSpeed(),
                     new Item.Settings().fireproof()
             )
@@ -903,7 +904,14 @@ public class ModItemsRegistry {
     public static void registerModItems() {
         if (FabricLoader.getInstance().isModLoaded("simplyswords")) {
             SimplyMore.LOGGER.info("Registering Items for " + SimplyMore.ID);
+
+            if (FabricLoader.getInstance().isModLoaded("sticknstone")) {
+                SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
+                StickNStoneCompatRegistry.registerCompatItems();
+            }
+
             Registry.register(Registries.ITEM_GROUP, Identifier.of(SimplyMore.ID, "items"), ITEM_GROUP);
+
         }
     }
 
@@ -913,6 +921,11 @@ public class ModItemsRegistry {
             .entries((context, entries) -> {
                 entries.add(RUNEFUSED_CARVER);
                 entries.add(NETHERFUSED_CARVER);
+
+                if (FabricLoader.getInstance().isModLoaded("sticknstone")) {
+                    StickNStoneCompatRegistry.addToGroup(entries);
+                }
+
                 entries.add(IRON_GREAT_KATANA);
                 entries.add(IRON_GRANDSWORD);
                 entries.add(IRON_BACKHAND_BLADE);
