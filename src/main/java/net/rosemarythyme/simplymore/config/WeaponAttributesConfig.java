@@ -140,7 +140,7 @@ public class WeaponAttributesConfig implements ConfigData {
     double serpentineValourSwingSpeed = 0.7;
     int lustrousMoxieDamage = 10;
     double lustrousMoxieSwingspeed = 1.4;
-    int brassturnDamage = 6;
+    int brassturnDamage = 8;
     double brassturnMaxSwingSpeed = 3.8;
     int cindergorgeDamage = 11;
     double cindergorgeSwingSpeed = 1.3;

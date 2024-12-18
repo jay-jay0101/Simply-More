@@ -20,7 +20,7 @@ public class UniqueEffectConfig implements ConfigData {
 
     @Comment("Blade of the Grotesque")
     int grotesqueSolidifySelfStunTime = 50;
-    int grotesqueSolidifyAuraStunTime = 90;
+    int grotesqueSolidifyAuraStunTime = 50;
     int grotesqueAuraRange = 4;
     int grotesqueSolidifySelfStunnedArmorBuff = 10;
     int grotesqueSolidifyAttackerStunnedArmorBuff = 10;
@@ -734,7 +734,7 @@ public class UniqueEffectConfig implements ConfigData {
     int deathsEyrieCrowAttackBlindTime = 20;
     int deathsEyrieCrowAttackTimePerCrow = 30;
     float deathsEyrieCrowAttackDamage = 2.3f;
-    float deathsEyrieCrowAttackHeal = 0.4f;
+    float deathsEyrieCrowAttackHeal = 0.3f;
 
     public int getDeathsEyrieBleedChance() {
         return deathsEyrieBleedChance;

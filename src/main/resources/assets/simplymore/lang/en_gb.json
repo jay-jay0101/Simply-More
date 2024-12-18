@@ -549,9 +549,8 @@
   "item.simplymore.perforiscus.tooltip2": "Each hit with this weapon will grant a stack of bloom, up to 15.",
   "item.simplymore.perforiscus.tooltip3": "The more bloom stacks you have, your defenses will be",
   "item.simplymore.perforiscus.tooltip4": "gradually buffed.",
-  "item.simplymore.perforiscus.tooltip5": "Being hit will reduce your stacks of bloom.",
-  "item.simplymore.perforiscus.tooltip6": "Consume 8 stacks of bloom to create a flower field",
-  "item.simplymore.perforiscus.tooltip7": "around you. Allies stood inside of the field are buffed.",
+  "item.simplymore.perforiscus.tooltip5": "Consume 8 stacks of bloom to create a flower field",
+  "item.simplymore.perforiscus.tooltip6": "around you. Allies stood inside of the field are buffed.",
 
   "item.simplymore.revvengine": "Revvengine",
   "item.simplymore.revvengine.tooltip1": "Unique Effect: Kickback",
