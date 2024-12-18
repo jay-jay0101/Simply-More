@@ -175,6 +175,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
                                 0.2f,
                                 normalisedVector.z()
                         ));
+                        livingTarget.velocityModified = true;
                     }
                 } else {
                     player.removeStatusEffect(ModEffectsRegistry.GRASPING);

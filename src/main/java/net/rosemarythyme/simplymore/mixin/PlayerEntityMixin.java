@@ -40,20 +40,6 @@ public abstract class PlayerEntityMixin {
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		SimplyMoreHelperMethods.simplyMore$onDamageEffects(amount, source, info, player);
 
-		if(player.hasStatusEffect(ModEffectsRegistry.BLOOM)) {
-			if(player.getStatusEffect(ModEffectsRegistry.BLOOM).getAmplifier() > 1) {
-				StatusEffectInstance bloom = player.getStatusEffect(ModEffectsRegistry.BLOOM);
-				player.removeStatusEffect(ModEffectsRegistry.BLOOM);
-				player.addStatusEffect(new StatusEffectInstance(
-						ModEffectsRegistry.BLOOM,
-						bloom.getDuration(),
-						bloom.getAmplifier() - 1
-				));
-			} else {
-				player.removeStatusEffect(ModEffectsRegistry.BLOOM);
-			}
-		}
-
 		if(player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof CindergorgeItem || player.getStackInHand(Hand.OFF_HAND).getItem() instanceof CindergorgeItem ) {
 			Entity attacker = source.getAttacker();
 			if(player.getRandom().nextBetween(1, 100) <= effect.getCindergorgeThornsChance()) {
