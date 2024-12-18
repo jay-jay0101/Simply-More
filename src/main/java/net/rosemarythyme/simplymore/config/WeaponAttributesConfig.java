@@ -13,9 +13,41 @@ public class WeaponAttributesConfig implements ConfigData {
     int runicWeaponDamageModifier = 0;
 
     @Comment("Stick N Stone Compat")
-            int woodenWeaponDamageModifier = 0;
-            int stoneWeaponDamageModifier = 0;
+    int woodenWeaponDamageModifier = 0;
+    int stoneWeaponDamageModifier = 0;
 
+    @Comment("Gobber Compat")
+    int gobberWeaponDamageModifier = 0;
+    int gobberNetherWeaponDamageModifier = 0;
+    int gobberEndWeaponDamageModifier = 0;
+    boolean gobberEndWeaponUnbreakable = true;
+
+    @Comment("Mythic Metals Compat")
+    int adamantiteWeaponDamageModifier = 0;
+    int aquariumWeaponDamageModifier = 0;
+    int banglumWeaponDamageModifier = 0;
+    int carmotWeaponDamageModifier = 0;
+    int kyberWeaponDamageModifier = 0;
+    int mythrilWeaponDamageModifier = 0;
+    int orichalcumWeaponDamageModifier = 0;
+    int osmiumWeaponDamageModifier = 0;
+    int prometheumWeaponDamageModifier = 0;
+    int quadrillumWeaponDamageModifier = 0;
+    int runiteWeaponDamageModifier = 0;
+    int starPlatinumWeaponDamageModifier = 0;
+    int bronzeWeaponDamageModifier = 0;
+    int steelWeaponDamageModifier = 0;
+    int palladiumWeaponDamageModifier = 0;
+    int metallurgiumWeaponDamageModifier = 0;
+    int celestiumWeaponDamageModifier = 0;
+    int copperWeaponDamageModifier = 0;
+    int durasteelWeaponDamageModifier = 0;
+    int hallowedWeaponDamageModifier = 0;
+    int legendaryBanglumWeaponDamageModifier = 0;
+    int stormyxWeaponDamageModifier = 0;
+    int tidesingerWeaponDamageModifier = 0;
+
+    @Comment("Weapon Stats")
     int greatKatanaDamageModifier = 1;
     int grandswordDamageModifier = 6;
     int backhandBladeDamageModifier = -2;
@@ -44,18 +76,14 @@ public class WeaponAttributesConfig implements ConfigData {
     double moltenFlareSwingSpeed = 0.6;
     int grandfrostDamage = 14;
     double grandfrostSwingSpeed = 0.6;
-    int mimicryPurityDamage = 8;
-    double mimicryPuritySwingSpeed = 2.0;
-    int mimicryTwistedDamageModifier = 2;
-    double mimicryTwistedSwingSpeedModifier = 3.4;
     int glimmerstepDamage = 9;
     double glimmerstepSwingSpeed = 1.0;
     int theBloodHarvesterDamage = 8;
     double theBloodHarvesterSwingSpeed = 1.6;
     int jesterPenetrateDamage = 6;
     double jesterPenetrateSwingSpeed = 1.0;
-    int scarabRollerDamage = 8;
-    double scarabRollerSwingSpeed = 1.9;
+    int myrmedgeDamage = 8;
+    double myrmedgeSwingSpeed = 1.9;
 
     int blackPearlDamage = 9;
     double blackPearlSwingSpeed = 2.0;
@@ -110,10 +138,80 @@ public class WeaponAttributesConfig implements ConfigData {
     double soulForeseerSwingSpeed = 1.4;
     int serpentineValourDamage = 11;
     double serpentineValourSwingSpeed = 0.7;
-    int lustrousMoxieDamage = 11;
-    double lustrousMoxieSwingspeed = 1.0;
+    int lustrousMoxieDamage = 10;
+    double lustrousMoxieSwingspeed = 1.4;
+    int brassturnDamage = 6;
+    double brassturnMaxSwingSpeed = 3.8;
+    int cindergorgeDamage = 11;
+    double cindergorgeSwingSpeed = 1.3;
+    int deathsEyrieDamage = 12;
+    double deathsEyrieSwingSpeed = 0.8;
+    int perforiscusDamage = 10;
+    double perforiscusSwingSpeed = 0.7;
+    int revvengineDamage = 8;
+    double revvengineSwingSpeed = 2.0;
+    int exedrillDamage = 9;
+    double exedrillSwingSpeed = 1.0;
+    int culterexDamage = 8;
+    double culterexSwingSpeed = 2.2;
+
+    public double getCulterexSwingSpeed() {
+        return culterexSwingSpeed - 4.0;
+    }
+
+    public int getCulterexDamage() {
+        return culterexDamage;
+    }
+
+    public double getExedrillSwingSpeed() {
+        return exedrillSwingSpeed - 4.0;
+    }
+
+    public int getExedrillDamage() {
+        return exedrillDamage;
+    }
 
     public WeaponAttributesConfig() {
+    }
+
+    public double getRevvengineSwingSpeed() {
+        return revvengineSwingSpeed - 4.0;
+    }
+
+    public int getRevvengineDamage() {
+        return revvengineDamage;
+    }
+
+    public double getPerforiscusSwingSpeed() {
+        return perforiscusSwingSpeed - 4.0;
+    }
+
+    public int getPerforiscusDamage() {
+        return perforiscusDamage;
+    }
+
+    public double getDeathsEyrieSwingSpeed() {
+        return deathsEyrieSwingSpeed - 4.0;
+    }
+
+    public int getDeathsEyrieDamage() {
+        return deathsEyrieDamage;
+    }
+
+    public double getCindergorgeSwingSpeed() {
+        return cindergorgeSwingSpeed - 4.0;
+    }
+
+    public int getCindergorgeDamage() {
+        return cindergorgeDamage;
+    }
+
+    public double getBrassturnMaxSwingSpeed() {
+        return brassturnMaxSwingSpeed - 4.0;
+    }
+
+    public int getBrassturnDamage() {
+        return brassturnDamage;
     }
 
     public double getEarthshatterSwingSpeed() {
@@ -320,20 +418,12 @@ public class WeaponAttributesConfig implements ConfigData {
         return lanceSwingSpeed - 4.0;
     }
 
-    public double getMimicryPuritySwingSpeed() {
-        return mimicryPuritySwingSpeed - 4.0;
-    }
-
-    public double getMimicryTwistedSwingSpeedModifier() {
-        return mimicryTwistedSwingSpeedModifier - 4.0;
-    }
-
     public double getMoltenFlareSwingSpeed() {
         return moltenFlareSwingSpeed - 4.0;
     }
 
-    public double getScarabRollerSwingSpeed() {
-        return scarabRollerSwingSpeed - 4.0;
+    public double getMyrmedgeSwingSpeed() {
+        return myrmedgeSwingSpeed - 4.0;
     }
 
     public double getTheBloodHarvesterSwingSpeed() {
@@ -376,20 +466,12 @@ public class WeaponAttributesConfig implements ConfigData {
         return lanceDamageModifier;
     }
 
-    public int getMimicryPurityDamage() {
-        return mimicryPurityDamage;
-    }
-
-    public int getMimicryTwistedDamageModifier() {
-        return mimicryTwistedDamageModifier;
-    }
-
     public int getMoltenFlareDamage() {
         return moltenFlareDamage;
     }
 
-    public int getScarabRollerDamage() {
-        return scarabRollerDamage;
+    public int getMyrmedgeDamage() {
+        return myrmedgeDamage;
     }
 
     public int getTheBloodHarvesterDamage() {
@@ -462,5 +544,113 @@ public class WeaponAttributesConfig implements ConfigData {
 
     public int getWoodenWeaponDamageModifier() {
         return woodenWeaponDamageModifier;
+    }
+
+    public int getGobberEndWeaponDamageModifier() {
+        return gobberEndWeaponDamageModifier;
+    }
+
+    public int getGobberWeaponDamageModifier() {
+        return gobberWeaponDamageModifier;
+    }
+
+    public int getGobberNetherWeaponDamageModifier() {
+        return gobberNetherWeaponDamageModifier;
+    }
+
+    public boolean isGobberEndWeaponUnbreakable() {
+        return gobberEndWeaponUnbreakable;
+    }
+
+    public int getAdamantiteWeaponDamageModifier() {
+        return adamantiteWeaponDamageModifier;
+    }
+
+    public int getAquariumWeaponDamageModifier() {
+        return aquariumWeaponDamageModifier;
+    }
+
+    public int getBanglumWeaponDamageModifier() {
+        return banglumWeaponDamageModifier;
+    }
+
+    public int getBronzeWeaponDamageModifier() {
+        return bronzeWeaponDamageModifier;
+    }
+
+    public int getCarmotWeaponDamageModifier() {
+        return carmotWeaponDamageModifier;
+    }
+
+    public int getCelestiumWeaponDamageModifier() {
+        return celestiumWeaponDamageModifier;
+    }
+
+    public int getCopperWeaponDamageModifier() {
+        return copperWeaponDamageModifier;
+    }
+
+    public int getDurasteelWeaponDamageModifier() {
+        return durasteelWeaponDamageModifier;
+    }
+
+    public int getHallowedWeaponDamageModifier() {
+        return hallowedWeaponDamageModifier;
+    }
+
+    public int getKyberWeaponDamageModifier() {
+        return kyberWeaponDamageModifier;
+    }
+
+    public int getLegendaryBanglumWeaponDamageModifier() {
+        return legendaryBanglumWeaponDamageModifier;
+    }
+
+    public int getMetallurgiumWeaponDamageModifier() {
+        return metallurgiumWeaponDamageModifier;
+    }
+
+    public int getMythrilWeaponDamageModifier() {
+        return mythrilWeaponDamageModifier;
+    }
+
+    public int getOrichalcumWeaponDamageModifier() {
+        return orichalcumWeaponDamageModifier;
+    }
+
+    public int getOsmiumWeaponDamageModifier() {
+        return osmiumWeaponDamageModifier;
+    }
+
+    public int getPalladiumWeaponDamageModifier() {
+        return palladiumWeaponDamageModifier;
+    }
+
+    public int getPrometheumWeaponDamageModifier() {
+        return prometheumWeaponDamageModifier;
+    }
+
+    public int getQuadrillumWeaponDamageModifier() {
+        return quadrillumWeaponDamageModifier;
+    }
+
+    public int getRuniteWeaponDamageModifier() {
+        return runiteWeaponDamageModifier;
+    }
+
+    public int getStarPlatinumWeaponDamageModifier() {
+        return starPlatinumWeaponDamageModifier;
+    }
+
+    public int getSteelWeaponDamageModifier() {
+        return steelWeaponDamageModifier;
+    }
+
+    public int getTidesingerWeaponDamageModifier() {
+        return tidesingerWeaponDamageModifier;
+    }
+
+    public int getStormyxWeaponDamageModifier() {
+        return stormyxWeaponDamageModifier;
     }
 }

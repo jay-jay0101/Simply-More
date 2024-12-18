@@ -26,7 +26,7 @@ import java.util.List;
 
 public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = effect.getInsanityTeleportCooldown();
+    int skillCooldown = effect.getTidebreakerInsanityTeleportCooldown();
     int lastHitTime;
     LivingEntity lastHit;
 
@@ -37,9 +37,9 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getInsanityCloudChance()) {
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getTidebreakerInsanityCloudChance()) {
                 if (!attacker.hasStatusEffect(ModEffectsRegistry.TIDEBREAKER)) {
-                    attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.TIDEBREAKER, effect.getInsanityCloudDuration(), 0), attacker);
+                    attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.TIDEBREAKER, effect.getTidebreakerInsanityCloudDuration(), 0), attacker);
                 }
             }
 
@@ -59,7 +59,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         if (lastHit == null
                 || !lastHit.isAlive()
                 || lastHit.getWorld() != user.getWorld()
-                || lastHit.distanceTo(user) > effect.getInsanityTeleportMaxDistance())
+                || lastHit.distanceTo(user) > effect.getTidebreakerInsanityTeleportMaxDistance())
             return super.use(world, user, hand);
 
         if (shouldTeleport(user, lastHit)) {
@@ -73,7 +73,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     }
 
     private boolean shouldTeleport(PlayerEntity user, LivingEntity target) {
-        return target.getWorld() == user.getWorld() && target.distanceTo(user) <= effect.getInsanityTeleportMaxDistance();
+        return target.getWorld() == user.getWorld() && target.distanceTo(user) <= effect.getTidebreakerInsanityTeleportMaxDistance();
     }
 
     private void swapUserAndTarget(PlayerEntity user, LivingEntity target) {
@@ -104,7 +104,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         if (!world.isClient) {
             lastHitTime++;
 
-            if (lastHitTime > effect.getInsanityTeleportMaxTime())
+            if (lastHitTime > effect.getTidebreakerInsanityTeleportMaxTime())
                 resetLastHit();
         }
         stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
@@ -128,8 +128,8 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip7",
-                SimplyMoreHelperMethods.translateTicks(effect.getInsanityTeleportMaxTime()),
-                effect.getInsanityTeleportMaxDistance()).setStyle(textStyle));
+                SimplyMoreHelperMethods.translateTicks(effect.getTidebreakerInsanityTeleportMaxTime()),
+                effect.getTidebreakerInsanityTeleportMaxDistance()).setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

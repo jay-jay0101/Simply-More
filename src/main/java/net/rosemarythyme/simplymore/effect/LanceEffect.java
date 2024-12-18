@@ -6,8 +6,10 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.util.Hand;
+import net.rosemarythyme.simplymore.item.compat.CompatSwordItem;
 import net.rosemarythyme.simplymore.item.normal.LanceItem;
 import net.rosemarythyme.simplymore.item.runics.RunicLanceItem;
+import net.rosemarythyme.simplymore.item.uniques.ExedrillItem;
 import net.rosemarythyme.simplymore.item.uniques.GlimmerstepItem;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 
@@ -27,7 +29,9 @@ public class LanceEffect extends StatusEffect {
     private boolean isLanceInMainHand(LivingEntity livingEntity) {
         return livingEntity.getMainHandStack().getItem() instanceof LanceItem
                 || livingEntity.getMainHandStack().getItem() instanceof RunicLanceItem
-                || livingEntity.getMainHandStack().getItem() instanceof GlimmerstepItem;
+                || livingEntity.getMainHandStack().getItem() instanceof GlimmerstepItem
+                || livingEntity.getMainHandStack().getItem() instanceof ExedrillItem
+                || (livingEntity.getMainHandStack().getItem() instanceof CompatSwordItem compatSwordItem && compatSwordItem.getIsLance());
     }
 
     private boolean isRidingLivingEntity(LivingEntity entity) {

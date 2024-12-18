@@ -1,0 +1,30 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "gobber2"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+   "s": {
+      "item": "gobber2:gobber2_rod_end"
+    },
+    "M": {
+      "item": "gobber2:gobber2_ingot_end"
+    },
+    "B": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "MB ",
+    "BsB",
+    " BM"
+  ],
+  "result": {
+    "item": "simplymore:gobber_end_deer_horns"
+  }
+}

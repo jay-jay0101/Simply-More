@@ -81,8 +81,8 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                 entity.setVelocity(distanceX * 2.5 / i, distanceY * 2.5 / i, distanceZ * 2.5 / i);
                 entity.velocityModified = true;
                 entity.setOnFireFor(5);
-                entity.damage(player.getDamageSources().onFire(), effect.getDayDamage());
-                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getDayActiveBlindnessTime()));
+                entity.damage(player.getDamageSources().onFire(), effect.getTimekeeperDayActiveDamage());
+                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getTimekeeperDayActiveBlindnessTime()));
             }
         }
         world.playSound(null, playerX, playerY, playerZ, SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get(), SoundCategory.PLAYERS, 1, 1);
@@ -112,8 +112,8 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                         continue;
                     entity.setVelocity(0, 1.5, 0);
                     entity.velocityModified = true;
-                    entity.damage(player.getDamageSources().magic(), effect.getNightDamage());
-                    entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getNightActiveSlownessTime(), 3));
+                    entity.damage(player.getDamageSources().magic(), effect.getTimekeeperNightActiveDamage());
+                    entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getTimekeeperNightActiveSlownessTime(), 3));
                 }
             }
         }
@@ -147,7 +147,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         world.spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),20,0.7,0.7,0.7,0);
         for (LivingEntity passiveTarget : attacker.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(attacker.getX()-30,attacker.getY()-30,attacker.getZ()-30,attacker.getX()+30,attacker.getY()+30,attacker.getZ()+30))) {
             if (passiveTarget == attacker) continue;
-            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, effect.getDayPassiveEffectTime(), 0), attacker);
+            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, effect.getTimekeeperDayPassiveEffectTime(), 0), attacker);
         }
     }
 
@@ -156,10 +156,10 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         world.spawnParticles(ParticleTypes.SQUID_INK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),20,0.7,0.7,0.7,0);
         for (LivingEntity passiveTarget : attacker.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(attacker.getX()-10,attacker.getY()-10,attacker.getZ()-10,attacker.getX()+10,attacker.getY()+10,attacker.getZ()+10))) {
             if (passiveTarget == attacker) continue;
-            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, effect.getNightPassiveEffectTime(), 0), attacker);
+            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, effect.getTimekeeperNightPassiveEffectTime(), 0), attacker);
         }
-        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, effect.getNightPassiveEffectTime(), 0), attacker);
-        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, effect.getNightPassiveEffectTime(), 1), attacker);
+        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, effect.getTimekeeperNightPassiveEffectTime(), 0), attacker);
+        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, effect.getTimekeeperNightPassiveEffectTime(), 1), attacker);
     }
 
     private void applyRandomEffect(LivingEntity entity, ServerWorld world) {

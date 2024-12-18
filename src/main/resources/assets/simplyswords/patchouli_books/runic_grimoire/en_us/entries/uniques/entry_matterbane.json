@@ -7,11 +7,11 @@
     {
       "type": "patchouli:spotlight",
       "item": "simplymore:matterbane",
-      "text": "$(#0BE334)Item Added In Simply More$(br2)$()Very little is known about the Matterbane - few know of its existence. Matterbane is a blade consisting of pure plasma, able to burn through anything it touches. In the hand of its true wielder, It has the ability to slit the gaps in spacetime to access"
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()Created in mass to kill a rogue parasite, this weapon was given to as many people in their secret society as possible. Made of pure ionised plasma, the weapon slices through any material it comes across with ease, often firing off antiparticles as it reacts catastrophically on impact."
     },
     {
       "type": "patchouli:text",
-      "text": "new dimensions beyond the human conscience. This causes a rift which destroys euclidean space, causing those trapped within to be unable to leave. The plasma seems to have a colorful reaction to dyes, allowing it to shine different colors."
+      "text": "They were meant to be kept secret to those outside the commune, though more and more have been turning up in the public eye as the search for the parasite still runs rampant."
     }
   ]
 }

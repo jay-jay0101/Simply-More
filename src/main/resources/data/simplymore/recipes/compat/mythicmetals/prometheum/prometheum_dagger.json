@@ -1,0 +1,30 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+   "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "item": "mythicmetals:prometheum_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "   ",
+    "BMs",
+    "   "
+  ],
+  "result": {
+    "item": "simplymore:prometheum_dagger"
+  }
+}

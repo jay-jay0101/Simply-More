@@ -27,8 +27,8 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class StasisItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getLightningCooldown();
-    int onHitCooldown = effect.getStagnationTime();
+    int skillCooldown = effect.getStasisLightningCooldown();
+    int onHitCooldown = effect.getStasisStagnationTime();
 
 
     public StasisItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -38,7 +38,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (attacker.getRandom().nextBetween(1, 100) <= effect.getStagnationChance()) {
+                if (attacker.getRandom().nextBetween(1, 100) <= effect.getStasisStagnationChance()) {
                     attacker.getWorld().playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.PLAYERS,0.5f,2f);
                     ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),50,0.15,0.25,0.15,0.1);
                     if (target instanceof PlayerEntity playerTarget) {
@@ -95,20 +95,20 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     }
 
     private void damageAndElectrifyEnemies(LivingEntity user, PlayerEntity player, ServerWorld world) {
-        int boxRange = effect.getLightningRange();
+        int boxRange = effect.getStasisLightningRange();
         Box box = new Box(user.getX() - boxRange, user.getY() - 2, user.getZ() - boxRange, user.getX() + boxRange, user.getY() + boxRange*2, user.getZ() + boxRange);
         for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
             if (entity == user || entity.isTeammate(user)) {
                 continue;
             }
-            entity.damage(player.getDamageSources().magic(), effect.getLightningDamage());
+            entity.damage(player.getDamageSources().magic(), effect.getStasisLightningDamage());
             entity.onStruckByLightning(world, null);
         }
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return effect.getLightningWindup();
+        return effect.getStasisLightningWindup();
     }
 
 

@@ -13,8 +13,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.rosemarythyme.simplymore.SimplyMore;
+import net.rosemarythyme.simplymore.config.MimicryAttributesConfig;
+import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.config.WrapperConfig;
+import net.rosemarythyme.simplymore.item.RemovedItem;
 import net.rosemarythyme.simplymore.item.RuneCarverItem;
 import net.rosemarythyme.simplymore.item.normal.GrandSwordItem;
 import net.rosemarythyme.simplymore.item.normal.LanceItem;
@@ -25,13 +28,23 @@ import net.rosemarythyme.simplymore.item.uniques.*;
 import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
+import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
+import net.rosemarythyme.simplymore.registry.compat.Gobber2CompatRegistry;
+import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompat;
 import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.item.RunicSwordItem;
 
+import java.util.List;
+import java.util.Map;
+
+import static java.util.Map.entry;
+
 public class ModItemsRegistry {
     static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
     static WeaponAttributesConfig attributes = config.weaponAttributes;
+    static UniqueEffectConfig effect = config.uniqueEffects;
+    static MimicryAttributesConfig mimicryAttributes = config.mimicry;
 
     public static final Item IRON_GREAT_KATANA = registerItem(
             "iron_great_katana",
@@ -593,17 +606,6 @@ public class ModItemsRegistry {
                             .rarity(Rarity.EPIC)       
             )
     );
-    public static final Item MIMICRY = registerItem(
-            "mimicry",
-            new MimicryItem(
-                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getMimicryPurityDamage() - 6,
-                    (float)attributes.getMimicryPuritySwingSpeed(),
-                    new Item.Settings()
-                            .fireproof()
-                            .rarity(Rarity.EPIC)       
-            )
-    );
     public static final Item GLIMMERSTEP = registerItem(
             "glimmerstep",
             new GlimmerstepItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
@@ -635,15 +637,20 @@ public class ModItemsRegistry {
             )
     );
 
-    public static final Item SCARAB_ROLLER = registerItem(
-            "scarab_roller",
-            new ScarabRollerItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getScarabRollerDamage() - 6,
-                    (float)attributes.getScarabRollerSwingSpeed(),
+    public static final Item MYRMEDGE = registerItem(
+            "myrmedge",
+            new MyrmedgeItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getMyrmedgeDamage() - 6,
+                    (float)attributes.getMyrmedgeSwingSpeed(),
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
             )
+    );
+
+    public static final Item SCARAB_ROLLER = registerItem(
+            "scarab_roller",
+            new RemovedItem(new Item.Settings().maxCount(1), MYRMEDGE)
     );
 
     public static final Item BLACK_PEARL = registerItem(
@@ -877,6 +884,83 @@ public class ModItemsRegistry {
             )
     );
 
+    public static final Item BRASSTURN = registerItem(
+            "brassturn",
+            new BrassturnItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getBrassturnDamage() - 6,
+                    (float)attributes.getBrassturnMaxSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item CINDERGORGE = registerItem(
+            "cindergorge",
+            new CindergorgeItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getCindergorgeDamage() - 6,
+                    (float)attributes.getCindergorgeSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item DEATHS_EYRIE = registerItem(
+            "deaths_eyrie",
+            new DeathsEyrieItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getDeathsEyrieDamage() - 6,
+                    (float)attributes.getDeathsEyrieSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item PERFORISCUS = registerItem(
+            "perforiscus",
+            new PerforiscusItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getPerforiscusDamage() - 6,
+                    (float)attributes.getPerforiscusSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item REVVENGINE = registerItem(
+            "revvengine",
+            new RevvengineItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getRevvengineDamage() - 6,
+                    (float)attributes.getRevvengineSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item EXEDRILL = registerItem(
+            "exedrill",
+            new ExedrillItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getExedrillDamage() - 6,
+                    (float)attributes.getExedrillSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item CULTEREX = registerItem(
+            "culterex",
+            new CulterexItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.getCulterexDamage() - 6,
+                    (float)attributes.getCulterexSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
     public static final Item RUNEFUSED_CARVER = registerItem(
             "runefused_carver",
             new RuneCarverItem(
@@ -898,6 +982,314 @@ public class ModItemsRegistry {
             )
     );
 
+    public static final Item MIMICRY_LONGSWORD = registerItem(
+            "mimicry_longsword",
+            new LongswordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getLongswordDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getLongswordSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_TWINBLADE = registerItem(
+            "mimicry_twinblade",
+            new TwinbladeItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getTwinbladeDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getTwinbladeSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_RAPIER = registerItem(
+            "mimicry_rapier",
+            new RapierItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getRapierDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getRapierSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_KATANA = registerItem(
+            "mimicry_katana",
+            new KatanaItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getKatanaDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getKatanaSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_SPEAR = registerItem(
+            "mimicry_spear",
+            new SpearItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getSpearDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getSpearSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_SAI = registerItem(
+            "mimicry_sai",
+            new SaiItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getSaiDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getSaiSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_GLAIVE = registerItem(
+            "mimicry_glaive",
+            new GlaiveItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getGlaiveDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getGlaiveSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_WARGLAIVE = registerItem(
+            "mimicry_warglaive",
+            new WarglaiveItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getWarglaiveDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getWarglaiveSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_CUTLASS = registerItem(
+            "mimicry_cutlass",
+            new CutlassItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getCutlassDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getCutlassSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_CLAYMORE = registerItem(
+            "mimicry_claymore",
+            new ClaymoreItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getClaymoreDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getClaymoreSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_GREATHAMMER = registerItem(
+            "mimicry_greathammer",
+            new GreathammerItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getGreathammerDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getGreathammerSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_GREATAXE = registerItem(
+            "mimicry_greataxe",
+            new GreataxeItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getGreataxeDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getGreataxeSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_CHAKRAM = registerItem(
+            "mimicry_chakram",
+            new ChakramItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getChakramDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getChakramSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_SCYTHE = registerItem(
+            "mimicry_scythe",
+            new ScytheItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getScytheDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getScytheSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_HALBERD = registerItem(
+            "mimicry_halberd",
+            new HalberdItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getHalberdDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getHalberdSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_GREAT_KATANA = registerItem(
+            "mimicry_great_katana",
+            new GreatKatanaItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getGreatKatanaDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getGreatKatanaSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_GRANDSWORD = registerItem(
+            "mimicry_grandsword",
+            new GrandswordItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getGrandswordDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getGrandswordSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_BACKHAND_BLADE = registerItem(
+            "mimicry_backhand_blade",
+            new BackhandBladeItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getBackhandBladeDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getBackhandBladeSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_LANCE = registerItem(
+            "mimicry_lance",
+            new net.rosemarythyme.simplymore.item.uniques.mimicry.LanceItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getLanceDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getLanceSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_KHOPESH = registerItem(
+            "mimicry_khopesh",
+            new KhopeshItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getKhopeshDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getKhopeshSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_DAGGER = registerItem(
+            "mimicry_dagger",
+            new DaggerItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getDaggerDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getDaggerSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_PERNACH = registerItem(
+            "mimicry_pernach",
+            new PernachItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getPernachDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getPernachSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_QUARTERSTAFF = registerItem(
+            "mimicry_quarterstaff",
+            new QuarterstaffItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getQuarterstaffDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getQuarterstaffSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_GREAT_SPEAR = registerItem(
+            "mimicry_great_spear",
+            new GreatSpearItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getGreatSpearDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getGreatSpearSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY_DEER_HORNS = registerItem(
+            "mimicry_deer_horns",
+            new DeerHornsItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    mimicryAttributes.getDeerHornsDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
+                    (float)mimicryAttributes.getDeerHornsSwingSpeed(),
+                    new Item.Settings()
+                            .fireproof()
+                            .rarity(Rarity.EPIC)
+            )
+    );
+
+    public static final Item MIMICRY = registerItem(
+            "mimicry",
+            new RemovedItem(
+                    new Item.Settings(),
+                    MIMICRY_LONGSWORD
+            )
+    );
+
     public static Item registerItem (String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(SimplyMore.ID, name),item);
     }
@@ -908,6 +1300,16 @@ public class ModItemsRegistry {
             if (FabricLoader.getInstance().isModLoaded("sticknstone")) {
                 SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
                 StickNStoneCompatRegistry.registerCompatItems();
+            }
+
+            if (FabricLoader.getInstance().isModLoaded("gobber2")) {
+                SimplyMore.LOGGER.info("Registering Gobber2 Compat for " + SimplyMore.ID);
+                Gobber2CompatRegistry.registerCompatItems();
+            }
+
+            if (FabricLoader.getInstance().isModLoaded("mythicmetals")) {
+                SimplyMore.LOGGER.info("Registering Mythic Metals Compat for " + SimplyMore.ID);
+                MythicMetalsCompat.registerCompatItems();
             }
 
             Registry.register(Registries.ITEM_GROUP, Identifier.of(SimplyMore.ID, "items"), ITEM_GROUP);
@@ -976,13 +1378,22 @@ public class ModItemsRegistry {
                 entries.add(RUNIC_QUARTERSTAFF);
                 entries.add(RUNIC_GREAT_SPEAR);
                 entries.add(RUNIC_DEER_HORNS);
+
+                if (FabricLoader.getInstance().isModLoaded("gobber2")) {
+                    Gobber2CompatRegistry.addToGroup(entries);
+                }
+
+                if (FabricLoader.getInstance().isModLoaded("mythicmetals")) {
+                    MythicMetalsCompat.addToGroup(entries);
+                }
+
                 entries.add(GREAT_SLITHER);
                 entries.add(MOLTEN_FLARE);
                 entries.add(GRANDFROST);
-                entries.add(MIMICRY);
+                entries.add(MIMICRY_LONGSWORD);
                 entries.add(GLIMMERSTEP);
                 entries.add(THEBLOODHARVESTER);
-                entries.add(SCARAB_ROLLER);
+                entries.add(MYRMEDGE);
                 entries.add(BLACK_PEARL);
                 entries.add(THEVESSELBREACH);
                 entries.add(BLADEOFTHEGROTESQUE);
@@ -1003,8 +1414,71 @@ public class ModItemsRegistry {
                 entries.add(SOUL_FORESEER);
                 entries.add(SERPENTINE_VALOUR);
                 entries.add(LUSTROUS_MOXIE);
+                entries.add(BRASSTURN);
+                entries.add(CINDERGORGE);
+                entries.add(DEATHS_EYRIE);
+                entries.add(PERFORISCUS);
+                entries.add(REVVENGINE);
+                entries.add(EXEDRILL);
+                entries.add(CULTEREX);
                 entries.add(JESTER_PENETRATE);
                 entries.add(THE_PAN);
             })
             .build();
+
+    public static final Map<String, Item> MIMICRY_ITEMS = Map.ofEntries(
+            entry("longsword", MIMICRY_LONGSWORD),
+            entry("twinblade", MIMICRY_TWINBLADE),
+            entry("rapier", MIMICRY_RAPIER),
+            entry("katana", MIMICRY_KATANA),
+            entry("spear", MIMICRY_SPEAR),
+            entry("sai", MIMICRY_SAI),
+            entry("glaive", MIMICRY_GLAIVE),
+            entry("warglaive", MIMICRY_WARGLAIVE),
+            entry("cutlass", MIMICRY_CUTLASS),
+            entry("claymore", MIMICRY_CLAYMORE),
+            entry("greathammer", MIMICRY_GREATHAMMER),
+            entry("greataxe", MIMICRY_GREATAXE),
+            entry("chakram", MIMICRY_CHAKRAM),
+            entry("scythe", MIMICRY_SCYTHE),
+            entry("halberd", MIMICRY_HALBERD),
+            entry("great_katana", MIMICRY_GREAT_KATANA),
+            entry("grandsword", MIMICRY_GRANDSWORD),
+            entry("backhand_blade", MIMICRY_BACKHAND_BLADE),
+            entry("lance", MIMICRY_LANCE),
+            entry("khopesh", MIMICRY_KHOPESH),
+            entry("dagger", MIMICRY_DAGGER),
+            entry("pernach", MIMICRY_PERNACH),
+            entry("quarterstaff", MIMICRY_QUARTERSTAFF),
+            entry("great_spear", MIMICRY_GREAT_SPEAR),
+            entry("deer_horns", MIMICRY_DEER_HORNS)
+    );
+
+    public static final List<MimicryItem> MIMICRY_AMPLIFIERS = List.of(
+            ((MimicryItem) ModItemsRegistry.MIMICRY_LONGSWORD),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_TWINBLADE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_RAPIER),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_KATANA),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_SAI),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_SPEAR),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_GLAIVE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_WARGLAIVE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_CUTLASS),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_CLAYMORE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_GREATHAMMER),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_GREATAXE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_CHAKRAM),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_SCYTHE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_HALBERD),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_GREAT_KATANA),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_GRANDSWORD),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_BACKHAND_BLADE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_LANCE),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_KHOPESH),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_DAGGER),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_PERNACH),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_QUARTERSTAFF),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_GREAT_SPEAR),
+            ((MimicryItem) ModItemsRegistry.MIMICRY_DEER_HORNS)
+    );
 }

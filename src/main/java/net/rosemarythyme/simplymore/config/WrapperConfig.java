@@ -22,6 +22,10 @@ public class WrapperConfig extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Gui.TransitiveObject
     public UniqueEffectConfig uniqueEffects = new UniqueEffectConfig();
 
+    @ConfigEntry.Category("mimicry_attributes")
+    @ConfigEntry.Gui.TransitiveObject
+    public MimicryAttributesConfig mimicry = new MimicryAttributesConfig();
+
     public WrapperConfig() {
     }
 }

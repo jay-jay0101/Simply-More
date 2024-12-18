@@ -1,0 +1,17 @@
+{
+  "name": "Myrmedge [SM]",
+  "icon": "simplymore:myrmedge",
+  "advancement": "simplymore:myrmedge",
+  "category": "simplyswords:category_unique_weapons",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "simplymore:myrmedge",
+      "text": "$(#0BE334)Item Added In Simply More$(br2)$()TO ADD"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "???"
+    }
+  ]
+}

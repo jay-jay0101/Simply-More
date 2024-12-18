@@ -91,7 +91,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
         }
 
         // Check if the version is greater than or equal to 10 and the distance is greater than 3
-        if (version >= effect.getPoisonBoltLifespan() && distance > 3) {
+        if (version >= effect.getSerpentinePoisonBoltLifespan() && distance > 3) {
             return;
         }
 
@@ -122,8 +122,8 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
             this.getWorld().playSound(null, this.getBlockPos(), SoundRegistry.DARK_SWORD_ATTACK_03.get(), SoundCategory.PLAYERS, 0.25f, 1);
         } else {
             // Damage the target
-            target.damage(owner.getDamageSources().magic(), effect.getPoisonBoltDamage());
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, effect.getPoisonVenomTime()));
+            target.damage(owner.getDamageSources().magic(), effect.getSerpentinePoisonBoltDamage());
+            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, effect.getSerpentinePoisonVenomTime()));
             this.discard();
             this.getWorld().playSound(null, this.getBlockPos(), SoundRegistry.DARK_SWORD_ATTACK_WITH_BLOOD_01.get(), SoundCategory.PLAYERS, 0.4f, 1);
         }

@@ -1,7 +1,7 @@
 {
   "parent": "simplymore:template_great_spear",
   "attributes": {
-    "attack_range": 5.5,
+    "attack_range": 3.5,
     "pose": "bettercombat:pose_two_handed_katana",
     "attacks": [
       {
@@ -24,18 +24,6 @@
         "animation": "bettercombat:two_handed_slash_horizontal_left",
         "swing_sound": {
           "id": "simplyswords:elemental_sword_holy_attack_01",
-          "volume": 0.5,
-          "pitch": 1
-        }
-      },
-      {
-        "hitbox": "FORWARD_BOX",
-        "damage_multiplier": 1,
-        "angle": 0,
-        "upswing": 0.5,
-        "animation": "simplyswords:halberd_stab_right",
-        "swing_sound": {
-          "id": "simplyswords:elemental_sword_holy_attack_03",
           "volume": 0.5,
           "pitch": 1
         }

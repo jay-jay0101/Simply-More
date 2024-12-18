@@ -14,10 +14,73 @@ import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.effect.*;
 
+import java.util.HexFormat;
+
 public class ModEffectsRegistry {
     static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
     static WeaponAttributesConfig attributes = config.weaponAttributes;
     static UniqueEffectConfig effects = config.uniqueEffects;
+
+    public static final StatusEffect BLEED = registerEffect(
+            "bleed",
+            new BleedPoisonEffect(StatusEffectCategory.HARMFUL,7865862)
+    );
+
+    public static final StatusEffect MIMICRY_HAPPENING = registerEffect(
+            "mimicry_happening",
+            new MimicryEffect(StatusEffectCategory.NEUTRAL,0)
+    );
+
+    public static final StatusEffect HEX = registerEffect(
+            "hex",
+            new HexEffect(StatusEffectCategory.HARMFUL,10494192)
+    );
+
+    public static final StatusEffect STARLIGHT = registerEffect(
+            "starlight",
+            new StarlightEffect(StatusEffectCategory.BENEFICIAL,11393254)
+    );
+
+    public static final StatusEffect GRASPING = registerEffect(
+            "grasping",
+            new MyrmedgeEffect(StatusEffectCategory.NEUTRAL,7865862)
+    ).addAttributeModifier(
+            EntityAttributes.GENERIC_ATTACK_SPEED,
+            "7d90bac9-a45b-4355-ad10-e354bdcf2fcf",
+            -99,
+            EntityAttributeModifier.Operation.ADDITION
+    ).addAttributeModifier(
+            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+            "58d2352a-7caa-4025-9add-333f96effda0",
+            -9999,
+            EntityAttributeModifier.Operation.ADDITION
+    );
+
+    public static final StatusEffect SOUL_HEALTH = registerEffect(
+            "soul_health",
+            new ModStatusEffect(StatusEffectCategory.BENEFICIAL,7865862)
+    ).addAttributeModifier(
+            EntityAttributes.GENERIC_MAX_HEALTH,
+            "81c601bf-416a-48bc-889d-018ded246002",
+            2,
+            EntityAttributeModifier.Operation.ADDITION
+    );
+
+
+    public static final StatusEffect BLOOM = registerEffect(
+            "bloom",
+            new BloomEffect(StatusEffectCategory.BENEFICIAL,7865862)
+    );
+
+    public static final StatusEffect RAVENOUS = registerEffect(
+            "ravenous",
+            new RevvengineRushEffect(StatusEffectCategory.BENEFICIAL,9109504)
+    );
+
+    public static final StatusEffect LIGHTWEIGHT = registerEffect(
+            "lightweight",
+            new FallDamageImmunityEffect(StatusEffectCategory.BENEFICIAL, (int) HexFormat.fromHexDigitsToLong("BFBFBF"))
+    );
 
     public static final StatusEffect VENOM = registerEffect(
             "venom",
@@ -29,7 +92,7 @@ public class ModEffectsRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             "f53f18d4-ac4d-4010-aa0a-7d2d25050c66",
-                            effects.getExecutingSliceSwingSpeedBonus(),
+                            effects.getMoltenFlareExecutingSliceSwingSpeedBonus(),
                             EntityAttributeModifier.Operation.ADDITION
                     )
     );
@@ -37,20 +100,9 @@ public class ModEffectsRegistry {
             "chill",
             new ChillEffect(StatusEffectCategory.HARMFUL,10875635)
     );
-    public static final StatusEffect MIMICRY = registerEffect(
+    public static final StatusEffect MIMICRY /* Removed in SimplyMore v1.1.0 */ = registerEffect(
             "mimicry",
-            new MimicryEffect(StatusEffectCategory.NEUTRAL,0)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            "ccb60c0e-fcc8-4a37-bcf7-fc4644dd6160",
-                            attributes.getMimicryTwistedSwingSpeedModifier(),
-                            EntityAttributeModifier.Operation.ADDITION
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            "f6de8d23-a536-43f7-8363-434609ae6e5b",
-                            attributes.getMimicryTwistedDamageModifier(),
-                            EntityAttributeModifier.Operation.ADDITION
-                    )
+            new RemovedEffect(StatusEffectCategory.NEUTRAL,0)
     );
     public static final StatusEffect LANCE = registerEffect(
             "lance_mounted",
@@ -92,28 +144,34 @@ public class ModEffectsRegistry {
                             EntityAttributeModifier.Operation.ADDITION
                     )
     );
-    public static final StatusEffect GROTESQUE = registerEffect(
+    public static final StatusEffect GROTESQUE /* Removed in SimplyMore v1.1.0 */ = registerEffect(
             "grotesque",
-            new GrotesqueEffect(StatusEffectCategory.NEUTRAL,8948877)
+            new RemovedEffect(StatusEffectCategory.NEUTRAL,0)
+    );
+
+    public static final StatusEffect GROTESQUE_WARD = registerEffect(
+            "grotesque_ward",
+            new ModStatusEffect(StatusEffectCategory.HARMFUL, 1023141)
                     .addAttributeModifier(
-                            EntityAttributes.GENERIC_ARMOR,
-                            "3c943533-dab6-4f42-9195-21ca6838bb0b",
-                            effects.getGrotesqueHeldArmorBuff(),
+                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                            "9e3ef8b8-1e2c-43f6-876f-da4808fdbbb8",
+                            -1,
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
-                            EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
-                            "28a24cb0-f23b-49f7-9a46-a2776e7fb94d",
-                            0.225,
+                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                            "1fffd775-87fc-4ddb-9a61-3ccb63a1a221",
+                            -0.01,
                             EntityAttributeModifier.Operation.ADDITION
                     )
     );
+
     public static final StatusEffect SOLIDIFIED = registerEffect(
             "solidified",
             new SolidifyEffect(StatusEffectCategory.NEUTRAL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             "695fbd36-b9e1-452d-8f41-2f850a4ccf6a",
-                            effects.getSolidifyAttackerStunnedArmorBuff(),
+                            effects.getGrotesqueSolidifyAttackerStunnedArmorBuff(),
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
@@ -133,7 +191,7 @@ public class ModEffectsRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             "f00fd930-1cd9-4524-a375-0d50225d323f",
-                            effects.getSolidifySelfStunnedArmorBuff(),
+                            effects.getGrotesqueSolidifySelfStunnedArmorBuff(),
                             EntityAttributeModifier.Operation.ADDITION
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,

@@ -3,7 +3,9 @@ package net.rosemarythyme.simplymore.entity;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.EvokerFangsEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
@@ -86,9 +88,11 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
     private void damage(LivingEntity target) {
         float damageAmount = effect.getSlitherFangsDamage();
         int venomTime = effect.getSlitherFangsVenomTime();
+        int slowTime = effect.getSlitherFangsSlowTime();
         if (target.isAlive() && !target.isInvulnerable() && target != owner) {
             if (owner == null) {
                 target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, venomTime, 0), null);
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, slowTime, 2), null);
                 target.damage(getDamageSources().playerAttack(null), damageAmount);
             } else {
                 if (owner.isTeammate(target)) {

@@ -140,11 +140,11 @@ public class LootTableModifier {
         if (loot.isEnableJesterPenetrate() && isAllowJokeUniques) pool.with(ItemEntry.builder(ModItemsRegistry.JESTER_PENETRATE));
         if (loot.isEnableLustrousMoxie()) pool.with(ItemEntry.builder(ModItemsRegistry.LUSTROUS_MOXIE));
         if (loot.isEnableMatterbane()) pool.with(ItemEntry.builder(ModItemsRegistry.MATTERBANE));
-        if (loot.isEnableMimicry()) pool.with(ItemEntry.builder(ModItemsRegistry.MIMICRY));
+        if (loot.isEnableMimicry()) pool.with(ItemEntry.builder(ModItemsRegistry.MIMICRY_LONGSWORD));
         if (loot.isEnableMoltenFlare()) pool.with(ItemEntry.builder(ModItemsRegistry.MOLTEN_FLARE));
         if (loot.isEnableRupturedIdol()) pool.with(ItemEntry.builder(ModItemsRegistry.RUPTURED_IDOL));
         if (loot.isEnableRuyiJinguBang()) pool.with(ItemEntry.builder(ModItemsRegistry.RUYI_JINGU_BANG));
-        if (loot.isEnableScarabRoller()) pool.with(ItemEntry.builder(ModItemsRegistry.SCARAB_ROLLER));
+        if (loot.isEnableMyrmedge()) pool.with(ItemEntry.builder(ModItemsRegistry.MYRMEDGE));
         if (loot.isEnableSerpentineValour()) pool.with(ItemEntry.builder(ModItemsRegistry.SERPENTINE_VALOUR));
         if (loot.isEnableSmoulderingRuin()) pool.with(ItemEntry.builder(ModItemsRegistry.SMOULDERING_RUIN));
         if (loot.isEnableSoulForeseer()) pool.with(ItemEntry.builder(ModItemsRegistry.SOUL_FORESEER));
@@ -155,6 +155,13 @@ public class LootTableModifier {
         if (loot.isEnableTidebreaker()) pool.with(ItemEntry.builder(ModItemsRegistry.TIDEBREAKER));
         if (loot.isEnableTimekeeper()) pool.with(ItemEntry.builder(ModItemsRegistry.TIMEKEEPER));
         if (loot.isEnableVipersCall()) pool.with(ItemEntry.builder(ModItemsRegistry.VIPERSCALL));
+        if (loot.isEnableBrassturn()) pool.with(ItemEntry.builder(ModItemsRegistry.BRASSTURN));
+        if (loot.isEnableCindergorge()) pool.with(ItemEntry.builder(ModItemsRegistry.CINDERGORGE));
+        if (loot.isEnableDeathsEyrie()) pool.with(ItemEntry.builder(ModItemsRegistry.DEATHS_EYRIE));
+        if (loot.isEnablePerforiscus()) pool.with(ItemEntry.builder(ModItemsRegistry.PERFORISCUS));
+        if (loot.isEnableRevvengine()) pool.with(ItemEntry.builder(ModItemsRegistry.REVVENGINE));
+        if (loot.isEnableExedrill()) pool.with(ItemEntry.builder(ModItemsRegistry.EXEDRILL));
+        if (loot.isEnableCulterex()) pool.with(ItemEntry.builder(ModItemsRegistry.CULTEREX));
         context.addPool(pool);
     }
 }

@@ -27,7 +27,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getRadiantTeleportCooldown();
+    int skillCooldown = effect.getLustrousRadiantTeleportCooldown();
 
     public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -40,7 +40,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK) && radiantMarkEffect != null) {
                 target.damage(attacker.getDamageSources().magic(),radiantMarkEffect.getAmplifier() + 1);
             }
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getRadiantMarkChance()) {
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getLustrousRadiantMarkChance()) {
                 if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK) && radiantMarkEffect != null) {
                     int amplifier = radiantMarkEffect.getAmplifier() + 1;
                     int duration = 240 - (amplifier * 40);
@@ -64,14 +64,14 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             damageAndKnockbackAndTeleportToRadiantMarkedTarget(target, user);
             damageAndKnockbackNearbyNonRadiantMarkedEntities(target, user);
 
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE, effect.getRadiantTeleportStunTime(), 0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE, effect.getLustrousRadiantTeleportStunTime(), 0));
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
     }
 
     private LivingEntity locateRadiantMarkedTarget(PlayerEntity user) {
-        int boxRange = effect.getRadiantTeleportRange();
+        int boxRange = effect.getLustrousRadiantTeleportRange();
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> potentiallyMarkedLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK)).findAny().orElse(null);
@@ -88,17 +88,17 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             user.teleport(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ(), false);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 2, user.getZ(), 500, 3, 3, 3, 0);
             targetEntity.removeStatusEffect(ModEffectsRegistry.RADIANT_MARK);
-            knockbackAndDamageEntity(targetEntity, user, effect.getRadiantTeleportTargetDamage());
+            knockbackAndDamageEntity(targetEntity, user, effect.getLustrousRadiantTeleportTargetDamage());
         }
     }
 
     private void damageAndKnockbackNearbyNonRadiantMarkedEntities(LivingEntity targetEntity, PlayerEntity user) {
-        int boxRange = effect.getRadiantTeleportAOERange();
+        int boxRange = effect.getLustrousRadiantTeleportAOERange();
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> nearbyLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         nearbyLivingEntities.remove(targetEntity);
         for (LivingEntity livingEntity : nearbyLivingEntities) {
-            knockbackAndDamageEntity(livingEntity, user, effect.getRadiantTeleportAOEDamage());
+            knockbackAndDamageEntity(livingEntity, user, effect.getLustrousRadiantTeleportAOEDamage());
         }
     }
 
@@ -123,7 +123,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         double normalizedDeltaX = deltaX / distance;
         double normalizedDeltaZ = deltaZ / distance;
 
-        targetEntity.setVelocity(normalizedDeltaX * effect.getRadiantTeleportAOEKnockback(), 0.2, normalizedDeltaZ * effect.getRadiantTeleportAOEKnockback());
+        targetEntity.setVelocity(normalizedDeltaX * effect.getLustrousRadiantTeleportAOEKnockback(), 0.2, normalizedDeltaZ * effect.getLustrousRadiantTeleportAOEKnockback());
         targetEntity.velocityModified = true;
     }
 
@@ -131,6 +131,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         user.setCurrentHand(hand);
+
         return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
                 ? TypedActionResult.fail(itemStack)
                 : TypedActionResult.consume(itemStack);

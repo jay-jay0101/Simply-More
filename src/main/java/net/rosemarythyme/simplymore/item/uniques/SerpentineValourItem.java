@@ -26,17 +26,12 @@ import java.util.List;
 
 
 public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getPoisonBoltCooldown();
+    int skillCooldown = effect.getSerpentinePoisonBoltCooldown();
 
     public SerpentineValourItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
-    /*
-     Using LivingEntity#setHealth() is not recommended as it can, and likely will, cause issues when calculating damage
-     As such, using LivingEntity#damage() is recommended. If there is a need to bypass armour, using
-        LivingEntity#getDamageSources().magic() is recommended
-    */
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -45,7 +40,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
 
         if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(ModEffectsRegistry.VENOM)) {
             target.timeUntilRegen = 0;
-            target.damage(target.getDamageSources().generic(), effect.getPoisonedTargetDamageBuff());
+            target.damage(target.getDamageSources().generic(), effect.getSerpentinePoisonedTargetDamageBuff());
         }
 
         return super.postHit(stack, target, attacker);
@@ -68,29 +63,16 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
 
             int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
 
-            // Loop through the four cardinal directions (north, south, east, west)
             for (int j = 0; j < 4; j++) {
-                /*
-                 Calculate the offset for the x-coordinate based on the current direction
-                 j % 2 == 0 means we're on an even iteration (0 or 2), which corresponds to the x-axis
-                 j / 2 == 0 means we're on the first even iteration (0), which corresponds to the west direction (-1)
-                 j / 2 == 1 means we're on the second even iteration (2), which corresponds to the east direction (1)
-                */
+
                 int offsetX = j % 2 == 0
                         ? (j / 2 == 0 ? -1 : 1)
                         : 0;
 
-                /*
-                 Calculate the offset for the z-coordinate based on the current direction
-                 j % 2 == 1 means we're on an odd iteration (1 or 3), which corresponds to the z-axis
-                 j / 2 == 0 means we're on the first odd iteration (1), which corresponds to the north direction (-1)
-                 j / 2 == 1 means we're on the second odd iteration (3), which corresponds to the south direction (1)
-                */
                 int offsetZ = j % 2 == 1
                         ? (j / 2 == 0 ? -1 : 1)
                         : 0;
 
-                // Create a new PoisonBoltAreaEffectCloudEntity at the calculated position
                 PoisonBoltAreaEffectCloudEntity entity = new PoisonBoltAreaEffectCloudEntity(
                         user.getWorld(),
                         user.getX() + offsetX,  // Add the x-offset to the user's x-coordinate

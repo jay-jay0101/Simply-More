@@ -1,0 +1,27 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sticknstone"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+   "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "pattern": [
+    " M ",
+    " s ",
+    " M "
+  ],
+  "result": {
+    "item": "simplymore:stone_quarterstaff"
+  }
+}

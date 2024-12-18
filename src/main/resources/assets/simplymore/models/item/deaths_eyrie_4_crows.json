@@ -1,0 +1,6 @@
+{
+  "parent": "simplyswords:item/template_claymore",
+  "textures": {
+    "layer0": "simplymore:item/uniques/deaths_eyrie/deaths_eyrie_4_crows"
+  }
+}

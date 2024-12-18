@@ -24,7 +24,7 @@ public class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     String iRarity = "UNIQUE";
     String[] repairIngredient;
 
-    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
+    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
     protected static UniqueEffectConfig effect = config.uniqueEffects;
 
     public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Item.Settings settings) {

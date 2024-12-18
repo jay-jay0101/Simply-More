@@ -25,7 +25,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getRageCooldown();
+    int skillCooldown = effect.getVesselRageCooldown();
 
     public TheVesselBreachItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -39,6 +39,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
                         attacker.heal(this.getAttackDamage() * effect.getVesselLifesteal());
                     } else {
                         attacker.heal(this.getAttackDamage() * effect.getVesselRageLifesteal());
+                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.BLEED, effect.getVesselRageBleedTime(),0));
                     }
                 }
             }
@@ -49,8 +50,8 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
-            user.damage(user.getDamageSources().genericKill(), user.getMaxHealth()*effect.getRageStartupDamagePercentage());
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.RAGE, effect.getRageTime(), 0));
+            user.damage(user.getDamageSources().genericKill(), user.getMaxHealth()*effect.getVesselRageStartupDamagePercentage());
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.RAGE, effect.getVesselRageTime(), 0));
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,12,4));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
@@ -79,7 +80,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip3",
-                SimplyMoreHelperMethods.toPercentage(effect.getRageStartupDamagePercentage())).setStyle(textStyle));
+                SimplyMoreHelperMethods.toPercentage(effect.getVesselRageStartupDamagePercentage())).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip4").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip5").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip6",

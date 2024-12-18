@@ -25,8 +25,8 @@ import java.util.List;
 
 
 public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getCannonballCooldown();
-    int plunderChance = effect.getPlunderChance();
+    int skillCooldown = effect.getBlackPearlCannonballCooldown();
+    int plunderChance = effect.getBlackPearlPlunderChance();
 
     public BlackPearlItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);

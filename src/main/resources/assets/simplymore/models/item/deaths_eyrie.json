@@ -1,0 +1,12 @@
+{
+  "parent": "simplyswords:item/template_claymore",
+  "textures": {
+    "layer0": "simplymore:item/uniques/deaths_eyrie/deaths_eyrie"
+  },
+  "overrides": [
+    {"predicate": {"simplymore:crows": 0.2},"model": "simplymore:item/deaths_eyrie_2_crows"},
+    {"predicate": {"simplymore:crows": 0.3},"model": "simplymore:item/deaths_eyrie_3_crows"},
+    {"predicate": {"simplymore:crows": 0.4},"model": "simplymore:item/deaths_eyrie_4_crows"},
+    {"predicate": {"simplymore:crows": 0.5},"model": "simplymore:item/deaths_eyrie_5_crows"}
+  ]
+}

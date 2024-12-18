@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -25,7 +24,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getHarvestCooldown();
+    int skillCooldown = effect.getHarvesterCooldown();
 
     public TheBloodHarvesterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -39,7 +38,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
                         attacker.heal(this.getAttackDamage() * effect.getHarvesterLifesteal());
                     } else {
                         attacker.heal(this.getAttackDamage() * effect.getHarvesterHarvestLifesteal());
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,effect.getHarvestWitherTime(),0));
+                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.BLEED,effect.getHarvesterBleedTime(),0));
                     }
                 }
             }
@@ -49,7 +48,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.HARVEST, effect.getHarvestTime(), 0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.HARVEST, effect.getHarvesterHarvestTime(), 0));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SWORD_ATTACK_WITH_BLOOD_04.get(), user.getSoundCategory(), 2F, 0F);
@@ -77,7 +76,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3",
-                SimplyMoreHelperMethods.translateTicks(effect.getHarvestTime())).setStyle(textStyle));
+                SimplyMoreHelperMethods.translateTicks(effect.getHarvesterHarvestTime())).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip4",
                 SimplyMoreHelperMethods.toPercentage(effect.getHarvesterHarvestLifesteal())).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip5").setStyle(textStyle));

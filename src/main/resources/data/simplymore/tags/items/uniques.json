@@ -3,10 +3,9 @@
     "simplymore:great_slither",
     "simplymore:molten_flare",
     "simplymore:grandfrost",
-    "simplymore:mimicry",
     "simplymore:glimmerstep",
     "simplymore:the_blood_harvester",
-    "simplymore:scarab_roller",
+    "simplymore:myrmedge",
     "simplymore:black_pearl",
     "simplymore:the_vessel_breach",
     "simplymore:blade_of_the_grotesque",
@@ -26,6 +25,14 @@
     "simplymore:earthshatter",
     "simplymore:soul_foreseer",
     "simplymore:serpentine_valour",
-    "simplymore:lustrous_moxie"
+    "simplymore:lustrous_moxie",
+    "simplymore:brassturn",
+    "simplymore:cindergorge",
+    "simplymore:deaths_eyrie",
+    "simplymore:perforiscus",
+    "simplymore:revvengine",
+    "simplymore:exedrill",
+    "simplymore:culterex",
+    "#simplymore:mimicry"
   ]
 }

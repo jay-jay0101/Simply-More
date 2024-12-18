@@ -16,6 +16,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.GreatSlitherFangEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -33,7 +34,11 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
             if (attacker.getRandom().nextBetween(1, 100) <= effect.getSlitherPoisonChance()) {
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, effect.getSlitherPoisonTime(), 0), attacker);
+                if(target.hasStatusEffect(StatusEffects.POISON)) {
+                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM, effect.getSlitherVenomTime(), 0), attacker);
+                } else {
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, effect.getSlitherPoisonTime(), 0), attacker);
+                }
             }
         }
 
@@ -46,18 +51,21 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
             return super.use(world, user, hand);
         }
 
-        double yawAngle = Math.toRadians(user.getYaw());
-        double cosYaw = Math.cos(yawAngle);
-        double sinYaw = Math.sin(yawAngle);
+        for(int i = -1; i<2; i++){
+            float yawInternal = user.getYaw() + (i * 15);
+            double yawAngle = Math.toRadians(yawInternal);
+            double cosYaw = Math.cos(yawAngle);
+            double sinYaw = Math.sin(yawAngle);
 
-        for (int distanceMultiplier = 1; distanceMultiplier < effect.getSlitherFangsRange(); distanceMultiplier++) {
-            double offsetX = -distanceMultiplier * sinYaw;
-            double offsetZ = distanceMultiplier * cosYaw;
+            for (int distanceMultiplier = 1; distanceMultiplier < effect.getSlitherFangsRange(); distanceMultiplier++) {
+                double offsetX = -distanceMultiplier * sinYaw;
+                double offsetZ = distanceMultiplier * cosYaw;
 
-            double spawnX = user.getX() + 1.2 * offsetX;
-            double spawnZ = user.getZ() + 1.2 * offsetZ;
+                double spawnX = user.getX() + 1.2 * offsetX;
+                double spawnZ = user.getZ() + 1.2 * offsetZ;
 
-            world.spawnEntity(new GreatSlitherFangEntity(world, spawnX, user.getY(), spawnZ, user.getYaw(), 0, user));
+                world.spawnEntity(new GreatSlitherFangEntity(world, spawnX, user.getY(), spawnZ, yawInternal, 0, user));
+            }
         }
 
         user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
@@ -80,10 +88,11 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip3").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip5").setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

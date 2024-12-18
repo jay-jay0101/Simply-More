@@ -1,20 +1,20 @@
 {
-  "parent": "simplyswords:item/long_handheld",
+  "parent": "simplymore:item/template/great_katana",
   "textures": {
-    "layer0": "simplymore:item/uniques/lustrous_moxie",
-    "layer1": "simplymore:item/uniques/lustrous_moxie_star"
+    "layer0": "simplymore:item/uniques/lustrous_moxie/lustrous_moxie",
+    "layer1": "simplymore:item/uniques/lustrous_moxie/shimmer",
+    "layer2": "simplymore:item/uniques/lustrous_moxie/wisps"
   },
   "display": {
     "thirdperson_righthand": {
-      "rotation": [0, 90, 35],
-      "translation": [0, 14, -2.5],
-      "scale": [2.55, 2.55, 0.85]
+      "rotation": [0, -90, 55],
+      "translation": [0, 20, -1.5],
+      "scale": [3, 3, 1]
     },
     "thirdperson_lefthand": {
-      "rotation": [0, -90, -35],
-      "translation": [0, 8, 0.5],
-      "scale": [2.55, 2.55, 0.85]
+      "rotation": [0, 90, -55],
+      "translation": [0, 20, -0.5],
+      "scale": [3, 3, 1]
     }
-  }
-
+   }
 }

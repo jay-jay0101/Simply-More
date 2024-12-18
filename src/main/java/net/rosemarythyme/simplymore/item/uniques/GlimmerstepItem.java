@@ -1,32 +1,40 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.registry.EffectRegistry;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
+import org.joml.Vector3f;
 
+import javax.smartcardio.ATR;
 import java.util.List;
 
 public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getTeleportCooldown();
+    int skillCooldown = effect.getGlimmerstepExplosionCooldown();
 
     public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -40,10 +48,20 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         int chance = attacker.getVehicle() instanceof LivingEntity ?
-                effect.getMountedBlindnessChance():
-                effect.getUnmountedBlindnessChance();
+                effect.getGlimmerstepStarlightMountedChance():
+                effect.getGlimmerstepStarlightChance();
         if (attacker.getRandom().nextBetween(1, 100) <= chance) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getBlindnessTime(), 0), attacker);
+            if (attacker.hasStatusEffect(ModEffectsRegistry.STARLIGHT)) {
+                int amplifier = attacker.getStatusEffect(ModEffectsRegistry.STARLIGHT).getAmplifier();
+                amplifier = Math.min(amplifier + 1, effect.getGlimmerstepMaxStarlight() - 1);
+                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STARLIGHT, effect.getGlimmerstepStarlightTime(), amplifier), attacker);
+            } else {
+                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STARLIGHT, effect.getGlimmerstepStarlightTime(), 0), attacker);
+            }
+
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getGlimmerstepBlindTime()));
+
+            attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.PLAYERS, 1f,2f);
         }
 
         return super.postHit(stack, target, attacker);
@@ -52,6 +70,11 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+
+        if(!user.hasStatusEffect(ModEffectsRegistry.STARLIGHT)) {
+            return TypedActionResult.fail(itemStack);
+        }
+
         user.setCurrentHand(hand);
         return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
                 ? TypedActionResult.fail(itemStack)
@@ -65,32 +88,71 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             return;
         }
 
-        ServerWorld serverWorld = ((ServerWorld) world);
-        int ticksUntilUseEnd = this.getMaxUseTime(stack) - remainingUseTicks;
-        if (remainingUseTicks == 1) {
-            user.dismountVehicle();
-            teleportAndPlayEffect(serverWorld, user);
-        } else if (ticksUntilUseEnd == 0) {
-            serverWorld.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_BEACON_ACTIVATE, user.getSoundCategory(), 1.0f, 0.8f);
-            serverWorld.spawnParticles(ParticleTypes.GLOW, user.getX(), user.getY() + 1, user.getZ(), (int) Math.floor((60 - remainingUseTicks) / 2.0), 0.2, 0.4, 0.2, 0.5);
+        int ticksUsed = getMaxUseTime(this.getDefaultStack()) - remainingUseTicks;
+
+        if(ticksUsed == 1) {
+            user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1f,1.2f);
+        }
+
+
+        ((ServerWorld) user.getWorld()).spawnParticles(
+                new DustParticleEffect(new Vector3f(2f,2f,1f), 2f),
+                user.getX(),
+                user.getEyeY(),
+                user.getZ(),
+                Math.min(ticksUsed, Math.min(60, effect.getGlimmerstepExplosionCharge())),
+                4f,
+                4f,
+                4f,
+                0f
+        );
+
+        if(ticksUsed == effect.getGlimmerstepExplosionCharge()) {
+            user.stopUsingItem();
+
+            int boxSize = effect.getGlimmerstepExplosionRange();
+            Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
+            List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
+            float damage = 0;
+            try {
+                damage = effect.getGlimmerstepExplosionDamagePerStarlight() * (user.getStatusEffect(ModEffectsRegistry.STARLIGHT).getAmplifier() + 1);
+            } catch (NullPointerException e) {
+                damage = effect.getGlimmerstepExplosionDamagePerStarlight();
+            }
+
+            ((PlayerEntity) user).getItemCooldownManager().set(this, skillCooldown);
+            user.removeStatusEffect(ModEffectsRegistry.STARLIGHT);
+
+            float finalDamage = damage;
+            livingEntities.stream().filter(
+                    livingEntity -> !(livingEntity instanceof TameableEntity tame && tame.isOwner(user))
+            ).forEach(
+                    livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
+                            (livingEntity.isTeammate(user) || livingEntity == user)?
+                                    finalDamage * (effect.getGlimmerstepSelfAndAllyDamagePercentage()/100f) : finalDamage)
+            );
+
+            ((ServerWorld) user.getWorld()).spawnParticles(
+                    ParticleTypes.EXPLOSION,
+                    user.getX(),
+                    user.getEyeY(),
+                    user.getZ(),
+                    80,
+                    2f,
+                    2f,
+                    2f,
+                    0f
+            );
+
+            user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 1f,0.8f);
         }
 
         super.usageTick(world, user, stack, remainingUseTicks);
     }
 
-    private void teleportAndPlayEffect(ServerWorld serverWorld, LivingEntity user) {
-        Position blockPos = user.raycast(effect.getTeleportDistance()+1, 0, false).getPos();
-        user.teleport(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-
-        serverWorld.playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_NORDIC_21.get(), user.getSoundCategory(), 0.1f, 1f);
-        serverWorld.spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 1, user.getZ(), 60, 0.2, 0.4, 0.2, 0.5);
-
-        ((PlayerEntity) user).getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
-    }
-
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return effect.getTeleportWindUpTime();
+        return 9999999;
     }
 
     @Override
@@ -101,6 +163,15 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+
+        if (entity.getVehicle() instanceof LivingEntity
+                && selected
+                && ((PlayerEntity) entity)
+                .getStackInHand(Hand.OFF_HAND).getItem().getAttributeModifiers(EquipmentSlot.MAINHAND)
+                .get(EntityAttributes.GENERIC_ATTACK_DAMAGE).isEmpty()) ((PlayerEntity) entity)
+                .addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.LANCE,9999999,0));
+        super.inventoryTick(stack, world, entity, slot, selected);
+
         stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
@@ -113,14 +184,18 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip2",
+                effect.getGlimmerstepMaxStarlight()).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4",
-                SimplyMoreHelperMethods.translateTicks(effect.getTeleportWindUpTime())).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5",effect.getTeleportDistance()).setStyle(textStyle));
-
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip8").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip9").setStyle(textStyle));
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

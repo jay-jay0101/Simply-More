@@ -3,9 +3,19 @@ package net.rosemarythyme.simplymore;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.util.Identifier;
+import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
+import net.rosemarythyme.simplymore.client.renderers.CrowEntityRenderer;
+import net.rosemarythyme.simplymore.item.uniques.BrassturnItem;
+import net.rosemarythyme.simplymore.item.uniques.DeathsEyrieItem;
 import net.rosemarythyme.simplymore.item.uniques.MatterbaneItem;
+import net.rosemarythyme.simplymore.registry.ModEntityRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 
 @Environment(EnvType.CLIENT)
@@ -13,14 +23,17 @@ public class SimplyMoreClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         registerModelPredicates();
+        registerEntityRenderers();
+    }
+    public static final EntityModelLayer MODEL_CROW_LAYER = new EntityModelLayer(new Identifier(SimplyMore.ID, "crow"), "bone");
+    private static void registerEntityRenderers() {
+        EntityRendererRegistry.register(ModEntityRegistry.CROW, CrowEntityRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(MODEL_CROW_LAYER, CrowEntityModel::getTexturedModelData);
+
+        EntityRendererRegistry.register(ModEntityRegistry.GHOST_FALLING_BLOCK, FallingBlockEntityRenderer::new);
     }
 
     private static void registerModelPredicates() {
-        ModelPredicateProviderRegistry.register(ModItemsRegistry.MIMICRY, new Identifier(SimplyMore.ID, "mimicry_form"), (itemStack, clientWorld, livingEntity, a) -> {
-            Object form = itemStack.getOrCreateNbt().get("simplymore:form");
-            if (form == null) return 0f;
-            return form.toString().equals("\"twisted\"") ? 1f : 0f;
-        });
 
 
         final int[] randomSprite = {0};
@@ -67,6 +80,24 @@ public class SimplyMoreClient implements ClientModInitializer {
             color = MatterbaneItem.getMatterbaneColor(color);
             color = (float) ((int) color);
             return (float) color / 100f;
+        });
+
+        ModelPredicateProviderRegistry.register(ModItemsRegistry.BRASSTURN, new Identifier(SimplyMore.ID, "oxidisation"), (itemStack, clientWorld, livingEntity, a) -> {
+
+            int oxidisation = BrassturnItem.getOxidisation(itemStack);
+            if(oxidisation >= 16) {
+                return 0.3f;
+            } else if (oxidisation >= 11) {
+                return 0.2f;
+            } else if (oxidisation >= 6) {
+                return 0.1f;
+            }
+
+            return 0f;
+        });
+
+        ModelPredicateProviderRegistry.register(ModItemsRegistry.DEATHS_EYRIE, new Identifier(SimplyMore.ID, "crows"), (itemStack, clientWorld, livingEntity, a) -> {
+            return DeathsEyrieItem.getCrows(itemStack) * 0.1f;
         });
 
         ModelPredicateProviderRegistry.register(ModItemsRegistry.RUYI_JINGU_BANG, new Identifier(SimplyMore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {

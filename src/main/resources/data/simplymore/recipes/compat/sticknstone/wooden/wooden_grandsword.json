@@ -1,0 +1,30 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sticknstone"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:wooden_sword"
+    },
+    "M": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "tag": "minecraft:wooden_buttons"
+    }
+  },
+  "pattern": [
+    "BMB",
+    "MMM",
+    "MSM"
+  ],
+  "result": {
+    "item": "simplymore:wooden_grandsword"
+  }
+}

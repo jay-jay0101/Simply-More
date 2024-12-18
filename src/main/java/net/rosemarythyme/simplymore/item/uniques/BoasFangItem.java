@@ -29,7 +29,7 @@ import java.util.List;
 
 
 public class BoasFangItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getSpitCooldown();
+    int skillCooldown = effect.getBoasFangSpitCooldown();
 
     public BoasFangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -38,8 +38,8 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getSuffocationChance()) {
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SUFFOCATION,effect.getSuffocationTime()));
+            if (attacker.getRandom().nextBetween(1, 100) <= effect.getBoasFangSuffocationChance()) {
+                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.SUFFOCATION,effect.getBoasFangSuffocationTime()));
             }
         }
         return super.postHit(stack, target, attacker);
@@ -77,15 +77,15 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
                         if (entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
                         if (entity.isBlocking()) continue;
 
-                        entity.damage(user.getDamageSources().magic(),effect.getSpitDamage());
+                        entity.damage(user.getDamageSources().magic(),effect.getBoasFangSpitDamage());
                         entity.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
-                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,effect.getSpitPoisonTime(),1));
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,effect.getBoasFangSpitPoisonTime(),1));
                     }
                 }
-                user.setVelocity(user.getRotationVector().negate().multiply(effect.getSpitSelfKnockback()));
+                user.setVelocity(user.getRotationVector().negate().multiply(effect.getBoasFangSpitSelfKnockback()));
                 user.setVelocity(user.getVelocity().x, 0.0, user.getVelocity().z);
                 user.velocityModified = true;
-                user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED,effect.getSpitSpeedTime(),1));
+                user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED,effect.getBoasFangSpitSpeedTime(),1));
             }
 
 

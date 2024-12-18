@@ -47,7 +47,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
         // Check if the attacker's random number generator returns a value greater than 30.
         // If so, we don't apply the knockback effect.
         // This is, functionally, the same as checking if the attacker's random number generator returns a value less than or equal to 30.
-        if (attacker.getRandom().nextBetween(1, 100) > effect.getBonkChance()) {
+        if (attacker.getRandom().nextBetween(1, 100) > effect.getPanBonkChance()) {
             // Call the superclass's postHit method to handle any default behavior.
             return super.postHit(stack, target, attacker);
         }
@@ -71,7 +71,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
         }
 
         // Define the knockback strength.
-        float knockbackStrength = effect.getBonkStrength();
+        float knockbackStrength = effect.getPanBonkStrength();
 
         // Normalize the delta x and z values to get the direction of the knockback.
         double normalizedDeltaX = deltaX / distance;

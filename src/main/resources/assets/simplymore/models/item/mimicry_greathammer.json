@@ -1,0 +1,6 @@
+{
+	"parent": "simplyswords:item/template_reworked_greathammer",
+	"textures": {
+		"texture": "simplymore:item/uniques/mimicry/mimicry_greathammer"
+	}
+}

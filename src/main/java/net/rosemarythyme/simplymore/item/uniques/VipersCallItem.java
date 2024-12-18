@@ -27,7 +27,7 @@ import java.util.List;
 
 
 public class VipersCallItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getChakramCooldown();
+    int skillCooldown = effect.getVipersCallCooldown();
 
     public String[] effectBlacklist =
     {

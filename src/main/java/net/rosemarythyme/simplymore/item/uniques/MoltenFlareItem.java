@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getExecutingSliceCooldown();
+    int skillCooldown = effect.getMoltenFlareExecutingSliceCooldown();
 
     public MoltenFlareItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -35,10 +35,10 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        if (attacker.getRandom().nextBetween(1, 100) <= effect.getEruptionChance() || attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
+        if (attacker.getRandom().nextBetween(1, 100) <= effect.getMoltenFlareEruptionChance() || attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE)) {
             eruption(attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE) ?
-                    effect.getEruptionRadiusEmpowered():
-                    effect.getEruptionRadius(), attacker);
+                    effect.getMoltenFlareEruptionRadiusEmpowered():
+                    effect.getMoltenFlareEruptionRadius(), attacker);
             attacker.removeStatusEffect(ModEffectsRegistry.MOLTEN_FLARE);
         }
         return super.postHit(stack, target, attacker);

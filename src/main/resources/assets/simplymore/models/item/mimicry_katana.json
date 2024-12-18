@@ -1,0 +1,11 @@
+{
+	"parent": "simplyswords:item/template_katana",
+	"textures": {
+		"layer0": "simplymore:item/uniques/mimicry/mimicry_katana"
+	},
+	"display": {
+		"gui": {
+			"scale": [1, 1, 1]
+		}
+	}
+}

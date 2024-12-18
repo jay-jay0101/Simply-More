@@ -90,7 +90,7 @@ public class HolyLightItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip7").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip8",
-                effect.getBlessingHeal()/2).setStyle(textStyle));
+                effect.getIdolBlessingHeal()/2).setStyle(textStyle));
 
         super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }

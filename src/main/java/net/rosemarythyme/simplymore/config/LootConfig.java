@@ -22,7 +22,7 @@ public class LootConfig implements ConfigData {
     boolean enableMimicry = true;
     boolean enableGlimmerstep = true;
     boolean enableTheBloodHarvester = true;
-    boolean enableScarabRoller = true;
+    boolean enableMyrmedge = true;
     boolean enableJesterPenetrate = true;
     boolean enableBlackPearl = true;
     boolean enableThePan = true;
@@ -43,8 +43,40 @@ public class LootConfig implements ConfigData {
     boolean enableSerpentineValour = true;
     boolean enableLustrousMoxie = true;
 
+    boolean enableBrassturn = true;
+    boolean enableCindergorge = true;
+    boolean enableDeathsEyrie = true;
+    boolean enablePerforiscus = true;
+    boolean enableRevvengine = true;
+    boolean enableExedrill = true;
+    boolean enableCulterex = true;
+
 
     public LootConfig() {
+    }
+
+    public boolean isEnableCulterex() {
+        return enableCulterex;
+    }
+
+    public boolean isEnableExedrill() {
+        return enableExedrill;
+    }
+
+    public boolean isEnableRevvengine() {
+        return enableRevvengine;
+    }
+
+    public boolean isEnableDeathsEyrie() {
+        return enableDeathsEyrie;
+    }
+
+    public boolean isEnablePerforiscus() {
+        return enablePerforiscus;
+    }
+
+    public boolean isEnableCindergorge() {
+        return enableCindergorge;
     }
 
     public boolean isEnableEarthshatter() {
@@ -73,6 +105,10 @@ public class LootConfig implements ConfigData {
 
     public boolean isEnableBoasFang() {
         return enableBoasFang;
+    }
+
+    public boolean isEnableBrassturn() {
+        return enableBrassturn;
     }
 
     public boolean isEnableRupturedIdol() {
@@ -155,8 +191,8 @@ public class LootConfig implements ConfigData {
         return enableMoltenFlare;
     }
 
-    public boolean isEnableScarabRoller() {
-        return enableScarabRoller;
+    public boolean isEnableMyrmedge() {
+        return enableMyrmedge;
     }
 
     public boolean isEnableTheBloodHarvester() {

@@ -39,10 +39,10 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         if (attacker.getWorld() instanceof ServerWorld serverworld
-                && attacker.getRandom().nextBetween(1, 100) <= effect.getForeseenChance()
+                && attacker.getRandom().nextBetween(1, 100) <= effect.getForeseerForeseenChance()
                 && !target.hasStatusEffect(ModEffectsRegistry.FORESEEN)) {
             serverworld.playSound(null, attacker.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_NORDIC_27.get(), SoundCategory.PLAYERS);
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.FORESEEN, effect.getForeseenTime(), 0));
+            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.FORESEEN, effect.getForeseerForseenTime(), 0));
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10, 0));
             serverworld.spawnParticles(ParticleTypes.SOUL_FIRE_FLAME, attacker.getX(), attacker.getY() + 1, attacker.getZ(), 50, 0.25f, 0.25f, 0.25f, 0.1);
         }
@@ -54,7 +54,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!player.getWorld().isClient()) {
             boolean hasAffectedEntity = false;
-            int boxRange = effect.getJudgeTeleportRange();
+            int boxRange = effect.getForeseerJudgeTeleportRange();
             Box box = new Box(player.getX() - boxRange, player.getY() - boxRange, player.getZ() - boxRange, player.getX() + boxRange, player.getY() + boxRange, player.getZ() + 20);
             List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
@@ -64,9 +64,9 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
                 }
 
                 livingEntity.removeStatusEffect(ModEffectsRegistry.FORESEEN);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getJudgeTeleportNegativeEffectTime(), 3));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getJudgeTeleportNegativeEffectTime(), 0));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.getJudgeTeleportNegativeEffectTime(), 1));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getForeseerJudgeTeleportNegativeEffectTime(), 3));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getForeseerJudgeTeleportNegativeEffectTime(), 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.getForeseerJudgeTeleportNegativeEffectTime(), 1));
                 livingEntity.teleport(player.getX(), player.getY(), player.getZ());
                 livingEntity.velocityModified = true;
                 hasAffectedEntity = true;
@@ -98,7 +98,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip2").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip3").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip5", SimplyMoreHelperMethods.translateTicks(effect.getForeseenTime())).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip5", SimplyMoreHelperMethods.translateTicks(effect.getForeseerForseenTime())).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip6").setStyle(textStyle));

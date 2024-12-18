@@ -1,18 +1,6 @@
 {
-  "parent": "simplyswords:item/template_katana",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "simplymore:item/uniques/mimicry"
-  },
-  "display": {
-    "gui": {
-      "scale": [
-        1.1,
-        1.1,
-        1
-      ]
-    }
-  },
-  "overrides": [
-    {"predicate": {"simplymore:mimicry_form": 1},"model": "simplymore:item/mimicry_twisted"}
-  ]
+    "layer0": "simplymore:item/error"
+  }
 }

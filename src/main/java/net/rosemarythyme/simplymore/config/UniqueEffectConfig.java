@@ -7,174 +7,221 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 @Config(name="unique_effects")
 public class UniqueEffectConfig implements ConfigData {
     @Comment("Black Pearl")
-    int cannonballCooldown = 180;
-    int plunderChance = 10;
+    int blackPearlCannonballCooldown = 180;
+    int blackPearlPlunderChance = 10;
 
-    public int getCannonballCooldown() {
-        return cannonballCooldown;
+    public int getBlackPearlCannonballCooldown() {
+        return blackPearlCannonballCooldown;
     }
 
-    public int getPlunderChance() {
-        return plunderChance;
+    public int getBlackPearlPlunderChance() {
+        return blackPearlPlunderChance;
     }
 
     @Comment("Blade of the Grotesque")
-    int solidifySelfStunTime = 50;
-    int solidifyAttackerStunTime = 90;
-    int grotesqueHeldArmorBuff = 3;
-    int solidifySelfStunnedArmorBuff = 10;
-    int solidifyAttackerStunnedArmorBuff = 10;
-    int solidifyCooldown = 500;
+    int grotesqueSolidifySelfStunTime = 50;
+    int grotesqueSolidifyAuraStunTime = 90;
+    int grotesqueAuraRange = 4;
+    int grotesqueSolidifySelfStunnedArmorBuff = 10;
+    int grotesqueSolidifyAttackerStunnedArmorBuff = 10;
+    int grotesqueSolidifyCooldown = 500;
+    float grotesqueSelfSlow = -0.02f;
+    float grotesqueMaxAuraWard = 5;
 
-    public int getSolidifyAttackerStunTime() {
-        return solidifyAttackerStunTime;
+    public float getGrotesqueMaxAuraWard() {
+        return grotesqueMaxAuraWard;
     }
 
-    public int getGrotesqueHeldArmorBuff() {
-        return grotesqueHeldArmorBuff;
+    public float getGrotesqueSelfSlow() {
+        return grotesqueSelfSlow;
     }
 
-    public int getSolidifySelfStunTime() {
-        return solidifySelfStunTime;
+    public int getGrotesqueSolidifyAuraStunTime() {
+        return grotesqueSolidifyAuraStunTime;
     }
 
-    public int getSolidifyCooldown() {
-        return solidifyCooldown;
+    public int getGrotesqueAuraRange() {
+        return grotesqueAuraRange;
     }
 
-    public int getSolidifyAttackerStunnedArmorBuff() {
-        return solidifyAttackerStunnedArmorBuff;
+    public int getGrotesqueSolidifySelfStunTime() {
+        return grotesqueSolidifySelfStunTime;
     }
 
-    public int getSolidifySelfStunnedArmorBuff() {
-        return solidifySelfStunnedArmorBuff;
+    public int getGrotesqueSolidifyCooldown() {
+        return grotesqueSolidifyCooldown;
+    }
+
+    public int getGrotesqueSolidifyAttackerStunnedArmorBuff() {
+        return grotesqueSolidifyAttackerStunnedArmorBuff;
+    }
+
+    public int getGrotesqueSolidifySelfStunnedArmorBuff() {
+        return grotesqueSolidifySelfStunnedArmorBuff;
     }
 
     @Comment("Boa's Fang")
-    int suffocationChance = 50;
-    int suffocationTime = 50;
-    int spitSpeedTime = 80;
-    int spitCooldown = 600;
-    int spitPoisonTime = 80;
-    float spitDamage = 5f;
-    float spitSelfKnockback = 2f;
+    int boasFangSuffocationChance = 50;
+    int boasFangSuffocationTime = 50;
+    int boasFangSpitSpeedTime = 80;
+    int boasFangSpitCooldown = 600;
+    int boasFangSpitPoisonTime = 80;
+    float boasFangSpitDamage = 5f;
+    float boasFangSpitSelfKnockback = 2f;
 
-    public float getSpitSelfKnockback() {
-        return spitSelfKnockback;
+    public float getBoasFangSpitSelfKnockback() {
+        return boasFangSpitSelfKnockback;
     }
 
-    public int getSpitCooldown() {
-        return spitCooldown;
+    public int getBoasFangSpitCooldown() {
+        return boasFangSpitCooldown;
     }
 
-    public int getSpitPoisonTime() {
-        return spitPoisonTime;
+    public int getBoasFangSpitPoisonTime() {
+        return boasFangSpitPoisonTime;
     }
 
-    public int getSpitSpeedTime() {
-        return spitSpeedTime;
+    public int getBoasFangSpitSpeedTime() {
+        return boasFangSpitSpeedTime;
     }
 
-    public float getSpitDamage() {
-        return spitDamage;
+    public float getBoasFangSpitDamage() {
+        return boasFangSpitDamage;
     }
 
-    public int getSuffocationChance() {
-        return suffocationChance;
+    public int getBoasFangSuffocationChance() {
+        return boasFangSuffocationChance;
     }
 
-    public int getSuffocationTime() {
-        return suffocationTime;
+    public int getBoasFangSuffocationTime() {
+        return boasFangSuffocationTime;
     }
 
     @Comment("Earthshatter")
-    int armorCrunchChance = 15;
-    int slamCooldown = 600;
-    int slamEffectTime = 160;
+    int earthshatterArmorCrunchChance = 15;
+    int earthshatterSlamCooldown = 600;
+    int earthshatterSlamEffectTime = 160;
 
-    public int getArmorCrunchChance() {
-        return armorCrunchChance;
+    public int getEarthshatterArmorCrunchChance() {
+        return earthshatterArmorCrunchChance;
     }
 
-    public int getSlamCooldown() {
-        return slamCooldown;
+    public int getEarthshatterSlamCooldown() {
+        return earthshatterSlamCooldown;
     }
 
-    public int getSlamEffectTime() {
-        return slamEffectTime;
+    public int getEarthshatterSlamEffectTime() {
+        return earthshatterSlamEffectTime;
     }
 
     @Comment("Glimmerstep")
-    int mountedBlindnessChance = 30;
-    int unmountedBlindnessChance = 5;
-    int blindnessTime = 5;
-    int teleportWindUpTime = 60;
-    int teleportDistance = 30;
-    int teleportCooldown = 1200;
+    int glimmerstepMaxStarlight = 10;
+    int glimmerstepStarlightChance = 25;
+    int glimmerstepStarlightMountedChance = 40;
+    float glimmerstepExplosionDamagePerStarlight = 3.2f;
+    int glimmerstepBlindTime = 40;
+    int glimmerstepBaseSpeedFrequency = 200;
+    int glimmerstepSpeedFrequencyPerStack = 10;
+    int glimmerstepSpeedTime = 40;
+    int glimmerstepExplosionRange = 5;
+    int glimmerstepExplosionCharge = 60;
+    int glimmerstepExplosionCooldown = 800;
+    int glimmerstepSelfAndAllyDamagePercentage = 80;
+    int glimmerstepStarlightTime = 800;
 
-    public int getBlindnessTime() {
-        return blindnessTime;
+    public float getGlimmerstepExplosionDamagePerStarlight() {
+        return glimmerstepExplosionDamagePerStarlight;
     }
 
-    public int getTeleportCooldown() {
-        return teleportCooldown;
+    public int getGlimmerstepStarlightTime() {
+        return glimmerstepStarlightTime;
     }
 
-    public int getMountedBlindnessChance() {
-        return mountedBlindnessChance;
+    public int getGlimmerstepSelfAndAllyDamagePercentage() {
+        return glimmerstepSelfAndAllyDamagePercentage;
     }
 
-    public int getTeleportDistance() {
-        return teleportDistance;
+    public int getGlimmerstepBaseSpeedFrequency() {
+        return glimmerstepBaseSpeedFrequency;
     }
 
-    public int getTeleportWindUpTime() {
-        return teleportWindUpTime;
+    public int getGlimmerstepBlindTime() {
+        return glimmerstepBlindTime;
     }
 
-    public int getUnmountedBlindnessChance() {
-        return unmountedBlindnessChance;
+    public int getGlimmerstepExplosionCharge() {
+        return glimmerstepExplosionCharge;
+    }
+
+    public int getGlimmerstepExplosionCooldown() {
+        return glimmerstepExplosionCooldown;
+    }
+
+    public int getGlimmerstepExplosionRange() {
+        return glimmerstepExplosionRange;
+    }
+
+    public int getGlimmerstepMaxStarlight() {
+        return glimmerstepMaxStarlight;
+    }
+
+    public int getGlimmerstepSpeedFrequencyPerStack() {
+        return glimmerstepSpeedFrequencyPerStack;
+    }
+
+    public int getGlimmerstepSpeedTime() {
+        return glimmerstepSpeedTime;
+    }
+
+    public int getGlimmerstepStarlightChance() {
+        return glimmerstepStarlightChance;
+    }
+
+    public int getGlimmerstepStarlightMountedChance() {
+        return glimmerstepStarlightMountedChance;
     }
 
     @Comment("Grandfrost")
-    int chillingChance = 25;
-    int chillingTime = 140;
-    int blizzardRange = 5;
-    float blizzardStrength = 3.5f;
-    int blizzardEffectTime = 200;
-    int blizzardCooldown = 500;
+    int grandfrostChillingChance = 25;
+    int grandfrostChillingTime = 140;
+    int grandfrostBlizzardRange = 5;
+    float grandfrostBlizzardStrength = 3.5f;
+    int grandfrostBlizzardEffectTime = 200;
+    int grandfrostBlizzardCooldown = 500;
 
-    public float getBlizzardStrength() {
-        return blizzardStrength;
+    public float getGrandfrostBlizzardStrength() {
+        return grandfrostBlizzardStrength;
     }
 
-    public int getBlizzardCooldown() {
-        return blizzardCooldown;
+    public int getGrandfrostBlizzardCooldown() {
+        return grandfrostBlizzardCooldown;
     }
 
-    public int getBlizzardEffectTime() {
-        return blizzardEffectTime;
+    public int getGrandfrostBlizzardEffectTime() {
+        return grandfrostBlizzardEffectTime;
     }
 
-    public int getBlizzardRange() {
-        return blizzardRange;
+    public int getGrandfrostBlizzardRange() {
+        return grandfrostBlizzardRange;
     }
 
-    public int getChillingChance() {
-        return chillingChance;
+    public int getGrandfrostChillingChance() {
+        return grandfrostChillingChance;
     }
 
-    public int getChillingTime() {
-        return chillingTime;
+    public int getGrandfrostChillingTime() {
+        return grandfrostChillingTime;
     }
 
     @Comment("Great Slither")
     int slitherPoisonTime = 90;
+    int slitherVenomTime = 40;
     int slitherPoisonChance = 25;
     int slitherFangsRange = 7;
     float slitherFangsDamage = 4f;
     int slitherFangsVenomTime = 90;
-    int slitherFangsCooldown = 200;
+    int slitherFangsSlowTime = 35;
+    int slitherFangsCooldown = 300;
 
     public int getSlitherFangsRange() {
         return slitherFangsRange;
@@ -182,6 +229,14 @@ public class UniqueEffectConfig implements ConfigData {
 
     public float getSlitherFangsDamage() {
         return slitherFangsDamage;
+    }
+
+    public int getSlitherVenomTime() {
+        return slitherVenomTime;
+    }
+
+    public int getSlitherFangsSlowTime() {
+        return slitherFangsSlowTime;
     }
 
     public int getSlitherFangsCooldown() {
@@ -201,201 +256,198 @@ public class UniqueEffectConfig implements ConfigData {
     }
 
     @Comment("Lustrous Moxie")
-    int radiantMarkChance = 20;
-    int radiantTeleportCooldown = 400;
-    int radiantTeleportStunTime = 30;
-    int radiantTeleportRange = 20;
-    int radiantTeleportAOERange = 5;
-    float radiantTeleportAOEKnockback = 2f;
-    float radiantTeleportTargetDamage = 15f;
-    float radiantTeleportAOEDamage = 10f;
+    int lustrousRadiantMarkChance = 20;
+    int lustrousRadiantTeleportCooldown = 400;
+    int lustrousRadiantTeleportStunTime = 30;
+    int lustrousRadiantTeleportRange = 20;
+    int lustrousRadiantTeleportAOERange = 5;
+    float lustrousRadiantTeleportAOEKnockback = 2f;
+    float lustrousRadiantTeleportTargetDamage = 15f;
+    float lustrousRadiantTeleportAOEDamage = 10f;
 
-    public float getRadiantTeleportAOEDamage() {
-        return radiantTeleportAOEDamage;
+    public float getLustrousRadiantTeleportAOEDamage() {
+        return lustrousRadiantTeleportAOEDamage;
     }
 
-    public float getRadiantTeleportAOEKnockback() {
-        return radiantTeleportAOEKnockback;
+    public float getLustrousRadiantTeleportAOEKnockback() {
+        return lustrousRadiantTeleportAOEKnockback;
     }
 
-    public float getRadiantTeleportTargetDamage() {
-        return radiantTeleportTargetDamage;
+
+    public float getLustrousRadiantTeleportTargetDamage() {
+        return lustrousRadiantTeleportTargetDamage;
     }
 
-    public int getRadiantMarkChance() {
-        return radiantMarkChance;
+    public int getLustrousRadiantMarkChance() {
+        return lustrousRadiantMarkChance;
     }
 
-    public int getRadiantTeleportAOERange() {
-        return radiantTeleportAOERange;
+    public int getLustrousRadiantTeleportAOERange() {
+        return lustrousRadiantTeleportAOERange;
     }
 
-    public int getRadiantTeleportCooldown() {
-        return radiantTeleportCooldown;
+    public int getLustrousRadiantTeleportCooldown() {
+        return lustrousRadiantTeleportCooldown;
     }
 
-    public int getRadiantTeleportRange() {
-        return radiantTeleportRange;
+    public int getLustrousRadiantTeleportRange() {
+        return lustrousRadiantTeleportRange;
     }
 
-    public int getRadiantTeleportStunTime() {
-        return radiantTeleportStunTime;
+    public int getLustrousRadiantTeleportStunTime() {
+        return lustrousRadiantTeleportStunTime;
     }
 
     @Comment("Matterbane")
-    int levitationChance = 15;
-    int levitationTime = 20;
-    int riftCooldown = 1200;
+    int matterbaneBeamChance = 20;
+    int matterbaneBeamRange = 8;
+    int matterbaneBeamDamage = 6;
+    int matterbaneRiftCooldown = 1200;
 
-    public int getLevitationChance() {
-        return levitationChance;
+    public int getMatterbaneBeamChance() {
+        return matterbaneBeamChance;
     }
 
-    public int getLevitationTime() {
-        return levitationTime;
+    public int getMatterbaneBeamDamage() {
+        return matterbaneBeamDamage;
     }
 
-    public int getRiftCooldown() {
-        return riftCooldown;
+    public int getMatterbaneBeamRange() {
+        return matterbaneBeamRange;
+    }
+
+    public int getMatterbaneRiftCooldown() {
+        return matterbaneRiftCooldown;
     }
 
     @Comment("Mimi-cry")
-    int purityHitsNeeded = 5;
-    int twistedHitsNeeded = 4;
-    int purityEffectTime = 250;
-    int twistedEffectTime = 250;
+    int mimicryTypeCooldown = 400;
+    int mimicryCooldownBetweenTypes = 60;
+    int mimicryWindup = 10;
+    int mimicryDamageModifierFromRunic = 1;
 
-    public int getPurityHitsNeeded() {
-        return purityHitsNeeded;
+    public int getMimicryDamageModifierFromRunic() {
+        return mimicryDamageModifierFromRunic;
     }
 
-    public int getTwistedHitsNeeded() {
-        return twistedHitsNeeded;
+    public int getMimicryCooldownBetweenTypes() {
+        return mimicryCooldownBetweenTypes;
     }
 
-    public int getPurityEffectTime() {
-        return purityEffectTime;
+    public int getMimicryTypeCooldown() {
+        return mimicryTypeCooldown;
     }
 
-    public int getTwistedEffectTime() {
-        return twistedEffectTime;
+    public int getMimicryWindup() {
+        return mimicryWindup;
     }
 
     @Comment("Molten Flare")
-    int eruptionChance = 20;
-    int eruptionRadius = 4;
-    int eruptionRadiusEmpowered = 7;
-    float executingSliceSwingSpeedBonus = 0.6f;
-    int executingSliceCooldown = 300;
+    int moltenFlareEruptionChance = 20;
+    int moltenFlareEruptionRadius = 4;
+    int moltenFlareEruptionRadiusEmpowered = 7;
+    float moltenFlareExecutingSliceSwingSpeedBonus = 0.6f;
+    int moltenFlareExecutingSliceCooldown = 300;
 
-    public int getExecutingSliceCooldown() {
-        return executingSliceCooldown;
+    public int getMoltenFlareExecutingSliceCooldown() {
+        return moltenFlareExecutingSliceCooldown;
     }
 
-    public float getExecutingSliceSwingSpeedBonus() {
-        return executingSliceSwingSpeedBonus;
+    public float getMoltenFlareExecutingSliceSwingSpeedBonus() {
+        return moltenFlareExecutingSliceSwingSpeedBonus;
     }
 
-    public int getEruptionChance() {
-        return eruptionChance;
+    public int getMoltenFlareEruptionChance() {
+        return moltenFlareEruptionChance;
     }
 
-    public int getEruptionRadius() {
-        return eruptionRadius;
+    public int getMoltenFlareEruptionRadius() {
+        return moltenFlareEruptionRadius;
     }
 
-    public int getEruptionRadiusEmpowered() {
-        return eruptionRadiusEmpowered;
+    public int getMoltenFlareEruptionRadiusEmpowered() {
+        return moltenFlareEruptionRadiusEmpowered;
     }
 
     @Comment("Ruyi Jingu Bang")
-    int ruyiCooldown = 700;
+    int ruyiJinguBangCooldown = 700;
 
-    public int getRuyiCooldown() {
-        return ruyiCooldown;
+    public int getRuyiJinguBangCooldown() {
+        return ruyiJinguBangCooldown;
     }
 
-    @Comment("Scarab Roller")
-    int rollCooldown = 200;
-    float rollSpeed = 1f;
-    float rollDamage = 5f;
-    int rollMaxDuration = 300;
-    int resistanceChance = 15;
-    int resistanceTime = 100;
+    @Comment("Myrmedge")
+    int myrmedgeMaxDamagePercentageBuff = 40;
+    int myrmedgeMaxGrabTime = 100;
+    int myrmedgeCooldown = 300;
+    float myrmedgeThrowStrength = 1.6f;
 
-    public float getRollSpeed() {
-        return rollSpeed;
+    public int getMyrmedgeCooldown() {
+        return myrmedgeCooldown;
     }
 
-    public float getRollDamage() {
-        return rollDamage;
+    public float getMyrmedgeThrowStrength() {
+        return myrmedgeThrowStrength;
     }
 
-    public int getRollMaxDuration() {
-        return rollMaxDuration;
+    public int getMyrmedgeMaxDamagePercentageBuff() {
+        return myrmedgeMaxDamagePercentageBuff;
     }
 
-    public int getResistanceChance() {
-        return resistanceChance;
-    }
-
-    public int getResistanceTime() {
-        return resistanceTime;
-    }
-
-    public int getRollCooldown() {
-        return rollCooldown;
+    public int getMyrmedgeMaxGrabTime() {
+        return myrmedgeMaxGrabTime;
     }
 
     @Comment("Serpentine Valor")
-    int poisonBoltCooldown = 700;
-    int poisonBoltLifespan = 10;
-    float poisonBoltDamage = 2f;
-    int poisonVenomTime = 160;
-    float poisonedTargetDamageBuff = 4f;
+    int serpentinePoisonBoltCooldown = 700;
+    int serpentinePoisonBoltLifespan = 10;
+    float serpentinePoisonBoltDamage = 2f;
+    int serpentinePoisonVenomTime = 160;
+    float serpentinePoisonedTargetDamageBuff = 4f;
 
-    public float getPoisonBoltDamage() {
-        return poisonBoltDamage;
+    public float getSerpentinePoisonBoltDamage() {
+        return serpentinePoisonBoltDamage;
     }
 
-    public int getPoisonBoltCooldown() {
-        return poisonBoltCooldown;
+    public int getSerpentinePoisonBoltCooldown() {
+        return serpentinePoisonBoltCooldown;
     }
 
-    public float getPoisonedTargetDamageBuff() {
-        return poisonedTargetDamageBuff;
+    public float getSerpentinePoisonedTargetDamageBuff() {
+        return serpentinePoisonedTargetDamageBuff;
     }
 
-    public int getPoisonBoltLifespan() {
-        return poisonBoltLifespan;
+    public int getSerpentinePoisonBoltLifespan() {
+        return serpentinePoisonBoltLifespan;
     }
 
-    public int getPoisonVenomTime() {
-        return poisonVenomTime;
+    public int getSerpentinePoisonVenomTime() {
+        return serpentinePoisonVenomTime;
     }
 
     @Comment("The Pan")
-    int bonkChance = 30;
-    float bonkStrength = 20f;
+    int panBonkChance = 30;
+    float panBonkStrength = 20f;
 
-    public float getBonkStrength() {
-        return bonkStrength;
+    public float getPanBonkStrength() {
+        return panBonkStrength;
     }
 
-    public int getBonkChance() {
-        return bonkChance;
+    public int getPanBonkChance() {
+        return panBonkChance;
     }
 
     @Comment("Idols")
-    int spreadAuraChance = 15;
-    float curseDamageMultiplier = 1.5f;
-    int curseNegativeAdditionsTime = 100;
-    float blessingHeal = 4f;
+    int idolSpreadAuraChance = 15;
+    float idolCurseDamageMultiplier = 1.5f;
+    int idolCurseNegativeAdditionsTime = 100;
+    float idolBlessingHeal = 4f;
     int darksentCooldown = 800;
     int holylightCooldown = 800;
 
-    public float getCurseDamageMultiplier() {
-        return curseDamageMultiplier;
+
+    public float getIdolCurseDamageMultiplier() {
+        return idolCurseDamageMultiplier;
     }
 
     public int getDarksentCooldown() {
@@ -406,92 +458,92 @@ public class UniqueEffectConfig implements ConfigData {
         return holylightCooldown;
     }
 
-    public float getBlessingHeal() {
-        return blessingHeal;
+    public float getIdolBlessingHeal() {
+        return idolBlessingHeal;
     }
 
-    public int getCurseNegativeAdditionsTime() {
-        return curseNegativeAdditionsTime;
+    public int getIdolCurseNegativeAdditionsTime() {
+        return idolCurseNegativeAdditionsTime;
     }
 
-    public int getSpreadAuraChance() {
-        return spreadAuraChance;
+    public int getIdolSpreadAuraChance() {
+        return idolSpreadAuraChance;
     }
 
     @Comment("Smoldering Ruin")
-    int ruinCooldown = 800;
-    int witherChance = 25;
-    int witherTime = 100;
+    int smoulderingCooldown = 800;
+    int smoulderingWitherChance = 25;
+    int smoulderingWitherTime = 100;
 
-    public int getRuinCooldown() {
-        return ruinCooldown;
+    public int getSmoulderingCooldown() {
+        return smoulderingCooldown;
     }
 
-    public int getWitherChance() {
-        return witherChance;
+    public int getSmoulderingWitherChance() {
+        return smoulderingWitherChance;
     }
 
-    public int getWitherTime() {
-        return witherTime;
+    public int getSmoulderingWitherTime() {
+        return smoulderingWitherTime;
     }
     @Comment("Soul Foreseer")
-    int foreseenTime = 160;
-    int foreseenChance = 30;
-    int judgeTeleportRange = 20;
-    int judgeTeleportNegativeEffectTime = 80;
+    int foreseerForseenTime = 160;
+    int foreseerForeseenChance = 30;
+    int foreseerJudgeTeleportRange = 20;
+    int foreseerJudgeTeleportNegativeEffectTime = 80;
 
-    public int getForeseenChance() {
-        return foreseenChance;
+    public int getForeseerForeseenChance() {
+        return foreseerForeseenChance;
     }
 
-    public int getForeseenTime() {
-        return foreseenTime;
+    public int getForeseerForseenTime() {
+        return foreseerForseenTime;
     }
 
-    public int getJudgeTeleportNegativeEffectTime() {
-        return judgeTeleportNegativeEffectTime;
+    public int getForeseerJudgeTeleportNegativeEffectTime() {
+        return foreseerJudgeTeleportNegativeEffectTime;
     }
 
-    public int getJudgeTeleportRange() {
-        return judgeTeleportRange;
+    public int getForeseerJudgeTeleportRange() {
+        return foreseerJudgeTeleportRange;
     }
 
     @Comment("Stasis")
-    int lightningCooldown = 700;
-    int stagnationTime = 80;
-    int stagnationChance = 20;
-    float lightningDamage = 16;
-    int lightningWindup = 60;
-    int lightningRange = 4;
+    int stasisLightningCooldown = 700;
+    int stasisStagnationTime = 80;
+    int stasisStagnationChance = 20;
+    float stasisLightningDamage = 16;
+    int stasisLightningWindup = 60;
+    int stasisLightningRange = 4;
 
-    public int getLightningCooldown() {
-        return lightningCooldown;
+    public int getStasisLightningCooldown() {
+        return stasisLightningCooldown;
     }
 
-    public float getLightningDamage() {
-        return lightningDamage;
+    public float getStasisLightningDamage() {
+        return stasisLightningDamage;
     }
 
-    public int getLightningRange() {
-        return lightningRange;
+    public int getStasisLightningRange() {
+        return stasisLightningRange;
     }
 
-    public int getLightningWindup() {
-        return lightningWindup;
+    public int getStasisLightningWindup() {
+        return stasisLightningWindup;
     }
 
-    public int getStagnationChance() {
-        return stagnationChance;
+    public int getStasisStagnationChance() {
+        return stasisStagnationChance;
     }
 
-    public int getStagnationTime() {
-        return stagnationTime;
+    public int getStasisStagnationTime() {
+        return stasisStagnationTime;
     }
 
     @Comment("The Blood Harvester")
-    int harvestCooldown = 1800;
-    int harvestTime = 300;
-    int harvestWitherTime = 80;
+    int harvesterCooldown = 1800;
+    int harvesterHarvestTime = 300;
+    int harvesterBleedTime = 150;
     float harvesterLifesteal = 0.1f;
     float harvesterHarvestLifesteal = 0.2f;
 
@@ -503,118 +555,418 @@ public class UniqueEffectConfig implements ConfigData {
         return harvesterLifesteal;
     }
 
-    public int getHarvestCooldown() {
-        return harvestCooldown;
+    public int getHarvesterCooldown() {
+        return harvesterCooldown;
     }
 
-    public int getHarvestTime() {
-        return harvestTime;
+    public int getHarvesterHarvestTime() {
+        return harvesterHarvestTime;
     }
 
-    public int getHarvestWitherTime() {
-        return harvestWitherTime;
+    public int getHarvesterBleedTime() {
+        return harvesterBleedTime;
     }
 
     @Comment("The Vessel Breach")
-    int rageCooldown = 1800;
+    int vesselRageCooldown = 1800;
+    int vesselRageBleedTime = 100;
     float vesselLifesteal = 0.1f;
-    float vesselRageLifesteal = 0.28f;
-    int rageTime = 200;
-    float rageStartupDamagePercentage = 0.3f;
+    float vesselRageLifesteal = 0.16f;
+    int vesselRageTime = 200;
+    float vesselRageStartupDamagePercentage = 0.3f;
 
     public float getVesselLifesteal() {
         return vesselLifesteal;
     }
 
-    public float getRageStartupDamagePercentage() {
-        return rageStartupDamagePercentage;
+    public int getVesselRageBleedTime() {
+        return vesselRageBleedTime;
+    }
+
+    public float getVesselRageStartupDamagePercentage() {
+        return vesselRageStartupDamagePercentage;
     }
 
     public float getVesselRageLifesteal() {
         return vesselRageLifesteal;
     }
 
-    public int getRageCooldown() {
-        return rageCooldown;
+    public int getVesselRageCooldown() {
+        return vesselRageCooldown;
     }
 
-    public int getRageTime() {
-        return rageTime;
+    public int getVesselRageTime() {
+        return vesselRageTime;
     }
 
     @Comment("Tidebreaker")
-    int insanityTeleportCooldown = 400;
-    int insanityCloudChance = 25;
-    int insanityCloudDuration = 300;
-    int insanityTeleportMaxDistance = 15;
-    int insanityTeleportMaxTime = 200;
+    int tidebreakerInsanityTeleportCooldown = 400;
+    int tidebreakerInsanityCloudChance = 25;
+    int tidebreakerInsanityCloudDuration = 300;
+    int tidebreakerInsanityTeleportMaxDistance = 15;
+    int tidebreakerInsanityTeleportMaxTime = 200;
 
-    public int getInsanityCloudChance() {
-        return insanityCloudChance;
+    public int getTidebreakerInsanityCloudChance() {
+        return tidebreakerInsanityCloudChance;
     }
 
-    public int getInsanityTeleportCooldown() {
-        return insanityTeleportCooldown;
+    public int getTidebreakerInsanityTeleportCooldown() {
+        return tidebreakerInsanityTeleportCooldown;
     }
 
-    public int getInsanityCloudDuration() {
-        return insanityCloudDuration;
+    public int getTidebreakerInsanityCloudDuration() {
+        return tidebreakerInsanityCloudDuration;
     }
 
-    public int getInsanityTeleportMaxDistance() {
-        return insanityTeleportMaxDistance;
+    public int getTidebreakerInsanityTeleportMaxDistance() {
+        return tidebreakerInsanityTeleportMaxDistance;
     }
-    public int getInsanityTeleportMaxTime() {
-        return insanityTeleportMaxTime;
+    public int getTidebreakerInsanityTeleportMaxTime() {
+        return tidebreakerInsanityTeleportMaxTime;
     }
 
     @Comment("Timekeeper")
     int timekeeperBaseCooldown = 400;
-    int nightActiveSlownessTime = 100;
-    int dayActiveBlindnessTime = 100;
-    int nightPassiveEffectTime = 70;
-    int dayPassiveEffectTime = 70;
-    float nightDamage = 2f;
-    float dayDamage = 6f;
+    int timekeeperNightActiveSlownessTime = 100;
+    int timekeeperDayActiveBlindnessTime = 100;
+    int timekeeperNightPassiveEffectTime = 70;
+    int timekeeperDayPassiveEffectTime = 70;
+    float timekeeperNightActiveDamage = 2f;
+    float timekeeperDayActiveDamage = 6f;
     int timekeeperOnHitChance = 20;
 
     public int getTimekeeperBaseCooldown() {
         return timekeeperBaseCooldown;
     }
 
-    public int getDayActiveBlindnessTime() {
-        return dayActiveBlindnessTime;
+    public int getTimekeeperDayActiveBlindnessTime() {
+        return timekeeperDayActiveBlindnessTime;
     }
 
-    public int getNightActiveSlownessTime() {
-        return nightActiveSlownessTime;
+    public int getTimekeeperNightActiveSlownessTime() {
+        return timekeeperNightActiveSlownessTime;
     }
 
-    public int getNightPassiveEffectTime() {
-        return nightPassiveEffectTime;
+    public int getTimekeeperNightPassiveEffectTime() {
+        return timekeeperNightPassiveEffectTime;
     }
 
-    public int getDayPassiveEffectTime() {
-        return dayPassiveEffectTime;
+    public int getTimekeeperDayPassiveEffectTime() {
+        return timekeeperDayPassiveEffectTime;
     }
 
     public int getTimekeeperOnHitChance() {
         return timekeeperOnHitChance;
     }
 
-    public float getNightDamage() {
-        return nightDamage;
+    public float getTimekeeperNightActiveDamage() {
+        return timekeeperNightActiveDamage;
     }
 
-    public float getDayDamage() {
-        return dayDamage;
+    public float getTimekeeperDayActiveDamage() {
+        return timekeeperDayActiveDamage;
     }
 
     @Comment("Viper's Call")
-    int chakramCooldown = 1200;
+    int vipersCallCooldown = 1200;
 
-    public int getChakramCooldown() {
-        return chakramCooldown;
+    public int getVipersCallCooldown() {
+        return vipersCallCooldown;
+    }
+
+    @Comment("Brassturn")
+    int brassturnJetChance = 15;
+    int brassturnSparkStunDuration = 15;
+    int brassturnScrapeTime = 5;
+    int brassturnSparkChance = 25;
+
+    public int getBrassturnScrapeTime() {
+        return brassturnScrapeTime;
+    }
+    public int getBrassturnSparkChance() {
+        return brassturnSparkChance;
+    }
+
+    public int getBrassturnJetChance() {
+        return brassturnJetChance;
+    }
+    public int getBrassturnSparkStunDuration() {
+        return brassturnSparkStunDuration;
+    }
+
+    @Comment("Cindergorge")
+    int cindergorgeThornsChance = 40;
+    float cindergorgeThornsDamage = 3f;
+    float cindergorgeThornsFireDamage = 6f;
+    int cindergorgeMaxDuration = 200;
+    int cindergorgeFireRange = 5;
+    float cindergorgeFireDamage = 5f;
+    int cindergorgeMaxCooldown = 600;
+
+    public int getCindergorgeThornsChance() {
+        return cindergorgeThornsChance;
+    }
+    public float getCindergorgeThornsFireDamage() {
+        return cindergorgeThornsFireDamage;
+    }
+    public float getCindergorgeThornsDamage() {
+        return cindergorgeThornsDamage;
+    }
+    public int getCindergorgeMaxDuration() {
+        return cindergorgeMaxDuration;
+    }
+    public int getCindergorgeFireRange() {
+        return cindergorgeFireRange;
+    }
+    public float getCindergorgeFireDamage() {
+        return cindergorgeFireDamage;
+    }
+    public int getCindergorgeMaxCooldown() {
+        return cindergorgeMaxCooldown;
+    }
+
+    @Comment("Death's Eyrie")
+    int deathsEyrieBleedChance = 25;
+    int deathsEyrieBaseBleedTime = 80;
+    int deathsEyrieCrowAdditionalBleedTime = 20;
+    int deathsEyrieCooldown = 550;
+    int deathsEyrieCrowAttackBleedTime = 120;
+    int deathsEyrieCrowAttackBlindTime = 20;
+    int deathsEyrieCrowAttackTimePerCrow = 30;
+    float deathsEyrieCrowAttackDamage = 2.3f;
+    float deathsEyrieCrowAttackHeal = 0.4f;
+
+    public int getDeathsEyrieBleedChance() {
+        return deathsEyrieBleedChance;
+    }
+
+    public float getDeathsEyrieCrowAttackDamage() {
+        return deathsEyrieCrowAttackDamage;
+    }
+
+    public float getDeathsEyrieCrowAttackHeal() {
+        return deathsEyrieCrowAttackHeal;
+    }
+
+    public int getDeathsEyrieCrowAttackBleedTime() {
+        return deathsEyrieCrowAttackBleedTime;
+    }
+
+    public int getDeathsEyrieCrowAttackBlindTime() {
+        return deathsEyrieCrowAttackBlindTime;
+    }
+
+    public int getDeathsEyrieCrowAttackTimePerCrow() {
+        return deathsEyrieCrowAttackTimePerCrow;
+    }
+
+    public int getDeathsEyrieCooldown() {
+        return deathsEyrieCooldown;
+    }
+
+    public int getDeathsEyrieBaseBleedTime() {
+        return deathsEyrieBaseBleedTime;
+    }
+
+    public int getDeathsEyrieCrowAdditionalBleedTime() {
+        return deathsEyrieCrowAdditionalBleedTime;
+    }
+
+    @Comment("Perforiscus")
+    int perforiscusBloomTime = 500;
+    int perforiscusCooldown = 800;
+
+    public int getPerforiscusBloomTime() {
+        return perforiscusBloomTime;
+    }
+
+    public int getPerforiscusCooldown() {
+        return perforiscusCooldown;
+    }
+
+    @Comment("Revvengine")
+    int revvenginePhase1Cooldown = 240;
+    int revvenginePhase2Cooldown = 360;
+    int revvenginePhase3Cooldown = 440;
+    int revvenginePhase1MinimumCharge = 10;
+    int revvenginePhase2MinimumCharge = 40;
+    int revvenginePhase3MinimumCharge = 80;
+    int revvengineBleedChance = 20;
+    int revvengineBleedTime = 80;
+    int revvenginePhase1Damage = 7;
+    int revvenginePhase2Damage = 12;
+    int revvenginePhase2EffectTime = 120;
+    int revvenginePhase3Damage = 15;
+    int revvenginePhase3EffectTime = 100;
+    int revvenginePhase3ExplosionWaitTime = 80;
+    int revvenginePhase3ExplosionDamage = 10;
+    int revvengineMaxDamagePercentageBuff = 60;
+    int revvengineMaxRangePercentageBuff = 50;
+
+    public int getRevvenginePhase1Cooldown() {
+        return revvenginePhase1Cooldown;
+    }
+
+    public int getRevvenginePhase2Cooldown() {
+        return revvenginePhase2Cooldown;
+    }
+
+    public int getRevvenginePhase3Cooldown() {
+        return revvenginePhase3Cooldown;
+    }
+
+    public int getRevvenginePhase1MinimumCharge() {
+        return revvenginePhase1MinimumCharge;
+    }
+
+    public int getRevvenginePhase2MinimumCharge() {
+        return revvenginePhase2MinimumCharge;
+    }
+
+    public int getRevvenginePhase3MinimumCharge() {
+        return revvenginePhase3MinimumCharge;
+    }
+
+    public int getRevvengineBleedChance() {
+        return revvengineBleedChance;
+    }
+
+    public int getRevvengineBleedTime() {
+        return revvengineBleedTime;
+    }
+
+    public int getRevvenginePhase1Damage() {
+        return revvenginePhase1Damage;
+    }
+
+    public int getRevvenginePhase2Damage() {
+        return revvenginePhase2Damage;
+    }
+
+    public int getRevvenginePhase2EffectTime() {
+        return revvenginePhase2EffectTime;
+    }
+
+    public int getRevvenginePhase3Damage() {
+        return revvenginePhase3Damage;
+    }
+
+    public int getRevvenginePhase3EffectTime() {
+        return revvenginePhase3EffectTime;
+    }
+
+    public int getRevvenginePhase3ExplosionWaitTime() {
+        return revvenginePhase3ExplosionWaitTime;
+    }
+
+    public int getRevvenginePhase3ExplosionDamage() {
+        return revvenginePhase3ExplosionDamage;
+    }
+
+    public int getRevvengineMaxDamagePercentageBuff() {
+        return revvengineMaxDamagePercentageBuff;
+    }
+
+    public int getRevvengineMaxRangePercentageBuff() {
+        return revvengineMaxRangePercentageBuff;
+    }
+
+    @Comment("Exedrill")
+    int exedrillCooldown = 250;
+    int exedrillTrembleChance = 15;
+    int exedrillTrembleEffectTime = 80;
+    int exedrillTrembleMountedChance = 30;
+    int exedrillTrembleHeatAmount = 6;
+    int exedrillHitHeatAmount = 1;
+    int exedrillMaxHeat = 25;
+    float exedrillExplosionDamage = 12f;
+    float exedrillRockDamage = 6f;
+    float exedrillRockSpeed = 0.4f;
+    int exedrillRockStunTime = 14;
+    int exedrillRocksAmount = 5;
+    float exedrillEarthquakePushStrength = 1.8f;
+
+    public int getExedrillTrembleEffectTime() {
+        return exedrillTrembleEffectTime;
+    }
+
+    public float getExedrillRockSpeed() {
+        return exedrillRockSpeed;
+    }
+
+    public int getExedrillRocksAmount() {
+        return exedrillRocksAmount;
+    }
+
+    public float getExedrillRockDamage() {
+        return exedrillRockDamage;
+    }
+
+    public int getExedrillRockStunTime() {
+        return exedrillRockStunTime;
+    }
+
+    public int getExedrillCooldown() {
+        return exedrillCooldown;
+    }
+    public int getExedrillTrembleChance() {
+        return exedrillTrembleChance;
+    }
+
+    public int getExedrillTrembleMountedChance() {
+        return exedrillTrembleMountedChance;
+    }
+
+    public int getExedrillTrembleHeatAmount() {
+        return exedrillTrembleHeatAmount;
+    }
+
+    public int getExedrillHitHeatAmount() {
+        return exedrillHitHeatAmount;
+    }
+
+    public int getExedrillMaxHeat() {
+        return exedrillMaxHeat;
+    }
+
+    public float getExedrillExplosionDamage() {
+        return exedrillExplosionDamage;
+    }
+
+    public float getExedrillEarthquakePushStrength() {
+        return exedrillEarthquakePushStrength;
+    }
+
+    @Comment("Culterex")
+    int culterexCooldown = 400;
+    int culterexBaseDuration = 180;
+    int culterexExtraDuration = 60;
+    int culterexExtraDurationChance = 35;
+    int culterexDurationPerEffectLevel = 60;
+    int culterexRightClickRange = 30;
+
+    public int getCulterexCooldown() {
+        return culterexCooldown;
+    }
+
+    public int getCulterexBaseDuration() {
+        return culterexBaseDuration;
+    }
+
+    public int getCulterexExtraDuration() {
+        return culterexExtraDuration;
+    }
+
+    public int getCulterexExtraDurationChance() {
+        return culterexExtraDurationChance;
+    }
+
+    public int getCulterexDurationPerEffectLevel() {
+        return culterexDurationPerEffectLevel;
+    }
+
+    public int getCulterexRightClickRange() {
+        return culterexRightClickRange;
     }
 
 }

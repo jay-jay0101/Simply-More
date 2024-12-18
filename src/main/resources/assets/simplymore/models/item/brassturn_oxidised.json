@@ -1,0 +1,6 @@
+{
+  "parent": "simplymore:item/brassturn",
+  "textures": {
+    "layer0": "simplymore:item/uniques/brassturn/brassturn_oxidised"
+  }
+}
