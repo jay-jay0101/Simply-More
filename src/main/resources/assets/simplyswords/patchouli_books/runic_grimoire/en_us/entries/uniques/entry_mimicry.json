@@ -1,12 +1,12 @@
 {
   "name": "Mimi-cry [SM]",
-  "icon": "simplymore:mimicry",
+  "icon": "simplymore:mimicry_longsword",
   "advancement": "simplymore:mimicry",
   "category": "simplyswords:category_unique_weapons",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "simplymore:mimicry",
+      "item": "simplymore:mimicry_longsword",
       "text": "$(#0BE334)Item Added In Simply More$(br2)$()Mimi-cry, the parasite, crawls along a blade of its own formation. Despite the fleshy feeling, the weapon's hardened tissue still impacts heavily on contact, cutting, piercing or bludgeoning depending on whichever form it takes. It was created by a far advanced society"
     },
     {
