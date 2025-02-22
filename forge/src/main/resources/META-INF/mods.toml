@@ -1,0 +1,44 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+#issueTrackerURL = ""
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "simplymore"
+version = "${version}"
+displayName = "Simply More"
+authors = "RosemaryThyme"
+credits = "NotSaneAshley & Scootifyz (Art) | Chronosacaria (Code Review)"
+description = '''
+An addon to Simply Swords which adds even more weapons variety and new uniques!
+'''
+logoFile = "assets/simplymore/icon.png"
+
+[[dependencies.simplymore]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.simplymore]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.simplymore]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.simplymore]]
+modId = "simplyswords"
+mandatory = true
+versionRange = "[1.55.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
