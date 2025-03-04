@@ -84,7 +84,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
         Entity entityTarget = HelperMethods.getTargetedEntity(user, 20);
         if (entityTarget instanceof LivingEntity target && !target.isTeammate(user)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10, 0), user);
-            List<CrowEntity> pets = world.getEntitiesByClass(CrowEntity.class, user.getBoundingBox().expand(10000),
+            List<CrowEntity> pets = world.getEntitiesByClass(CrowEntity.class, user.getBoundingBox().expand(50),
                     crowEntity -> crowEntity.getOwner() == user
             );
 
@@ -122,11 +122,15 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
     int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-        if(entity instanceof PlayerEntity player && selected && !player.getWorld().isClient) {
+        if(
+                entity instanceof PlayerEntity player
+                && selected
+                && !player.getWorld().isClient
+                && player.getMainHandStack().equals(stack)
+        ) {
             int crows = getCrows(stack);
 
-            List<CrowEntity> pets = world.getEntitiesByClass(CrowEntity.class, player.getBoundingBox().expand(10000),
+            List<CrowEntity> pets = world.getEntitiesByClass(CrowEntity.class, player.getBoundingBox().expand(50),
                     crowEntity -> crowEntity.getOwner() == player
             );
 
