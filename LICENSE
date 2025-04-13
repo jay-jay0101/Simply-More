@@ -1,0 +1,40 @@
+Copyright (c) 2024-25, RosemaryThyme & NotSaneAshley. All Rights Reserved.
+ 
+ This License pertains to this software only, and does not extend to the dependency software "SimplySwords".
+ Referenced code and assets from SimplySwords are licensed under the [Timefall Development License 1.2](https://github.com/Sweenus/SimplySwords/blob/Architectury-1.20/LICENSE).
+ 
+ DEFINITIONS:
+ Software - Any compiled version of the collection of code and assets that come together to create SimplyMore. This includes the .jar files or any other file extensions that may result from recompiling SimplyMore into another language.
+ 
+ Assets - Media (including, but not limited to: Sound, Image, and Model files) contained within the software.
+ 
+ Content Creation - The production of video media on sites including, but not limited to, YouTube or Twitch.
+ 
+ The following permissions are hereby granted, below, to any person having a copy of this software and/or its associated files:
+ 
+ USAGE
+ - You may use this software for public or private use. If used within a Modpack, it may be bundled directly as a file, or done via manifest which would download this software from its respective CurseForge or Modrinth page.
+ - You may use this software and its associated art assets for public and private use as a dependency or API.
+ - You may not bundle this software within any other software in any way, shape or form.
+ 
+ COPYING & MODIFICATION
+ - You may copy this software for private use or to contribute to this software through means of a fork and pull request.
+ - You may modify this software for private use or to contribute to this software through means of a fork and pull request. You agree and the rights of any modifications made as means of contribution to this software are transferred to the original copyright holder(s) of this software.
+ 
+ MONETISATION
+ - You may not place access to this software or any modified versions (including, but not limited to: early access versions) of this software, behind a paywall.
+ - You may not benefit financially or commercially through the selling of code or assets from this software, whether modified or unmodified.
+ - You are permitted to monetise works or content created using this software, including but not limited to Content Creation on platforms such as YouTube or Twitch.
+ 
+ DISTRIBUTION & SUBLICENSING
+ - You may not distribute this software.
+ - You may not sublicense this software.
+ 
+ OTHER NOTICES
+ - This license is provided with the notion that basic common sense be used when interacting with this software.
+ - The copyright holder(s) retain the right to revoke this license at any time for any reason.
+ - This license may be changed by copyright holder(s) to permit additional actions upon reasonable request.
+ 
+ INDEMNIFICATION
+ - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ - WITHIN THE FULLEST EXTENT OF THE LAW, THE AUTHORS AND COPYRIGHT HOLDERS OF THIS SOFTWARE SHALL NOT BE LIABLE FOR ANY CLAIMS, DAMAGES OR OTHER LIABILITIES, WHETHER ARISING IN CONTRACT, TORT OR OTHERWISE, OUT OF OR IN CONNECTION WITH THIS SOFTWARE OR WITH THE USE, INABILITY TO USE, OR OTHER DEALINGS WITH THIS SOFTWARE OR ITS ASSETS.
