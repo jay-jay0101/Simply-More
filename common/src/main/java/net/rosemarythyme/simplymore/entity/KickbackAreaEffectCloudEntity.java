@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.entity;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particle.DustParticleEffect;
@@ -10,26 +9,25 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.joml.Vector3f;
 
 public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
-    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
     public KickbackAreaEffectCloudEntity(World world, double x, double y, double z, int radius, LivingEntity owner) {
         super(world, x, y, z);
-        SimplyMoreHelperMethods.simplyMore$setAreaEffectCloudParameters(this, new DustParticleEffect(new Vector3f(0f,0f,0f), 5), radius, 0, 0, owner, effect.getRevvenginePhase3ExplosionWaitTime());
+        SimplyMoreHelperMethods.simplyMore$setAreaEffectCloudParameters(this, new DustParticleEffect(new Vector3f(0f,0f,0f), 5), radius, 0, 0, owner, effect.revvengine.explosionWindup);
     }
 
     @Override
     public void tick() {
         super.tick();
 
-        int timeTillDeath = effect.getRevvenginePhase3ExplosionWaitTime() - this.age;
+        int timeTillDeath = effect.revvengine.explosionWindup - this.age;
 
         if(timeTillDeath > 10) {
             ((ServerWorld) getWorld()).spawnParticles(
@@ -90,10 +88,10 @@ public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
                 livingEntity.damage(
                         getOwner().getDamageSources().explosion(this, getOwner()),
-                        effect.getRevvenginePhase3ExplosionDamage()
+                        effect.revvengine.explosionDamage
                 );
 
-                livingEntity.setOnFireFor(effect.getRevvenginePhase3EffectTime());
+                livingEntity.setOnFireFor(effect.revvengine.p3effectTime);
             }
         }
     }

@@ -1,0 +1,164 @@
+{
+	"values": [
+		{
+			"id": "simplymore:the_pan",
+			"required": false
+		},
+		{
+			"id": "simplymore:cindergorge",
+			"required": false
+		},
+		{
+			"id": "simplymore:ruptured_idol",
+			"required": false
+		},
+		{
+			"id": "simplymore:ascended_idol",
+			"required": false
+		},
+		{
+			"id": "simplymore:tarnished_idol",
+			"required": false
+		},
+		{
+			"id": "simplymore:holylight",
+			"required": false
+		},
+		{
+			"id": "simplymore:darksent",
+			"required": false
+		},
+		{
+			"id": "simplymore:wooden_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:stone_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:iron_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:diamond_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:gold_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:netherite_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:runic_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_nether_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_end_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:adamantite_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:aquarium_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:banglum_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:carmot_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:kyber_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:mythril_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:orichalcum_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:osmium_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:prometheum_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:quadrillum_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:runite_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:star_platinum_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:bronze_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:steel_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:stormyx_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:palladium_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:metallurgium_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:celestium_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:copper_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:durasteel_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:hallowed_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:legendary_banglum_pernach",
+			"required": false
+		},
+		{
+			"id": "simplymore:tidesinger_pernach",
+			"required": false
+		}
+	]
+}

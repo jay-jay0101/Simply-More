@@ -1,11 +1,13 @@
 package net.rosemarythyme.simplymore.item.uniques.idols;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
@@ -16,24 +18,26 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AuraOfCorruptionAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
 public class DarksentItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = effect.getDarksentCooldown();
+    int skillCooldown = effect.darksent.cooldown;
 
     public DarksentItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -53,7 +57,8 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
                         attacker.getY(),
                         attacker.getZ(),
                         attacker
-                )
+                ),
+                effect.darksent.chance
         );
 
         return super.postHit(stack, target, attacker);
@@ -64,7 +69,7 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
         SimplyMoreHelperMethods.simplyMore$IdolUseEffects(
                 this,
                 user,
-                ModEffectsRegistry.CURSE.get(),
+                ModEffectsRegistry.getReference(ModEffectsRegistry.CURSE),
                 160,
                 SoundEvents.ENTITY_EVOKER_PREPARE_ATTACK,
                 2F,
@@ -81,10 +86,10 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style textStyle = HelperMethods.getStyle("text");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip1").setStyle(abilityStyle));
@@ -98,8 +103,23 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip7").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip8").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip9",
-                SimplyMoreHelperMethods.toPercentage(effect.getIdolCurseDamageMultiplier())).setStyle(textStyle));
+                SimplyMoreHelperMethods.toPercentage(effect.darksent.curseDamageMultiplier)).setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.DARKSENT));
+        }
+
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.15f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float curseDamageMultiplier = 1.5f;
+        @ValidatedInt.Restrict(min = 0)
+        public int curseWeakenTime = 100;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 800;
     }
 }

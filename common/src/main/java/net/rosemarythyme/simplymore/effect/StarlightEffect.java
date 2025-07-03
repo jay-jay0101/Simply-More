@@ -1,17 +1,15 @@
 package net.rosemarythyme.simplymore.effect;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 
 public class StarlightEffect extends StatusEffect {
-    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
 
     public StarlightEffect(StatusEffectCategory category, int color) {
@@ -20,19 +18,19 @@ public class StarlightEffect extends StatusEffect {
 
 
     @Override
-    public void applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
-        int frequency = effect.getGlimmerstepBaseSpeedFrequency() - (effect.getGlimmerstepSpeedFrequencyPerStack() * (amplifier + 1));
+    public boolean applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
+        int frequency = effect.glimmerstep.baseSpeedFrequency - (effect.glimmerstep.speedFrequencyPerStack * (amplifier + 1));
         if(affectedEntity.getWorld().getTime() % frequency == 0) {
             affectedEntity.addStatusEffect(
                     new StatusEffectInstance(
                             StatusEffects.SPEED,
-                            effect.getGlimmerstepSpeedTime(),
+                            effect.glimmerstep.speedTime,
                             amplifier
                     )
             );
         }
 
-        super.applyUpdateEffect(affectedEntity, amplifier);
+        return super.applyUpdateEffect(affectedEntity, amplifier);
     }
 
     @Override

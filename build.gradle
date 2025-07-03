@@ -2,6 +2,7 @@ plugins {
     id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id 'org.moddedmc.wiki.toolkit' version '0.2.7'
 }
 
 architectury {
@@ -33,7 +34,10 @@ subprojects {
 
     dependencies {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings "net.fabricmc:yarn:$rootProject.yarn_mappings:v2"
+        mappings loom.layered {
+            it.mappings("net.fabricmc:yarn:$rootProject.yarn_mappings:v2")
+            it.mappings("dev.architectury:yarn-mappings-patch-neoforge:$rootProject.yarn_mappings_patch_neoforge_version")
+        }
     }
 
     java {
@@ -42,12 +46,30 @@ subprojects {
         // If you remove this line, sources will not be generated.
         withSourcesJar()
 
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    wiki {
+        docs {
+            simplymore {
+                root = file('docs')
+            }
+        }
+    }
+
+    tasks.named('processResources') {
+        from("$rootDir/docs") {
+            into "assets/oracle_index/books/simplymore"
+            exclude '.assets/**'
+        }
+        doLast {
+            println "Copied wiki pages from /docs/ to /assets/oracle_index/books/simplymore"
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = 17
+        it.options.release = 21
     }
 
     // Configure Maven publishing.
@@ -65,6 +87,104 @@ subprojects {
             // Notice: This block does NOT have the same function as the block in the top level.
             // The repositories here will be used for publishing your artifact, not for
             // retrieving dependencies.
+        }
+    }
+
+    tasks.register('generateRecipeDocs') {
+        def recipesDir = file("$rootDir/common/src/main/resources/data/simplymore/recipe") // Path to recipes folder
+        def outputDir = file("$rootDir/docs/generated") // Path to generate .mdx files
+
+        inputs.dir(recipesDir)
+        outputs.dir(outputDir)
+
+        doLast {
+            if (!recipesDir.exists()) {
+                println "Recipes directory does not exist: $recipesDir"
+                return
+            }
+
+            if (!outputDir.exists()) {
+                outputDir.mkdirs()
+            }
+
+            def tagToItemMap = [
+                    "c:wood_sticks": "stick"
+            ]
+
+            def metaContent = [:]
+
+            recipesDir.eachFileRecurse { recipeFile ->
+                if(!recipeFile.isFile()) return
+
+                // Filter compat
+                if (recipeFile.text.contains("mythicmetals") ||
+                        recipeFile.text.contains("gobber") ||
+                        recipeFile.name.contains("wooden") ||
+                        recipeFile.name.contains("stone")) return
+                // Filter smithing
+                if (recipeFile.text.contains("smithing")) return
+
+
+                if (recipeFile.name.endsWith('.json')) {
+                    def recipeJson = new groovy.json.JsonSlurper().parse(recipeFile)
+                    def result = recipeJson.result?.id ?: "unknown:unknown_item"
+                    def pattern = recipeJson.pattern ?: []
+                    def key = recipeJson.key ?: [:]
+                    def slots = []
+
+                    for (int i = 0; i < 3; i++) {
+                        String row = i < pattern.size() ? pattern[i] : "   "
+                        row = row.padRight(3, ' ').substring(0, 3)
+
+                        for (int j = 0; j < 3; j++) {
+                            char currentChar = row.charAt(j)
+                            String charStr = currentChar.toString()
+
+                            if (key.containsKey(charStr)) {
+                                // Process key entry
+                                def keyEntry = key[charStr]
+                                String item = ""
+
+                                if (keyEntry.containsKey("item")) {
+                                    item = keyEntry.item.replace('minecraft:', '')
+                                } else if (keyEntry.containsKey("tag")) {
+                                    String tag = keyEntry.tag
+                                    item = tagToItemMap[tag] ?: ""
+                                }
+
+                                slots.add(item)
+                            } else if (charStr == ' ') {
+                                slots.add('')
+                            } else {
+                                println "Warning: Character '${charStr}' in pattern not found in key map. Adding blank slot."
+                                slots.add('')
+                            }
+                        }
+                    }
+
+                    def icon = result.split(':').join(':item/')
+                    def title = result.split(':')[-1].capitalize()
+                    def cleanedTitle = title.replaceAll('_', ' ').split(' ').collect { it.capitalize() }.join(' ')
+                    def mdxFileName = "${title.toLowerCase()}.mdx"
+
+                    // Add entry to metaContent
+                    metaContent[mdxFileName] = cleanedTitle
+
+                    // Prepare and write the MDX file
+                    def mdxContent = """---\ntitle: ${cleanedTitle}\nicon: ${icon}\n---\n\n<CraftingRecipe\nslots={${slots.collect { "'$it'" }}}\nresult="${result}"\n/>"""
+
+                    def outputFile = new File(outputDir, mdxFileName)
+                    outputFile.text = mdxContent
+                    println "Generated: ${outputFile.absolutePath}"
+                }
+            }
+
+            // Write the _meta.json file
+            def metaFile = new File(outputDir, "_meta.json")
+            metaFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(metaContent))
+            println "Generated: ${metaFile.absolutePath}"
+
+            println "All .mdx files and _meta.json have been generated in: $outputDir"
         }
     }
 }

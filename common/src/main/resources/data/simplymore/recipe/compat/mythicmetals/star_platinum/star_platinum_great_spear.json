@@ -1,0 +1,34 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mythicmetals"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "item": "mythicmetals:star_platinum"
+    }
+  },
+  "pattern": [
+    " MM",
+    " sM",
+    "s  "
+  ],
+  "result": {
+    "id": "simplymore:star_platinum_great_spear",
+    "count": 1
+  }
+}

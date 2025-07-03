@@ -1,40 +1,46 @@
 package net.rosemarythyme.simplymore.item;
 
-import com.google.common.collect.Multimap;
-import me.shedaniel.autoconfig.AutoConfig;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
+import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.item.uniques.idols.DarksentItem;
-import net.rosemarythyme.simplymore.item.uniques.idols.HolyLightItem;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.item.uniques.idols.HolylightItem;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
-import net.sweenus.simplyswords.registry.ItemsRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
-    String iRarity = "UNIQUE";
+public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implements Weapon {
+    public CounterComponent getDefaultComponent() {
+        return new CounterComponent(0, 0);
+    }
+
     String[] repairIngredient;
+    final SwordTypes swordType;
 
-    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
-    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings.fireproof());
+    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
+        super(toolMaterial, settings.fireproof().attributeModifiers(
+                SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
+
+        this.swordType = swordType;
         this.repairIngredient = new String[]{"simplyswords:runic_tablet"};
+    }
+
+    @Override
+    public SwordTypes swordType() {
+        return swordType;
     }
 
     @Override
@@ -42,19 +48,16 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
         List<Item> potentialIngredients = new ArrayList<>(List.of());
         Arrays.stream(this.repairIngredient).toList().forEach(
                 (repIngredient) -> potentialIngredients.add(
-                        Registries.ITEM.get(new Identifier(repIngredient))));
+                        Registries.ITEM.get(Identifier.of(repIngredient))));
         return potentialIngredients.contains(ingredient.getItem());
     }
 
     @Override
     public Text getName(ItemStack stack) {
-        Style UNIQUE = HelperMethods.getStyle("unique");
-        Style LEGENDARY = HelperMethods.getStyle("legendary");
-        if (stack.getItem() instanceof HolyLightItem || stack.getItem() instanceof DarksentItem) {
-            this.iRarity = "LEGENDARY";
-            return Text.translatable(this.getTranslationKey(stack)).setStyle(LEGENDARY);
+        if (stack.getItem() instanceof HolylightItem || stack.getItem() instanceof DarksentItem) {
+            return Text.translatable(this.getTranslationKey(stack)).setStyle(Styles.LEGENDARY);
         } else {
-            return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
+            return Text.translatable(this.getTranslationKey(stack)).setStyle(Styles.UNIQUE);
         }
     }
 }

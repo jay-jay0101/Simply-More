@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "id": "simplymore:deaths_eyrie"
+    },
+    "title": {
+      "translate": "advancements.simplymore.deaths_eyrie.title",
+      "with": []
+    },
+    "description": {
+      "translate": "advancements.simplyswords.find_unique.description",
+      "with": [
+        {
+          "translate": "item.simplymore.deaths_eyrie"
+        }
+      ]
+    },
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:deaths_eyrie"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,44 +1,44 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
+import me.fzzyhmstrs.fzzy_config.validation.minecraft.ValidatedRegistryType;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.VipersCallProjectileAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.registry.EffectRegistry;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class VipersCallItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getVipersCallCooldown();
-
-    public String[] effectBlacklist =
-    {
-        "simplyswords:fatal_flicker",
-        "minecraft:absorption",
-        "simplyswords:flameseed",
-        "simplyswords:frenzy"
-    };
+    int skillCooldown = effect.vipers_call.vipersCallCooldown;
 
     public VipersCallItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
     @Override
@@ -52,7 +52,6 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, user, hand);
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
@@ -65,23 +64,33 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
-    private boolean isInBlacklist(StatusEffectInstance effect) {
-        List<StatusEffect> blacklistedEffects = new ArrayList<>(List.of());
-        Arrays.stream(effectBlacklist).toList().forEach(
-                (effectType) -> blacklistedEffects.add(
-                        Registries.STATUS_EFFECT.get(new Identifier(effectType))));
-        return blacklistedEffects.contains(effect.getEffectType());
+    private boolean isInBlacklist(StatusEffectInstance status) {
+        return getBlacklist().contains(status.getEffectType().value());
+    }
+
+    private Set<StatusEffect> blacklist = null;
+
+    private Set<StatusEffect> getBlacklist() {
+        if(blacklist == null) {
+            blacklist = Stream.concat(
+                    Set.of(EffectRegistry.FATAL_FLICKER.get(), StatusEffects.ABSORPTION.value(),
+                            EffectRegistry.FLAMESEED.get(), EffectRegistry.FRENZY.get()).stream(),
+                    effect.vipers_call.blacklist.stream()
+            ).collect(Collectors.toSet());
+        }
+
+        return blacklist;
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip1").setStyle(abilityStyle));
@@ -96,6 +105,16 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip7").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.vipers_call.tooltip8").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.VIPERS_CALL));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int vipersCallCooldown = 1200;
+        public ValidatedSet<StatusEffect> blacklist = ValidatedRegistryType.of(StatusEffects.ABSORPTION.value(), Registries.STATUS_EFFECT, (entry) -> true).toSet();
     }
 }

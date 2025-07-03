@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.rosemarythyme.simplymore.item.uniques.MoltenFlareItem;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 
 public class MoltenFlareEffect extends StatusEffect {
 
@@ -15,17 +16,17 @@ public class MoltenFlareEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
         if (!(livingEntity.getMainHandStack().getItem() instanceof MoltenFlareItem)) {
-            livingEntity.removeStatusEffect(this);
-            return;
+            livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE));
+            return super.applyUpdateEffect(livingEntity, amplifier);
         }
 
         if (!livingEntity.getEntityWorld().isClient()) {
             spawnParticles(livingEntity);
         }
 
-        super.applyUpdateEffect(livingEntity, amplifier);
+        return super.applyUpdateEffect(livingEntity, amplifier);
     }
 
     private void spawnParticles(LivingEntity livingEntity) {

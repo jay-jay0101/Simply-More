@@ -1,22 +1,23 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
 import java.util.List;
 
 public class GreatKatanaItem extends MimicryItem {
     public GreatKatanaItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
 
@@ -33,7 +34,7 @@ public class GreatKatanaItem extends MimicryItem {
 
         if(ticksUsed == 30) {
             List<LivingEntity> enemies = slamAttack(player, 6);
-            float damage = mimicryAttributes.getGreatKatanaDamage();
+            float damage = mimicry.great_katana.damage;
 
             if(!enemies.isEmpty()) {
                 LivingEntity mainTarget = enemies.get(player.getRandom().nextBetween(0, enemies.size() - 1));
@@ -42,28 +43,28 @@ public class GreatKatanaItem extends MimicryItem {
                         target -> {
                             if (target.isBlocking()) return;
                             target.timeUntilRegen = 0;
-                            player.teleport(target.getX(), target.getY(), target.getZ());
+                            player.teleport(target.getX(), target.getY(), target.getZ(), false);
                             sweepAttack(player, 0.1f);
                             if (target == mainTarget) {
-                                target.damage(player.getDamageSources().playerAttack(player), damage + mimicryAttributes.getGreatAdditionalKatanaDamage());
+                                target.damage(player.getDamageSources().playerAttack(player), damage + mimicry.great_katana.extraDamage);
                             } else {
                                 target.damage(player.getDamageSources().playerAttack(player), damage);
                             }
                         }
                 );
 
-                player.teleport(mainTarget.getX(), mainTarget.getY(), mainTarget.getZ());
+                player.teleport(mainTarget.getX(), mainTarget.getY(), mainTarget.getZ(), false);
             }
         }
 
         if(ticksUsed >= 40) {
-            player.removeStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get());
+            player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
         }
     }
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryAttributes.isDisableGreatKatanaVariant();
+        return mimicry.great_katana.disabled;
     }
 
     @Override
@@ -72,8 +73,20 @@ public class GreatKatanaItem extends MimicryItem {
     }
 
     @Override
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+    public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.great_katana.tooltip1").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.mimicry.great_katana.tooltip2").setStyle(textStyle));
+    }
+
+    public static class MimicryEffectSettings extends TooltipSettings {
+        public MimicryEffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_GREAT_KATANA));
+        }
+
+        public boolean disabled = false;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float damage = 14f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float extraDamage = 4f;
     }
 }

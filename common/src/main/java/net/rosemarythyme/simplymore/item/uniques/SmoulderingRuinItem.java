@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -8,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
@@ -17,30 +19,33 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
 public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getSmoulderingCooldown();
+    int skillCooldown = effect.smouldering_ruin.cooldown;
 
     public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient() && attacker.getRandom().nextBetween(1,100) <= effect.getSmoulderingWitherChance()) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.getSmoulderingWitherTime(), 0), attacker);
-            StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(ModEffectsRegistry.WITHERING_FATE.get());
+        if (SimplyMoreHelperMethods.chance(attacker, effect.smouldering_ruin.chance)) {
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.smouldering_ruin.witherTime, 0), attacker);
+            StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE));
             if (targetWitheringFateStatus != null) {
                 target.addStatusEffect(
                         new StatusEffectInstance(
-                                ModEffectsRegistry.WITHERING_FATE.get(),
+                                ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE),
                                 targetWitheringFateStatus.getDuration(),
                                 targetWitheringFateStatus.getAmplifier() + 1
                         ), attacker);
@@ -62,24 +67,23 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
             user.velocityModified = true;
 
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_FLYBY_01.get(), SoundCategory.PLAYERS, 1, 1);
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.MISTIFIED.get(),10000,0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED),10000,0));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
         return super.use(world, user, hand);
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.CRIMSON_SPORE);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.smouldering_ruin.tooltip1").setStyle(abilityStyle));
@@ -97,6 +101,19 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.smouldering_ruin.tooltip11").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.SMOULDERING_RUIN));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 800;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.25f;
+        @ValidatedInt.Restrict(min = 0)
+        public int witherTime = 100;
     }
 }

@@ -1,0 +1,148 @@
+{
+	"values": [
+		{
+			"id": "simplymore:glimmerstep",
+			"required": false
+		},
+		{
+			"id": "simplymore:jester_penetrate",
+			"required": false
+		},
+		{
+			"id": "simplymore:exedrill",
+			"required": false
+		},
+		{
+			"id": "simplymore:wooden_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:stone_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:iron_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:diamond_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:gold_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:netherite_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:runic_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_nether_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_end_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:adamantite_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:aquarium_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:banglum_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:carmot_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:kyber_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:mythril_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:orichalcum_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:osmium_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:prometheum_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:quadrillum_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:runite_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:star_platinum_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:bronze_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:steel_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:stormyx_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:palladium_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:metallurgium_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:celestium_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:copper_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:durasteel_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:hallowed_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:legendary_banglum_lance",
+			"required": false
+		},
+		{
+			"id": "simplymore:tidesinger_lance",
+			"required": false
+		}
+	]
+}

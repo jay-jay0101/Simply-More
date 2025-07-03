@@ -13,12 +13,13 @@ public class SoulForesightEffect extends StatusEffect {
 
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         for (StatusEffectInstance effect : entity.getStatusEffects()) {
-            if (effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL || effect.getDuration() <= 10) continue;
+            if (effect.getEffectType().value().getCategory() != StatusEffectCategory.BENEFICIAL || effect.getDuration() <= 10) continue;
             entity.setStatusEffect(new StatusEffectInstance(effect.getEffectType(), effect.getDuration() - 8, effect.getAmplifier()), entity);
         }
-        super.applyUpdateEffect(entity, amplifier);
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

@@ -1,15 +1,14 @@
 package net.rosemarythyme.simplymore.client;
 
-import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
+import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
+import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.item.ItemPropertiesRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
@@ -17,10 +16,6 @@ import net.rosemarythyme.simplymore.client.renderers.CrowEntityRenderer;
 import net.rosemarythyme.simplymore.registry.ModEntityRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-
-import java.util.Map;
-
-import static java.util.Map.entry;
 
 @Environment(EnvType.CLIENT)
 public class SimplyMoreClientInit {
@@ -37,7 +32,7 @@ public class SimplyMoreClientInit {
     public static void registerModelPredicates() {
         final int[] randomSprite = {0};
 
-        ItemPropertiesRegistry.register(ModItemsRegistry.TIMEKEEPER.get(), new Identifier(SimplyMore.ID, "sun"), (itemStack, clientWorld, livingEntity, a) -> {
+        ItemPropertiesRegistry.register(ModItemsRegistry.TIMEKEEPER.get(), Identifier.of(SimplyMore.ID, "sun"), (itemStack, clientWorld, livingEntity, a) -> {
 
             if (clientWorld == null) return 0f;
 
@@ -73,16 +68,31 @@ public class SimplyMoreClientInit {
             return 0.11f;
         });
 
-        ItemPropertiesRegistry.register(ModItemsRegistry.MATTERBANE.get(), new Identifier(SimplyMore.ID, "color"), (itemStack, clientWorld, livingEntity, a) -> {
-            Object color = itemStack.getOrCreateNbt().get("simplymore:color");
-            color = SimplyMoreHelperMethods.getMatterbaneColor((color));
-            color = (float) ((int) color);
-            return (float) color / 100f;
-        });
+        ColorHandlerRegistry.registerItemColors(((stack, tintIndex) -> {
+            if(tintIndex == 0) return -1; // Do not dye "layer0"
 
-        ItemPropertiesRegistry.register(ModItemsRegistry.BRASSTURN.get(), new Identifier(SimplyMore.ID, "oxidisation"), (itemStack, clientWorld, livingEntity, a) -> {
+            DyedColorComponent color = stack.get(DataComponentTypes.DYED_COLOR);
+            if(color == null) {
+                return 0xFFFF0000;
+            }
 
-            int oxidisation = SimplyMoreHelperMethods.getBrassturnOxidisation(itemStack);
+            // Brighten
+            int r = (color.rgb() >> 16) & 0xFF;
+            int g = (color.rgb() >> 8) & 0xFF;
+            int b = color.rgb() & 0xFF;
+            r = Math.min(255, Math.round(r * 1.3f));
+            g = Math.min(255, Math.round(g * 1.3f));
+            b = Math.min(255, Math.round(b * 1.3f));
+
+            int finalColor = (r << 16) | (g << 8) | b;
+
+
+            return 0xFF000000 | finalColor;
+        }), ModItemsRegistry.MATTERBANE);
+
+        ItemPropertiesRegistry.register(ModItemsRegistry.BRASSTURN.get(), Identifier.of(SimplyMore.ID, "oxidisation"), (itemStack, clientWorld, livingEntity, a) -> {
+
+            int oxidisation = SimplyMoreHelperMethods.getCounterComponent(itemStack).value();
             if(oxidisation >= 16) {
                 return 0.3f;
             } else if (oxidisation >= 11) {
@@ -94,11 +104,10 @@ public class SimplyMoreClientInit {
             return 0f;
         });
 
-        ItemPropertiesRegistry.register(ModItemsRegistry.DEATHS_EYRIE.get(), new Identifier(SimplyMore.ID, "crows"), (itemStack, clientWorld, livingEntity, a) -> {
-            return SimplyMoreHelperMethods.getDeathsEyrieCrows(itemStack) * 0.1f;
-        });
+        ItemPropertiesRegistry.register(ModItemsRegistry.DEATHS_EYRIE.get(), Identifier.of(SimplyMore.ID, "crows"),
+                (itemStack, clientWorld, livingEntity, a) -> SimplyMoreHelperMethods.getCounterComponent(itemStack).value() * 0.1f);
 
-        ItemPropertiesRegistry.register(ModItemsRegistry.RUYI_JINGU_BANG.get(), new Identifier(SimplyMore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {
+        ItemPropertiesRegistry.register(ModItemsRegistry.RUYI_JINGU_BANG.get(), Identifier.of(SimplyMore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {
 
             if (livingEntity == null)
                 return 0f;

@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mythicmetals"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "simplymore:diamond_lance"
+  },
+  "addition": {
+    "item": "mythicmetals:celestium_ingot"
+  },
+  "result": {
+    "id": "simplymore:celestium_lance",
+    "count": 1
+  },
+  "template": {
+    "item": "mythicmetals:unobtainium_smithing_template"
+  }
+}

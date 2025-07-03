@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.effect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.rosemarythyme.simplymore.item.uniques.MyrmedgeItem;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 
 public class MyrmedgeEffect extends SolidifyEffect {
 
@@ -12,18 +13,18 @@ public class MyrmedgeEffect extends SolidifyEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
         if (!(livingEntity.getMainHandStack().getItem() instanceof MyrmedgeItem)
         && !(livingEntity.getOffHandStack().getItem() instanceof MyrmedgeItem)) {
-            livingEntity.removeStatusEffect(this);
-            return;
+            livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING));
+            return super.applyUpdateEffect(livingEntity, amplifier);
         }
 
         if(livingEntity.age < 20) {
-            livingEntity.removeStatusEffect(this);
+            livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING));
         }
 
-        super.applyUpdateEffect(livingEntity, amplifier);
+        return super.applyUpdateEffect(livingEntity, amplifier);
     }
 
     @Override

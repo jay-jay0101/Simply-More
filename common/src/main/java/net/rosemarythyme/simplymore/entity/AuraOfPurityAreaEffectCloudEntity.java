@@ -22,7 +22,7 @@ public class AuraOfPurityAreaEffectCloudEntity extends AreaEffectCloudEntity {
         for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
             if (target.isAlive() && (target == owner || target.isTeammate(owner))) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 15, 0));
-                target.getStatusEffects().removeIf(effect -> effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL);
+                target.getStatusEffects().removeIf(effect -> effect.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL);
             }
         }
     }

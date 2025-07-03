@@ -10,14 +10,14 @@ public class InsanityEffect extends StatusEffect {
         super(category, color);
     }
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         float newYaw = entity.getYaw() + (entity.getRandom().nextInt(21) - 10);
         float newPitch = entity.getPitch() + (entity.getRandom().nextInt(21) - 10);
 
         entity.setYaw(newYaw);
         entity.setPitch(newPitch);
 
-        super.applyUpdateEffect(entity, amplifier);
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

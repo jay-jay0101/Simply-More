@@ -5,56 +5,57 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.rosemarythyme.simplymore.item.components.UsageComponent;
+import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
 
 public interface CooldownOnUnselected {
-
-    String nbt = "simplymore:using";
-    String offhand = "simplymore:offhand";
-    String previous_offhand = "simplymore:previous_offhand";
 
     default void cooldown(PlayerEntity user, int time) {
         user.stopUsingItem();
         user.getItemCooldownManager().set((Item) this, time);
     }
 
+    static void setComponent(ItemStack stack, Boolean using, Boolean offhand, Boolean previousOffhand) {
+        UsageComponent component = getComponent(stack);
+        using = using == null ? component.using() : using;
+        offhand = offhand == null ? component.offhand() : offhand;
+        previousOffhand = previousOffhand == null ? component.offhandPrevious() : previousOffhand;
+
+        stack.set(ModComponentRegistry.USAGE.get(), new UsageComponent(using, offhand, previousOffhand));
+    }
+
+    static UsageComponent getComponent(ItemStack stack) {
+        return stack.getOrDefault(ModComponentRegistry.USAGE.get(), new UsageComponent(false, false, false));
+    }
+
     default void startUsing(ItemStack stack, Hand hand) {
-        stack.getOrCreateNbt().putBoolean(nbt, true);
+        setComponent(stack, true, null, null);
 
         if(getOffhand(stack) != null) {
-            stack.getOrCreateNbt().putBoolean(previous_offhand, getOffhand(stack));
+            setComponent(stack, null, null, getOffhand(stack));
         }
 
-        stack.getOrCreateNbt().putBoolean(offhand, hand == Hand.OFF_HAND);
+        setComponent(stack, null, hand == Hand.OFF_HAND, null);
     }
 
     default Boolean getUsing(ItemStack stack) {
-        if(stack.getOrCreateNbt().contains(nbt)) {
-            return stack.getOrCreateNbt().getBoolean(nbt);
-        } else {
-            return null;
-        }
+        return getComponent(stack).using();
     }
 
     default Boolean getOffhand(ItemStack stack) {
-        if(stack.getOrCreateNbt().contains(offhand)) {
-            return stack.getOrCreateNbt().getBoolean(offhand);
-        } else {
-            return null;
-        }
+        return getComponent(stack).offhand();
+    }
+
+    default Boolean getOffhandPrevious(ItemStack stack) {
+        return getComponent(stack).offhandPrevious();
     }
 
     default boolean checkIfHandChanged(ItemStack stack) {
-        if(stack.getOrCreateNbt().contains(offhand) && stack.getOrCreateNbt().contains(previous_offhand)) {
-            return stack.getOrCreateNbt().getBoolean(previous_offhand) != stack.getOrCreateNbt().getBoolean(offhand);
-        } else {
-            return false;
-        }
+        return getOffhand(stack) != getOffhandPrevious(stack);
     }
 
     default void endUsing(ItemStack stack) {
-        stack.getOrCreateNbt().putBoolean(nbt, false);
-        stack.getOrCreateNbt().remove(previous_offhand);
-        stack.getOrCreateNbt().remove(offhand);
+        setComponent(stack, false, false, false);
     }
 
     default void detectCooldown(PlayerEntity user, boolean selected, ItemStack stack, int time, boolean twoHanded) {

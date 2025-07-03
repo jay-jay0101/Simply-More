@@ -1,32 +1,25 @@
 package net.rosemarythyme.simplymore.item.uniques.joke;
 
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.registry.Registries;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.normal.LanceItem;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
+import net.sweenus.simplyswords.util.Styles;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class JesterPenetrateItem extends LanceItem {
-
-    String[] repairIngredient;
+public class JesterPenetrateItem extends SimplyMoreSwordItem {
 
     public JesterPenetrateItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
         this.repairIngredient = new String[]{
                 "minecraft:white_wool",
                 "minecraft:orange_wool",
@@ -48,15 +41,6 @@ public class JesterPenetrateItem extends LanceItem {
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        List<Item> potentialIngredients = new ArrayList<>(List.of());
-        Arrays.stream(this.repairIngredient).toList().forEach(
-                (repIngredient) -> potentialIngredients.add(
-                        Registries.ITEM.get(new Identifier(repIngredient))));
-        return potentialIngredients.contains(ingredient.getItem());
-    }
-
-    @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (world.getTime() % 20 == 0
                 && entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
@@ -69,9 +53,9 @@ public class JesterPenetrateItem extends LanceItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip1").setStyle(abilityStyle));
@@ -80,6 +64,6 @@ public class JesterPenetrateItem extends LanceItem {
         tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip3").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip4").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 }

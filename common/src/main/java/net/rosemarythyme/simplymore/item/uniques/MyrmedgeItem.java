@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -8,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -20,9 +22,15 @@ import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.item.components.GrabbedComponent;
+import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 import org.joml.Vector3d;
 
 import java.util.List;
@@ -30,17 +38,17 @@ import java.util.UUID;
 
 
 public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getMyrmedgeCooldown() + effect.getMyrmedgeMaxGrabTime();
+    int skillCooldown = effect.myrmedge.cooldown + effect.myrmedge.grabTime;
 
     public MyrmedgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
-    public static float getHungerModifiedValue(PlayerEntity entity, int percentage, float value) {
+    public static float getHungerModifiedValue(PlayerEntity entity, float percentage, float value) {
         float hungerPercentage = entity.getHungerManager().getFoodLevel() / 20f;
         float extraPercentage = percentage * (1 - hungerPercentage);
 
-        return value * (extraPercentage/100f);
+        return value * (extraPercentage);
     }
 
     @Override
@@ -57,13 +65,13 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
                 return super.use(world, user, hand);
             }
 
-            stack.getOrCreateNbt().putUuid("simplymore:grabbed", target.getUuid());
+            stack.set(ModComponentRegistry.GRABBED.get(), new GrabbedComponent(target.getUuid()));
             user.getItemCooldownManager().set(this, skillCooldown);
 
             user.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.GRASPING.get(),
-                            effect.getMyrmedgeMaxGrabTime()
+                            ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING),
+                            effect.myrmedge.grabTime
                     )
             );
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_EVOKER_FANGS_ATTACK, SoundCategory.PLAYERS, 1,1.5f);
@@ -80,8 +88,8 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
 
         if (attacker instanceof PlayerEntity playerAttacker) {
             float extraDamage = getHungerModifiedValue(playerAttacker,
-                    effect.getMyrmedgeMaxDamagePercentageBuff(),
-                    config.weaponAttributes.getMyrmedgeDamage());
+                    effect.myrmedge.maxDamageBonus,
+                    (float) HelperMethods.getEntityAttackDamage(attacker));
 
             target.timeUntilRegen = 0;
             target.damage(target.getDamageSources().playerAttack(playerAttacker), extraDamage);
@@ -92,14 +100,13 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
     }
 
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
         if(world.getTime() % 20 == 0 && entity instanceof PlayerEntity playerEntity) {
             int amplifier = (int) Math.floor(getHungerModifiedValue(
                     playerEntity,
-                    500,
+                    5,
                     1
             )) -1;
 
@@ -118,13 +125,13 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         // Grasping
         if(entity instanceof PlayerEntity player
         && (selected || ( player.getOffHandStack() == stack  && player.getMainHandStack().getItem() != stack.getItem() ))
-        && player.hasStatusEffect(ModEffectsRegistry.GRASPING.get())
+        && player.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING))
         && !player.getWorld().isClient
         && player.isAlive()) {
 
 
-            if(stack.getOrCreateNbt().contains("simplymore:grabbed")) {
-                UUID uuid = stack.getOrCreateNbt().getUuid("simplymore:grabbed");
+            if(stack.get(ModComponentRegistry.GRABBED.get()) != null) {
+                UUID uuid = stack.get(ModComponentRegistry.GRABBED.get()).entityId();
                 Entity target = ((ServerWorld) world).getEntity(uuid);
 
                 if(target instanceof LivingEntity livingTarget && livingTarget.isAlive()) {
@@ -146,7 +153,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
                     );
 
                     Position blockPos = entity.raycast(1.2, 0, false).getPos();
-                    livingTarget.teleport(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    livingTarget.teleport(blockPos.getX(), blockPos.getY(), blockPos.getZ(), false);
                     livingTarget.limitFallDistance();
                     livingTarget.fallDistance = 0;
 
@@ -168,8 +175,8 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
                     }
 
                     // Throw
-                    if(player.getStatusEffect(ModEffectsRegistry.GRASPING.get()).getDuration() == 1) {
-                        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(player.getYaw()).mul(effect.getMyrmedgeThrowStrength());
+                    if(player.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING)).getDuration() == 1) {
+                        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(player.getYaw()).mul(effect.myrmedge.throwStrength);
                         livingTarget.setVelocity(new Vec3d(
                                 normalisedVector.x(),
                                 0.2f,
@@ -178,20 +185,20 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
                         livingTarget.velocityModified = true;
                     }
                 } else {
-                    player.removeStatusEffect(ModEffectsRegistry.GRASPING.get());
+                    player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING));
                 }
             }
         }
 
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip1").setStyle(abilityStyle));
@@ -203,13 +210,27 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip5").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip7",SimplyMoreHelperMethods.translateTicks(
-                effect.getMyrmedgeMaxGrabTime()
+                effect.myrmedge.grabTime
         )).setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip8").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip9").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.MYRMEDGE));
+        }
+
+        @ValidatedFloat.Restrict(min = 0f)
+        public float maxDamageBonus = 0.4f;
+        @ValidatedInt.Restrict(min = 0)
+        public int grabTime = 100;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 300;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float throwStrength = 1.6f;
+    }
 }

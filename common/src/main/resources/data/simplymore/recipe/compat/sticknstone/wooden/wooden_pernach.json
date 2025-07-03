@@ -1,0 +1,37 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "sticknstone"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sticknstone"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "tag": "minecraft:wooden_buttons"
+    }
+  },
+  "pattern": [
+    "BMB",
+    "BsB",
+    " s "
+  ],
+  "result": {
+    "id": "simplymore:wooden_pernach",
+    "count": 1
+  }
+}

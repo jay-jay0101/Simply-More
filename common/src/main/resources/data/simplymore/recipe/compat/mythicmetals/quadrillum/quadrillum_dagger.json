@@ -1,0 +1,37 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mythicmetals"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "item": "mythicmetals:quadrillum_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "   ",
+    "BMs",
+    "   "
+  ],
+  "result": {
+    "id": "simplymore:quadrillum_dagger",
+    "count": 1
+  }
+}

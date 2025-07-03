@@ -1,16 +1,16 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -25,17 +25,20 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 import org.joml.Vector3f;
 
 import java.util.List;
 
 public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getGlimmerstepExplosionCooldown();
+    int skillCooldown = effect.glimmerstep.cooldown;
 
     public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
     }
 
 
@@ -45,19 +48,19 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        int chance = attacker.getVehicle() instanceof LivingEntity ?
-                effect.getGlimmerstepStarlightMountedChance():
-                effect.getGlimmerstepStarlightChance();
-        if (attacker.getRandom().nextBetween(1, 100) <= chance) {
-            if (attacker.hasStatusEffect(ModEffectsRegistry.STARLIGHT.get())) {
-                int amplifier = attacker.getStatusEffect(ModEffectsRegistry.STARLIGHT.get()).getAmplifier();
-                amplifier = Math.min(amplifier + 1, effect.getGlimmerstepMaxStarlight() - 1);
-                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STARLIGHT.get(), effect.getGlimmerstepStarlightTime(), amplifier), attacker);
+        float chance = attacker.getVehicle() instanceof LivingEntity ?
+                effect.glimmerstep.chanceMounted:
+                effect.glimmerstep.chance;
+        if (SimplyMoreHelperMethods.chance(attacker, chance)) {
+            if (attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT))) {
+                int amplifier = attacker.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier();
+                amplifier = Math.min(amplifier + 1, effect.glimmerstep.maxStarlight - 1);
+                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), effect.glimmerstep.starlightTime, amplifier), attacker);
             } else {
-                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STARLIGHT.get(), effect.getGlimmerstepStarlightTime(), 0), attacker);
+                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), effect.glimmerstep.starlightTime, 0), attacker);
             }
 
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getGlimmerstepBlindTime()));
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.glimmerstep.blindTime));
 
             attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.PLAYERS, 1f,2f);
         }
@@ -69,7 +72,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 
-        if(!user.hasStatusEffect(ModEffectsRegistry.STARLIGHT.get())) {
+        if(!user.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT))) {
             return TypedActionResult.fail(itemStack);
         }
 
@@ -86,7 +89,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             return;
         }
 
-        int ticksUsed = getMaxUseTime(this.getDefaultStack()) - remainingUseTicks;
+        int ticksUsed = getMaxUseTime(stack, user) - remainingUseTicks;
 
         if(ticksUsed == 1) {
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1f,1.2f);
@@ -98,28 +101,28 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
                 user.getX(),
                 user.getEyeY(),
                 user.getZ(),
-                Math.min(ticksUsed, Math.min(60, effect.getGlimmerstepExplosionCharge())),
+                Math.min(ticksUsed, Math.min(60, effect.glimmerstep.explosionWindup)),
                 4f,
                 4f,
                 4f,
                 0f
         );
 
-        if(ticksUsed == effect.getGlimmerstepExplosionCharge()) {
+        if(ticksUsed == effect.glimmerstep.explosionWindup) {
             user.stopUsingItem();
 
-            int boxSize = effect.getGlimmerstepExplosionRange();
+            int boxSize = effect.glimmerstep.explosionRange;
             Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
             List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-            float damage = 0;
+            float damage;
             try {
-                damage = effect.getGlimmerstepExplosionDamagePerStarlight() * (user.getStatusEffect(ModEffectsRegistry.STARLIGHT.get()).getAmplifier() + 1);
+                damage = effect.glimmerstep.explosionDamagePerStarlight * (user.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier() + 1);
             } catch (NullPointerException e) {
-                damage = effect.getGlimmerstepExplosionDamagePerStarlight();
+                damage = effect.glimmerstep.explosionDamagePerStarlight;
             }
 
             ((PlayerEntity) user).getItemCooldownManager().set(this, skillCooldown);
-            user.removeStatusEffect(ModEffectsRegistry.STARLIGHT.get());
+            user.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT));
 
             float finalDamage = damage;
             livingEntities.stream().filter(
@@ -127,7 +130,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             ).forEach(
                     livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
                             (livingEntity.isTeammate(user) || livingEntity == user)?
-                                    finalDamage * (effect.getGlimmerstepSelfAndAllyDamagePercentage()/100f) : finalDamage)
+                                    finalDamage * (effect.glimmerstep.glimmerstepAllyDamage) : finalDamage)
             );
 
             ((ServerWorld) user.getWorld()).spawnParticles(
@@ -149,7 +152,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 9999999;
     }
 
@@ -158,32 +161,22 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-        if (entity.getVehicle() instanceof LivingEntity
-                && selected
-                && ((PlayerEntity) entity)
-                .getStackInHand(Hand.OFF_HAND).getItem().getAttributeModifiers(EquipmentSlot.MAINHAND)
-                .get(EntityAttributes.GENERIC_ATTACK_DAMAGE).isEmpty()) ((PlayerEntity) entity)
-                .addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.LANCE.get(),9999999,0));
-        super.inventoryTick(stack, world, entity, slot, selected);
-
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip2",
-                effect.getGlimmerstepMaxStarlight()).setStyle(textStyle));
+                effect.glimmerstep.maxStarlight).setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip3").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
@@ -194,6 +187,39 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip7").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip8").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip9").setStyle(textStyle));
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.GLIMMERSTEP));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int maxStarlight = 10;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.25f;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chanceMounted = 0.4f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float explosionDamagePerStarlight = 3.2f;
+        @ValidatedInt.Restrict(min = 0)
+        public int blindTime = 40;
+        @ValidatedInt.Restrict(min = 0)
+        public int baseSpeedFrequency = 200;
+        @ValidatedInt.Restrict(min = 0)
+        public int speedFrequencyPerStack = 10;
+        @ValidatedInt.Restrict(min = 0)
+        public int speedTime = 40;
+        @ValidatedInt.Restrict(min = 0)
+        public int explosionRange = 5;
+        @ValidatedInt.Restrict(min = 0)
+        public int explosionWindup = 60;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 800;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float glimmerstepAllyDamage = 0.8f;
+        @ValidatedInt.Restrict(min = 0)
+        public int starlightTime = 800;
     }
 }

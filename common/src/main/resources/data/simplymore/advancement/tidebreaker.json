@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "id": "simplymore:tidebreaker"
+    },
+    "title": {
+      "translate": "advancements.simplymore.tidebreaker.title",
+      "with": []
+    },
+    "description": {
+      "translate": "advancements.simplyswords.find_unique.description",
+      "with": [
+        {
+          "translate": "item.simplymore.tidebreaker"
+        }
+      ]
+    },
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:tidebreaker"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

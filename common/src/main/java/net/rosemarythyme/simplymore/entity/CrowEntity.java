@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.entity;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.AnimationState;
@@ -25,6 +24,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.server.world.ServerWorld;
@@ -34,10 +34,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.EntityView;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.item.uniques.DeathsEyrieItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
@@ -54,21 +53,20 @@ public class CrowEntity extends TameableEntity implements Ownable {
     private PlayerEntity owner;
     public final AnimationState flapAnimationState = new AnimationState();
 
-    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(1, new FollowOwnerGoal(this, 1.0, 3.0F, 1F, true));
+        this.goalSelector.add(1, new FollowOwnerGoal(this, 1.0, 3.0F, 1F));
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(2, new SitGoal(this));
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ATTACKING_UUID, Optional.empty());
-        this.dataTracker.startTracking(ATTACKING_TIME, OptionalInt.of(0));
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ATTACKING_UUID, Optional.empty());
+        builder.add(ATTACKING_TIME, OptionalInt.of(0));
     }
 
 
@@ -153,11 +151,11 @@ public class CrowEntity extends TameableEntity implements Ownable {
                                     .setBaseValue(1.0);
                         }
 
-                        target.damage(this.owner.getDamageSources().playerAttack(this.owner), effect.getDeathsEyrieCrowAttackDamage());
+                        target.damage(this.owner.getDamageSources().playerAttack(this.owner), effect.deaths_eyrie.crowDamage);
                         this.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, 10,0, true, false));
-                        this.owner.heal(effect.getDeathsEyrieCrowAttackHeal());
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,effect.getDeathsEyrieCrowAttackBlindTime()));
-                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.BLEED.get(),effect.getDeathsEyrieCrowAttackBleedTime()));
+                        this.owner.heal(effect.deaths_eyrie.deathsEyrieCrowAttackHeal);
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,effect.deaths_eyrie.crowBlindTime));
+                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),effect.deaths_eyrie.crowBleedTime));
 
                         if (target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE) != null) {
                             target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)
@@ -215,8 +213,13 @@ public class CrowEntity extends TameableEntity implements Ownable {
         }
     }
 
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return false;
+    }
+
     public void teleportWithParticles(double x,double y, double z) {
-        teleport(x, y, z);
+        teleport(x, y, z, false);
 
         this.getWorld().playSound(
                 null,
@@ -292,11 +295,6 @@ public class CrowEntity extends TameableEntity implements Ownable {
 
     @Override
     public @Nullable PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return null;
-    }
-
-    @Override
-    public EntityView method_48926() {
         return null;
     }
 

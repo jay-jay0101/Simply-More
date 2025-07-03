@@ -15,28 +15,9 @@ import org.joml.Vector3f;
 
 public class RiftAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
-    int color;
+    Vector3f color;
 
-    Vector3f[] colours = new Vector3f[] {
-            new Vector3f(1, 1, 1),
-            new Vector3f(1, 0.667f, 0),
-            new Vector3f(1, 0.333f, 1),
-            new Vector3f(0.333f,1, 1),
-            new Vector3f(1, 1, 0.333f),
-            new Vector3f(0.333f,1, 0.333f),
-            new Vector3f(1, 0.75f, 0.8f),
-            new Vector3f(1, 0.333f, 0.333f),
-            new Vector3f(0.667f,0.667f, 0.667f),
-            new Vector3f(0, 0.667f, 0.667f),
-            new Vector3f(0.667f,0, 0.667f),
-            new Vector3f(0.333f,0.333f, 1),
-            new Vector3f(0.667f,0.333f, 0),
-            new Vector3f(0, 0.667f, 0),
-            new Vector3f(0.667f,0, 0),
-            new Vector3f(0, 0, 0)
-    };
-
-    public RiftAreaEffectCloudEntity(World world, double x, double y, double z, LivingEntity owner, int color) {
+    public RiftAreaEffectCloudEntity(World world, double x, double y, double z, LivingEntity owner, Vector3f color) {
         super(world, x, y, z);
         SimplyMoreHelperMethods.simplyMore$setAreaEffectCloudParameters(this, ParticleTypes.ASH, 0.25f, 0, 0, owner, 300);
         this.color = color;
@@ -56,8 +37,8 @@ public class RiftAreaEffectCloudEntity extends AreaEffectCloudEntity {
             return;
         }
 
-        DustParticleEffect bigParticle = new DustParticleEffect(colours[color], 3);
-        DustParticleEffect smallParticle = new DustParticleEffect(colours[color], 1);
+        DustParticleEffect bigParticle = new DustParticleEffect(color, 3);
+        DustParticleEffect smallParticle = new DustParticleEffect(color, 1);
 
         ((ServerWorld) getWorld()).spawnParticles(bigParticle, getX(), getY(), getZ(), 2, 0.2, 0.2, 0.2, 0.3);
 

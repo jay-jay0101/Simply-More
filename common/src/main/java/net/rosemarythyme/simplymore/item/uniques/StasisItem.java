@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
@@ -8,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -21,24 +23,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 public class StasisItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getStasisLightningCooldown();
-    int onHitCooldown = effect.getStasisStagnationTime();
+    int skillCooldown = effect.stasis.cooldown;
+    int onHitCooldown = effect.stasis.stunTime;
 
 
     public StasisItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (attacker.getRandom().nextBetween(1, 100) <= effect.getStasisStagnationChance()) {
+                if (SimplyMoreHelperMethods.chance(attacker, effect.stasis.chance)) {
                     attacker.getWorld().playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.PLAYERS,0.5f,2f);
                     ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),50,0.15,0.25,0.15,0.1);
                     if (target instanceof PlayerEntity playerTarget) {
@@ -95,13 +100,13 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     }
 
     private void damageAndElectrifyEnemies(LivingEntity user, PlayerEntity player, ServerWorld world) {
-        int boxRange = effect.getStasisLightningRange();
+        int boxRange = effect.stasis.range;
         Box box = new Box(user.getX() - boxRange, user.getY() - 2, user.getZ() - boxRange, user.getX() + boxRange, user.getY() + boxRange*2, user.getZ() + boxRange);
         for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
             if (entity == user || entity.isTeammate(user)) {
                 continue;
             }
-            entity.damage(player.getDamageSources().magic(), effect.getStasisLightningDamage());
+            entity.damage(player.getDamageSources().magic(), effect.stasis.strikeDamage);
 
             LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
             if (lightning != null) {
@@ -114,8 +119,8 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return effect.getStasisLightningWindup();
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+        return effect.stasis.strikeWindup;
     }
 
 
@@ -124,19 +129,18 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.GLOW);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.GLOW);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip1").setStyle(abilityStyle));
@@ -148,6 +152,25 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip5").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.STASIS));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 700;
+        @ValidatedInt.Restrict(min = 0)
+        public int stunTime = 80;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.2f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float strikeDamage = 16;
+        @ValidatedInt.Restrict(min = 0)
+        public int strikeWindup = 60;
+        @ValidatedInt.Restrict(min = 0)
+        public int range = 4;
     }
 }

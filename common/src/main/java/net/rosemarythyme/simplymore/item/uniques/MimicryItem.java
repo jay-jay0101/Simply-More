@@ -1,8 +1,8 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
 import dev.architectury.registry.registries.RegistrySupplier;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -11,7 +11,7 @@ import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
@@ -29,13 +29,16 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.config.MimicryAttributesConfig;
+import net.rosemarythyme.simplymore.config.MimicryConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.registry.ModTagRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 import org.joml.Vector3d;
 
 import java.util.ArrayList;
@@ -44,26 +47,26 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class MimicryItem extends SimplyMoreUniqueSwordItem {
-    protected final Style rightClickStyle = HelperMethods.getStyle("rightclick");
-    protected final Style abilityStyle = HelperMethods.getStyle("ability");
-    protected final Style textStyle = HelperMethods.getStyle("text");
+public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
+    protected final Style textStyle = Styles.TEXT;
+    protected final Style abilityStyle = Styles.ABILITY;
+    protected final Style rightClickStyle = Styles.RIGHT_CLICK;
 
-    protected static MimicryAttributesConfig mimicryAttributes = config.mimicry;
+    protected static MimicryConfig mimicry = effect.mimicry.config;
 
-    int skillBetweenComboCooldown = effect.getMimicryCooldownBetweenTypes();
-    int skillCooldown = effect.getMimicryTypeCooldown();
+    int skillBetweenComboCooldown = effect.mimicry.cooldown;
+    int skillCooldown = effect.mimicry.typeCooldown;
     public static final int usageEffectTime = 9999999;
 
-    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
+        super(toolMaterial, attackDamage, attackSpeed, swordType, settings);
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 
-        if(user.hasStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get())) {
+        if(user.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING))) {
             return TypedActionResult.fail(itemStack);
         }
 
@@ -87,13 +90,13 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
 
             user.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.MIMICRY_HAPPENING.get(),
+                            ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING),
                             usageEffectTime,
                             getAmplifier(stack.getItem())
                     )
             );
 
-            stack.getOrCreateNbt().putBoolean("simplymore:change", true);
+            stack.set(ModComponentRegistry.CHANGE.get(), true);
         }
 
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -109,8 +112,8 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return effect.getMimicryWindup();
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+        return effect.mimicry.windup;
     }
 
     @Override
@@ -118,14 +121,11 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
-    int stepMod = 0;
-
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stack.getOrCreateNbt().contains("simplymore:change")
-                && stack.getOrCreateNbt().getBoolean("simplymore:change")
+        if (Boolean.TRUE.equals(stack.get(ModComponentRegistry.CHANGE.get()))
                 && entity instanceof PlayerEntity playerEntity
-                && !playerEntity.hasStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get())
+                && !playerEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING))
                 && !playerEntity.getWorld().isClient
         ) {
             playerEntity.getItemCooldownManager().set(stack.getItem(), skillCooldown);
@@ -141,12 +141,9 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
             Item newItem = ModItemsRegistry.MIMICRY_ITEMS.get(newForm).get();
             playerEntity.getItemCooldownManager().set(newItem, skillBetweenComboCooldown);
 
-            if(newItem instanceof MimicryItem mimicryItemToTransformInto) {
-                NbtCompound nbt = stack.getNbt();
-                ItemStack newItemStack = mimicryItemToTransformInto.getDefaultStack();
-                nbt = nbt == null ? new NbtCompound() : nbt.copy();
-                newItemStack.setNbt(nbt);
-                newItemStack.getOrCreateNbt().putBoolean("simplymore:change", false);
+            if(newItem instanceof MimicryItem mimicryItem) {
+                ItemStack newItemStack = stack.copyComponentsToNewStack(mimicryItem, 1);
+                newItemStack.set(ModComponentRegistry.CHANGE.get(), false);
 
                 int slotIndex = playerEntity.getInventory().getSlotWithStack(stack);
                 if(slotIndex != -1) {
@@ -159,11 +156,11 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        if(!stack.getOrCreateNbt().contains("simplymore:change")) {
-            stack.getOrCreateNbt().putBoolean("simplymore:change", false);
+        if(stack.get(ModComponentRegistry.CHANGE.get()) == null) {
+            stack.set(ModComponentRegistry.CHANGE.get(), false);
         }
 
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -192,15 +189,12 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
-        if(otherStack.isIn(ModTagRegistry.ALL) && !player.hasStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get())) {
+        if(otherStack.isIn(ModTagRegistry.ALL) && !player.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING))) {
             String clickedItemType = checkItem(otherStack.getItem());
             Item itemToTransformInto = ModItemsRegistry.MIMICRY_ITEMS.get(clickedItemType).get();
 
-            if(itemToTransformInto instanceof MimicryItem mimicryItemToTransformInto && isFormEnabled(mimicryItemToTransformInto, player)) {
-                NbtCompound nbt = stack.getNbt();
-                ItemStack newItem = mimicryItemToTransformInto.getDefaultStack();
-                nbt = nbt == null? new NbtCompound():nbt.copy();
-                newItem.setNbt(nbt);
+            if(itemToTransformInto instanceof MimicryItem mimicryItem && isFormEnabled(mimicryItem, player)) {
+                ItemStack newItem = stack.copyComponentsToNewStack(mimicryItem, 1);
 
                 int slotIndex = player.getInventory().getSlotWithStack(stack);
                 if(slotIndex != -1) {
@@ -261,7 +255,7 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip1").setStyle(abilityStyle));
@@ -275,13 +269,12 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip8",
                 getMimicryFormName()).setStyle(rightClickStyle));
-        appendSpecificTooltip(itemStack, world, tooltip, tooltipContext);
+        appendSpecificTooltip(tooltip);
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-    }
+    public abstract void appendSpecificTooltip(List<Text> tooltip);
 
     public void knockback(PlayerEntity player, LivingEntity target, float strength) {
         Vec3d userPosition = player.getPos();
@@ -451,6 +444,21 @@ public class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public static void breakShield(LivingEntity target) {
-        if(target.isBlocking() && target instanceof PlayerEntity playerEntity) playerEntity.disableShield(true);
+        if(target.isBlocking() && target instanceof PlayerEntity playerEntity) playerEntity.disableShield();
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_LONGSWORD));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int typeCooldown = 400;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 60;
+        @ValidatedInt.Restrict(min = 0)
+        public int windup = 10;
+
+        public MimicryConfig config = new MimicryConfig();
     }
 }

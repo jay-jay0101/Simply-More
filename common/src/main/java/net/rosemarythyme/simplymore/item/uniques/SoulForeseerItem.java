@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -8,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -19,9 +21,12 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -30,7 +35,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = 100;
 
     public SoulForeseerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
     @Override
@@ -39,10 +44,10 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         if (attacker.getWorld() instanceof ServerWorld serverworld
-                && attacker.getRandom().nextBetween(1, 100) <= effect.getForeseerForeseenChance()
-                && !target.hasStatusEffect(ModEffectsRegistry.FORESEEN.get())) {
+                && SimplyMoreHelperMethods.chance(attacker, effect.soul_foreseer.chance)
+                && !target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
             serverworld.playSound(null, attacker.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_NORDIC_27.get(), SoundCategory.PLAYERS);
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.FORESEEN.get(), effect.getForeseerForseenTime(), 0));
+            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN), effect.soul_foreseer.effectTime, 0));
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10, 0));
             serverworld.spawnParticles(ParticleTypes.SOUL_FIRE_FLAME, attacker.getX(), attacker.getY() + 1, attacker.getZ(), 50, 0.25f, 0.25f, 0.25f, 0.1);
         }
@@ -54,20 +59,20 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!player.getWorld().isClient()) {
             boolean hasAffectedEntity = false;
-            int boxRange = effect.getForeseerJudgeTeleportRange();
+            int boxRange = effect.soul_foreseer.range;
             Box box = new Box(player.getX() - boxRange, player.getY() - boxRange, player.getZ() - boxRange, player.getX() + boxRange, player.getY() + boxRange, player.getZ() + 20);
             List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
             for (LivingEntity livingEntity : entities) {
-                if (livingEntity == player || livingEntity.isTeammate(player) || !livingEntity.hasStatusEffect(ModEffectsRegistry.FORESEEN.get())) {
+                if (livingEntity == player || livingEntity.isTeammate(player) || !livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
                     continue;
                 }
 
-                livingEntity.removeStatusEffect(ModEffectsRegistry.FORESEEN.get());
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getForeseerJudgeTeleportNegativeEffectTime(), 3));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getForeseerJudgeTeleportNegativeEffectTime(), 0));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.getForeseerJudgeTeleportNegativeEffectTime(), 1));
-                livingEntity.teleport(player.getX(), player.getY(), player.getZ());
+                livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.soul_foreseer.effectTime, 3));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.soul_foreseer.effectTime, 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.soul_foreseer.effectTime, 1));
+                livingEntity.teleport(player.getX(), player.getY(), player.getZ(), false);
                 livingEntity.velocityModified = true;
                 hasAffectedEntity = true;
             }
@@ -80,30 +85,44 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
         return super.use(world, player, hand);
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.SOUL, ParticleTypes.SCULK_SOUL, ParticleTypes.WARPED_SPORE);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.SOUL, ParticleTypes.SCULK_SOUL, ParticleTypes.WARPED_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip2").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip3").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip5", SimplyMoreHelperMethods.translateTicks(effect.getForeseerForseenTime())).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip5", SimplyMoreHelperMethods.translateTicks(effect.soul_foreseer.foreseenTime)).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip7").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.SOUL_FORESEER));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int foreseenTime = 160;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.3f;
+        @ValidatedInt.Restrict(min = 0)
+        public int range = 20;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 80;
     }
 }

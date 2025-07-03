@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -8,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -20,11 +22,16 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.CrowEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModEntityRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -33,24 +40,30 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = effect.getDeathsEyrieCooldown();
+    @Override
+    public CounterComponent getDefaultComponent() {
+        return new CounterComponent(0, 5);
+    }
+
+    int skillCooldown = effect.deaths_eyrie.cooldown;
     public static final int maxCrows = 5;
 
+
     public DeathsEyrieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient() && attacker instanceof PlayerEntity playerAttacker && !playerAttacker.getItemCooldownManager().isCoolingDown(this)) {
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getDeathsEyrieBleedChance()) {
-                int effectTime = effect.getDeathsEyrieBaseBleedTime();
-                effectTime += effect.getDeathsEyrieCrowAdditionalBleedTime() * getCrows(stack);
+            if (SimplyMoreHelperMethods.chance(attacker, effect.deaths_eyrie.chance)) {
+                int effectTime = effect.deaths_eyrie.baseBleedTime;
+                effectTime += effect.deaths_eyrie.additionalBleedTime * getCrows(stack);
                 int amplifier = (int) Math.floor(0.75f * (getCrows(stack) -1));
 
                 target.addStatusEffect(new StatusEffectInstance(
-                        ModEffectsRegistry.BLEED.get(),
+                        ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
                         effectTime,
                         amplifier
                 ));
@@ -91,7 +104,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
             if (!pets.isEmpty()) {
                 AtomicInteger offset = new AtomicInteger();
                 pets.forEach(crowEntity -> {
-                    crowEntity.setAttackingTime(offset.get() + (pets.size() * effect.getDeathsEyrieCrowAttackTimePerCrow()));
+                    crowEntity.setAttackingTime(offset.get() + (pets.size() * effect.deaths_eyrie.crowAttackTimePerCrow));
                     offset.getAndIncrement();
                     crowEntity.setAttackingUuid(target.getUuid());
                 });
@@ -107,7 +120,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
     public static int getCrows(ItemStack stack) {
         final int minCrows = 1; // Constant
 
-        int crows = stack.getOrCreateNbt().getInt("simplymore:crow");
+        int crows = SimplyMoreHelperMethods.getCounterComponent(stack).value();
 
         crows = Math.max(minCrows, crows);
         crows = Math.min(maxCrows, crows);
@@ -116,10 +129,10 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
     }
 
     public static void setCrows(ItemStack stack, int value) {
-        stack.getOrCreateNbt().putInt("simplymore:crow", value);
+        SimplyMoreHelperMethods.setCounterComponent(stack,
+                SimplyMoreHelperMethods.getCounterComponent(stack).set(value));
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if(
@@ -136,7 +149,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
 
             if(!player.getItemCooldownManager().isCoolingDown(this)) {
                 if (pets.size() > crows) {
-                    pets.get(0).kill();
+                    pets.getFirst().kill();
                 } else if (pets.size() < crows) {
                     double dX = player.getRandom().nextBetween(-15,15) / 10d;
                     double dZ = player.getRandom().nextBetween(-15,15) / 10d;
@@ -171,15 +184,15 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.WARPED_SPORE);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.WARPED_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip1").setStyle(abilityStyle));
@@ -196,6 +209,32 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip10").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip11").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.DEATHS_EYRIE));
+        }
+
+
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.25f;
+        @ValidatedInt.Restrict(min = 0)
+        public int baseBleedTime = 80;
+        @ValidatedInt.Restrict(min = 0)
+        public int additionalBleedTime = 20;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 550;
+        @ValidatedInt.Restrict(min = 0)
+        public int crowBleedTime = 120;
+        @ValidatedInt.Restrict(min = 0)
+        public int crowBlindTime = 20;
+        @ValidatedInt.Restrict(min = 0)
+        public int crowAttackTimePerCrow = 30;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float crowDamage = 2.3f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float deathsEyrieCrowAttackHeal = 0.3f;
     }
 }

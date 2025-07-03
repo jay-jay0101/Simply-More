@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.effect;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -14,8 +13,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.entity.KickbackAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.uniques.RevvengineItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
@@ -32,13 +31,10 @@ public class RevvengineRushEffect extends StatusEffect {
         super(category, color);
     }
 
-    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
-
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         // Sound
         if(entity.age % 2 == 0)
             entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get(), SoundCategory.PLAYERS, 1, 1.2f);
@@ -121,34 +117,34 @@ public class RevvengineRushEffect extends StatusEffect {
             if(amplifier > 0) {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase3EffectTime(),
-                        effect.getRevvenginePhase3Damage(),
+                        effect.revvengine.p3effectTime,
+                        effect.revvengine.p3damage,
                         true
                 );
             } else {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase2EffectTime(),
-                        effect.getRevvenginePhase2Damage(),
+                        effect.revvengine.p2effectTime,
+                        effect.revvengine.p2damage,
                         false
                 );
             }
         }
 
         // On End Effect
-        if (entity.hasStatusEffect(this) && entity.getStatusEffect(this).getDuration() < 10) {
+        if (entity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS)) && entity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS)).getDuration() < 10) {
             if(amplifier > 0) {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase3EffectTime(),
-                        effect.getRevvenginePhase3Damage(),
+                        effect.revvengine.p3effectTime,
+                        effect.revvengine.p3damage,
                         true
                 );
             } else {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase2EffectTime(),
-                        effect.getRevvenginePhase2Damage(),
+                        effect.revvengine.p2effectTime,
+                        effect.revvengine.p2damage,
                         false
                 );
             }
@@ -167,12 +163,14 @@ public class RevvengineRushEffect extends StatusEffect {
                     )
             );
         }
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     public void causeSlash(LivingEntity user, int effectTime, float damage, boolean isTier3) {
         if(user.getWorld().isClient) return;
 
-        user.removeStatusEffect(this);
+        user.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS));
         Vec3d position = user.getEyePos();
         Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(user.getYaw());
 
@@ -197,13 +195,13 @@ public class RevvengineRushEffect extends StatusEffect {
             livingEntity.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),
                     RevvengineItem.getHealthModifiedValue(user,
-                            effect.getRevvengineMaxDamagePercentageBuff(),
+                            effect.revvengine.damageBuff,
                             damage) + damage
             );
 
             livingEntity.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.BLEED.get(),
+                            ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
                             effectTime,
                             0
                     )
@@ -218,7 +216,7 @@ public class RevvengineRushEffect extends StatusEffect {
             );
 
             if(isTier3) {
-                livingEntity.setOnFireFor(effectTime/20);
+                livingEntity.setOnFireFor(effectTime / 20f);
             }
 
             user.getWorld().playSound(null, particlePos.getX(), particlePos.getY(), particlePos.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1,0.5f);

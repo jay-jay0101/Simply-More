@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.entity;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -10,8 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 
 public class GreatSlitherFangEntity extends EvokerFangsEntity {
@@ -81,16 +80,15 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
         }
     }
 
-    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
     private void damage(LivingEntity target) {
-        float damageAmount = effect.getSlitherFangsDamage();
-        int venomTime = effect.getSlitherFangsVenomTime();
-        int slowTime = effect.getSlitherFangsSlowTime();
+        float damageAmount = effect.great_slither.fangDamage;
+        int venomTime = effect.great_slither.venomTime;
+        int slowTime = effect.great_slither.fangsSlowTime;
         if (target.isAlive() && !target.isInvulnerable() && target != owner) {
             if (owner == null) {
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM.get(), venomTime, 0), null);
+                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), venomTime, 0), null);
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, slowTime, 2), null);
                 target.damage(getDamageSources().playerAttack(null), damageAmount);
             } else {
@@ -98,7 +96,7 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
                     return;
                 }
 
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM.get(), venomTime, 0), owner);
+                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), venomTime, 0), owner);
                 target.damage(getDamageSources().playerAttack(((PlayerEntity) owner)), damageAmount);
             }
         }

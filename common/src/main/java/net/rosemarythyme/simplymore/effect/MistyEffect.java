@@ -22,50 +22,49 @@ public class MistyEffect extends StatusEffect {
 
 
     @Override
-    public void applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
-        if (!affectedEntity.hasStatusEffect(this)) {
-            return;
-        }
+    public boolean applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
+        if(affectedEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED))) {
+            int effectDuration = affectedEntity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED)).getDuration();
 
-        int effectDuration = affectedEntity.getStatusEffect(this).getDuration();
+            if (effectDuration >= 9960
+                    && effectDuration < 9990
+                    && !affectedEntity.getWorld().isClient
+                    && affectedEntity instanceof PlayerEntity playerEntity) {
 
-        if (effectDuration >= 9960
-                && effectDuration < 9990
-                && !affectedEntity.getWorld().isClient
-                && affectedEntity instanceof PlayerEntity playerEntity) {
+                float playerYaw = (float) Math.toRadians(playerEntity.getYaw() + 90);
+                float playerPitch = (float) Math.toRadians(playerEntity.getPitch());
 
-            float playerYaw = (float) Math.toRadians(playerEntity.getYaw() + 90);
-            float playerPitch = (float) Math.toRadians(playerEntity.getPitch());
+                float forwardDirectionX = (float) (Math.cos(playerYaw) * Math.cos(playerPitch));
+                float forwardDirectionZ = (float) (Math.sin(playerYaw) * Math.cos(playerPitch));
+                float forwardDirectionY = (float) Math.sin(playerPitch) * -1.0f;
+                LivingEntity teleportTarget = findTeleportTarget(playerEntity, forwardDirectionX, forwardDirectionY, forwardDirectionZ);
 
-            float forwardDirectionX = (float) (Math.cos(playerYaw) * Math.cos(playerPitch));
-            float forwardDirectionZ = (float) (Math.sin(playerYaw) * Math.cos(playerPitch));
-            float forwardDirectionY = (float) Math.sin(playerPitch) * -1.0f;
-            LivingEntity teleportTarget = findTeleportTarget(playerEntity, forwardDirectionX, forwardDirectionY, forwardDirectionZ);
-
-            if (teleportTarget != null) {
-                playerEntity.removeStatusEffect(this);
-                double distanceToTarget = Math.sqrt(
-                                  Math.pow(playerEntity.getX() - teleportTarget.getX(), 2)
-                                + Math.pow(playerEntity.getY() - teleportTarget.getY(), 2)
-                                + Math.pow(playerEntity.getZ() - teleportTarget.getZ(), 2)
-                );
-                distanceToTarget /= 10;
-                spawnParticles(playerEntity, forwardDirectionX, forwardDirectionY, forwardDirectionZ, distanceToTarget);
-                playerEntity.teleport(teleportTarget.getX(), teleportTarget.getY(), teleportTarget.getPos().getZ());
+                if (teleportTarget != null) {
+                    playerEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED));
+                    double distanceToTarget = Math.sqrt(
+                            Math.pow(playerEntity.getX() - teleportTarget.getX(), 2)
+                                    + Math.pow(playerEntity.getY() - teleportTarget.getY(), 2)
+                                    + Math.pow(playerEntity.getZ() - teleportTarget.getZ(), 2)
+                    );
+                    distanceToTarget /= 10;
+                    spawnParticles(playerEntity, forwardDirectionX, forwardDirectionY, forwardDirectionZ, distanceToTarget);
+                    playerEntity.teleport(teleportTarget.getX(), teleportTarget.getY(), teleportTarget.getPos().getZ(), false);
+                }
             }
+
+            if (affectedEntity.isOnGround() && effectDuration < 9980) {
+                affectedEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED));
+            }
+
+            if (!affectedEntity.getWorld().isClient) {
+                ((ServerWorld) affectedEntity.getWorld()).spawnParticles(ParticleTypes.LARGE_SMOKE, affectedEntity.getX(), affectedEntity.getY() + 0.5, affectedEntity.getZ(), 5, 0.5, 0.5, 0.5, 0);
+            }
+
+            affectedEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 5));
+            affectedEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, 5));
         }
 
-        if (affectedEntity.isOnGround() && effectDuration < 9980) {
-            affectedEntity.removeStatusEffect(this);
-        }
-
-        if (!affectedEntity.getWorld().isClient) {
-            ((ServerWorld) affectedEntity.getWorld()).spawnParticles(ParticleTypes.LARGE_SMOKE, affectedEntity.getX(), affectedEntity.getY() + 0.5, affectedEntity.getZ(), 5, 0.5, 0.5, 0.5, 0);
-        }
-
-        affectedEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 5));
-        affectedEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, 5));
-        super.applyUpdateEffect(affectedEntity, amplifier);
+        return super.applyUpdateEffect(affectedEntity, amplifier);
     }
 
     private LivingEntity findTeleportTarget(PlayerEntity player, float offsetDirectionX, float offsetDirectionY, float offsetDirectionZ) {
@@ -99,7 +98,7 @@ public class MistyEffect extends StatusEffect {
                         amplifier = 20;
                     }
                     amplifier--;
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.WITHERING_FATE.get(), 600, amplifier));
+                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE), 600, amplifier));
                     target.damage(player.getDamageSources().playerAttack(player), 8);
                 }
             }

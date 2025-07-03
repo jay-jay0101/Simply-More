@@ -1,35 +1,38 @@
 package net.rosemarythyme.simplymore.item;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.util.ValidationResult;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.power.GemPowerComponent;
+import net.sweenus.simplyswords.power.GemPowerFiller;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class RuneCarverItem extends Item {
+public class RuneCarverItem extends Item implements GemPowerFiller {
 
-    String type;
+    Types type;
 
-    public RuneCarverItem(Settings settings, String type) {
+    public RuneCarverItem(Settings settings, Types type) {
         super(settings);
         this.type = type;
     }
 
     @Override
     public Text getName(ItemStack stack) {
-        Style RUNIC = type.equals("runic")? HelperMethods.getStyle("runic") : HelperMethods.getStyle("legendary");
+        Style RUNIC = type == Types.RUNEFUSED ? Styles.RUNIC : Styles.LEGENDARY;
         return Text.translatable(this.getTranslationKey(stack)).setStyle(RUNIC);
     }
 
+
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType tooltipType) {
         tooltip.add(Text.literal(""));
-        if (type.equals("runic")) {
+        if (type == Types.RUNEFUSED) {
             tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
             tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
         } else {
@@ -38,4 +41,21 @@ public class RuneCarverItem extends Item {
         }
     }
 
+    @Override
+    public ValidationResult<GemPowerComponent> fill(ItemStack stack, GemPowerComponent component) {
+        if (type == Types.RUNEFUSED) {
+            return !(component.hasRunicPower()) ?
+                    ValidationResult.Companion.success(new GemPowerComponent(true, component.hasNetherPower(), component.runicPower(), component.netherPower())) :
+                    ValidationResult.Companion.error(component, "Can't add runic socket to the provided component");
+        } else {
+            return !(component.hasNetherPower()) ?
+                    ValidationResult.Companion.success(new GemPowerComponent(component.hasRunicPower(), true, component.runicPower(), component.netherPower())) :
+                    ValidationResult.Companion.error(component, "Can't add nether socket to the provided component");
+        }
+    }
+
+    public enum Types {
+        RUNEFUSED,
+        NETHERFUSED
+    }
 }

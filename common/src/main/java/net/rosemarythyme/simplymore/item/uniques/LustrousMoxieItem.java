@@ -1,12 +1,14 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -20,33 +22,36 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getLustrousRadiantTeleportCooldown();
+    int skillCooldown = effect.lustrous_moxie.cooldown;
 
     public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            StatusEffectInstance radiantMarkEffect = target.getStatusEffect(ModEffectsRegistry.RADIANT_MARK.get());
-            if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK.get()) && radiantMarkEffect != null) {
+            StatusEffectInstance radiantMarkEffect = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK));
+            if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                 target.damage(attacker.getDamageSources().magic(),radiantMarkEffect.getAmplifier() + 1);
             }
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getLustrousRadiantMarkChance()) {
-                if (target.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK.get()) && radiantMarkEffect != null) {
+            if (SimplyMoreHelperMethods.chance(attacker, effect.lustrous_moxie.chance)) {
+                if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                     int amplifier = radiantMarkEffect.getAmplifier() + 1;
                     int duration = 240 - (amplifier * 40);
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.RADIANT_MARK.get(), duration, amplifier), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK), duration, amplifier), attacker);
                 } else {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.RADIANT_MARK.get(), 200, 0), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK), 200, 0), attacker);
                 }
             }
         }
@@ -64,17 +69,17 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             damageAndKnockbackAndTeleportToRadiantMarkedTarget(target, user);
             damageAndKnockbackNearbyNonRadiantMarkedEntities(target, user);
 
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED_MOXIE.get(), effect.getLustrousRadiantTeleportStunTime(), 0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED_MOXIE), effect.lustrous_moxie.stunTime, 0));
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
     }
 
     private LivingEntity locateRadiantMarkedTarget(PlayerEntity user) {
-        int boxRange = effect.getLustrousRadiantTeleportRange();
+        int boxRange = effect.lustrous_moxie.range;
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> potentiallyMarkedLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-        LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.RADIANT_MARK.get())).findAny().orElse(null);
+        LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK))).findAny().orElse(null);
 
         if (markedEntity == null || (markedEntity == user || markedEntity.isTeammate(user))) {
             return null;
@@ -87,18 +92,18 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         if (targetEntity == user.getAttacking()) {
             user.teleport(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ(), false);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 2, user.getZ(), 500, 3, 3, 3, 0);
-            targetEntity.removeStatusEffect(ModEffectsRegistry.RADIANT_MARK.get());
-            knockbackAndDamageEntity(targetEntity, user, effect.getLustrousRadiantTeleportTargetDamage());
+            targetEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK));
+            knockbackAndDamageEntity(targetEntity, user, effect.lustrous_moxie.targetDamage);
         }
     }
 
     private void damageAndKnockbackNearbyNonRadiantMarkedEntities(LivingEntity targetEntity, PlayerEntity user) {
-        int boxRange = effect.getLustrousRadiantTeleportAOERange();
+        int boxRange = effect.lustrous_moxie.aoe;
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> nearbyLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         nearbyLivingEntities.remove(targetEntity);
         for (LivingEntity livingEntity : nearbyLivingEntities) {
-            knockbackAndDamageEntity(livingEntity, user, effect.getLustrousRadiantTeleportAOEDamage());
+            knockbackAndDamageEntity(livingEntity, user, effect.lustrous_moxie.aoeDamage);
         }
     }
 
@@ -123,7 +128,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         double normalizedDeltaX = deltaX / distance;
         double normalizedDeltaZ = deltaZ / distance;
 
-        targetEntity.setVelocity(normalizedDeltaX * effect.getLustrousRadiantTeleportAOEKnockback(), 0.2, normalizedDeltaZ * effect.getLustrousRadiantTeleportAOEKnockback());
+        targetEntity.setVelocity(normalizedDeltaX * effect.lustrous_moxie.knockbackStrength, 0.2, normalizedDeltaZ * effect.lustrous_moxie.knockbackStrength);
         targetEntity.velocityModified = true;
     }
 
@@ -147,7 +152,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 15;
     }
 
@@ -155,18 +160,19 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.SPEAR;
     }
-    int stepMod = 0;
+
+
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.WAX_OFF);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.WAX_OFF);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip1").setStyle(abilityStyle));
@@ -182,6 +188,29 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip9").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip10").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.LUSTROUS_MOXIE));
+        }
+
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.2f;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 400;
+        @ValidatedInt.Restrict(min = 0)
+        public int stunTime = 30;
+        @ValidatedInt.Restrict(min = 0)
+        public int range = 20;
+        @ValidatedInt.Restrict(min = 0)
+        public int aoe = 5;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float knockbackStrength = 2f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float targetDamage = 15f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float aoeDamage = 10f;
     }
 }

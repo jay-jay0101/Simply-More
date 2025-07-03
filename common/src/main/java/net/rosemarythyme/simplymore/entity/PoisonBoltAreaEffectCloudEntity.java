@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.entity;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
@@ -11,8 +10,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -22,8 +21,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
     int version;
     int time = 0;
-    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
     final DustParticleEffect particleEffect = new DustParticleEffect(new Vector3f(0f, 0.6f, 0.2f), 1);
     LivingEntity target;
     double distance;
@@ -91,7 +89,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
         }
 
         // Check if the version is greater than or equal to 10 and the distance is greater than 3
-        if (version >= effect.getSerpentinePoisonBoltLifespan() && distance > 3) {
+        if (version >= effect.serpentine_valour.lifespan && distance > 3) {
             return;
         }
 
@@ -122,8 +120,8 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
             this.getWorld().playSound(null, this.getBlockPos(), SoundRegistry.DARK_SWORD_ATTACK_03.get(), SoundCategory.PLAYERS, 0.25f, 1);
         } else {
             // Damage the target
-            target.damage(owner.getDamageSources().magic(), effect.getSerpentinePoisonBoltDamage());
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.VENOM.get(), effect.getSerpentinePoisonVenomTime()));
+            target.damage(owner.getDamageSources().magic(), effect.serpentine_valour.damage);
+            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), effect.serpentine_valour.venomTime));
             this.discard();
             this.getWorld().playSound(null, this.getBlockPos(), SoundRegistry.DARK_SWORD_ATTACK_WITH_BLOOD_01.get(), SoundCategory.PLAYERS, 0.4f, 1);
         }

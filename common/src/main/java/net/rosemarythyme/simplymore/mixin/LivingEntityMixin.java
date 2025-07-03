@@ -5,13 +5,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.rosemarythyme.simplymore.item.compat.CompatSwordItem;
-import net.rosemarythyme.simplymore.item.normal.GrandSwordItem;
-import net.rosemarythyme.simplymore.item.runics.RunicGrandSwordItem;
-import net.rosemarythyme.simplymore.item.uniques.EarthshatterItem;
-import net.rosemarythyme.simplymore.item.uniques.GrandfrostItem;
-import net.rosemarythyme.simplymore.item.uniques.MoltenFlareItem;
-import net.rosemarythyme.simplymore.item.uniques.mimicry.GrandswordItem;
+import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,13 +19,7 @@ public abstract class LivingEntityMixin {
 	private boolean simplyMore$disablesShield(boolean originalReturnValue) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		ItemStack mainHandStack = livingEntity.getEquippedStack(EquipmentSlot.MAINHAND);
-		if (mainHandStack.getItem() instanceof EarthshatterItem
-				|| mainHandStack.getItem() instanceof RunicGrandSwordItem
-				|| mainHandStack.getItem() instanceof GrandSwordItem
-				|| mainHandStack.getItem() instanceof MoltenFlareItem
-				|| mainHandStack.getItem() instanceof GrandfrostItem
-				|| mainHandStack.getItem() instanceof GrandswordItem
-				|| (mainHandStack.getItem() instanceof CompatSwordItem compatSwordItem && compatSwordItem.getIsGrandsword())) return true;
+		if (mainHandStack.getItem() instanceof Weapon weapon && weapon.swordType() == Weapon.SwordTypes.GRANDSWORD) return true;
 		return originalReturnValue;
 	}
 
@@ -44,7 +32,7 @@ public abstract class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "heal", cancellable = true)
 	private void simplyMore$heal(float amount, CallbackInfo info) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
-		if(livingEntity.hasStatusEffect(ModEffectsRegistry.BLEED.get())) {
+		if(livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED))) {
 			float f = livingEntity.getHealth();
 			if (f > 0.0F) {
 				livingEntity.setHealth(f + amount/2);

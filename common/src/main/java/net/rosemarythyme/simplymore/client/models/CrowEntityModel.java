@@ -15,7 +15,7 @@ import net.rosemarythyme.simplymore.entity.CrowEntity;
 // Exported for Minecraft version 1.17+ for Yarn
 // Paste this class into your mod and generate all required imports
 public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
-	public static final EntityModelLayer CROW_LAYER = new EntityModelLayer(new Identifier(SimplyMore.ID, "crow"), "bone");
+	public static final EntityModelLayer CROW_LAYER = new EntityModelLayer(Identifier.of(SimplyMore.ID, "crow"), "bone");
 
 	private final ModelPart main;
 	private final ModelPart head;
@@ -51,8 +51,8 @@ public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
 		return TexturedModelData.of(modelData, 32, 32);
 	}
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
+		main.render(matrices, vertexConsumer, light, overlay, color);
 	}
 
 	@Override

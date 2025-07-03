@@ -1,12 +1,16 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.annotations.Action;
+import me.fzzyhmstrs.fzzy_config.annotations.RequiresAction;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
@@ -17,29 +21,32 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.EruptionAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
 public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getMoltenFlareExecutingSliceCooldown();
+    int skillCooldown = effect.molten_flare.cooldown;
 
     public MoltenFlareItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.GRANDSWORD, settings);
     }
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        if (attacker.getRandom().nextBetween(1, 100) <= effect.getMoltenFlareEruptionChance() || attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE.get())) {
-            eruption(attacker.hasStatusEffect(ModEffectsRegistry.MOLTEN_FLARE.get()) ?
-                    effect.getMoltenFlareEruptionRadiusEmpowered():
-                    effect.getMoltenFlareEruptionRadius(), attacker);
-            attacker.removeStatusEffect(ModEffectsRegistry.MOLTEN_FLARE.get());
+        if (SimplyMoreHelperMethods.chance(attacker, effect.molten_flare.chance) || attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE))) {
+            eruption(attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE)) ?
+                    effect.molten_flare.radiusEmpowered:
+                    effect.molten_flare.radius, attacker);
+            attacker.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE));
         }
         return super.postHit(stack, target, attacker);
     }
@@ -47,7 +54,7 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.MOLTEN_FLARE.get(),100));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE),100));
             user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
         }
         return super.use(world, user, hand);
@@ -59,18 +66,17 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
         attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundRegistry.SPELL_FIRE.get(), attacker.getSoundCategory(), 2F, 0.3F);
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.molten_flare.tooltip1").setStyle(abilityStyle));
@@ -81,6 +87,24 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.molten_flare.tooltip4").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.molten_flare.tooltip5").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.MOLTEN_FLARE));
+        }
+
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.20f;
+        @ValidatedInt.Restrict(min = 0)
+        public int radius = 4;
+        @ValidatedInt.Restrict(min = 0)
+        public int radiusEmpowered = 7;
+        @ValidatedFloat.Restrict(min = 0)
+        @RequiresAction(action = Action.RESTART)
+        public float activeAttackSpeedBonus = 0.6f;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 300;
     }
 }

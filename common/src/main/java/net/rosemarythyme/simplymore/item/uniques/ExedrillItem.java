@@ -1,17 +1,17 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Ownable;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -28,21 +28,28 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.GhostFallingBlockEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.item.interfaces.CooldownOnUnselected;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 import org.joml.Vector3d;
 
 import java.util.List;
 
-public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownOnUnselected {
-    int skillCooldown = effect.getExedrillCooldown();
-    static int maxHeat = effect.getExedrillMaxHeat();
+public class ExedrillItem extends SimplyMoreUniqueSwordItem{
+    int skillCooldown = effect.exedrill.cooldown;
+    static int maxHeat = effect.exedrill.maxHeat;
     static final int minHeat = 0; // Constant
 
+    @Override
+    public CounterComponent getDefaultComponent() {
+        return new CounterComponent(minHeat, maxHeat);
+    }
+
     public ExedrillItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
     }
 
 
@@ -64,14 +71,14 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownO
                     livingEntity -> {
                         livingEntity.damage(
                                 player.getDamageSources().explosion(player, player),
-                                effect.getExedrillExplosionDamage()
+                                effect.exedrill.explosionDamage
                         );
 
                         double deltaX = livingEntity.getX() - player.getX();
                         double deltaZ = livingEntity.getZ() - player.getZ();
                         double distance = Math.hypot(deltaX, deltaZ);
 
-                        float knockbackStrength = effect.getExedrillEarthquakePushStrength();
+                        float knockbackStrength = effect.exedrill.earthquakeStrength;
                         double normalizedDeltaX = deltaX / distance;
                         double normalizedDeltaZ = deltaZ / distance;
 
@@ -85,19 +92,19 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownO
         }
 
         setHeat(stack,
-                getHeat(stack) + effect.getExedrillHitHeatAmount());
+                getHeat(stack) + effect.exedrill.hitHeatAmount);
 
         // Tremors
-        int chance = attacker.getVehicle() instanceof LivingEntity ?
-                effect.getExedrillTrembleMountedChance():
-                effect.getExedrillTrembleChance();
-        if (attacker.getRandom().nextBetween(1, 100) <= chance && attacker instanceof PlayerEntity player) {
+        float chance = attacker.getVehicle() instanceof LivingEntity ?
+                effect.exedrill.chanceMounted:
+                effect.exedrill.chance;
+        if (SimplyMoreHelperMethods.chance(attacker, chance) && attacker instanceof PlayerEntity player) {
             List<LivingEntity> targets = tremorEffectHitbox(5, attacker.getPos(), ((ServerWorld) attacker.getWorld()), player);
             setHeat(stack,
-                    getHeat(stack) + effect.getExedrillTrembleHeatAmount());
+                    getHeat(stack) + effect.exedrill.trembleHeatAmount);
             attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5f,0.5f);
 
-            int effectTime = effect.getExedrillTrembleEffectTime();
+            int effectTime = effect.exedrill.trembleEffectTime;
             targets.forEach(
                     entity -> {
                         entity.addStatusEffect(new StatusEffectInstance(
@@ -119,7 +126,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownO
 
     public static int getHeat(ItemStack stack) {
 
-        int heat = stack.getOrCreateNbt().getInt("simplymore:heat");
+        int heat = SimplyMoreHelperMethods.getCounterComponent(stack).value();
 
         heat = Math.max(minHeat, heat);
         heat = Math.min(maxHeat, heat);
@@ -128,7 +135,8 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownO
     }
 
     public static void setHeat(ItemStack stack, int value) {
-        stack.getOrCreateNbt().putInt("simplymore:heat", value);
+        SimplyMoreHelperMethods.setCounterComponent(stack,
+                SimplyMoreHelperMethods.getCounterComponent(stack).set(value));
     }
 
     @Override
@@ -137,12 +145,12 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownO
             return super.use(world, user, hand);
         }
 
-        for(int i = 0; i < effect.getExedrillRocksAmount(); i++) {
+        for(int i = 0; i < effect.exedrill.rocksAmount; i++) {
             Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(user.getYaw() + user.getRandom().nextBetween(-40,40));
             Vec3d rockVelocity = new Vec3d(
-                    normalisedVector.x() * effect.getExedrillRockSpeed(),
+                    normalisedVector.x() * effect.exedrill.rockSpeed,
                     0.45f,
-                    normalisedVector.z() * effect.getExedrillRockSpeed()
+                    normalisedVector.z() * effect.exedrill.rockSpeed
             );
 
             GhostFallingBlockEntity rock = new GhostFallingBlockEntity(
@@ -190,31 +198,17 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownO
     }
 
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-        if (entity.getVehicle() instanceof LivingEntity
-                && selected
-                && ((PlayerEntity) entity)
-                .getStackInHand(Hand.OFF_HAND).getItem().getAttributeModifiers(EquipmentSlot.MAINHAND)
-                .get(EntityAttributes.GENERIC_ATTACK_DAMAGE).isEmpty()) ((PlayerEntity) entity)
-                .addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.LANCE.get(),9999999,0));
-        super.inventoryTick(stack, world, entity, slot, selected);
-
-        if(entity instanceof PlayerEntity player) {
-            detectCooldown(player, selected, stack, skillCooldown, false);
-        }
-
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip1").setStyle(abilityStyle));
@@ -228,6 +222,39 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem implements CooldownO
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip8").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip9").setStyle(textStyle));
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.EXEDRILL));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 250;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.15f;
+        @ValidatedInt.Restrict(min = 0)
+        public int trembleEffectTime = 80;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chanceMounted = 0.3f;
+        @ValidatedInt.Restrict(min = 0)
+        public int trembleHeatAmount = 6;
+        @ValidatedInt.Restrict(min = 0)
+        public int hitHeatAmount = 1;
+        @ValidatedInt.Restrict(min = 0)
+        public int maxHeat = 25;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float explosionDamage = 12f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float rockDamage = 6f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float rockSpeed = 0.4f;
+        @ValidatedInt.Restrict(min = 0)
+        public int rockStunTime = 14;
+        @ValidatedInt.Restrict(min = 0)
+        public int rocksAmount = 5;
+        @ValidatedInt.Restrict(min = 0)
+        public float earthquakeStrength = 1.8f;
     }
 }

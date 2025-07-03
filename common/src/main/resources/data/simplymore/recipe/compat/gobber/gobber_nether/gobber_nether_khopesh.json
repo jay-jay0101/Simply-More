@@ -1,0 +1,37 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "gobber2"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "gobber2"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "gobber2:gobber2_rod_nether"
+    },
+    "M": {
+      "item": "gobber2:gobber2_ingot_nether"
+    },
+    "B": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "  M",
+    " MB",
+    "Bs "
+  ],
+  "result": {
+    "id": "simplymore:gobber_nether_khopesh",
+    "count": 1
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "simplyswords:unique_upgrade",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "A": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "T": {
+      "item": "simplyswords:runic_tablet"
+    },
+    "W": {
+      "item": "simplymore:ruptured_idol",
+      "upgradable": true
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "GAG",
+    "TWT",
+    "DBD"
+  ],
+  "result": {
+    "id": "simplymore:ascended_idol",
+    "count": 1
+  }
+}

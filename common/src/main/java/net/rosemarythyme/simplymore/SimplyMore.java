@@ -1,11 +1,12 @@
 package net.rosemarythyme.simplymore;
 
+import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.utils.Env;
 import dev.architectury.utils.EnvExecutor;
 import net.rosemarythyme.simplymore.client.SimplyMoreClientInit;
-import net.rosemarythyme.simplymore.config.ModConfigs;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
+import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
 import net.rosemarythyme.simplymore.registry.*;
-import net.rosemarythyme.simplymore.util.LootTableModifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class SimplyMore {
@@ -13,7 +14,7 @@ public class SimplyMore {
 	public static final String ID = "simplymore";
 
 	public static void init() {
-		ModConfigs.registerConfigs();
+		ConfigWrapper.registerModConfigs();
 
 		ModEffectsRegistry.registerModEffects();
 
@@ -21,13 +22,15 @@ public class SimplyMore {
 		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMoreClientInit::registerEntityRenderers);
 
 		ModItemsRegistry.registerModItems();
-
+		ModComponentRegistry.registerModComponents();
 		ModTagRegistry.registerModTags();
 
-		ModRecipesRegistry.registerModRecipes();
-
-		LootTableModifier.registerLootTableChanges();
+		SimplyMore.registerEvents();
 
 		LOGGER.info(ID + " Initialized Successfully!");
+	}
+
+	public static void registerEvents() {
+		PlayerEvent.PLAYER_JOIN.register(new RemoveStatusOnJoin());
 	}
 }

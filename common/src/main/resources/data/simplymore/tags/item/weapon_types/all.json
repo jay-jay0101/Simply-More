@@ -1,0 +1,29 @@
+{
+	"values": [
+		"#simplymore:weapon_types/backhand_blades",
+		"#simplymore:weapon_types/chakrams",
+		"#simplymore:weapon_types/claymores",
+		"#simplymore:weapon_types/cutlasses",
+		"#simplymore:weapon_types/daggers",
+		"#simplymore:weapon_types/deer_horns",
+		"#simplymore:weapon_types/glaives",
+		"#simplymore:weapon_types/grandswords",
+		"#simplymore:weapon_types/great_katanas",
+		"#simplymore:weapon_types/great_spears",
+		"#simplymore:weapon_types/greataxes",
+		"#simplymore:weapon_types/greathammers",
+		"#simplymore:weapon_types/halberds",
+		"#simplymore:weapon_types/katanas",
+		"#simplymore:weapon_types/khopeshs",
+		"#simplymore:weapon_types/lances",
+		"#simplymore:weapon_types/longswords",
+		"#simplymore:weapon_types/pernachs",
+		"#simplymore:weapon_types/quarterstaffs",
+		"#simplymore:weapon_types/rapiers",
+		"#simplymore:weapon_types/sais",
+		"#simplymore:weapon_types/scythes",
+		"#simplymore:weapon_types/spears",
+		"#simplymore:weapon_types/twinblades",
+		"#simplymore:weapon_types/warglaives"
+	]
+}

@@ -1,0 +1,37 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "sticknstone"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sticknstone"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "B": {
+      "tag": "minecraft:stone_buttons"
+    }
+  },
+  "pattern": [
+    " MB",
+    "MBM",
+    "sM "
+  ],
+  "result": {
+    "id": "simplymore:stone_lance",
+    "count": 1
+  }
+}

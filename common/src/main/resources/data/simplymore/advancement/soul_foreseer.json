@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "id": "simplymore:soul_foreseer"
+    },
+    "title": {
+      "translate": "advancements.simplymore.soul_foreseer.title",
+      "with": []
+    },
+    "description": {
+      "translate": "advancements.simplyswords.find_unique.description",
+      "with": [
+        {
+          "translate": "item.simplymore.soul_foreseer"
+        }
+      ]
+    },
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:soul_foreseer"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

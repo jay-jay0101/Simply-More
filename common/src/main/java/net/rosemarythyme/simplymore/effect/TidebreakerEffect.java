@@ -19,7 +19,7 @@ public class TidebreakerEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
         if (!affectedEntity.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) affectedEntity.getWorld();
             spawnParticles(serverWorld, affectedEntity);
@@ -27,7 +27,7 @@ public class TidebreakerEffect extends StatusEffect {
             applyInsanityEffect(affectedEntity, serverWorld);
         }
 
-        super.applyUpdateEffect(affectedEntity, amplifier);
+        return super.applyUpdateEffect(affectedEntity, amplifier);
     }
 
     private void spawnParticles(ServerWorld serverWorld, LivingEntity affectedEntity) {
@@ -46,7 +46,7 @@ public class TidebreakerEffect extends StatusEffect {
             if (target == affectedEntity || target.isTeammate(affectedEntity)) {
                 continue;
             }
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.INSANITY.get(), 160, 0), affectedEntity);
+            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.INSANITY), 160, 0), affectedEntity);
         }
     }
 

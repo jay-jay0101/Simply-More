@@ -40,7 +40,7 @@ public class JetAreaEffectCloudEntity extends AreaEffectCloudEntity {
                 entity.addVelocity(0d,0.45d,0d);
             }
 
-            entity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.LIGHTWEIGHT.get(), 35, 0));
+            entity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.LIGHTWEIGHT), 35, 0));
 
             entity.addVelocity(new Vec3d(0d, 0.1d, 0d));
             entity.velocityModified = true;

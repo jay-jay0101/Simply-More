@@ -1,22 +1,24 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
 import java.util.List;
 
 public class GrandswordItem extends MimicryItem {
     public GrandswordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.GRANDSWORD, settings);
     }
 
 
@@ -35,7 +37,7 @@ public class GrandswordItem extends MimicryItem {
             if(ticksUsed % 10 != 0) return;
 
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicryAttributes.getGrandswordDamage();
+            float damage = mimicry.grandsword.damage;
 
             enemies.forEach(
                     target -> {
@@ -44,23 +46,23 @@ public class GrandswordItem extends MimicryItem {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.STRENGTH,
-                                        mimicryAttributes.getGrandswordEffectTime(),
+                                        mimicry.grandsword.effectTime,
                                         0
                                 )
                         );
-                        knockback(player, target, mimicryAttributes.getGrandswordKnockback());
+                        knockback(player, target, mimicry.grandsword.knockback);
                     }
             );
         }
 
         if(ticksUsed >= 60) {
-            player.removeStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get());
+            player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
         }
     }
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryAttributes.isDisableGrandswordVariant();
+        return mimicry.grandsword.disabled;
     }
 
     @Override
@@ -69,8 +71,22 @@ public class GrandswordItem extends MimicryItem {
     }
 
     @Override
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+    public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.grandsword.tooltip1").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.mimicry.grandsword.tooltip2").setStyle(textStyle));
+    }
+
+    public static class MimicryEffectSettings extends TooltipSettings {
+        public MimicryEffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_GRANDSWORD));
+        }
+
+        public boolean disabled = false;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float damage = 15f;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 120;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float knockback = 2.5f;
     }
 }

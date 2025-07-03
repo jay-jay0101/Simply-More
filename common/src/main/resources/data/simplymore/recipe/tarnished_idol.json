@@ -1,0 +1,33 @@
+{
+  "type": "simplyswords:unique_upgrade",
+  "key": {
+    "G": {
+      "item": "minecraft:blaze_powder"
+    },
+    "A": {
+      "item": "minecraft:lava_bucket"
+    },
+    "T": {
+      "item": "simplyswords:runic_tablet"
+    },
+    "W": {
+      "item": "simplymore:ruptured_idol",
+      "upgradable": true
+    },
+    "B": {
+      "item": "minecraft:obsidian"
+    },
+    "D": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "GAG",
+    "TWT",
+    "DBD"
+  ],
+  "result": {
+    "id": "simplymore:tarnished_idol",
+    "count": 1
+  }
+}

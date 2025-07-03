@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.entity;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LandingBlock;
@@ -15,8 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,8 +24,8 @@ import java.util.UUID;
 
 public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownable {
     public Entity owner;
-    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+
 
     public GhostFallingBlockEntity(EntityType<? extends FallingBlockEntity> entityType, World world) {
         super(entityType, world);
@@ -135,11 +134,11 @@ public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownab
 
         targets.forEach(
                 target -> {
-                    target.damage(this.getDamageSources().fallingBlock(this), effect.getExedrillRockDamage());
+                    target.damage(this.getDamageSources().fallingBlock(this), effect.exedrill.rockDamage);
                     target.addStatusEffect(
                             new StatusEffectInstance(
-                                    ModEffectsRegistry.STUNNED.get(),
-                                    effect.getExedrillRockStunTime()
+                                    ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED),
+                                    effect.exedrill.rockStunTime
                             )
                     );
                 }

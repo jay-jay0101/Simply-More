@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 
 public class MimicryEffect extends StatusEffect {
@@ -15,9 +16,9 @@ public class MimicryEffect extends StatusEffect {
         super(category, color);
     }
     @Override
-    public void applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
 
-        if(amplifier != 12) {
+        if(amplifier != 12) { // Chakram RC doesnt disable normal swings
             livingEntity.addStatusEffect(
                     new StatusEffectInstance(
                             StatusEffects.MINING_FATIGUE,
@@ -35,14 +36,16 @@ public class MimicryEffect extends StatusEffect {
             );
         }
 
-        if(livingEntity instanceof PlayerEntity player && !player.getWorld().isClient) {
-            int duration = livingEntity.getStatusEffect(this).getDuration();
+        if(livingEntity instanceof PlayerEntity player && !player.getWorld().isClient()) {
+            int duration = livingEntity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING)).getDuration();
             int ticksUsed = MimicryItem.usageEffectTime - duration;
 
             MimicryItem item = (MimicryItem) ModItemsRegistry.MIMICRY_AMPLIFIERS.get(amplifier).get();
 
             item.usageTimeline(player, ticksUsed);
         }
+
+        return super.applyUpdateEffect(livingEntity, amplifier);
     }
 
     @Override

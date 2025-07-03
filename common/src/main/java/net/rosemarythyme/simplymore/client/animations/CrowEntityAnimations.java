@@ -8,7 +8,7 @@ import net.minecraft.client.render.entity.animation.Transformation;
 /**
  * Made with Blockbench 4.11.2
  * Exported for Minecraft version 1.19 or later with Yarn mappings
- * @author Author
+ * @author RosemaryThyme
  */
 public class CrowEntityAnimations {
 	public static final Animation FLAP = Animation.Builder.create(0.303F)

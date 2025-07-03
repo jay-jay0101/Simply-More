@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 
 import java.util.List;
 
@@ -17,16 +18,16 @@ public class HexEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int Amplifier) {
-        StatusEffectInstance effect = entity.getStatusEffect(this);
+    public boolean applyUpdateEffect(LivingEntity entity, int Amplifier) {
+        StatusEffectInstance effect = entity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX));
         if(entity.getWorld().isClient)
-             return;
+            return super.applyUpdateEffect(entity, Amplifier);
 
 
         if(effect.getDuration() % 100 == 5) {
             entity.addStatusEffect(
                     new StatusEffectInstance(
-                            this,
+                            ModEffectsRegistry.getReference(ModEffectsRegistry.HEX),
                             effect.getDuration(),
                             effect.getAmplifier() + 1
                     )
@@ -188,8 +189,8 @@ public class HexEffect extends StatusEffect {
         // Other effects
         if(effect.getAmplifier() >= 4) {
             List<StatusEffectInstance> negativeEffects = entity.getStatusEffects().stream().filter(
-                    statusEffectInstance -> !statusEffectInstance.getEffectType().isBeneficial() &&
-                            statusEffectInstance.getEffectType() != this
+                    statusEffectInstance -> !statusEffectInstance.getEffectType().value().isBeneficial() &&
+                            statusEffectInstance.getEffectType() != ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)
             ).toList();
 
             negativeEffects.forEach(
@@ -207,7 +208,7 @@ public class HexEffect extends StatusEffect {
 
         if(effect.getAmplifier() >= 5) {
             List<StatusEffectInstance> positiveEffects = entity.getStatusEffects().stream().filter(
-                    statusEffectInstance -> statusEffectInstance.getEffectType().isBeneficial()
+                    statusEffectInstance -> statusEffectInstance.getEffectType().value().isBeneficial()
             ).toList();
 
             positiveEffects.forEach(
@@ -218,13 +219,14 @@ public class HexEffect extends StatusEffect {
         }
 
         if(effect.getAmplifier() >= 8) {
-            entity.removeStatusEffect(this);
+            entity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX));
         }
+
+        return super.applyUpdateEffect(entity, Amplifier);
     }
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;
     }
-
 }

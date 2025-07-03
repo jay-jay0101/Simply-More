@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -8,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -18,18 +20,23 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.item.components.DayTimeComponent;
+import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
 public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getTimekeeperBaseCooldown();
+    int skillCooldown = effect.timekeeper.cooldown;
 
     public TimekeeperItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
     }
 
     @Override
@@ -52,7 +59,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                 spawnWindAttack(world, user, playerX, user.getY(), playerZ);
             }
 
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), calculateCooldown(currentTime, isFixedTime));
+            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), calculateCooldown(currentTime));
         }
         return super.use(world, user, hand);
     }
@@ -83,8 +90,8 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                 entity.setVelocity(distanceX * 2.5 / i, distanceY * 2.5 / i, distanceZ * 2.5 / i);
                 entity.velocityModified = true;
                 entity.setOnFireFor(5);
-                entity.damage(player.getDamageSources().onFire(), effect.getTimekeeperDayActiveDamage());
-                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.getTimekeeperDayActiveBlindnessTime()));
+                entity.damage(player.getDamageSources().onFire(), effect.timekeeper.dayDamage);
+                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.timekeeper.dayActiveBlindnessTime));
             }
         }
         world.playSound(null, playerX, playerY, playerZ, SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get(), SoundCategory.PLAYERS, 1, 1);
@@ -114,15 +121,15 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                         continue;
                     entity.setVelocity(0, 1.5, 0);
                     entity.velocityModified = true;
-                    entity.damage(player.getDamageSources().magic(), effect.getTimekeeperNightActiveDamage());
-                    entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getTimekeeperNightActiveSlownessTime(), 3));
+                    entity.damage(player.getDamageSources().magic(), effect.timekeeper.nightDamage);
+                    entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.timekeeper.nightActiveSlownessTime, 3));
                 }
             }
         }
         world.playSound(null, playerX, playerY, playerZ, SoundRegistry.ELEMENTAL_SWORD_WIND_ATTACK_01.get(), SoundCategory.PLAYERS, 1, 1.5f);
     }
-    private int calculateCooldown(long currentTime, boolean isFixedTime) {
-        return (isFixedTime && currentTime < 13000)
+    private int calculateCooldown(long currentTime) {
+        return (currentTime < 13000)
                 ? (int) (skillCooldown + (skillCooldown * Math.abs(6000 - currentTime) / 7000))
                 : (int) (skillCooldown + (skillCooldown * Math.abs(18000 - currentTime) / 7000));
     }
@@ -130,7 +137,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getTimekeeperOnHitChance()) {
+            if (SimplyMoreHelperMethods.chance(attacker, effect.timekeeper.chance)) {
                 long dayTime = Math.abs(attacker.getWorld().getTimeOfDay() % 24000);
                 boolean isFixedTime  = attacker.getWorld().getDimension().hasFixedTime();
 
@@ -149,7 +156,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         world.spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),20,0.7,0.7,0.7,0);
         for (LivingEntity passiveTarget : attacker.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(attacker.getX()-30,attacker.getY()-30,attacker.getZ()-30,attacker.getX()+30,attacker.getY()+30,attacker.getZ()+30))) {
             if (passiveTarget == attacker || passiveTarget.isTeammate(attacker)) continue;
-            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, effect.getTimekeeperDayPassiveEffectTime(), 0), attacker);
+            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, effect.timekeeper.dayPassiveEffectTime, 0), attacker);
         }
     }
 
@@ -158,10 +165,10 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         world.spawnParticles(ParticleTypes.SQUID_INK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),20,0.7,0.7,0.7,0);
         for (LivingEntity passiveTarget : attacker.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(attacker.getX()-10,attacker.getY()-10,attacker.getZ()-10,attacker.getX()+10,attacker.getY()+10,attacker.getZ()+10))) {
             if (passiveTarget == attacker || passiveTarget.isTeammate(attacker)) continue;
-            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, effect.getTimekeeperNightPassiveEffectTime(), 0), attacker);
+            passiveTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, effect.timekeeper.nightPassiveEffectTime, 0), attacker);
         }
-        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, effect.getTimekeeperNightPassiveEffectTime(), 0), attacker);
-        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, effect.getTimekeeperNightPassiveEffectTime(), 1), attacker);
+        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, effect.timekeeper.nightPassiveEffectTime, 0), attacker);
+        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, effect.timekeeper.nightPassiveEffectTime, 1), attacker);
     }
 
     private void applyRandomEffect(LivingEntity entity, ServerWorld world) {
@@ -180,41 +187,57 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         }
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+
+        if (world != null) {
+            long dayTime = Math.abs(world.getTimeOfDay() % 24000);
+            boolean isFixedTime = world.getDimension().hasFixedTime();
+
+            if (isFixedTime) {
+                stack.set(ModComponentRegistry.DAYTIME.get(),
+                        DayTimeComponent.of(DayTimeComponent.DayForm.TIMELESS));
+            } else {
+                if (dayTime < 13000) {
+                    stack.set(ModComponentRegistry.DAYTIME.get(),
+                            DayTimeComponent.of(DayTimeComponent.DayForm.DAY));
+                } else {
+                    stack.set(ModComponentRegistry.DAYTIME.get(),
+                            DayTimeComponent.of(DayTimeComponent.DayForm.NIGHT));
+                }
+            }
+        }
+
+        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
 
-        if (world == null)
+        DayTimeComponent component = itemStack.get(ModComponentRegistry.DAYTIME.get());
+
+        if(component == null) {
+            appendDayTooltips(tooltip, rightClickStyle, abilityStyle, textStyle);
+            super.appendTooltip(itemStack, tooltipContext, tooltip, type);
             return;
-
-        long dayTime = Math.abs(world.getTimeOfDay() % 24000);
-        boolean isFixedTime = world.getDimension().hasFixedTime();
-
-        if (isFixedTime) {
-            appendFixedTimeTooltips(tooltip, abilityStyle, textStyle);
-        } else {
-            if (dayTime < 13000) {
-                appendDayTooltips(tooltip, rightClickStyle, abilityStyle, textStyle);
-            } else {
-                appendNightTooltips(tooltip, rightClickStyle, abilityStyle, textStyle);
-            }
         }
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        switch(component.getForm()) {
+            case DAY -> appendDayTooltips(tooltip, rightClickStyle, abilityStyle, textStyle);
+            case NIGHT -> appendNightTooltips(tooltip, rightClickStyle, abilityStyle, textStyle);
+            case TIMELESS -> appendFixedTimeTooltips(tooltip, rightClickStyle, abilityStyle, textStyle);
+        }
+
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 
-    private void appendFixedTimeTooltips(List<Text> tooltip, Style abilityStyle, Style textStyle) {
+    private void appendFixedTimeTooltips(List<Text> tooltip, @SuppressWarnings("unused") Style rightClickStyle, Style abilityStyle, Style textStyle) {
         tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip2").setStyle(textStyle));
         tooltip.add(Text.literal(""));
@@ -258,5 +281,28 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip8").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip9").setStyle(textStyle));
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.TIMEKEEPER)); // TODO: gotta change this probably
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 400;
+        @ValidatedInt.Restrict(min = 0)
+        public int nightActiveSlownessTime = 100;
+        @ValidatedInt.Restrict(min = 0)
+        public int dayActiveBlindnessTime = 100;
+        @ValidatedInt.Restrict(min = 0)
+        public int nightPassiveEffectTime = 70;
+        @ValidatedInt.Restrict(min = 0)
+        public int dayPassiveEffectTime = 70;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float nightDamage = 2f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float dayDamage = 6f;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.2f;
     }
 }

@@ -1,9 +1,11 @@
 package net.rosemarythyme.simplymore.util;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public enum SimplyMoreToolMaterial implements ToolMaterial {
@@ -14,7 +16,7 @@ public enum SimplyMoreToolMaterial implements ToolMaterial {
     // Gobber2 Compat
     GOBBER(9, 3800, 9.0F, 7.0F, 20,"gobber2:gobber2_ingot"),
     GOBBER_NETHER(9, 5200, 12.0F, 9.0F, 25,"gobber2:gobber2_ingot_nether"),
-    GOBBER_END(9, 8000, 9.0F, 12.0F, 30,"minecraft:diamond");
+    GOBBER_END(9, 8000, 9.0F, 12.0F, 30,"gobber2:gobber2_ingot_end");
 
 
 
@@ -46,6 +48,11 @@ public enum SimplyMoreToolMaterial implements ToolMaterial {
         return this.attackDamage;
     }
 
+    @Override
+    public TagKey<Block> getInverseTag() {
+        return null;
+    }
+
     public int getMiningLevel() {
         return this.miningLevel;
     }
@@ -55,6 +62,6 @@ public enum SimplyMoreToolMaterial implements ToolMaterial {
     }
 
     public Ingredient getRepairIngredient() {
-        return Ingredient.ofItems(Registries.ITEM.getOrEmpty(new Identifier(repairIngredient)).orElse(Items.DIAMOND));
+        return Ingredient.ofItems(Registries.ITEM.getOrEmpty(Identifier.of(repairIngredient)).orElse(Items.DIAMOND));
     }
 }

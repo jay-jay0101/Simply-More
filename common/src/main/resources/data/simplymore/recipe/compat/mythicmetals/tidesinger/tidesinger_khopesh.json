@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mythicmetals"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "simplymore:aquarium_khopesh"
+  },
+  "addition": {
+    "item": "mythicmetals:aquarium_ingot"
+  },
+  "result": {
+    "id": "simplymore:tidesinger_khopesh",
+    "count": 1
+  },
+  "template": {
+    "item": "mythicmetals:tidesinger_smithing_template"
+  }
+}

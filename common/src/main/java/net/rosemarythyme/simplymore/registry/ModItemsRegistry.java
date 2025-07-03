@@ -1,11 +1,8 @@
 package net.rosemarythyme.simplymore.registry;
 
-import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import me.shedaniel.autoconfig.AutoConfig;
-//import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -14,27 +11,21 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Rarity;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.config.MimicryAttributesConfig;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.item.RemovedItem;
 import net.rosemarythyme.simplymore.item.RuneCarverItem;
-import net.rosemarythyme.simplymore.item.normal.GrandSwordItem;
-import net.rosemarythyme.simplymore.item.normal.LanceItem;
-import net.rosemarythyme.simplymore.item.normal.SimplyMoreSwordItem;
-import net.rosemarythyme.simplymore.item.runics.RunicGrandSwordItem;
-import net.rosemarythyme.simplymore.item.runics.RunicLanceItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreRunicSwordItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
+import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.item.uniques.*;
 import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
-import net.rosemarythyme.simplymore.registry.compat.Gobber2CompatRegistry;
-import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompatProxy;
-import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
-import net.sweenus.simplyswords.item.RunicSwordItem;
+import net.sweenus.simplyswords.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,20 +34,26 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class ModItemsRegistry {
-    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    static WeaponAttributesConfig attributes = config.weaponAttributes;
-    static UniqueEffectConfig effect = config.uniqueEffects;
-    static MimicryAttributesConfig mimicryAttributes = config.mimicry;
+    static WeaponAttributesConfig attributes = ConfigWrapper.attributes;
+    static UniqueEffectConfig effect = ConfigWrapper.unique;
+
+    static final int iron_modifier = (int) Config.weaponAttribute.materialDamageModifier.iron_damageModifier;
+    static final int gold_modifier = (int) Config.weaponAttribute.materialDamageModifier.gold_damageModifier;
+    static final int diamond_modifier = (int) Config.weaponAttribute.materialDamageModifier.diamond_damageModifier;
+    static final int netherite_modifier = (int) Config.weaponAttribute.materialDamageModifier.netherite_damageModifier;
+    static final int runic_modifier = (int) Config.weaponAttribute.materialDamageModifier.runic_damageModifier;
 
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ITEM);
 
+    // Great Katanas
     public static final RegistrySupplier<Item> IRON_GREAT_KATANA = ITEMS.register(
             "iron_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
+                    attributes.weaponTypesDamage.greatkatana_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -65,8 +62,9 @@ public class ModItemsRegistry {
             "gold_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
+                    attributes.weaponTypesDamage.greatkatana_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -75,8 +73,9 @@ public class ModItemsRegistry {
             "diamond_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
+                    attributes.weaponTypesDamage.greatkatana_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -85,92 +84,100 @@ public class ModItemsRegistry {
             "netherite_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof(),
+                    attributes.weaponTypesDamage.greatkatana_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
+                    Weapon.SwordTypes.SWORD,
+                    new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
     public static final RegistrySupplier<Item> RUNIC_GREAT_KATANA = ITEMS.register(
             "runic_great_katana",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof()
+                    attributes.weaponTypesDamage.greatkatana_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
+                    Weapon.SwordTypes.SWORD,
+                    new Item.Settings().fireproof()
             )
     );
 
+    // Grandswords
     public static final RegistrySupplier<Item> IRON_GRANDSWORD = ITEMS.register(
             "iron_grandsword",
-            () -> new GrandSwordItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGrandswordDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getGrandswordSwingSpeed(),
+                    attributes.weaponTypesDamage.grandsword_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
+                    Weapon.SwordTypes.GRANDSWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
     );
     public static final RegistrySupplier<Item> GOLD_GRANDSWORD = ITEMS.register(
             "gold_grandsword",
-            () -> new GrandSwordItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGrandswordDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getGrandswordSwingSpeed(),
+                    attributes.weaponTypesDamage.grandsword_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
+                    Weapon.SwordTypes.GRANDSWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
     );
     public static final RegistrySupplier<Item> DIAMOND_GRANDSWORD = ITEMS.register(
             "diamond_grandsword",
-            () -> new GrandSwordItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGrandswordDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getGrandswordSwingSpeed(),
+                    attributes.weaponTypesDamage.grandsword_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
+                    Weapon.SwordTypes.GRANDSWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
     );
     public static final RegistrySupplier<Item> NETHERITE_GRANDSWORD = ITEMS.register(
             "netherite_grandsword",
-            () -> new GrandSwordItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGrandswordDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getGrandswordSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof(),
+                    attributes.weaponTypesDamage.grandsword_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
+                    Weapon.SwordTypes.GRANDSWORD,
+                    new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
     public static final RegistrySupplier<Item> RUNIC_GRANDSWORD = ITEMS.register(
             "runic_grandsword",
-            () -> new RunicGrandSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGrandswordDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getGrandswordSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof(),
+                    attributes.weaponTypesDamage.grandsword_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
+                    Weapon.SwordTypes.GRANDSWORD,
+                    new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
-    
+
+    // Backhand Blades
     public static final RegistrySupplier<Item> IRON_BACKHAND_BLADE = ITEMS.register(
             "iron_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
+                    attributes.weaponTypesDamage.backhandblade_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
     );
-    public static final RegistrySupplier<Item> GOLD_BACKHAND_BLADE = ITEMS.register("gold_backhand_blade",
+    public static final RegistrySupplier<Item> GOLD_BACKHAND_BLADE = ITEMS.register(
+            "gold_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
+                    attributes.weaponTypesDamage.backhandblade_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -179,8 +186,9 @@ public class ModItemsRegistry {
             "diamond_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
+                    attributes.weaponTypesDamage.backhandblade_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -189,297 +197,312 @@ public class ModItemsRegistry {
             "netherite_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof(),
+                    attributes.weaponTypesDamage.backhandblade_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
+                    Weapon.SwordTypes.SWORD,
+                    new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
     public static final RegistrySupplier<Item> RUNIC_BACKHAND_BLADE = ITEMS.register(
             "runic_backhand_blade",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof()
+                    attributes.weaponTypesDamage.backhandblade_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
+                    Weapon.SwordTypes.SWORD,
+                    new Item.Settings().fireproof()
             )
     );
 
+    // Lances
     public static final RegistrySupplier<Item> IRON_LANCE = ITEMS.register(
             "iron_lance",
-            () -> new LanceItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getLanceDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getLanceSwingSpeed(),
+                    attributes.weaponTypesDamage.lance_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
+                    Weapon.SwordTypes.LANCE,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
     );
     public static final RegistrySupplier<Item> GOLD_LANCE = ITEMS.register(
             "gold_lance",
-            () -> new LanceItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getLanceDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getLanceSwingSpeed(),
+                    attributes.weaponTypesDamage.lance_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
+                    Weapon.SwordTypes.LANCE,
                     new Item.Settings(),
-                    "minecraft:gold_ingot"));
+                    "minecraft:gold_ingot"
+            )
+    );
     public static final RegistrySupplier<Item> DIAMOND_LANCE = ITEMS.register(
             "diamond_lance",
-            () -> new LanceItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getLanceDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getLanceSwingSpeed(),
+                    attributes.weaponTypesDamage.lance_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
+                    Weapon.SwordTypes.LANCE,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
     );
     public static final RegistrySupplier<Item> NETHERITE_LANCE = ITEMS.register(
             "netherite_lance",
-            () -> new LanceItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getLanceDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getLanceSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof(),
+                    attributes.weaponTypesDamage.lance_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
+                    Weapon.SwordTypes.LANCE,
+                    new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
     public static final RegistrySupplier<Item> RUNIC_LANCE = ITEMS.register(
             "runic_lance",
-            () -> new RunicLanceItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getLanceDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getLanceSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof()
+                    attributes.weaponTypesDamage.lance_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
+                    Weapon.SwordTypes.LANCE,
+                    new Item.Settings().fireproof()
             )
     );
 
+    // Khopesh
     public static final RegistrySupplier<Item> IRON_KHOPESH = ITEMS.register(
             "iron_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getKhopeshDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
+                    attributes.weaponTypesDamage.khopesh_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> GOLD_KHOPESH = ITEMS.register(
             "gold_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getKhopeshDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
+                    attributes.weaponTypesDamage.khopesh_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> DIAMOND_KHOPESH = ITEMS.register(
             "diamond_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getKhopeshDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
+                    attributes.weaponTypesDamage.khopesh_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
     );
-
     public static final RegistrySupplier<Item> NETHERITE_KHOPESH = ITEMS.register(
             "netherite_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getKhopeshDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
+                    attributes.weaponTypesDamage.khopesh_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> RUNIC_KHOPESH = ITEMS.register(
             "runic_khopesh",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getKhopeshDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
+                    attributes.weaponTypesDamage.khopesh_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof()
             )
     );
 
+    // Daggers
     public static final RegistrySupplier<Item> IRON_DAGGER = ITEMS.register(
             "iron_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getDaggerDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
+                    attributes.weaponTypesDamage.dagger_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> GOLD_DAGGER = ITEMS.register(
             "gold_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getDaggerDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
+                    attributes.weaponTypesDamage.dagger_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> DIAMOND_DAGGER = ITEMS.register(
             "diamond_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getDaggerDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
+                    attributes.weaponTypesDamage.dagger_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
     );
-
     public static final RegistrySupplier<Item> NETHERITE_DAGGER = ITEMS.register(
             "netherite_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getDaggerDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
+                    attributes.weaponTypesDamage.dagger_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> RUNIC_DAGGER = ITEMS.register(
             "runic_dagger",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getDaggerDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
+                    attributes.weaponTypesDamage.dagger_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof()
             )
     );
 
+    // Pernach
     public static final RegistrySupplier<Item> IRON_PERNACH = ITEMS.register(
             "iron_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getPernachDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
+                    attributes.weaponTypesDamage.pernach_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> GOLD_PERNACH = ITEMS.register(
             "gold_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getPernachDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
+                    attributes.weaponTypesDamage.pernach_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> DIAMOND_PERNACH = ITEMS.register(
             "diamond_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getPernachDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
+                    attributes.weaponTypesDamage.pernach_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
     );
-
     public static final RegistrySupplier<Item> NETHERITE_PERNACH = ITEMS.register(
             "netherite_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getPernachDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
+                    attributes.weaponTypesDamage.pernach_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:netherite_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> RUNIC_PERNACH = ITEMS.register(
             "runic_pernach",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getPernachDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
+                    attributes.weaponTypesDamage.pernach_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings()
             )
     );
 
+    // Quarterstaff
     public static final RegistrySupplier<Item> IRON_QUARTERSTAFF = ITEMS.register(
             "iron_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    attributes.weaponTypesDamage.quarterstaff_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> GOLD_QUARTERSTAFF = ITEMS.register(
             "gold_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    attributes.weaponTypesDamage.quarterstaff_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> DIAMOND_QUARTERSTAFF = ITEMS.register(
             "diamond_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    attributes.weaponTypesDamage.quarterstaff_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
     );
-
     public static final RegistrySupplier<Item> NETHERITE_QUARTERSTAFF = ITEMS.register(
             "netherite_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    attributes.weaponTypesDamage.quarterstaff_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
-
     public static final RegistrySupplier<Item> RUNIC_QUARTERSTAFF = ITEMS.register(
             "runic_quarterstaff",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    attributes.weaponTypesDamage.quarterstaff_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof()
             )
     );
 
-
+    // Great Spear
     public static final RegistrySupplier<Item> IRON_GREAT_SPEAR = ITEMS.register(
             "iron_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
+                    attributes.weaponTypesDamage.greatspear_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -488,8 +511,9 @@ public class ModItemsRegistry {
             "gold_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
+                    attributes.weaponTypesDamage.greatspear_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -498,8 +522,9 @@ public class ModItemsRegistry {
             "diamond_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
+                    attributes.weaponTypesDamage.greatspear_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -508,29 +533,32 @@ public class ModItemsRegistry {
             "netherite_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
+                    attributes.weaponTypesDamage.greatspear_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
     public static final RegistrySupplier<Item> RUNIC_GREAT_SPEAR = ITEMS.register(
             "runic_great_spear",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
+                    attributes.weaponTypesDamage.greatspear_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof()
             )
     );
 
-
+    // Deer Horns
     public static final RegistrySupplier<Item> IRON_DEER_HORNS = ITEMS.register(
             "iron_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.IRON,
-                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getIronWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
+                    attributes.weaponTypesDamage.deerhorns_damage_modifier + iron_modifier,
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -539,8 +567,9 @@ public class ModItemsRegistry {
             "gold_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.GOLD,
-                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getGoldWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
+                    attributes.weaponTypesDamage.deerhorns_damage_modifier + gold_modifier,
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -549,8 +578,9 @@ public class ModItemsRegistry {
             "diamond_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.DIAMOND,
-                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getDiamondWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
+                    attributes.weaponTypesDamage.deerhorns_damage_modifier + diamond_modifier,
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -559,83 +589,92 @@ public class ModItemsRegistry {
             "netherite_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.NETHERITE,
-                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getNetheriteWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
+                    attributes.weaponTypesDamage.deerhorns_damage_modifier + netherite_modifier,
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
     );
     public static final RegistrySupplier<Item> RUNIC_DEER_HORNS = ITEMS.register(
             "runic_deer_horns",
-            () -> new RunicSwordItem(
+            () -> new SimplyMoreRunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
-                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
+                    attributes.weaponTypesDamage.deerhorns_damage_modifier + runic_modifier,
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings().fireproof()
             )
     );
 
-
-
+    // Uniques
 
     public static final RegistrySupplier<Item> GREAT_SLITHER = ITEMS.register(
             "great_slither",
             () -> new GreatSlitherItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getGreatSlitherDamage() - 6,
-                    (float)attributes.getGreatSlitherSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.greatslither_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.greatslither_attack_speed,
                     new Item.Settings()
                             .fireproof()
-                            .rarity(Rarity.EPIC)       
+                            .rarity(Rarity.EPIC)
             )
     );
+
     public static final RegistrySupplier<Item> MOLTEN_FLARE = ITEMS.register(
             "molten_flare",
             () -> new MoltenFlareItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getMoltenFlareDamage() - 6,
-                    (float)attributes.getMoltenFlareSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.moltenflare_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.moltenflare_attack_speed,
                     new Item.Settings()
                             .fireproof()
-                            .rarity(Rarity.EPIC)       
+                            .rarity(Rarity.EPIC)
             )
     );
+
     public static final RegistrySupplier<Item> GRANDFROST = ITEMS.register(
             "grandfrost",
             () -> new GrandfrostItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getGrandfrostDamage() - 6,
-                    (float)attributes.getGrandfrostSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.grandfrost_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.grandfrost_attack_speed,
                     new Item.Settings()
                             .fireproof()
-                            .rarity(Rarity.EPIC)       
+                            .rarity(Rarity.EPIC)
             )
     );
+
     public static final RegistrySupplier<Item> GLIMMERSTEP = ITEMS.register(
             "glimmerstep",
-            () -> new GlimmerstepItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getGlimmerstepDamage() - 6,
-                    (float)attributes.getGlimmerstepSwingSpeed(),
+            () -> new GlimmerstepItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.uniqueWeaponsDamage.glimmerstep_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.glimmerstep_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
             )
     );
-    public static final RegistrySupplier<Item> THEBLOODHARVESTER = ITEMS.register(
+
+    public static final RegistrySupplier<Item> THE_BLOOD_HARVESTER = ITEMS.register(
             "the_blood_harvester",
-            () -> new TheBloodHarvesterItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTheBloodHarvesterDamage() - 6,
-                    (float)attributes.getTheBloodHarvesterSwingSpeed(),
+            () -> new TheBloodHarvesterItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.uniqueWeaponsDamage.thebloodharvester_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.thebloodharvester_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
             )
     );
+
     public static final RegistrySupplier<Item> JESTER_PENETRATE = ITEMS.register(
             "jester_penetrate",
-            () -> new JesterPenetrateItem(SimplyMoreToolMaterial.SIMPLY_MORE_JOKE_UNIQUE,
-                    attributes.getJesterPenetrateDamage() - 6,
-                    (float)attributes.getJesterPenetrateSwingSpeed(),
+            () -> new JesterPenetrateItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_JOKE_UNIQUE,
+                    attributes.uniqueWeaponsDamage.jesterpenetrate_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.jesterpenetrate_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -644,9 +683,10 @@ public class ModItemsRegistry {
 
     public static final RegistrySupplier<Item> MYRMEDGE = ITEMS.register(
             "myrmedge",
-            () -> new MyrmedgeItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getMyrmedgeDamage() - 6,
-                    (float)attributes.getMyrmedgeSwingSpeed(),
+            () -> new MyrmedgeItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.uniqueWeaponsDamage.myrmedge_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.myrmedge_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -661,9 +701,10 @@ public class ModItemsRegistry {
 
     public static final RegistrySupplier<Item> BLACK_PEARL = ITEMS.register(
             "black_pearl",
-            () -> new BlackPearlItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getBlackPearlDamage() - 6,
-                    (float)attributes.getBlackPearlSwingSpeed(),
+            () -> new BlackPearlItem(
+                    SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.uniqueWeaponsDamage.blackpearl_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.blackpearl_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -673,41 +714,41 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> THE_PAN = ITEMS.register(
             "the_pan",
             () -> new ThePanItem(SimplyMoreToolMaterial.SIMPLY_MORE_JOKE_UNIQUE,
-                    attributes.getThePanDamage() - 6,
-                    (float)attributes.getThePanSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.thepan_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.thepan_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
             )
     );
 
-    public static final RegistrySupplier<Item> THEVESSELBREACH = ITEMS.register(
+    public static final RegistrySupplier<Item> THE_VESSEL_BREACH = ITEMS.register(
             "the_vessel_breach",
             () -> new TheVesselBreachItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTheVesselBreachDamage() - 6,
-                    (float)attributes.getTheVesselBreachSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.thevesselbreach_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.thevesselbreach_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
             )
     );
 
-    public static final RegistrySupplier<Item> BLADEOFTHEGROTESQUE = ITEMS.register(
+    public static final RegistrySupplier<Item> BLADE_OF_THE_GROTESQUE = ITEMS.register(
             "blade_of_the_grotesque",
             () -> new BladeOfTheGrotesqueItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getBladeOfTheGrotesqueDamage() - 6,
-                    (float)attributes.getBladeOfTheGrotesqueSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.bladeofthegrotesque_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.bladeofthegrotesque_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
             )
     );
 
-    public static final RegistrySupplier<Item> VIPERSCALL = ITEMS.register(
+    public static final RegistrySupplier<Item> VIPERS_CALL = ITEMS.register(
             "vipers_call",
             () -> new VipersCallItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getVipersCallDamage() - 6,
-                    (float)attributes.getVipersCallSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.viperscall_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.viperscall_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -717,8 +758,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> TIMEKEEPER = ITEMS.register(
             "timekeeper",
             () -> new TimekeeperItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTimekeeperDamage() - 6,
-                    (float)attributes.getTimekeeperSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.timekeeper_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.timekeeper_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -728,8 +769,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> MATTERBANE = ITEMS.register(
             "matterbane",
             () -> new MatterbaneItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getMatterbaneDamage() - 6,
-                    (float)attributes.getMatterbaneSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.matterbane_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.matterbane_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -739,8 +780,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> SMOULDERING_RUIN = ITEMS.register(
             "smouldering_ruin",
             () -> new SmoulderingRuinItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getSmoulderingRuinDamage() - 6,
-                    (float)attributes.getSmoulderingRuinSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.smoulderingruin_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.smoulderingruin_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -750,8 +791,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> STASIS = ITEMS.register(
             "stasis",
             () -> new StasisItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getStasisDamage() - 6,
-                    (float)attributes.getStasisSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.stasis_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.stasis_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -761,8 +802,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> TIDEBREAKER = ITEMS.register(
             "tidebreaker",
             () -> new TidebreakerItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTidebreakerDamage() - 6,
-                    (float)attributes.getTidebreakerSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.tidebreaker_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.tidebreaker_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -772,8 +813,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> RUYI_JINGU_BANG = ITEMS.register(
             "ruyi_jingu_bang",
             () -> new RuyiJinguBangItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getRuyiJinguBangDamage() - 6,
-                    (float)attributes.getRuyiJinguBangSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.ruyijingubang_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.ruyijingubang_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -783,8 +824,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> RUPTURED_IDOL = ITEMS.register(
             "ruptured_idol",
             () -> new RupturedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getRupturedIdolDamage() - 6,
-                    (float)attributes.getRupturedIdolSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.rupturedidol_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.rupturedidol_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -794,8 +835,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> ASCENDED_IDOL = ITEMS.register(
             "ascended_idol",
             () -> new AscendedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getAscendedIdolDamage() - 6,
-                    (float)attributes.getAscendedIdolSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.ascendedidol_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.ascendedidol_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -805,8 +846,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> TARNISHED_IDOL = ITEMS.register(
             "tarnished_idol",
             () -> new TarnishedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getTarnishedIdolDamage() - 6,
-                    (float)attributes.getTarnishedIdolSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.tarnishedidol_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.tarnishedidol_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -815,9 +856,9 @@ public class ModItemsRegistry {
 
     public static final RegistrySupplier<Item> HOLYLIGHT = ITEMS.register(
             "holylight",
-            () -> new HolyLightItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getHolylightDamage() - 6,
-                    (float)attributes.getHolylightSwingSpeed(),
+            () -> new HolylightItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    attributes.uniqueWeaponsDamage.holylight_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.holylight_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -827,8 +868,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> DARKSENT = ITEMS.register(
             "darksent",
             () -> new DarksentItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getDarksentDamage() - 6,
-                    (float)attributes.getDarksentSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.darksent_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.darksent_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -838,8 +879,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> BOAS_FANG = ITEMS.register(
             "boas_fang",
             () -> new BoasFangItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getBoasFangDamage() - 6,
-                    (float)attributes.getBoasFangSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.boasfang_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.boasfang_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -849,8 +890,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> EARTHSHATTER = ITEMS.register(
             "earthshatter",
             () -> new EarthshatterItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getEarthshatterDamage() - 6,
-                    (float)attributes.getEarthshatterSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.earthshatter_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.earthshatter_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -860,8 +901,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> SOUL_FORESEER = ITEMS.register(
             "soul_foreseer",
             () -> new SoulForeseerItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getSoulForeseerDamage() - 6,
-                    (float)attributes.getSoulForeseerSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.soulforeseer_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.soulforeseer_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -871,8 +912,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> SERPENTINE_VALOUR = ITEMS.register(
             "serpentine_valour",
             () -> new SerpentineValourItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getSerpentineValourDamage() - 6,
-                    (float)attributes.getSerpentineValourSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.serpentinevalour_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.serpentinevalour_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -882,8 +923,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> LUSTROUS_MOXIE = ITEMS.register(
             "lustrous_moxie",
             () -> new LustrousMoxieItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getLustrousMoxieDamage() - 6,
-                    (float)attributes.getLustrousMoxieSwingspeed(),
+                    attributes.uniqueWeaponsDamage.lustrousmoxie_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.lustrousmoxie_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -893,8 +934,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> BRASSTURN = ITEMS.register(
             "brassturn",
             () -> new BrassturnItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getBrassturnDamage() - 6,
-                    (float)attributes.getBrassturnMaxSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.brassturn_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.brassturn_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -904,8 +945,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> CINDERGORGE = ITEMS.register(
             "cindergorge",
             () -> new CindergorgeItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getCindergorgeDamage() - 6,
-                    (float)attributes.getCindergorgeSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.cindergorge_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.cindergorge_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -915,8 +956,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> DEATHS_EYRIE = ITEMS.register(
             "deaths_eyrie",
             () -> new DeathsEyrieItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getDeathsEyrieDamage() - 6,
-                    (float)attributes.getDeathsEyrieSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.deathseyrie_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.deathseyrie_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -926,8 +967,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> PERFORISCUS = ITEMS.register(
             "perforiscus",
             () -> new PerforiscusItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getPerforiscusDamage() - 6,
-                    (float)attributes.getPerforiscusSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.perforiscus_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.perforiscus_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -937,8 +978,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> REVVENGINE = ITEMS.register(
             "revvengine",
             () -> new RevvengineItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getRevvengineDamage() - 6,
-                    (float)attributes.getRevvengineSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.revvengine_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.revvengine_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -948,8 +989,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> EXEDRILL = ITEMS.register(
             "exedrill",
             () -> new ExedrillItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getExedrillDamage() - 6,
-                    (float)attributes.getExedrillSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.exedrill_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.exedrill_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -959,8 +1000,8 @@ public class ModItemsRegistry {
     public static final RegistrySupplier<Item> CULTEREX = ITEMS.register(
             "culterex",
             () -> new CulterexItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    attributes.getCulterexDamage() - 6,
-                    (float)attributes.getCulterexSwingSpeed(),
+                    attributes.uniqueWeaponsDamage.culterex_damage_modifier,
+                    attributes.uniqueWeaponsSwingSpeed.culterex_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -974,7 +1015,7 @@ public class ModItemsRegistry {
                             .maxCount(1)
                             .fireproof()
                             .rarity(Rarity.EPIC),
-                    "runic"
+                    RuneCarverItem.Types.RUNEFUSED
             )
     );
     public static final RegistrySupplier<Item> NETHERFUSED_CARVER = ITEMS.register(
@@ -984,7 +1025,7 @@ public class ModItemsRegistry {
                             .maxCount(1)
                             .fireproof()
                             .rarity(Rarity.EPIC),
-                    "nether"
+                    RuneCarverItem.Types.NETHERFUSED
             )
     );
 
@@ -992,8 +1033,8 @@ public class ModItemsRegistry {
             "mimicry_longsword",
             () -> new LongswordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getLongswordDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getLongswordSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.longsword_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.longsword_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1004,8 +1045,8 @@ public class ModItemsRegistry {
             "mimicry_twinblade",
             () -> new TwinbladeItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getTwinbladeDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getTwinbladeSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.twinblade_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.twinblade_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1016,8 +1057,8 @@ public class ModItemsRegistry {
             "mimicry_rapier",
             () -> new RapierItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getRapierDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getRapierSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.rapier_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.rapier_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1028,8 +1069,8 @@ public class ModItemsRegistry {
             "mimicry_katana",
             () -> new KatanaItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getKatanaDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getKatanaSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.katana_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.katana_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1040,8 +1081,8 @@ public class ModItemsRegistry {
             "mimicry_spear",
             () -> new SpearItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getSpearDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getSpearSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.spear_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.spear_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1052,8 +1093,8 @@ public class ModItemsRegistry {
             "mimicry_sai",
             () -> new SaiItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getSaiDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getSaiSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.sai_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.sai_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1064,8 +1105,8 @@ public class ModItemsRegistry {
             "mimicry_glaive",
             () -> new GlaiveItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getGlaiveDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getGlaiveSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.glaive_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.glaive_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1076,8 +1117,8 @@ public class ModItemsRegistry {
             "mimicry_warglaive",
             () -> new WarglaiveItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getWarglaiveDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getWarglaiveSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.warglaive_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.warglaive_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1088,8 +1129,8 @@ public class ModItemsRegistry {
             "mimicry_cutlass",
             () -> new CutlassItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getCutlassDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getCutlassSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.cutlass_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.cutlass_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1100,8 +1141,8 @@ public class ModItemsRegistry {
             "mimicry_claymore",
             () -> new ClaymoreItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getClaymoreDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getClaymoreSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.claymore_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.claymore_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1112,8 +1153,8 @@ public class ModItemsRegistry {
             "mimicry_greathammer",
             () -> new GreathammerItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getGreathammerDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getGreathammerSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.greathammer_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.greathammer_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1124,8 +1165,8 @@ public class ModItemsRegistry {
             "mimicry_greataxe",
             () -> new GreataxeItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getGreataxeDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getGreataxeSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.greataxe_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.greataxe_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1136,8 +1177,8 @@ public class ModItemsRegistry {
             "mimicry_chakram",
             () -> new ChakramItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getChakramDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getChakramSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.chakram_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.chakram_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1148,8 +1189,8 @@ public class ModItemsRegistry {
             "mimicry_scythe",
             () -> new ScytheItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getScytheDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getScytheSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.scythe_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.scythe_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1160,8 +1201,8 @@ public class ModItemsRegistry {
             "mimicry_halberd",
             () -> new HalberdItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getHalberdDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getHalberdSwingSpeed(),
+                    (int) (Config.weaponAttribute.typeDamageModifier.halberd_damageModifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    Config.weaponAttribute.typeAttackSpeed.halberd_attackSpeed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1172,8 +1213,8 @@ public class ModItemsRegistry {
             "mimicry_great_katana",
             () -> new GreatKatanaItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getGreatKatanaDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getGreatKatanaSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.greatkatana_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1184,8 +1225,8 @@ public class ModItemsRegistry {
             "mimicry_grandsword",
             () -> new GrandswordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getGrandswordDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getGrandswordSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.grandsword_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1196,8 +1237,8 @@ public class ModItemsRegistry {
             "mimicry_backhand_blade",
             () -> new BackhandBladeItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getBackhandBladeDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getBackhandBladeSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.backhandblade_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1208,8 +1249,8 @@ public class ModItemsRegistry {
             "mimicry_lance",
             () -> new net.rosemarythyme.simplymore.item.uniques.mimicry.LanceItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getLanceDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getLanceSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.lance_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1220,8 +1261,8 @@ public class ModItemsRegistry {
             "mimicry_khopesh",
             () -> new KhopeshItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getKhopeshDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getKhopeshSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.khopesh_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1232,8 +1273,8 @@ public class ModItemsRegistry {
             "mimicry_dagger",
             () -> new DaggerItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getDaggerDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getDaggerSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.dagger_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1244,8 +1285,8 @@ public class ModItemsRegistry {
             "mimicry_pernach",
             () -> new PernachItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getPernachDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getPernachSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.pernach_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1256,8 +1297,8 @@ public class ModItemsRegistry {
             "mimicry_quarterstaff",
             () -> new QuarterstaffItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getQuarterstaffDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getQuarterstaffSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.quarterstaff_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1268,8 +1309,8 @@ public class ModItemsRegistry {
             "mimicry_great_spear",
             () -> new GreatSpearItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getGreatSpearDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getGreatSpearSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.greatspear_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1280,8 +1321,8 @@ public class ModItemsRegistry {
             "mimicry_deer_horns",
             () -> new DeerHornsItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    mimicryAttributes.getDeerHornsDamageModifier() + 3 + effect.getMimicryDamageModifierFromRunic(),
-                    (float)mimicryAttributes.getDeerHornsSwingSpeed(),
+                    (int)(attributes.weaponTypesDamage.deerhorns_damage_modifier + attributes.uniqueWeaponsDamage.mimicry_damage_modifier),
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
                     new Item.Settings()
                             .fireproof()
                             .rarity(Rarity.EPIC)
@@ -1297,15 +1338,15 @@ public class ModItemsRegistry {
 
     public static void registerModItems() {
         SimplyMore.LOGGER.info("Registering Items for " + SimplyMore.ID);
-        if (Platform.isModLoaded("sticknstone")) {
-            SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
-            StickNStoneCompatRegistry.registerCompatItems();
-        }
-
-        if (Platform.isModLoaded("gobber2")) {
-            SimplyMore.LOGGER.info("Registering Gobber2 Compat for " + SimplyMore.ID);
-            Gobber2CompatRegistry.registerCompatItems();
-        }
+//        if (Platform.isModLoaded("sticknstone")) {
+//            SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
+//            StickNStoneCompatRegistry.registerCompatItems();
+//        }
+//
+//        if (Platform.isModLoaded("gobber2")) {
+//            SimplyMore.LOGGER.info("Registering Gobber2 Compat for " + SimplyMore.ID);
+//            Gobber2CompatRegistry.registerCompatItems();
+//        }
 
         ITEMS.register();
     }
@@ -1322,9 +1363,9 @@ public class ModItemsRegistry {
         entries.add(RUNEFUSED_CARVER.get());
         entries.add(NETHERFUSED_CARVER.get());
 
-        if (Platform.isModLoaded("sticknstone")) {
-            StickNStoneCompatRegistry.addToGroup(entries);
-        }
+//        if (Platform.isModLoaded("sticknstone")) {
+//            StickNStoneCompatRegistry.addToGroup(entries);
+//        }
 
         entries.add(IRON_GREAT_KATANA.get());
         entries.add(IRON_GRANDSWORD.get());
@@ -1377,25 +1418,25 @@ public class ModItemsRegistry {
         entries.add(RUNIC_GREAT_SPEAR.get());
         entries.add(RUNIC_DEER_HORNS.get());
 
-        if (Platform.isModLoaded("gobber2")) {
-            Gobber2CompatRegistry.addToGroup(entries);
-        }
-
-        if (Platform.isModLoaded("mythicmetals")) {
-            MythicMetalsCompatProxy.addToGroup(entries);
-        }
+//        if (Platform.isModLoaded("gobber2")) {
+//            Gobber2CompatRegistry.addToGroup(entries);
+//        }
+//
+//        if (Platform.isModLoaded("mythicmetals")) {
+//            MythicMetalsCompatProxy.addToGroup(entries);
+//        }
 
         entries.add(GREAT_SLITHER.get());
         entries.add(MOLTEN_FLARE.get());
         entries.add(GRANDFROST.get());
         entries.add(MIMICRY_LONGSWORD.get());
         entries.add(GLIMMERSTEP.get());
-        entries.add(THEBLOODHARVESTER.get());
+        entries.add(THE_BLOOD_HARVESTER.get());
         entries.add(MYRMEDGE.get());
         entries.add(BLACK_PEARL.get());
-        entries.add(THEVESSELBREACH.get());
-        entries.add(BLADEOFTHEGROTESQUE.get());
-        entries.add(VIPERSCALL.get());
+        entries.add(THE_VESSEL_BREACH.get());
+        entries.add(BLADE_OF_THE_GROTESQUE.get());
+        entries.add(VIPERS_CALL.get());
         entries.add(TIMEKEEPER.get());
         entries.add(MATTERBANE.get());
         entries.add(SMOULDERING_RUIN.get());

@@ -7,9 +7,9 @@
   ],
   "mixins": [
     "LivingEntityMixin",
+    "LootTableModifierMixin",
     "MobEntityMixin",
-    "PlayerEntityMixin",
-    "UniqueSwordMixin"
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

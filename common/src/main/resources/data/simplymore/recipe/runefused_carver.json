@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:cobblestone"
+    },
+    "O": {
+      "item": "simplyswords:empowered_remnant"
+    }
+  },
+  "result": {
+    "id": "simplymore:runefused_carver",
+    "count": 1
+  }
+}

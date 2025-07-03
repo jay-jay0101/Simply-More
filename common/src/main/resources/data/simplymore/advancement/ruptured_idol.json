@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "id": "simplymore:ruptured_idol"
+    },
+    "title": {
+      "translate": "advancements.simplymore.ruptured_idol.title",
+      "with": []
+    },
+    "description": {
+      "translate": "advancements.simplyswords.find_unique.description",
+      "with": [
+        {
+          "translate": "item.simplymore.ruptured_idol"
+        }
+      ]
+    },
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:ruptured_idol"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

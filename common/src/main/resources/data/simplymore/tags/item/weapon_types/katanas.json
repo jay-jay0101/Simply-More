@@ -1,0 +1,144 @@
+{
+	"values": [
+		{
+			"id": "simplymore:revvengine",
+			"required": false
+		},
+		{
+			"id": "simplyswords:whisperwind",
+			"required": false
+		},
+		{
+			"id": "sticknstone:wooden_katana",
+			"required": false
+		},
+		{
+			"id": "sticknstone:stone_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:iron_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:diamond_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:gold_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:netherite_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:runic_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:gobber_compat/gobber/gobber_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:gobber_compat/gobber_nether/gobber_nether_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:gobber_compat/gobber_end/gobber_end_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/adamantite/adamantite_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/aquarium/aquarium_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/banglum/banglum_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/carmot/carmot_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/kyber/kyber_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/mythril/mythril_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/orichalcum/orichalcum_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/osmium/osmium_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/prometheum/prometheum_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/quadrillum/quadrillum_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/runite/runite_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/star_platinum/star_platinum_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/bronze/bronze_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/steel/steel_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/stormyx/stormyx_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/palladium/palladium_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/metallurgium/metallurgium_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/celestium/celestium_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/copper/copper_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/durasteel/durasteel_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/hallowed/hallowed_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/legendary_banglum/legendary_banglum_katana",
+			"required": false
+		},
+		{
+			"id": "simplyswords:mythicmetals_compat/tidesinger/tidesinger_katana",
+			"required": false
+		}
+	]
+}

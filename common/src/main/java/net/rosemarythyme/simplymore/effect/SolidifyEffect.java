@@ -11,16 +11,16 @@ public class SolidifyEffect extends FreezeEffect {
         super(statusEffectCategory, color);
     }
 
-    public void applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
         if (!livingEntity.getWorld().isClient() && livingEntity instanceof PlayerEntity player) {
             for (ItemStack itemstack : livingEntity.getHandItems()) {
                 if (!player.getItemCooldownManager().isCoolingDown(itemstack.getItem())) {
-                    player.getItemCooldownManager().set(itemstack.getItem(),60);
+                    player.getItemCooldownManager().set(itemstack.getItem(), 60);
                 }
             }
         }
 
-        super.applyUpdateEffect(livingEntity, amplifier);
+        return super.applyUpdateEffect(livingEntity, amplifier);
     }
 
 }

@@ -28,12 +28,12 @@
     "simplymore.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.10",
-    "minecraft": "~1.20.1",
-    "java": ">=17",
-    "architectury": ">=9.2.14",
-    "fabric-api": "*",
-    "simplyswords": ">=1.55.0-1.20.1"
+    "fabric": "*",
+    "minecraft": ">=1.21.1 <=1.21.1",
+    "architectury": ">=7.1.0",
+    "fzzy_config": ">=0.6.6",
+    "oracle_index": ">=0.2.0",
+    "simplyswords": ">=1.60.11-1.21.1"
   },
   "suggests": {
   }

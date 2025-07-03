@@ -1,0 +1,37 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mythicmetals"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "item": "mythicmetals:steel_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "MB ",
+    "BsB",
+    " BM"
+  ],
+  "result": {
+    "id": "simplymore:steel_deer_horns",
+    "count": 1
+  }
+}

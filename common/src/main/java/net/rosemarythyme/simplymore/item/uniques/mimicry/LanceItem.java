@@ -1,22 +1,24 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
 import java.util.List;
 
 public class LanceItem extends MimicryItem {
     public LanceItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
     }
 
 
@@ -26,7 +28,7 @@ public class LanceItem extends MimicryItem {
             jump(player, 3.2f,0.4f);
             player.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.LIGHTWEIGHT.get(),
+                            ModEffectsRegistry.getReference(ModEffectsRegistry.LIGHTWEIGHT),
                             20,
                             0
                     )
@@ -35,7 +37,7 @@ public class LanceItem extends MimicryItem {
 
         if(ticksUsed==19) {
             List<LivingEntity> enemies = stabAttack(player, 4,0.8f);
-            float damage = mimicryAttributes.getLanceFirstDamage();
+            float damage = mimicry.lance.firstDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -43,7 +45,7 @@ public class LanceItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryAttributes.getLanceEffectTime(),
+                                        mimicry.lance.effectTime,
                                         2
                                 )
                         );
@@ -53,24 +55,24 @@ public class LanceItem extends MimicryItem {
 
         if(ticksUsed==27) {
             List<LivingEntity> enemies = stabAttack(player, 4,0.8f);
-            float damage = mimicryAttributes.getLanceSecondDamage();
+            float damage = mimicry.lance.secondDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         target.damage(player.getDamageSources().playerAttack(player), damage);
-                        knockback(player, target, mimicryAttributes.getLanceKnockback());
+                        knockback(player, target, mimicry.lance.knockback);
                     }
             );
         }
 
         if(ticksUsed >= 36) {
-            player.removeStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get());
+            player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
         }
     }
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryAttributes.isDisableLanceVariant();
+        return mimicry.lance.disabled;
     }
 
     @Override
@@ -79,8 +81,24 @@ public class LanceItem extends MimicryItem {
     }
 
     @Override
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+    public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.lance.tooltip1").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.mimicry.lance.tooltip2").setStyle(textStyle));
+    }
+
+    public static class MimicryEffectSettings extends TooltipSettings {
+        public MimicryEffectSettings() {
+            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_LANCE));
+        }
+
+        public boolean disabled = false;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float firstDamage = 7f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float secondDamage = 9f;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 80;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float knockback = 1.5f;
     }
 }

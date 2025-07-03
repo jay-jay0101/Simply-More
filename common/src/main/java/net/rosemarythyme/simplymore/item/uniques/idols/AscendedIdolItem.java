@@ -1,16 +1,17 @@
 package net.rosemarythyme.simplymore.item.uniques.idols;
 
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
 
     public AscendedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, attackDamage, attackSpeed, Weapon.SwordTypes.SWORD, settings);
     }
 
     @Override
@@ -37,22 +38,17 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
                         attacker.getY(),
                         attacker.getZ(),
                         attacker
-                )
+                ),
+                effect.holylight.spreadChance
         );
 
         return super.postHit(stack, target, attacker);
     }
 
     @Override
-    public Text getName(ItemStack stack) {
-        Style UNIQUE = net.sweenus.simplyswords.util.HelperMethods.getStyle("unique");
-        return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
-    }
-
-    @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style textStyle = net.sweenus.simplyswords.util.HelperMethods.getStyle("text");
-        Style abilityStyle = net.sweenus.simplyswords.util.HelperMethods.getStyle("ability");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip1").setStyle(abilityStyle));
@@ -63,6 +59,6 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip6").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 }

@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "id": "simplymore:runefused_carver"
+    },
+    "title": "Simply More",
+    "description": {
+      "translate": "advancements.simplymore.root.description",
+      "with": []
+    },
+    "hidden": true,
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}
