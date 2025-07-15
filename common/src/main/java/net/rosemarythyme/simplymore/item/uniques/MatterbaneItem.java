@@ -81,8 +81,8 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
 
             float yaw = (float) Math.toRadians(user.getYaw()+90);
 
-            float velocityX = (float) (Math.cos(yaw)) * 0.5f;
-            float velocityZ = (float) (Math.sin(yaw)) * 0.5f;
+            float velocityX = (float) (Math.cos(yaw)) * 0.25f;
+            float velocityZ = (float) (Math.sin(yaw)) * 0.25f;
 
             double dX = velocityX * j;
             double dZ = velocityZ * j;
