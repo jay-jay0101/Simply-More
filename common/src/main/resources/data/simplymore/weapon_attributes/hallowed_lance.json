@@ -1,8 +1,8 @@
 {
-  "parent": "bettercombat:lance",
-  "attributes": {
-    "attack_range": 4,
-    "two_handed": false,
-    "category": "lance"
-  }
+    "parent": "bettercombat:lance",
+    "attributes": {
+        "two_handed": false,
+        "category": "lance",
+        "range_bonus": 1.5
+    }
 }
