@@ -1,5 +1,7 @@
 {
-  "item": "simplymore:the_blood_harvester",
-  "luminance": 10,
-  "water_sensitive": false
+    "luminance": 10,
+    "water_sensitive": false,
+    "match": {
+        "items": "simplymore:the_blood_harvester"
+    }
 }

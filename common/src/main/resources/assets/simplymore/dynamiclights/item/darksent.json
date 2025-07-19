@@ -1,5 +1,7 @@
 {
-  "item": "simplymore:darksent",
-  "luminance": 8,
-  "water_sensitive": false
+    "luminance": 8,
+    "water_sensitive": false,
+    "match": {
+        "items": "simplymore:darksent"
+    }
 }

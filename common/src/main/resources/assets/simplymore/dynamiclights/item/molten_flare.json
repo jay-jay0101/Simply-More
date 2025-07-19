@@ -1,5 +1,7 @@
 {
-  "item": "simplymore:molten_flare",
-  "luminance": 10,
-  "water_sensitive": true
+    "luminance": 10,
+    "water_sensitive": true,
+    "match": {
+        "items": "simplymore:molten_flare"
+    }
 }
