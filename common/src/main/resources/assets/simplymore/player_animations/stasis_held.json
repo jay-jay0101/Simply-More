@@ -1,7 +1,7 @@
 {
-    "name": "quarterstaff_held",
+    "name": "stasis_held",
     "author": "RosemaryThyme",
-    "description": "Quarterstaff Pose",
+    "description": "Stasis Pose",
     "emote":{
         "isLoop": "true",
         "returnTick": 1,
