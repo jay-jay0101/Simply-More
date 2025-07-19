@@ -7,6 +7,7 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.entity.AuraOfCorruptionAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
@@ -19,6 +20,11 @@ public class TarnishedIdolItem extends SimplyMoreUniqueSwordItem {
 
     public TarnishedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+    }
+
+    @Override
+    protected Identifier getConfigPath() {
+        return Identifier.of("simplymore.unique_effect.darksent");
     }
 
     @Override

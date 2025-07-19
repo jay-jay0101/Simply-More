@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.registry;
 
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -24,6 +25,7 @@ import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
+import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.config.Config;
 
@@ -1338,10 +1340,10 @@ public class ModItemsRegistry {
 
     public static void registerModItems() {
         SimplyMore.LOGGER.info("Registering Items for " + SimplyMore.ID);
-//        if (Platform.isModLoaded("sticknstone")) {
-//            SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
-//            StickNStoneCompatRegistry.registerCompatItems();
-//        }
+        if (Platform.isModLoaded("sticknstone")) {
+            SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
+            StickNStoneCompatRegistry.registerCompatItems();
+        }
 //
 //        if (Platform.isModLoaded("gobber2")) {
 //            SimplyMore.LOGGER.info("Registering Gobber2 Compat for " + SimplyMore.ID);
@@ -1363,9 +1365,9 @@ public class ModItemsRegistry {
         entries.add(RUNEFUSED_CARVER.get());
         entries.add(NETHERFUSED_CARVER.get());
 
-//        if (Platform.isModLoaded("sticknstone")) {
-//            StickNStoneCompatRegistry.addToGroup(entries);
-//        }
+        if (Platform.isModLoaded("sticknstone")) {
+            StickNStoneCompatRegistry.addToGroup(entries);
+        }
 
         entries.add(IRON_GREAT_KATANA.get());
         entries.add(IRON_GRANDSWORD.get());

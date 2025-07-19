@@ -7,6 +7,7 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
@@ -20,6 +21,11 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
 
     public AscendedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, Weapon.SwordTypes.SWORD, settings);
+    }
+
+    @Override
+    protected Identifier getConfigPath() {
+        return Identifier.of("simplymore.unique_effect.holylight");
     }
 
     @Override

@@ -12,7 +12,7 @@ dependencies {
     modImplementation "dev.architectury:architectury:$project.architectury_api_version"
 
 
-    modImplementation("curse.maven:simplyswords-659887:6724618")
+    modImplementation("curse.maven:simplyswords-659887:${simplyswords_version}")
     modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
 
     modCompileOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") { transitive false }

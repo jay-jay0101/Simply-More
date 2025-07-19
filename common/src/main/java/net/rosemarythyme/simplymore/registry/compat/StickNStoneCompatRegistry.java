@@ -1,25 +1,28 @@
 package net.rosemarythyme.simplymore.registry.compat;
 
 import dev.architectury.registry.registries.RegistrySupplier;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterials;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
+import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 
 import java.util.List;
 
 public class StickNStoneCompatRegistry {
-    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    static WeaponAttributesConfig attributes = config.weaponAttributes;
+    static WeaponAttributesConfig attributes = ConfigWrapper.attributes;
 
+    static final int wooden_modifier = attributes.typeDamageModifier.wooden_damage_modifier.get().intValue();
+    static final int stone_modifier = attributes.typeDamageModifier.stone_damage_modifier.get().intValue();
     public static final RegistrySupplier<Item> WOODEN_GREAT_KATANA = ModItemsRegistry.ITEMS.register(
             "wooden_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
+                    attributes.weaponTypesDamage.greatkatana_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -30,8 +33,9 @@ public class StickNStoneCompatRegistry {
             "stone_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getGreatKatanaDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
+                    attributes.weaponTypesDamage.greatkatana_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -40,10 +44,11 @@ public class StickNStoneCompatRegistry {
 
     public static final RegistrySupplier<Item> WOODEN_GRANDSWORD = ModItemsRegistry.ITEMS.register(
             "wooden_grandsword",
-            () -> new GrandSwordItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getGrandswordDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getGrandswordSwingSpeed(),
+                    attributes.weaponTypesDamage.grandsword_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
+                    Weapon.SwordTypes.GRANDSWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -52,10 +57,11 @@ public class StickNStoneCompatRegistry {
 
     public static final RegistrySupplier<Item> STONE_GRANDSWORD = ModItemsRegistry.ITEMS.register(
             "stone_grandsword",
-            () -> new GrandSwordItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getGrandswordDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getGrandswordSwingSpeed(),
+                    attributes.weaponTypesDamage.grandsword_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
+                    Weapon.SwordTypes.GRANDSWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -66,8 +72,9 @@ public class StickNStoneCompatRegistry {
             "wooden_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
+                    attributes.weaponTypesDamage.backhandblade_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -78,8 +85,9 @@ public class StickNStoneCompatRegistry {
             "stone_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getBackhandBladeDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
+                    attributes.weaponTypesDamage.backhandblade_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -88,10 +96,11 @@ public class StickNStoneCompatRegistry {
 
     public static final RegistrySupplier<Item> WOODEN_LANCE = ModItemsRegistry.ITEMS.register(
             "wooden_lance",
-            () -> new LanceItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getLanceDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getLanceSwingSpeed(),
+                    attributes.weaponTypesDamage.lance_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
+                    Weapon.SwordTypes.LANCE,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -100,10 +109,11 @@ public class StickNStoneCompatRegistry {
 
     public static final RegistrySupplier<Item> STONE_LANCE = ModItemsRegistry.ITEMS.register(
             "stone_lance",
-            () -> new LanceItem(
+            () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getLanceDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getLanceSwingSpeed(),
+                    attributes.weaponTypesDamage.lance_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.lance_attack_speed,
+                    Weapon.SwordTypes.LANCE,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -114,8 +124,9 @@ public class StickNStoneCompatRegistry {
             "wooden_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getKhopeshDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
+                    attributes.weaponTypesDamage.khopesh_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -126,8 +137,9 @@ public class StickNStoneCompatRegistry {
             "stone_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getKhopeshDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
+                    attributes.weaponTypesDamage.khopesh_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -138,8 +150,9 @@ public class StickNStoneCompatRegistry {
             "wooden_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getDaggerDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
+                    attributes.weaponTypesDamage.dagger_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -150,8 +163,9 @@ public class StickNStoneCompatRegistry {
             "stone_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getDaggerDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
+                    attributes.weaponTypesDamage.dagger_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.dagger_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -162,8 +176,9 @@ public class StickNStoneCompatRegistry {
             "wooden_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getPernachDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
+                    attributes.weaponTypesDamage.pernach_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -174,8 +189,9 @@ public class StickNStoneCompatRegistry {
             "stone_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getPernachDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
+                    attributes.weaponTypesDamage.pernach_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.pernach_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -186,8 +202,9 @@ public class StickNStoneCompatRegistry {
             "wooden_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    attributes.weaponTypesDamage.quarterstaff_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -198,8 +215,9 @@ public class StickNStoneCompatRegistry {
             "stone_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getQuarterstaffDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
+                    attributes.weaponTypesDamage.quarterstaff_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -210,8 +228,9 @@ public class StickNStoneCompatRegistry {
             "wooden_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
+                    attributes.weaponTypesDamage.greatspear_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -222,8 +241,9 @@ public class StickNStoneCompatRegistry {
             "stone_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getGreatSpearDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
+                    attributes.weaponTypesDamage.greatspear_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -234,8 +254,9 @@ public class StickNStoneCompatRegistry {
             "wooden_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
-                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getWoodenWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
+                    attributes.weaponTypesDamage.deerhorns_damage_modifier + wooden_modifier,
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -246,8 +267,9 @@ public class StickNStoneCompatRegistry {
             "stone_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
-                    attributes.getDeerHornsDamageModifier() + 3 + attributes.getStoneWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
+                    attributes.weaponTypesDamage.deerhorns_damage_modifier + stone_modifier,
+                    attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
+                    Weapon.SwordTypes.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"

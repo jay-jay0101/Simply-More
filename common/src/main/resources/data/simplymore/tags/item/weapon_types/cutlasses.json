@@ -5,6 +5,10 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:wraithfang",
+			"required": false
+		},
+		{
 			"id": "sticknstone:wooden_cutlass",
 			"required": false
 		},

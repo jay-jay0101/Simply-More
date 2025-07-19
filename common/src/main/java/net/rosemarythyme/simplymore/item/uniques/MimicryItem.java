@@ -22,10 +22,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -60,6 +57,11 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, swordType, settings);
+    }
+
+    @Override
+    protected Identifier getConfigPath() {
+        return Identifier.of("simplymore.unique_effect.mimicry");
     }
 
     @Override

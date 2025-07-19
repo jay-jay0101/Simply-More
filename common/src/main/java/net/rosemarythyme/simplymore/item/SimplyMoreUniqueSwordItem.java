@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -13,6 +14,7 @@ import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.item.uniques.idols.DarksentItem;
 import net.rosemarythyme.simplymore.item.uniques.idols.HolylightItem;
+import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
 import net.sweenus.simplyswords.util.Styles;
 
@@ -60,4 +62,14 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
             return Text.translatable(this.getTranslationKey(stack)).setStyle(Styles.UNIQUE);
         }
     }
+
+    protected void generateDynamicTooltip(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        SimplySwordsClientAPI.generateDynamicTooltip(itemStack, tooltipContext, tooltip, type, "simplymore", "oracle_index:books/simplymore/weapon_types", "oracle_index:books/simplymore/unique_weapons", "", getConfigPath());
+    }
+
+    @Override
+    protected Identifier getConfigPath() {
+        return Identifier.of("simplymore.unique_effect." + this.asItem().getRegistryEntry().registryKey().getValue().getPath());
+    }
+
 }

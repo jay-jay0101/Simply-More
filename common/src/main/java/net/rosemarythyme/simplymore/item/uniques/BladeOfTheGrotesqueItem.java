@@ -180,7 +180,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         @ValidatedInt.Restrict(min = 0)
         public int cooldown = 500;
         @RequiresAction(action = Action.RESTART)
-        public float selfSlow = -0.2f;
+        public float selfSlow = -0.02f;
         @ValidatedInt.Restrict(min = 0)
         public int maxAuraWard = 5;
     }
