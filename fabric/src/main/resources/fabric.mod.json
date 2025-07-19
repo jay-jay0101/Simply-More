@@ -14,7 +14,7 @@
     "sources": "https://github.com/jay-jay0101/Simply-More/tree/main"
   },
   "license": "All Rights Reserved",
-  "icon": "assets/simplymore/icon.png",
+  "icon": "assets/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
