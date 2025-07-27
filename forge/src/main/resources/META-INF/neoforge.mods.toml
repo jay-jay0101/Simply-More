@@ -1,44 +1,52 @@
 modLoader = "javafml"
-loaderVersion = "[47,)"
-#issueTrackerURL = ""
+loaderVersion = "[4,)"
 license = "All Rights Reserved"
+
+[[mixins]]
+config = "simplymore.mixins.json"
 
 [[mods]]
 modId = "simplymore"
 version = "${version}"
 displayName = "Simply More"
 authors = "RosemaryThyme"
-credits = "NotSaneAshley & Scootifyz (Art) | Chronosacaria (Code Review)"
+credits="NotSaneAshley (Art), ScootifyZ (Art), chronosacaria (Code Review)"
 description = '''
 An addon to Simply Swords which adds even more weapons variety and new uniques!
 '''
-logoFile = "assets/simplymore/icon.png"
+logoFile = "assets/icon.png"
 
 [[dependencies.simplymore]]
-modId = "forge"
+modId = "neoforge"
 mandatory = true
-versionRange = "[47,)"
+versionRange = "[4,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.simplymore]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.1,)"
+versionRange = "[1.21, 1.22)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.simplymore]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.2.14,)"
+versionRange = "[5.12.42,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.simplymore]]
+modId = "fzzy_config"
+mandatory = true
+versionRange = "[0.6.6,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.simplymore]]
 modId = "simplyswords"
 mandatory = true
-versionRange = "[1.55.0,)"
+versionRange = "[1.61.3,)"
 ordering = "AFTER"
 side = "BOTH"
-

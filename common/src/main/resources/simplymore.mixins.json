@@ -9,8 +9,7 @@
     "LivingEntityMixin",
     "LootTableModifierMixin",
     "MobEntityMixin",
-    "OracleIndexUtilsMixin",
-    "PlayerEntityMixin"
+    "OracleIndexUtilsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

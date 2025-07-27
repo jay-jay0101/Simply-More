@@ -2,16 +2,6 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
-//loom {
-//    accessWidenerPath = project(":common").loom.accessWidenerPath
-//
-//    neoForge {
-//        convertAccessWideners = true
-//        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-//
-//        mixin "simplymore.mixins.json"
-//    }
-//}
 
 architectury {
     platformSetupLoomIde()
@@ -61,6 +51,7 @@ shadowJar {
 
 remapJar {
     inputFile.set shadowJar.archiveFile
+    atAccessWideners.add(project(":common").loom.accessWidenerPath.get().asFile.name)
 }
 
 repositories {

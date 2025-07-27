@@ -679,7 +679,7 @@ public class ModItemsRegistry {
                     attributes.uniqueWeaponsSwingSpeed.jesterpenetrate_attack_speed,
                     new Item.Settings()
                             .fireproof()
-                            .rarity(Rarity.EPIC)
+                            .rarity(Rarity.COMMON)
             )
     );
 
@@ -720,7 +720,7 @@ public class ModItemsRegistry {
                     attributes.uniqueWeaponsSwingSpeed.thepan_attack_speed,
                     new Item.Settings()
                             .fireproof()
-                            .rarity(Rarity.EPIC)
+                            .rarity(Rarity.COMMON)
             )
     );
 

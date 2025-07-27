@@ -57,9 +57,9 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
     @Override
     public Text getName(ItemStack stack) {
         if (stack.getItem() instanceof HolylightItem || stack.getItem() instanceof DarksentItem) {
-            return Text.translatable(this.getTranslationKey(stack)).setStyle(Styles.LEGENDARY);
+            return Text.translatable(stack.getTranslationKey()).setStyle(Styles.LEGENDARY);
         } else {
-            return Text.translatable(this.getTranslationKey(stack)).setStyle(Styles.UNIQUE);
+            return Text.translatable(stack.getTranslationKey()).setStyle(Styles.UNIQUE);
         }
     }
 
