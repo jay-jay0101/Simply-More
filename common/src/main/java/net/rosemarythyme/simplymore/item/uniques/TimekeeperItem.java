@@ -59,7 +59,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
                 spawnWindAttack(world, user, playerX, user.getY(), playerZ);
             }
 
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), calculateCooldown(currentTime));
+            user.getItemCooldownManager().set(this, calculateCooldown(currentTime));
         }
         return super.use(world, user, hand);
     }

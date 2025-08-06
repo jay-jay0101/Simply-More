@@ -107,7 +107,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         serverWorld.playSound(null, player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_03.get(), soundCategory, 1, 0);
 
         // Set cooldown
-        player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+        player.getItemCooldownManager().set(this, skillCooldown);
 
         // Damage entities in range
         Box box = new Box(playerX - 4, playerY - 2, playerZ - 4, playerX + 4, playerY + 5, playerZ + 4);

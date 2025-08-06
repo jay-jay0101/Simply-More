@@ -53,7 +53,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
             user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.SOLIDIFIED),skillLength));
             user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.UI_STONECUTTER_TAKE_RESULT, user.getSoundCategory(), 2F, 1F);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.ASH,user.getX(),user.getEyeY()-0.25,user.getZ(),1000,0.2,0.5,0.2,1);
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
     }

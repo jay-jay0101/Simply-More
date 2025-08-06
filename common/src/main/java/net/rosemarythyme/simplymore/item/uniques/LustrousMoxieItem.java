@@ -71,7 +71,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
 
             user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED_MOXIE), effect.lustrous_moxie.stunTime, 0));
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
     }
 

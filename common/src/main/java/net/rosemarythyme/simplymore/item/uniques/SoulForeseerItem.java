@@ -79,7 +79,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
 
             if (hasAffectedEntity) {
                 player.getWorld().playSound(null, player.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_NORDIC_22.get(), SoundCategory.PLAYERS);
-                player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+                player.getItemCooldownManager().set(this, skillCooldown);
             }
         }
         return super.use(world, player, hand);

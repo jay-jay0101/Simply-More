@@ -84,7 +84,7 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
 
     private void damage(LivingEntity target) {
         float damageAmount = effect.great_slither.fangDamage;
-        int venomTime = effect.great_slither.venomTime;
+        int venomTime = effect.great_slither.fangsVenomTime;
         int slowTime = effect.great_slither.fangsSlowTime;
         if (target.isAlive() && !target.isInvulnerable() && target != owner) {
             if (owner == null) {

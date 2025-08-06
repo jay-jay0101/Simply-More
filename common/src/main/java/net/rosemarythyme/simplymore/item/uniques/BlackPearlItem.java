@@ -87,7 +87,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
                     user.getZ() + (velocityZ / 2)
             );
             world.spawnEntity(fireballEntity);
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
     }

@@ -258,7 +258,6 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip2").setStyle(textStyle));

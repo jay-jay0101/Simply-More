@@ -55,7 +55,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
             user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.HARVEST), effect.the_blood_harvester.harvestTime, 0));
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SWORD_ATTACK_WITH_BLOOD_04.get(), user.getSoundCategory(), 2F, 0F);
         }

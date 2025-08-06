@@ -88,7 +88,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
                 livingEntity.velocityModified = true;
             }
             if(isNonTeammateNearby) {
-                user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+                user.getItemCooldownManager().set(this, skillCooldown);
                 ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNOWFLAKE, user.getX(), user.getY() + 3, user.getZ(), 1000, 3, 0, 3, 0.25);
                 user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
             }

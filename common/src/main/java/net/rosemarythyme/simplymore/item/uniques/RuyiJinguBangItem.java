@@ -1,8 +1,5 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import me.fzzyhmstrs.fzzy_config.annotations.Action;
-import me.fzzyhmstrs.fzzy_config.annotations.RequiresAction;
-import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -74,7 +71,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
 
         if (!user.getWorld().isClient && user instanceof PlayerEntity player) {
             if (remainingUseTicks < 9999979) {
-                player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+                player.getItemCooldownManager().set(this, skillCooldown);
 
                 int useTime = Math.min(player.getItemUseTime(), 200);
                 int range = (int) Math.floor(useTime / 5f);

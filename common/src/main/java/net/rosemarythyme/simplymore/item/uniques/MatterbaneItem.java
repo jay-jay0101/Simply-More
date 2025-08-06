@@ -60,7 +60,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             RiftAreaEffectCloudEntity riftAreaEffectCloudEntity = new RiftAreaEffectCloudEntity(user.getWorld(),user.getX(),user.getY()+3,user.getZ(),user, color);
             user.getWorld().spawnEntity(riftAreaEffectCloudEntity);
             user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.ENTITY_WARDEN_DIG, user.getSoundCategory(), 1F, 2F);
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
     }

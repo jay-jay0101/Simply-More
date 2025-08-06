@@ -55,7 +55,7 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
             user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE),100));
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
     }

@@ -68,7 +68,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
 
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_FLYBY_01.get(), SoundCategory.PLAYERS, 1, 1);
             user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED),10000,0));
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
     }

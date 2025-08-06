@@ -94,7 +94,7 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
             }
 
 
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
     }

@@ -92,7 +92,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
             }
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_VOICE_15.get(), SoundCategory.PLAYERS, 0.4f, 1);
         }
-        user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+        user.getItemCooldownManager().set(this, skillCooldown);
         return super.use(world, user, hand);
     }
 

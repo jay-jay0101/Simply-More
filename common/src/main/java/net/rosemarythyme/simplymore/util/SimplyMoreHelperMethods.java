@@ -121,7 +121,7 @@ public class SimplyMoreHelperMethods {
 
             user.getWorld().playSound(null, user.getBlockPos(), soundEvent, user.getSoundCategory(), soundVolume, soundPitch);
             ((ServerWorld) user.getWorld()).spawnParticles(particleEffect, user.getX(), user.getY() + 1, user.getZ(), particleCount, deltaX, deltaY, deltaZ, particleSpeed);
-            user.getItemCooldownManager().set(item.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(item, skillCooldown);
         }
     }
 

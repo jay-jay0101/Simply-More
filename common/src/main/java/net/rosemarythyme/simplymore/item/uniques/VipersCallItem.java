@@ -46,7 +46,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         if (!user.getWorld().isClient) {
             VipersCallProjectileAreaEffectCloudEntity chakram = new VipersCallProjectileAreaEffectCloudEntity(user.getWorld(),user.getX(),user.getEyeY()-0.6,user.getZ(),user);
             user.getWorld().spawnEntity(chakram);
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.DARK_SWORD_WHOOSH_02.get(), user.getSoundCategory(), 2F, 1F);
         }
         return super.use(world, user, hand);

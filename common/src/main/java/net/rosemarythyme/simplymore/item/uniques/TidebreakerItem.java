@@ -70,7 +70,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         if (shouldTeleport(user, lastHit)) {
             swapUserAndTarget(user, lastHit);
             resetLastHit();
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
 
 

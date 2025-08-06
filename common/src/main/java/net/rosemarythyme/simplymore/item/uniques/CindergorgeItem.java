@@ -101,7 +101,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
         cooldown = Math.max(cooldown, 120f);
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, (int) (150f * relativeTime)));
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
-        ((PlayerEntity) user).getItemCooldownManager().set(this.getDefaultStack().getItem(), (int) cooldown);
+        ((PlayerEntity) user).getItemCooldownManager().set(this, (int) cooldown);
     }
 
     @Override
