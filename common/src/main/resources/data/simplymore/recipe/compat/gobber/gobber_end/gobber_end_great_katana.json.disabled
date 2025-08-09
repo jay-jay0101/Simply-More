@@ -1,7 +1,7 @@
 {
-  "conditions": [
+  "neoforge:conditions": [
     {
-      "type": "forge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "gobber2"
     }
   ],
@@ -16,10 +16,10 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "s": {
-      "item": "gobber2:gobber2_rod"
+      "item": "gobber2:gobber2_rod_end"
     },
     "M": {
-      "item": "gobber2:gobber2_ingot"
+      "item": "gobber2:gobber2_ingot_end"
     },
     "B": {
       "item": "minecraft:iron_nugget"
@@ -31,7 +31,7 @@
     "sMM"
   ],
   "result": {
-    "id": "simplymore:gobber_great_katana",
+    "id": "simplymore:gobber_end_great_katana",
     "count": 1
   }
 }

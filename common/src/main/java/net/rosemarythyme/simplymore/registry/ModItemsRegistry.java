@@ -48,6 +48,40 @@ public class ModItemsRegistry {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ITEM);
 
+    public static final DeferredRegister<ItemGroup> TABS =
+            DeferredRegister.create(SimplyMore.ID, RegistryKeys.ITEM_GROUP);
+
+    public static final RegistrySupplier<Item> RUNEFUSED_CARVER = ITEMS.register(
+            "runefused_carver",
+            () -> new RuneCarverItem(
+                    new Item.Settings()
+                            .maxCount(1)
+                            .fireproof()
+                            .rarity(Rarity.EPIC),
+                    RuneCarverItem.Types.RUNEFUSED
+            )
+    );
+    public static final RegistrySupplier<Item> NETHERFUSED_CARVER = ITEMS.register(
+            "netherfused_carver",
+            () -> new RuneCarverItem(
+                    new Item.Settings()
+                            .maxCount(1)
+                            .fireproof()
+                            .rarity(Rarity.EPIC),
+                    RuneCarverItem.Types.NETHERFUSED
+            )
+    );
+
+    public static final RegistrySupplier<ItemGroup> ITEM_GROUP =
+            TABS.register(
+                    "simplymore",
+                    () ->
+                            CreativeTabRegistry.create(
+                                    Text.translatable("item_group.simplymore"),
+                                    () -> new ItemStack(RUNEFUSED_CARVER)
+                            )
+            );
+
     // Great Katanas
     public static final RegistrySupplier<Item> IRON_GREAT_KATANA = ITEMS.register(
             "iron_great_katana",
@@ -1010,27 +1044,6 @@ public class ModItemsRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> RUNEFUSED_CARVER = ITEMS.register(
-            "runefused_carver",
-            () -> new RuneCarverItem(
-                    new Item.Settings()
-                            .maxCount(1)
-                            .fireproof()
-                            .rarity(Rarity.EPIC),
-                    RuneCarverItem.Types.RUNEFUSED
-            )
-    );
-    public static final RegistrySupplier<Item> NETHERFUSED_CARVER = ITEMS.register(
-            "netherfused_carver",
-            () -> new RuneCarverItem(
-                    new Item.Settings()
-                            .maxCount(1)
-                            .fireproof()
-                            .rarity(Rarity.EPIC),
-                    RuneCarverItem.Types.NETHERFUSED
-            )
-    );
-
     public static final RegistrySupplier<Item> MIMICRY_LONGSWORD = ITEMS.register(
             "mimicry_longsword",
             () -> new LongswordItem(
@@ -1354,71 +1367,71 @@ public class ModItemsRegistry {
     }
 
     public static void registerItemGroup() {
-        CreativeTabRegistry.append(ITEM_GROUP, itemsInTab().toArray(new Item[0]));
+        CreativeTabRegistry.append(ITEM_GROUP, itemsInTab().toArray(new RegistrySupplier[0]));
         TABS.register();
     }
 
 
-    public static List<Item> itemsInTab() {
-        List<Item> entries = new ArrayList<>();
+    public static List<RegistrySupplier<? extends Item>> itemsInTab() {
+        List<RegistrySupplier<? extends Item>> entries = new ArrayList<>();
 
-        entries.add(RUNEFUSED_CARVER.get());
-        entries.add(NETHERFUSED_CARVER.get());
+        entries.add(RUNEFUSED_CARVER);
+        entries.add(NETHERFUSED_CARVER);
 
         if (Platform.isModLoaded("sticknstone")) {
             StickNStoneCompatRegistry.addToGroup(entries);
         }
 
-        entries.add(IRON_GREAT_KATANA.get());
-        entries.add(IRON_GRANDSWORD.get());
-        entries.add(IRON_BACKHAND_BLADE.get());
-        entries.add(IRON_LANCE.get());
-        entries.add(IRON_KHOPESH.get());
-        entries.add(IRON_DAGGER.get());
-        entries.add(IRON_PERNACH.get());
-        entries.add(IRON_QUARTERSTAFF.get());
-        entries.add(IRON_GREAT_SPEAR.get());
-        entries.add(IRON_DEER_HORNS.get());
-        entries.add(GOLD_GREAT_KATANA.get());
-        entries.add(GOLD_GRANDSWORD.get());
-        entries.add(GOLD_BACKHAND_BLADE.get());
-        entries.add(GOLD_LANCE.get());
-        entries.add(GOLD_KHOPESH.get());
-        entries.add(GOLD_DAGGER.get());
-        entries.add(GOLD_PERNACH.get());
-        entries.add(GOLD_QUARTERSTAFF.get());
-        entries.add(GOLD_GREAT_SPEAR.get());
-        entries.add(GOLD_DEER_HORNS.get());
-        entries.add(DIAMOND_GREAT_KATANA.get());
-        entries.add(DIAMOND_GRANDSWORD.get());
-        entries.add(DIAMOND_BACKHAND_BLADE.get());
-        entries.add(DIAMOND_LANCE.get());
-        entries.add(DIAMOND_KHOPESH.get());
-        entries.add(DIAMOND_DAGGER.get());
-        entries.add(DIAMOND_PERNACH.get());
-        entries.add(DIAMOND_QUARTERSTAFF.get());
-        entries.add(DIAMOND_GREAT_SPEAR.get());
-        entries.add(DIAMOND_DEER_HORNS.get());
-        entries.add(NETHERITE_GREAT_KATANA.get());
-        entries.add(NETHERITE_GRANDSWORD.get());
-        entries.add(NETHERITE_BACKHAND_BLADE.get());
-        entries.add(NETHERITE_LANCE.get());
-        entries.add(NETHERITE_KHOPESH.get());
-        entries.add(NETHERITE_DAGGER.get());
-        entries.add(NETHERITE_PERNACH.get());
-        entries.add(NETHERITE_QUARTERSTAFF.get());
-        entries.add(NETHERITE_GREAT_SPEAR.get());
-        entries.add(NETHERITE_DEER_HORNS.get());
-        entries.add(RUNIC_GREAT_KATANA.get());
-        entries.add(RUNIC_GRANDSWORD.get());
-        entries.add(RUNIC_BACKHAND_BLADE.get());
-        entries.add(RUNIC_LANCE.get());
-        entries.add(RUNIC_KHOPESH.get());
-        entries.add(RUNIC_DAGGER.get());
-        entries.add(RUNIC_PERNACH.get());
-        entries.add(RUNIC_QUARTERSTAFF.get());
-        entries.add(RUNIC_GREAT_SPEAR.get());
-        entries.add(RUNIC_DEER_HORNS.get());
+        entries.add(IRON_GREAT_KATANA);
+        entries.add(IRON_GRANDSWORD);
+        entries.add(IRON_BACKHAND_BLADE);
+        entries.add(IRON_LANCE);
+        entries.add(IRON_KHOPESH);
+        entries.add(IRON_DAGGER);
+        entries.add(IRON_PERNACH);
+        entries.add(IRON_QUARTERSTAFF);
+        entries.add(IRON_GREAT_SPEAR);
+        entries.add(IRON_DEER_HORNS);
+        entries.add(GOLD_GREAT_KATANA);
+        entries.add(GOLD_GRANDSWORD);
+        entries.add(GOLD_BACKHAND_BLADE);
+        entries.add(GOLD_LANCE);
+        entries.add(GOLD_KHOPESH);
+        entries.add(GOLD_DAGGER);
+        entries.add(GOLD_PERNACH);
+        entries.add(GOLD_QUARTERSTAFF);
+        entries.add(GOLD_GREAT_SPEAR);
+        entries.add(GOLD_DEER_HORNS);
+        entries.add(DIAMOND_GREAT_KATANA);
+        entries.add(DIAMOND_GRANDSWORD);
+        entries.add(DIAMOND_BACKHAND_BLADE);
+        entries.add(DIAMOND_LANCE);
+        entries.add(DIAMOND_KHOPESH);
+        entries.add(DIAMOND_DAGGER);
+        entries.add(DIAMOND_PERNACH);
+        entries.add(DIAMOND_QUARTERSTAFF);
+        entries.add(DIAMOND_GREAT_SPEAR);
+        entries.add(DIAMOND_DEER_HORNS);
+        entries.add(NETHERITE_GREAT_KATANA);
+        entries.add(NETHERITE_GRANDSWORD);
+        entries.add(NETHERITE_BACKHAND_BLADE);
+        entries.add(NETHERITE_LANCE);
+        entries.add(NETHERITE_KHOPESH);
+        entries.add(NETHERITE_DAGGER);
+        entries.add(NETHERITE_PERNACH);
+        entries.add(NETHERITE_QUARTERSTAFF);
+        entries.add(NETHERITE_GREAT_SPEAR);
+        entries.add(NETHERITE_DEER_HORNS);
+        entries.add(RUNIC_GREAT_KATANA);
+        entries.add(RUNIC_GRANDSWORD);
+        entries.add(RUNIC_BACKHAND_BLADE);
+        entries.add(RUNIC_LANCE);
+        entries.add(RUNIC_KHOPESH);
+        entries.add(RUNIC_DAGGER);
+        entries.add(RUNIC_PERNACH);
+        entries.add(RUNIC_QUARTERSTAFF);
+        entries.add(RUNIC_GREAT_SPEAR);
+        entries.add(RUNIC_DEER_HORNS);
 
 //        if (Platform.isModLoaded("gobber2")) {
 //            Gobber2CompatRegistry.addToGroup(entries);
@@ -1428,58 +1441,45 @@ public class ModItemsRegistry {
 //            MythicMetalsCompatProxy.addToGroup(entries);
 //        }
 
-        entries.add(GREAT_SLITHER.get());
-        entries.add(MOLTEN_FLARE.get());
-        entries.add(GRANDFROST.get());
-        entries.add(MIMICRY_LONGSWORD.get());
-        entries.add(GLIMMERSTEP.get());
-        entries.add(THE_BLOOD_HARVESTER.get());
-        entries.add(MYRMEDGE.get());
-        entries.add(BLACK_PEARL.get());
-        entries.add(THE_VESSEL_BREACH.get());
-        entries.add(BLADE_OF_THE_GROTESQUE.get());
-        entries.add(VIPERS_CALL.get());
-        entries.add(TIMEKEEPER.get());
-        entries.add(MATTERBANE.get());
-        entries.add(SMOULDERING_RUIN.get());
-        entries.add(STASIS.get());
-        entries.add(TIDEBREAKER.get());
-        entries.add(RUYI_JINGU_BANG.get());
-        entries.add(RUPTURED_IDOL.get());
-        entries.add(ASCENDED_IDOL.get());
-        entries.add(TARNISHED_IDOL.get());
-        entries.add(HOLYLIGHT.get());
-        entries.add(DARKSENT.get());
-        entries.add(BOAS_FANG.get());
-        entries.add(EARTHSHATTER.get());
-        entries.add(SOUL_FORESEER.get());
-        entries.add(SERPENTINE_VALOUR.get());
-        entries.add(LUSTROUS_MOXIE.get());
-        entries.add(BRASSTURN.get());
-        entries.add(CINDERGORGE.get());
-        entries.add(DEATHS_EYRIE.get());
-        entries.add(PERFORISCUS.get());
-        entries.add(REVVENGINE.get());
-        entries.add(EXEDRILL.get());
-        entries.add(CULTEREX.get());
-        entries.add(JESTER_PENETRATE.get());
-        entries.add(THE_PAN.get());
+        entries.add(GREAT_SLITHER);
+        entries.add(MOLTEN_FLARE);
+        entries.add(GRANDFROST);
+        entries.add(MIMICRY_LONGSWORD);
+        entries.add(GLIMMERSTEP);
+        entries.add(THE_BLOOD_HARVESTER);
+        entries.add(MYRMEDGE);
+        entries.add(BLACK_PEARL);
+        entries.add(THE_VESSEL_BREACH);
+        entries.add(BLADE_OF_THE_GROTESQUE);
+        entries.add(VIPERS_CALL);
+        entries.add(TIMEKEEPER);
+        entries.add(MATTERBANE);
+        entries.add(SMOULDERING_RUIN);
+        entries.add(STASIS);
+        entries.add(TIDEBREAKER);
+        entries.add(RUYI_JINGU_BANG);
+        entries.add(RUPTURED_IDOL);
+        entries.add(ASCENDED_IDOL);
+        entries.add(TARNISHED_IDOL);
+        entries.add(HOLYLIGHT);
+        entries.add(DARKSENT);
+        entries.add(BOAS_FANG);
+        entries.add(EARTHSHATTER);
+        entries.add(SOUL_FORESEER);
+        entries.add(SERPENTINE_VALOUR);
+        entries.add(LUSTROUS_MOXIE);
+        entries.add(BRASSTURN);
+        entries.add(CINDERGORGE);
+        entries.add(DEATHS_EYRIE);
+        entries.add(PERFORISCUS);
+        entries.add(REVVENGINE);
+        entries.add(EXEDRILL);
+        entries.add(CULTEREX);
+        entries.add(JESTER_PENETRATE);
+        entries.add(THE_PAN);
 
         return entries;
     }
-
-    public static final DeferredRegister<ItemGroup> TABS =
-            DeferredRegister.create(SimplyMore.ID, RegistryKeys.ITEM_GROUP);
-
-    public static final RegistrySupplier<ItemGroup> ITEM_GROUP =
-            TABS.register(
-                    "simplymore",
-                    () ->
-                            CreativeTabRegistry.create(
-                                    Text.translatable("item_group.simplymore"),
-                                    () -> new ItemStack(RUNEFUSED_CARVER.get())
-                            )
-            );
 
     public static final Map<String, RegistrySupplier<Item>> MIMICRY_ITEMS = Map.ofEntries(
             entry("longsword", MIMICRY_LONGSWORD),

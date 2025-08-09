@@ -1,7 +1,7 @@
 {
-  "conditions": [
+  "neoforge:conditions": [
     {
-      "type": "forge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "gobber2"
     }
   ],
@@ -26,12 +26,12 @@
     }
   },
   "pattern": [
-    "  M",
-    " MB",
-    "Bs "
+    "   ",
+    "BMs",
+    "   "
   ],
   "result": {
-    "id": "simplymore:gobber_nether_khopesh",
+    "id": "simplymore:gobber_nether_dagger",
     "count": 1
   }
 }

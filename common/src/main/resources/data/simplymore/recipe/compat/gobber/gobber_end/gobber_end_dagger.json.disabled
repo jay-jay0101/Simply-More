@@ -1,7 +1,7 @@
 {
-  "conditions": [
+  "neoforge:conditions": [
     {
-      "type": "forge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "gobber2"
     }
   ],
@@ -15,23 +15,23 @@
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
-    "S": {
-      "item": "gobber2:gobber2_sword"
+    "s": {
+      "item": "gobber2:gobber2_rod_end"
     },
     "M": {
-      "item": "gobber2:gobber2_ingot"
+      "item": "gobber2:gobber2_ingot_end"
     },
     "B": {
       "item": "minecraft:iron_nugget"
     }
   },
   "pattern": [
-    "BMB",
-    "MMM",
-    "MSM"
+    "   ",
+    "BMs",
+    "   "
   ],
   "result": {
-    "id": "simplymore:gobber_grandsword",
+    "id": "simplymore:gobber_end_dagger",
     "count": 1
   }
 }

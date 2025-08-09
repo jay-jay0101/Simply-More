@@ -1,7 +1,7 @@
 {
-  "conditions": [
+  "neoforge:conditions": [
     {
-      "type": "forge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "gobber2"
     }
   ],
@@ -16,19 +16,22 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "s": {
-      "item": "gobber2:gobber2_rod_nether"
+      "item": "gobber2:gobber2_rod"
     },
     "M": {
-      "item": "gobber2:gobber2_ingot_nether"
+      "item": "gobber2:gobber2_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_nugget"
     }
   },
   "pattern": [
-    " MM",
-    " sM",
-    "s  "
+    "  s",
+    " Ms",
+    "B  "
   ],
   "result": {
-    "id": "simplymore:gobber_nether_great_spear",
+    "id": "simplymore:gobber_backhand_blade",
     "count": 1
   }
 }
