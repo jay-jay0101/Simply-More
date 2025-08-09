@@ -63,12 +63,10 @@ public class SimplyMoreHelperMethods {
 
     public static CounterComponent getCounterComponent(ItemStack stack) {
         if((stack.getItem() instanceof SimplyMoreUniqueSwordItem swordItem)) {
-
-
             if(stack.getComponents().contains(ModComponentRegistry.COUNTER.get())) {
                 return stack.getComponents().get(ModComponentRegistry.COUNTER.get());
             } else {
-                return setCounterComponent(stack, ((SimplyMoreUniqueSwordItem) stack.getItem()).getDefaultComponent());
+                return setCounterComponent(stack, swordItem.getDefaultComponent());
             }
         }
 
@@ -88,8 +86,8 @@ public class SimplyMoreHelperMethods {
         }
     }
 
-    public static boolean chance(LivingEntity attacker, float chance) {
-        return attacker.getRandom().nextFloat() <= chance;
+    public static boolean chance(LivingEntity player, float chance) {
+        return player.getRandom().nextFloat() <= chance;
     }
 
     public static Vector3d getNormalised2dVector(float yaw) {

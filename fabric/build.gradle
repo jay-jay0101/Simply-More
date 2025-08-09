@@ -39,7 +39,7 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
-    modImplementation("curse.maven:simplyswords-659887:${simplyswords_version}")
+    modImplementation("curse.maven:simplyswords-659887:${simplyswords_fabric_version}")
     modImplementation("curse.maven:fzzy-config-1005914:6405201")
 }
 

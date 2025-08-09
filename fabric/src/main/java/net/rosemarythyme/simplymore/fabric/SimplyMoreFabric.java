@@ -2,7 +2,6 @@ package net.rosemarythyme.simplymore.fabric;
 
 import net.fabricmc.api.ModInitializer;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 //import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompatProxy;
 
 public final class SimplyMoreFabric implements ModInitializer {
@@ -18,6 +17,6 @@ public final class SimplyMoreFabric implements ModInitializer {
 
         // This is handled separately on fabric and forge
         // to avoid a crash on forge
-        ModItemsRegistry.registerItemGroup();
+//        ModItemsRegistry.registerItemGroup();
     }
 }

@@ -22,6 +22,8 @@ public class SimplyMore {
 		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMoreClientInit::registerEntityRenderers);
 
 		ModItemsRegistry.registerModItems();
+		ModItemsRegistry.registerItemGroup();
+
 		ModComponentRegistry.registerModComponents();
 		ModTagRegistry.registerModTags();
 

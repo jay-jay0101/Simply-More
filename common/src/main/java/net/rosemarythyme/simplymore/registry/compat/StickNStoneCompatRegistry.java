@@ -276,27 +276,27 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static void addToGroup(List<Item> entries) {
-        entries.add(WOODEN_GREAT_KATANA.get());
-        entries.add(WOODEN_GRANDSWORD.get());
-        entries.add(WOODEN_BACKHAND_BLADE.get());
-        entries.add(WOODEN_LANCE.get());
-        entries.add(WOODEN_KHOPESH.get());
-        entries.add(WOODEN_DAGGER.get());
-        entries.add(WOODEN_PERNACH.get());
-        entries.add(WOODEN_QUARTERSTAFF.get());
-        entries.add(WOODEN_GREAT_SPEAR.get());
-        entries.add(WOODEN_DEER_HORNS.get());
-        entries.add(STONE_GREAT_KATANA.get());
-        entries.add(STONE_GRANDSWORD.get());
-        entries.add(STONE_BACKHAND_BLADE.get());
-        entries.add(STONE_LANCE.get());
-        entries.add(STONE_KHOPESH.get());
-        entries.add(STONE_DAGGER.get());
-        entries.add(STONE_PERNACH.get());
-        entries.add(STONE_QUARTERSTAFF.get());
-        entries.add(STONE_GREAT_SPEAR.get());
-        entries.add(STONE_DEER_HORNS.get());
+    public static void addToGroup(List<RegistrySupplier<? extends Item>> entries) {
+        entries.add(WOODEN_GREAT_KATANA);
+        entries.add(WOODEN_GRANDSWORD);
+        entries.add(WOODEN_BACKHAND_BLADE);
+        entries.add(WOODEN_LANCE);
+        entries.add(WOODEN_KHOPESH);
+        entries.add(WOODEN_DAGGER);
+        entries.add(WOODEN_PERNACH);
+        entries.add(WOODEN_QUARTERSTAFF);
+        entries.add(WOODEN_GREAT_SPEAR);
+        entries.add(WOODEN_DEER_HORNS);
+        entries.add(STONE_GREAT_KATANA);
+        entries.add(STONE_GRANDSWORD);
+        entries.add(STONE_BACKHAND_BLADE);
+        entries.add(STONE_LANCE);
+        entries.add(STONE_KHOPESH);
+        entries.add(STONE_DAGGER);
+        entries.add(STONE_PERNACH);
+        entries.add(STONE_QUARTERSTAFF);
+        entries.add(STONE_GREAT_SPEAR);
+        entries.add(STONE_DEER_HORNS);
     }
 
     public static void registerCompatItems() {

@@ -23,7 +23,7 @@ public abstract class PlayerEntityMixin {
 
 		if(player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof CindergorgeItem || player.getStackInHand(Hand.OFF_HAND).getItem() instanceof CindergorgeItem ) {
 			Entity attacker = source.getAttacker();
-			if(attacker != null && player.getRandom().nextBetween(1, 100) <= ConfigWrapper.unique.cindergorge.chance) {
+			if(attacker != null && SimplyMoreHelperMethods.chance(player, ConfigWrapper.unique.cindergorge.chance)) {
 				if(attacker.isOnFire()) {
 					attacker.damage(player.getDamageSources().onFire(), ConfigWrapper.unique.cindergorge.fireDamage);
 				} else {

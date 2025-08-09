@@ -9,8 +9,6 @@ import net.rosemarythyme.simplymore.client.SimplyMoreClientInit;
 public class SimplyMoreFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        // This is handled separately on fabric and forge
-        // to avoid a crash on forge
         SimplyMoreClientInit.registerModelPredicates();
     }
 }
