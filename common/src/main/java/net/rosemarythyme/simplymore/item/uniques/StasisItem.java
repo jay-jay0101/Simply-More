@@ -103,7 +103,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         int boxRange = effect.stasis.range;
         Box box = new Box(user.getX() - boxRange, user.getY() - 2, user.getZ() - boxRange, user.getX() + boxRange, user.getY() + boxRange*2, user.getZ() + boxRange);
         for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (entity == user || entity.isTeammate(user)) {
+            if (entity == user || SimplyMoreHelperMethods.checkFriendlyFire(entity, user)) {
                 continue;
             }
             entity.damage(player.getDamageSources().magic(), effect.stasis.strikeDamage);

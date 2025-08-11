@@ -79,7 +79,7 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
                     ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y+dY,z+dZ,1,0,0,0,0);
                     for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.25+dX,y-0.25+dY,z-0.25+dZ,x+0.25+dX,y+0.25+dY,z+0.25+dZ)))
                     {
-                        if (entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
+                        if (SimplyMoreHelperMethods.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
                         if (entity.isBlocking()) continue;
 
                         entity.damage(user.getDamageSources().magic(), effect.boas_fang.spitDamage);

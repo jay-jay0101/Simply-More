@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -126,10 +125,10 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
             float finalDamage = damage;
             livingEntities.stream().filter(
-                    livingEntity -> !(livingEntity instanceof TameableEntity tame && tame.isOwner(user))
+                    livingEntity -> livingEntity != user.getVehicle()
             ).forEach(
                     livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
-                            (livingEntity.isTeammate(user) || livingEntity == user)?
+                            (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user)?
                                     finalDamage * (effect.glimmerstep.glimmerstepAllyDamage) : finalDamage)
             );
 

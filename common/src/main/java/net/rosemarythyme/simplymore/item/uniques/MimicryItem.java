@@ -331,7 +331,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         ((ServerWorld) player.getWorld()).spawnParticles(ParticleTypes.SWEEP_ATTACK, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 1, 0, 0 , 0, 0);
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !livingEntity.isTeammate(player)
+                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -351,7 +351,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !livingEntity.isTeammate(player)
+                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -380,7 +380,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         }
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !livingEntity.isTeammate(player)
+                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -400,7 +400,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !livingEntity.isTeammate(player)
+                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -434,7 +434,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             );
 
             List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                    livingEntity -> livingEntity != player && !livingEntity.isTeammate(player) && !targets.contains(livingEntity)
+                    livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player) && !targets.contains(livingEntity)
 
             ).toList();
 

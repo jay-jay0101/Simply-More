@@ -1,5 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
+import me.fzzyhmstrs.fzzy_config.annotations.Action;
+import me.fzzyhmstrs.fzzy_config.annotations.RequiresAction;
 import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.minecraft.ValidatedRegistryType;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
@@ -115,6 +117,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
 
         @ValidatedInt.Restrict(min = 0)
         public int vipersCallCooldown = 1200;
+        @RequiresAction(action = Action.RESTART)
         public ValidatedSet<StatusEffect> blacklist = ValidatedRegistryType.of(StatusEffects.ABSORPTION.value(), Registries.STATUS_EFFECT, (entry) -> true).toSet();
     }
 }

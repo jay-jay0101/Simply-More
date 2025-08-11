@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin {
 			Entity attacker = source.getAttacker();
 			if(attacker != null && SimplyMoreHelperMethods.chance(player, ConfigWrapper.unique.cindergorge.chance)) {
 				if(attacker.isOnFire()) {
-					attacker.damage(player.getDamageSources().onFire(), ConfigWrapper.unique.cindergorge.fireDamage);
+					attacker.damage(player.getDamageSources().onFire(), ConfigWrapper.unique.cindergorge.fireThornsDamage);
 				} else {
 					attacker.damage(player.getDamageSources().thorns(attacker), ConfigWrapper.unique.cindergorge.thornsDamage);
 				}

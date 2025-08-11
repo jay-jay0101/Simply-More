@@ -61,7 +61,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
         // Find the closest entity in the box
         for (LivingEntity livingEntity : this.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity == owner || livingEntity.isTeammate(owner)) {
+            if (livingEntity == owner || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, owner)) {
                 continue;
             }
 

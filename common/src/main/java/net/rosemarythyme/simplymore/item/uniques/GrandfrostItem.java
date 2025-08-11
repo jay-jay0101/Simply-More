@@ -61,7 +61,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
             boolean isNonTeammateNearby = false;
 
             for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity == user || livingEntity.isTeammate(user)) {
+                if (livingEntity == user || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user)) {
                     continue;
                 }
 

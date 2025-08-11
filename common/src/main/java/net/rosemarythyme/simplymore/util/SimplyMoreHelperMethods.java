@@ -112,7 +112,7 @@ public class SimplyMoreHelperMethods {
             boolean isPositive = statusEffect.value().isBeneficial();
             Box box = new Box(user.getX() - 10, user.getY() - 10, user.getZ() - 10, user.getX() + 10, user.getY() + 10, user.getZ() + 10);
             for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                if ((livingEntity == user || livingEntity.isTeammate(user)) != isPositive) continue;
+                if ((livingEntity == user || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user)) != isPositive) continue;
 
                 livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, duration));
             }
@@ -178,5 +178,10 @@ public class SimplyMoreHelperMethods {
             livingEntity.damage(source, amount * (effect.darksent.curseDamageMultiplier + 1));
             info.cancel();
         }
+    }
+
+    public static boolean checkFriendlyFire(LivingEntity livingEntity, LivingEntity livingEntityB) {
+        return !(HelperMethods.checkFriendlyFire(livingEntity, livingEntityB)
+                || HelperMethods.checkFriendlyFire(livingEntityB, livingEntity));
     }
 }

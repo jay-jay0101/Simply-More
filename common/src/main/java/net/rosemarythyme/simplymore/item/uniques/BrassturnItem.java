@@ -93,7 +93,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
             int oxidisation = getOxidisation(stack) - 1;
             saveOxidisation(stack, oxidisation);
 
-            if (SimplyMoreHelperMethods.chance(user, effect.brassturn.chance)) {
+            if (SimplyMoreHelperMethods.chance(user, effect.brassturn.sparkChance)) {
                 serverWorld.spawnParticles(ParticleTypes.WAX_ON, user.getX(), user.getY(), user.getZ(), 20, 0.5, 1, 0.5, 0.2);
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.PLAYERS, 0.5f, 2);
                 int boxSize = 3;
@@ -101,7 +101,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
                 List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
                 for (LivingEntity livingEntity : livingEntities) {
-                    if (livingEntity == user || livingEntity.isTeammate(user)) {
+                    if (livingEntity == user || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user)) {
                         continue;
                     }
 

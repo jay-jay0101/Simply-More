@@ -81,7 +81,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         List<LivingEntity> potentiallyMarkedLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK))).findAny().orElse(null);
 
-        if (markedEntity == null || (markedEntity == user || markedEntity.isTeammate(user))) {
+        if (markedEntity == null || (markedEntity == user || SimplyMoreHelperMethods.checkFriendlyFire(markedEntity, user))) {
             return null;
         }
 
@@ -108,7 +108,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     }
 
     private void knockbackAndDamageEntity(LivingEntity targetEntity, PlayerEntity user, float damage) {
-        if(targetEntity==user || targetEntity.isTeammate(user)) {
+        if(targetEntity==user || SimplyMoreHelperMethods.checkFriendlyFire(targetEntity, user)) {
             return;
         }
 

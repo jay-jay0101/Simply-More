@@ -64,7 +64,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
             );
 
             boolean hasEnemies = user.getWorld().getNonSpectatingEntities(LivingEntity.class, entitySearchBox).stream()
-                    .anyMatch(entity -> entity != user && !entity.isTeammate(user));
+                    .anyMatch(entity -> entity != user && !SimplyMoreHelperMethods.checkFriendlyFire(entity, user));
 
             int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
 

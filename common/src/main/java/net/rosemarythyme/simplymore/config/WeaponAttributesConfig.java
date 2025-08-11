@@ -64,7 +64,7 @@ public class WeaponAttributesConfig extends Config {
         public int glimmerstep_damage_modifier = 3;
         public int thebloodharvester_damage_modifier = 2;
         public int jesterpenetrate_damage_modifier = 0;
-        public float mimicry_damage_modifier = 1f;
+        public int mimicry_damage_modifier = 4;
         public int myrmedge_damage_modifier = 2;
         public int blackpearl_damage_modifier = 3;
         public int thepan_damage_modifier = -2;

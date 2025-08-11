@@ -34,5 +34,6 @@ public class SimplyMore {
 
 	public static void registerEvents() {
 		PlayerEvent.PLAYER_JOIN.register(new RemoveStatusOnJoin());
+
 	}
 }

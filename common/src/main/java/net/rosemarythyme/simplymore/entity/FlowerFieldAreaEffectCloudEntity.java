@@ -19,7 +19,7 @@ public class FlowerFieldAreaEffectCloudEntity extends AreaEffectCloudEntity {
         super.tick();
         LivingEntity owner = this.getOwner();
         for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
-            if (target.isAlive() && (target == owner || target.isTeammate(owner))) {
+            if (target.isAlive() && (target == owner || SimplyMoreHelperMethods.checkFriendlyFire(target, owner))) {
                 if(this.age % 25 == 0) {
                     target.heal(1);
                 }

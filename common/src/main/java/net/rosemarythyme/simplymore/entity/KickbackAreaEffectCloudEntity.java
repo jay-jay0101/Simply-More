@@ -84,7 +84,7 @@ public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
             );
 
             for (LivingEntity livingEntity : getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                if (livingEntity.isTeammate(getOwner()) || livingEntity == getOwner() || livingEntity.isInvulnerable()) continue;
+                if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, getOwner()) || livingEntity == getOwner() || livingEntity.isInvulnerable()) continue;
 
                 livingEntity.damage(
                         getOwner().getDamageSources().explosion(this, getOwner()),

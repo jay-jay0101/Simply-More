@@ -72,7 +72,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
 
         List<LivingEntity> livingEntities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         for (LivingEntity livingEntity : livingEntities) {
-            if (livingEntity == player || livingEntity.isTeammate(player)) {
+            if (livingEntity == player || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)) {
                 continue;
             }
 
@@ -119,7 +119,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
 
             List<LivingEntity> livingEntities = entity.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
             for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity == entity || livingEntity.isTeammate(entity)) {
+                if (livingEntity == entity || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, (LivingEntity) entity)) {
                     continue;
                 }
 

@@ -192,7 +192,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box)
                 .stream().filter(livingEntity ->
                         livingEntity != player
-                        && !livingEntity.isTeammate(player)
+                        && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
                         && !(livingEntity instanceof Ownable pet && pet.getOwner() == player)
                 ).toList();
     }

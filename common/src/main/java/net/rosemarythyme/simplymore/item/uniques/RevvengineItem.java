@@ -208,7 +208,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
 
         );
         for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity.isTeammate(user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
+            if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
 
             livingEntity.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),

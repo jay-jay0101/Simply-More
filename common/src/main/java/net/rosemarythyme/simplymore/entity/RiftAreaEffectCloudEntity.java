@@ -44,7 +44,7 @@ public class RiftAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
         Box box = new Box(getX() - 13, getY() - 13, getZ() - 13, getX() + 13, getY() + 13, getZ() + 13);
         for (LivingEntity entity : getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (entity == getOwner() || entity.isTeammate(getOwner())) {
+            if (entity == getOwner() || SimplyMoreHelperMethods.checkFriendlyFire(entity, getOwner())) {
                 continue;
             }
 

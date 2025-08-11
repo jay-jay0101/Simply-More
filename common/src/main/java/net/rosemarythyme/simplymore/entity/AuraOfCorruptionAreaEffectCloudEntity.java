@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 public class AuraOfCorruptionAreaEffectCloudEntity extends AreaEffectCloudEntity {
     public AuraOfCorruptionAreaEffectCloudEntity(World world, double x, double y, double z, LivingEntity owner) {
@@ -24,7 +25,7 @@ public class AuraOfCorruptionAreaEffectCloudEntity extends AreaEffectCloudEntity
         LivingEntity owner = this.getOwner();
         for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
             if (target.isAlive()) {
-                if (target == owner || target.isTeammate(owner)) continue;
+                if (target == owner || SimplyMoreHelperMethods.checkFriendlyFire(target, owner)) continue;
                 if (!target.hasStatusEffect(StatusEffects.WITHER)) target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,20,1));
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS,40,0));
             }

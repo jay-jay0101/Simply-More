@@ -46,7 +46,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         Entity entity = HelperMethods.getTargetedEntity(user, effect.culterex.range);
 
         if(entity instanceof LivingEntity target) {
-            if(target == user || target.isTeammate(user) || target.isDead()) {
+            if(target == user || SimplyMoreHelperMethods.checkFriendlyFire(target, user) || target.isDead()) {
                 return super.use(world, user, hand);
             }
 

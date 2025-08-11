@@ -16,6 +16,7 @@
   "license": "All Rights Reserved",
   "icon": "assets/icon.png",
   "environment": "*",
+  "accessWidener": "simplymore.accesswidener",
   "entrypoints": {
     "main": [
       "net.rosemarythyme.simplymore.fabric.SimplyMoreFabric"

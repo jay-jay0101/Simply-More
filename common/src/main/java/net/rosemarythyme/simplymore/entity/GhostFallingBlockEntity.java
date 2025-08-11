@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -128,9 +129,10 @@ public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownab
 
         List<LivingEntity> targets = livingEntities.stream().filter(livingEntity ->
                 livingEntity != ownerEntity
-                        && !livingEntity.isTeammate(ownerEntity)
-                        && !(livingEntity instanceof Ownable pet && pet.getOwner() == ownerEntity)
+                        && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, (LivingEntity) ownerEntity)
+                        && livingEntity != ownerEntity.getVehicle()
         ).toList();
+
 
         targets.forEach(
                 target -> {

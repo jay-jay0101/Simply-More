@@ -93,7 +93,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
                     Box box = new Box(userX - 1 + offsetX, userY - 1 + offsetY, userZ - 1 + offsetZ, userX + 1 + offsetX, userY + 1 + offsetY, userZ + 1 + offsetZ);
                     DamageSource damageSource = player.getDamageSources().playerAttack(player);
                     for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                        if (livingEntity.isTeammate(user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
+                        if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
 
                         livingEntity.damage(damageSource, damage);
                         livingEntity.setVelocity(offsetX / i, offsetY / i, offsetZ / i);

@@ -21,7 +21,7 @@ public class EruptionAreaEffectCloudEntity extends AreaEffectCloudEntity {
         List<LivingEntity> entities = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox());
         for (LivingEntity target : entities) {
             if (target.isAlive() && !target.isInvulnerable() && target != livingEntity) {
-                if (livingEntity == null || !livingEntity.isTeammate(target)) {
+                if (!SimplyMoreHelperMethods.checkFriendlyFire(target, livingEntity)) {
                     target.damage(this.getDamageSources().inFire(), 1.0F);
                     target.setOnFireFor(3);
                 }

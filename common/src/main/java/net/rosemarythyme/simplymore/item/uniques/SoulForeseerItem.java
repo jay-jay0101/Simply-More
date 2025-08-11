@@ -64,7 +64,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
             List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
             for (LivingEntity livingEntity : entities) {
-                if (livingEntity == player || livingEntity.isTeammate(player) || !livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
+                if (livingEntity == player || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player) || !livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
                     continue;
                 }
 

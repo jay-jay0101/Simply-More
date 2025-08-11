@@ -97,7 +97,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y,z+dZ,1,0,0,0,0);
             for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.6+dX,y-0.6,z-0.6+dZ,x+0.6+dX,y+0.6,z+0.6+dZ)))
             {
-                if (entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
+                if (SimplyMoreHelperMethods.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
 
                 entity.damage(user.getDamageSources().magic(),effect.matterbane.damage);
             }

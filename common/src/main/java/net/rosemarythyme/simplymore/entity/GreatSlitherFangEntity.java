@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 public class GreatSlitherFangEntity extends EvokerFangsEntity {
     int warmup;
@@ -92,7 +93,7 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, slowTime, 2), null);
                 target.damage(getDamageSources().playerAttack(null), damageAmount);
             } else {
-                if (owner.isTeammate(target)) {
+                if (SimplyMoreHelperMethods.checkFriendlyFire(target, owner)) {
                     return;
                 }
 

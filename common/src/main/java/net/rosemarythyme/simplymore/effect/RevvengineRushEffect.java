@@ -111,7 +111,7 @@ public class RevvengineRushEffect extends StatusEffect {
         );
 
         List<LivingEntity> entities = entity.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> (livingEntity != entity && !livingEntity.isTeammate(entity))).toList();
+                livingEntity -> (livingEntity != entity && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, entity))).toList();
 
         if(!entities.isEmpty()) {
             if(amplifier > 0) {
@@ -190,7 +190,7 @@ public class RevvengineRushEffect extends StatusEffect {
 
         );
         for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity.isTeammate(user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
+            if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
 
             livingEntity.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),

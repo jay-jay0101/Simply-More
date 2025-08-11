@@ -84,7 +84,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
 
                     for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(spawnX-0.75,user.getEyeY()-0.75,spawnZ-0.75,spawnX+0.75,user.getEyeY()+0.75,spawnZ+0.75)))
                     {
-                        if (entity.isTeammate(user) || entity == user || entity.isInvulnerable()) continue;
+                        if (SimplyMoreHelperMethods.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
 
                         entity.damage(user.getDamageSources().inFire(),effect.cindergorge.fireDamage);
                         entity.setOnFireFor(3);
