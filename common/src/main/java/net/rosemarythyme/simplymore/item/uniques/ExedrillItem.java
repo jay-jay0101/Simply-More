@@ -69,6 +69,8 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
 
             targets.forEach(
                     livingEntity -> {
+                        if(attacker.getVehicle() == livingEntity) return;
+
                         livingEntity.damage(
                                 player.getDamageSources().explosion(player, player),
                                 effect.exedrill.explosionDamage
@@ -107,6 +109,8 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
             int effectTime = effect.exedrill.trembleEffectTime;
             targets.forEach(
                     entity -> {
+                        if(attacker.getVehicle() == entity) return;
+
                         entity.addStatusEffect(new StatusEffectInstance(
                                 StatusEffects.SLOWNESS,
                                 effectTime,

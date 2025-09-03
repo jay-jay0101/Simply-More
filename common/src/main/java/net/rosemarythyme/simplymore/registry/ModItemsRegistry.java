@@ -25,6 +25,7 @@ import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
+import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompat;
 import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.config.Config;
@@ -1357,6 +1358,11 @@ public class ModItemsRegistry {
             SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
             StickNStoneCompatRegistry.registerCompatItems();
         }
+
+        if (Platform.isModLoaded("mythicmetals")) {
+            SimplyMore.LOGGER.info("Registering Mythic Metals Compat for " + SimplyMore.ID);
+            MythicMetalsCompat.registerCompatItems();
+        }
 //
 //        if (Platform.isModLoaded("gobber2")) {
 //            SimplyMore.LOGGER.info("Registering Gobber2 Compat for " + SimplyMore.ID);
@@ -1437,9 +1443,9 @@ public class ModItemsRegistry {
 //            Gobber2CompatRegistry.addToGroup(entries);
 //        }
 //
-//        if (Platform.isModLoaded("mythicmetals")) {
-//            MythicMetalsCompatProxy.addToGroup(entries);
-//        }
+        if (Platform.isModLoaded("mythicmetals")) {
+            MythicMetalsCompat.addToGroup(entries);
+        }
 
         entries.add(GREAT_SLITHER);
         entries.add(MOLTEN_FLARE);

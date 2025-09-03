@@ -28,6 +28,10 @@ public class WeaponAttributesConfig extends Config {
         // Stick n' Stone compat
         public ValidatedCondition<Float> wooden_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "sticknstone");
         public ValidatedCondition<Float> stone_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "sticknstone");
+        // Mythic Metals compat
+        public ValidatedCondition<Float> hallowed_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "mythicmetals");
+        public ValidatedCondition<Float> legendary_banglum_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "mythicmetals");
+        public ValidatedCondition<Float> tidesinger_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "mythicmetals");
     }
 
     public static class WeaponTypesDamage extends ConfigSection {

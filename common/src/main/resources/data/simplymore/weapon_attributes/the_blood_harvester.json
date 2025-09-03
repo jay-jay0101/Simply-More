@@ -9,7 +9,7 @@
                 "conditions": [
                     "DUAL_WIELDING"
                 ],
-                "damage_multiplier": 0.2,
+                "damage_multiplier": 1,
                 "angle": 150,
                 "upswing": 0.5,
                 "animation": "bettercombat:one_handed_slash_horizontal_right",

@@ -28,6 +28,16 @@ public class StarlightEffect extends StatusEffect {
                             amplifier
                     )
             );
+
+            if(affectedEntity.getVehicle() instanceof LivingEntity livingEntity) {
+                livingEntity.addStatusEffect(
+                        new StatusEffectInstance(
+                                StatusEffects.SPEED,
+                                effect.glimmerstep.speedTime,
+                                amplifier
+                        )
+                );
+            }
         }
 
         return super.applyUpdateEffect(affectedEntity, amplifier);

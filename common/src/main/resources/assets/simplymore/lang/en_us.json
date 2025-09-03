@@ -886,10 +886,11 @@
   "oracle_index.title.simplymore": "Simply More",
 
   "config.simplymore.condition.mod_not_loaded.sticknstone.description": "Requires Stick n' Stone",
-  "config.simplymore.condition.mod_not_loaded.sticknstone.title": "Requires Stick n' Stone",
+  "config.simplymore.condition.mod_not_loaded.sticknstone.title": "Disabled",
   "config.simplymore.condition.mod_not_loaded.mythicmetals.description": "Requires Mythic Metals",
-  "config.simplymore.condition.mod_not_loaded.mythicmetals.title": "Requires Mythic Metals",
+  "config.simplymore.condition.mod_not_loaded.mythicmetals.title": "Disabled",
   "config.simplymore.condition.mod_not_loaded.gobber2.description": "Requires Gobber",
+  "config.simplymore.condition.mod_not_loaded.gobber2.title": "Disabled",
 
   "simplymore.weapon_attributes": "Weapon Attributes",
   "simplymore.weapon_attributes.weaponTypesDamage": "§a[Weapon Modifiers]§7",
@@ -909,6 +910,9 @@
   "simplymore.weapon_attributes.typeDamageModifier": "§a[Material Modifiers]§7",
   "simplymore.weapon_attributes.typeDamageModifier.wooden_damage_modifier": "Wood base damage modifier",
   "simplymore.weapon_attributes.typeDamageModifier.stone_damage_modifier": "Stone base damage modifier",
+  "simplymore.weapon_attributes.typeDamageModifier.hallowed_damage_modifier": "Hallowed base damage modifier",
+  "simplymore.weapon_attributes.typeDamageModifier.legendary_banglum_damage_modifier": "Legendary Banglum base damage modifier",
+  "simplymore.weapon_attributes.typeDamageModifier.tidesinger_damage_modifier": "Tidesinger base damage modifier",
   "simplymore.weapon_attributes.typeDamageModifier.desc": "This only includes material modifiers that SimplySwords do not themselves include.\n\nPlease check their configs if you do not find a weapon tier here.",
 
   "simplymore.weapon_attributes.weaponTypesSwingSpeed": "§a[Attack Speed Modifiers]§7",
