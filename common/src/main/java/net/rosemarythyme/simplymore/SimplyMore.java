@@ -23,6 +23,7 @@ public class SimplyMore {
 
 		ModItemsRegistry.registerModItems();
 		ModItemsRegistry.registerItemGroup();
+		TransformationRegistry.registerTransformations();
 
 		ModComponentRegistry.registerModComponents();
 		ModTagRegistry.registerModTags();

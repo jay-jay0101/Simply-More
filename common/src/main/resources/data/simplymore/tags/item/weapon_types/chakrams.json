@@ -13,6 +13,10 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:chompolotl",
+			"required": false
+		},
+		{
 			"id": "sticknstone:wooden_chakram",
 			"required": false
 		},

@@ -38,6 +38,6 @@ public class SimplyMoreRunicSwordItem extends RunicSwordItem implements Weapon {
     }
 
     protected void generateDynamicTooltip(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        SimplySwordsClientAPI.generateDynamicTooltip(itemStack, tooltipContext, tooltip, type, "simplyswords", "oracle_index:books/simplymore/weapon_types", "oracle_index:books/simplymore/unique_weapons", "oracle_index:books/simplyswords/runic-powers", null);
+        SimplySwordsClientAPI.generateDynamicTooltip(itemStack, tooltipContext, tooltip, type, "simplymore", "oracle_index:books/simplymore/weapon_types", "oracle_index:books/simplymore/unique_weapons", "oracle_index:books/simplyswords/runic-powers", null);
     }
 }
