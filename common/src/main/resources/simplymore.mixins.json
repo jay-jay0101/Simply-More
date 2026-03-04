@@ -10,7 +10,8 @@
     "LootTableModifierMixin",
     "MobEntityMixin",
     "OracleIndexUtilsMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "SimplySwordsAPIMixin"
   ],
   "injectors": {
     "defaultRequire": 1

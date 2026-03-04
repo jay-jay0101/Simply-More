@@ -7,8 +7,10 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.sweenus.simplyswords.power.GemPowerComponent;
 import net.sweenus.simplyswords.power.GemPowerFiller;
+import net.sweenus.simplyswords.registry.GemPowerRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -43,12 +45,13 @@ public class RuneCarverItem extends Item implements GemPowerFiller {
 
     @Override
     public ValidationResult<GemPowerComponent> fill(ItemStack stack, GemPowerComponent component) {
+        SimplyMore.LOGGER.info(component.toString());
         if (type == Types.RUNEFUSED) {
-            return !(component.hasRunicPower()) ?
+            return !(component.hasRunicPower() || component.runicPower() == GemPowerRegistry.EMPTY) ?
                     ValidationResult.Companion.success(new GemPowerComponent(true, component.hasNetherPower(), component.runicPower(), component.netherPower())) :
                     ValidationResult.Companion.error(component, "Can't add runic socket to the provided component");
         } else {
-            return !(component.hasNetherPower()) ?
+            return !(component.hasNetherPower() || component.netherPower() == GemPowerRegistry.EMPTY) ?
                     ValidationResult.Companion.success(new GemPowerComponent(component.hasRunicPower(), true, component.runicPower(), component.netherPower())) :
                     ValidationResult.Companion.error(component, "Can't add nether socket to the provided component");
         }
