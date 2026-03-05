@@ -12,7 +12,7 @@ import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
-import net.rosemarythyme.simplymore.client.renderers.CrowEntityRenderer;
+import net.rosemarythyme.simplymore.client.render.entity.CrowEntityRenderer;
 import net.rosemarythyme.simplymore.registry.ModEntityRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
@@ -76,18 +76,7 @@ public class SimplyMoreClientInit {
                 return 0xFFFF0000;
             }
 
-            // Brighten
-            int r = (color.rgb() >> 16) & 0xFF;
-            int g = (color.rgb() >> 8) & 0xFF;
-            int b = color.rgb() & 0xFF;
-            r = Math.min(255, Math.round(r * 1.3f));
-            g = Math.min(255, Math.round(g * 1.3f));
-            b = Math.min(255, Math.round(b * 1.3f));
-
-            int finalColor = (r << 16) | (g << 8) | b;
-
-
-            return 0xFF000000 | finalColor;
+            return 0xFF000000 | color.rgb();
         }), ModItemsRegistry.MATTERBANE);
 
         ItemPropertiesRegistry.register(ModItemsRegistry.BRASSTURN.get(), Identifier.of(SimplyMore.ID, "oxidisation"), (itemStack, clientWorld, livingEntity, a) -> {
