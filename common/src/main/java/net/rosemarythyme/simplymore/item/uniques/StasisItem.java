@@ -145,12 +145,9 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.stasis.tooltip5").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

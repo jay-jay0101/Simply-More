@@ -1363,11 +1363,6 @@ public class ModItemsRegistry {
             SimplyMore.LOGGER.info("Registering Mythic Metals Compat for " + SimplyMore.ID);
             MythicMetalsCompat.registerCompatItems();
         }
-//
-//        if (Platform.isModLoaded("gobber2")) {
-//            SimplyMore.LOGGER.info("Registering Gobber2 Compat for " + SimplyMore.ID);
-//            Gobber2CompatRegistry.registerCompatItems();
-//        }
 
         ITEMS.register();
     }

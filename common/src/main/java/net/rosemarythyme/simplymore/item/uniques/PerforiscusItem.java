@@ -110,12 +110,9 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip6").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

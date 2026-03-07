@@ -85,12 +85,8 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip3",
-                SimplyMoreHelperMethods.toPercentage(effect.the_vessel_breach.startupDamage)).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip6",
+                SimplyMoreHelperMethods.toPercentage(effect.the_vessel_breach.startupDamage),
                 SimplyMoreHelperMethods.toPercentage(effect.the_vessel_breach.rageLifesteal)).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip7").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

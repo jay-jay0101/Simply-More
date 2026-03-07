@@ -81,11 +81,9 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3",
-                SimplyMoreHelperMethods.translateTicks(effect.the_blood_harvester.harvestTime)).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip4",
-                SimplyMoreHelperMethods.toPercentage(effect.the_blood_harvester.harvestLifesteal)).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip6").setStyle(textStyle));
+                SimplyMoreHelperMethods.translateTicks(effect.the_blood_harvester.harvestTime),
+                SimplyMoreHelperMethods.toPercentage(effect.the_blood_harvester.harvestLifesteal)
+        ).setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

@@ -100,13 +100,11 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip5", SimplyMoreHelperMethods.translateTicks(effect.soul_foreseer.foreseenTime)).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip7").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

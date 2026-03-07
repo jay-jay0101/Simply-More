@@ -203,18 +203,15 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip7",SimplyMoreHelperMethods.translateTicks(
                 effect.myrmedge.grabTime
         )).setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip8").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip9").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

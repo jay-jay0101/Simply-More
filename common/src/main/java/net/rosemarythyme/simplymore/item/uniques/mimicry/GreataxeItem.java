@@ -50,7 +50,6 @@ public class GreataxeItem extends MimicryItem {
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.greataxe.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.greataxe.tooltip2").setStyle(textStyle));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

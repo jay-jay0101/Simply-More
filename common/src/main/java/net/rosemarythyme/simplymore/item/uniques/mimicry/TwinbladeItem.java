@@ -73,8 +73,6 @@ public class TwinbladeItem extends MimicryItem {
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.twinblade.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.twinblade.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.twinblade.tooltip3").setStyle(textStyle));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

@@ -75,8 +75,6 @@ public class GreatKatanaItem extends MimicryItem {
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.great_katana.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.great_katana.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.great_katana.tooltip3").setStyle(textStyle));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

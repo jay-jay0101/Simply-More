@@ -146,16 +146,14 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip5",
                 SimplyMoreHelperMethods.translateTicks(skillLength)).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip8").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

@@ -65,7 +65,6 @@ public class JesterPenetrateItem extends SimplyMoreSwordItem {
         tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip2").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.jester_penetrate.tooltip4").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

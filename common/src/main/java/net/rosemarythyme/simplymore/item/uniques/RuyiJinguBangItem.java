@@ -124,8 +124,6 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.ruyi_jingu_bang.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.ruyi_jingu_bang.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.ruyi_jingu_bang.tooltip4").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

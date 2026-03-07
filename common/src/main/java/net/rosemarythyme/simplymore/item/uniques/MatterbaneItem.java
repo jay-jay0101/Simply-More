@@ -119,18 +119,12 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip3", effect.matterbane.range).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip2", effect.matterbane.range).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip8").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip9").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip10").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

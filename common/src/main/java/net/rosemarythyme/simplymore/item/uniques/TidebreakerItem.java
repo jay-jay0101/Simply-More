@@ -125,13 +125,9 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip7",
+        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5",
                 SimplyMoreHelperMethods.translateTicks(effect.tidebreaker.teleportTime),
                 effect.tidebreaker.range).setStyle(textStyle));
 

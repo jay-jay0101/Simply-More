@@ -6,12 +6,14 @@
   "client": [
   ],
   "mixins": [
+    "BorderRendererMixin",
     "LivingEntityMixin",
     "LootTableModifierMixin",
     "MobEntityMixin",
     "OracleIndexUtilsMixin",
     "PlayerEntityMixin",
-    "SimplySwordsAPIMixin"
+    "SimplySwordsAPIMixin",
+    "TooltipRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

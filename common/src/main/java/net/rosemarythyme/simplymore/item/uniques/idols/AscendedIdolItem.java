@@ -59,9 +59,6 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip6").setStyle(textStyle));
 

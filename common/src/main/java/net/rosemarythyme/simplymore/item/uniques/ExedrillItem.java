@@ -217,15 +217,13 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip7").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip8").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.exedrill.tooltip9").setStyle(textStyle));
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 

@@ -144,13 +144,8 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.culterex.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.culterex.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.culterex.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.culterex.tooltip6").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.culterex.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.culterex.tooltip8").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.culterex.tooltip9").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

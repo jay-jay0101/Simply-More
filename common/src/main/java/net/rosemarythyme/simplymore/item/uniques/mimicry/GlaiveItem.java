@@ -49,7 +49,6 @@ public class GlaiveItem extends MimicryItem {
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.glaive.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.glaive.tooltip2").setStyle(textStyle));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

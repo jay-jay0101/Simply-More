@@ -197,17 +197,13 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip8").setStyle(textStyle));
+        tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip9").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip10").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip11").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

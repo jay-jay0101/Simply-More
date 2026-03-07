@@ -242,27 +242,20 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip2").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip6").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_timeless.tooltip8").setStyle(textStyle));
     }
 
     private void appendDayTooltips(List<Text> tooltip, Style rightClickStyle, Style abilityStyle, Style textStyle) {
         tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip6").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip8").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_day.tooltip9").setStyle(textStyle));
     }
@@ -270,15 +263,11 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
     private void appendNightTooltips(List<Text> tooltip, Style rightClickStyle, Style abilityStyle, Style textStyle) {
         tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip6").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip8").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.timekeeper_night.tooltip9").setStyle(textStyle));
     }

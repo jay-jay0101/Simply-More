@@ -176,16 +176,13 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip2",
                 effect.glimmerstep.maxStarlight).setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip7").setStyle(textStyle));
+        tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip8").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip9").setStyle(textStyle));
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 

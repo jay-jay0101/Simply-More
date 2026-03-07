@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.client.renderers;
+package net.rosemarythyme.simplymore.client.render.entity;
 
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRendererFactory;

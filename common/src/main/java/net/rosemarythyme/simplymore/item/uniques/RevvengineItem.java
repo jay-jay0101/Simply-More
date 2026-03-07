@@ -259,12 +259,9 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip6").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

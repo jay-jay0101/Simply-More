@@ -94,14 +94,9 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.darksent.tooltip8").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip9",
                 SimplyMoreHelperMethods.toPercentage(effect.darksent.curseDamageMultiplier)).setStyle(textStyle));
 

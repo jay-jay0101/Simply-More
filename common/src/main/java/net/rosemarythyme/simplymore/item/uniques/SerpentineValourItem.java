@@ -111,13 +111,9 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.serpentine_valour.tooltip7").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

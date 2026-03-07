@@ -134,13 +134,9 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip7").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

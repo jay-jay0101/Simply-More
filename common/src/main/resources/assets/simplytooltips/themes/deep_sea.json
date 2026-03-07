@@ -1,0 +1,28 @@
+{
+  "border":            "0xFF0c2936",
+  "borderInner":       "0xFF03131a",
+  "bgTop":             "0xCC010b0f",
+  "bgBottom":          "0xCC00090d",
+  "name":              "0xFF63b4d6",
+  "badgeBg":           "0xFF163542",
+  "badgeCutout":       "0xFF478fad",
+  "sectionHeader":     "0xFF406799",
+  "body":              "0x7595bf",
+  "separator":         "0xFF244258",
+  "diamondFrame":      "0xFF63b4d6",
+  "diamondFrameInner": "0xFF010b0f",
+
+  "footerDot":         "0xFF163542",
+
+  "stringColor":       "0x00000000",
+  "frameColor":        "0x00000000",
+  "runeColor":         "0x00000000",
+  "slotFilled":        "0x00000000",
+  "slotEmpty":         "0x00000000",
+  "hint":              "0x00000000",
+  "motif":             "ocean",
+  "itemAnimStyle":     "breathe_spin_bob",
+  "titleAnimStyle":    "wave",
+  "itemBorderShape":   "diamond",
+  "customTextKeys":    []
+}

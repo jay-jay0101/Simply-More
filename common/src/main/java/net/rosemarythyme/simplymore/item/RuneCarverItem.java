@@ -36,10 +36,8 @@ public class RuneCarverItem extends Item implements GemPowerFiller {
         tooltip.add(Text.literal(""));
         if (type == Types.RUNEFUSED) {
             tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
-            tooltip.add(Text.translatable("item.simplymore.runefused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
         } else {
             tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
-            tooltip.add(Text.translatable("item.simplymore.netherfused_carver.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
         }
     }
 

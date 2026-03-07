@@ -23,18 +23,19 @@ public class SimplyMore {
 
 		ModItemsRegistry.registerModItems();
 		ModItemsRegistry.registerItemGroup();
+		ModRecipeTypeRegistry.registerModRecipes();
 		TransformationRegistry.registerTransformations();
 
 		ModComponentRegistry.registerModComponents();
 		ModTagRegistry.registerModTags();
 
 		SimplyMore.registerEvents();
+		TooltipMotifRegistry.registerModTooltipMotifs();
 
 		LOGGER.info(ID + " Initialized Successfully!");
 	}
 
 	public static void registerEvents() {
 		PlayerEvent.PLAYER_JOIN.register(new RemoveStatusOnJoin());
-
 	}
 }

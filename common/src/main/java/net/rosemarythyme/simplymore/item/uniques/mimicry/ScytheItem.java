@@ -90,7 +90,6 @@ public class ScytheItem extends MimicryItem {
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
         tooltip.add(Text.translatable("item.simplymore.mimicry.scythe.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.scythe.tooltip2").setStyle(textStyle));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

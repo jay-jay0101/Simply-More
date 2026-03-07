@@ -84,8 +84,6 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.molten_flare.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.molten_flare.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.molten_flare.tooltip5").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

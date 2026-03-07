@@ -13,6 +13,7 @@ dependencies {
 
 
     modImplementation("curse.maven:simplyswords-659887:${simplyswords_fabric_version}")
+    modImplementation("curse.maven:simplytooltips-1475755:${simplytooltip_version}")
     modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
 
     modCompileOnly "maven.modrinth:mythicmetals:${project.mythicmetals_version}"

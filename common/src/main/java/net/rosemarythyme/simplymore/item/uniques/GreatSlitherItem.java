@@ -92,11 +92,9 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip5").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

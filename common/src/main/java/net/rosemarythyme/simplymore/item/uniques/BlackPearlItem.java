@@ -107,11 +107,9 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.black_pearl.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.black_pearl.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.black_pearl.tooltip3").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.black_pearl.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.black_pearl.tooltip5").setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
