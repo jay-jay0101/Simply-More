@@ -3,10 +3,8 @@ package net.rosemarythyme.simplymore.effect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.item.ToolItem;
-import net.minecraft.util.Hand;
-import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 public class LanceEffect extends StatusEffect {
 
@@ -16,21 +14,9 @@ public class LanceEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
-        if (!isLanceInMainHand(livingEntity) || !isRidingLivingEntity(livingEntity) || !isOffHandEmpty(livingEntity))
+        if (!SimplyMoreHelperMethods.shouldGrantLanceEffect(livingEntity))
             livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.LANCE));
         return super.applyUpdateEffect(livingEntity, amplifier);
-    }
-
-    private boolean isLanceInMainHand(LivingEntity livingEntity) {
-        return livingEntity.getMainHandStack().getItem() instanceof Weapon weapon && weapon.swordType() == Weapon.SwordTypes.LANCE;
-    }
-
-    private boolean isRidingLivingEntity(LivingEntity entity) {
-        return entity.getVehicle() instanceof LivingEntity;
-    }
-
-    private boolean isOffHandEmpty(LivingEntity livingEntity) {
-        return livingEntity.getStackInHand(Hand.OFF_HAND).getItem() instanceof ToolItem;
     }
 
     @Override

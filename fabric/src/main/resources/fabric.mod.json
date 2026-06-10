@@ -33,7 +33,8 @@
     "minecraft": ">=1.21.1 <=1.21.1",
     "architectury": ">=7.1.0",
     "fzzy_config": ">=0.6.6",
-    "simplyswords": ">=1.62.0-1.21.1"
+    "simplyswords": ">=1.62.0-1.21.1",
+    "simplytooltips": ">=0.1.3"
   },
   "suggests": {
   }

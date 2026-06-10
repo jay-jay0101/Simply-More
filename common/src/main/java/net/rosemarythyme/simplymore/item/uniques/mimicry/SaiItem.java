@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
@@ -46,7 +47,7 @@ public class SaiItem extends MimicryItem {
                     target -> {
                         if(target.isBlocking()) return;
                         target.timeUntilRegen = 0;
-                        target.damage(player.getDamageSources().playerAttack(player), damage);
+                        SimplyMoreHelperMethods.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),

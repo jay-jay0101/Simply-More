@@ -67,7 +67,7 @@ public class KatanaItem extends MimicryItem {
 
                 List<LivingEntity> livingEntities = katanaAttack(player,slashPos.getX(), slashPos.getY(), slashPos.getZ(), 1.3f);
                 livingEntities.forEach(
-                        (target) -> target.damage(player.getDamageSources().playerAttack(player), damage)
+                        (target) -> SimplyMoreHelperMethods.hitWithEnchants(player, target, damage)
                 );
             }
         }

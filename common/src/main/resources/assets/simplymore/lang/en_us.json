@@ -323,7 +323,7 @@
 
   "item.simplymore.holylight": "Holylight",
   "item.simplymore.holylight.tooltip1": "Unique Effect: Blessed",
-  "item.simplymore.holylight.tooltip2": "Chance on hit to spread holy water, creating an aura of purity in which you gain regeneration and have negative effects cured.",
+  "item.simplymore.holylight.tooltip2": "Chance on hit to spread holy water, creating an aura of purity in which you gain strength and have negative effects cured.",
   "item.simplymore.holylight.tooltip6": "Grant you and all allies nearby a short blessing. If you take damage while it is active, nullify it and heal for %s hearts instead.",
 
   "item.simplymore.tarnished_idol": "Tarnished Idol",

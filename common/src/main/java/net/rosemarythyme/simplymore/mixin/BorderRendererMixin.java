@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BorderRenderer.class)
 public class BorderRendererMixin {
-    @Inject(at=@At("HEAD"), remap = false, method = "drawBorderPattern", cancellable = true)
+    @Inject(at=@At("HEAD"), method = "drawBorderPattern", cancellable = true)
     private static void drawBorderPattern(DrawContext context, int x, int y, int w, int h, TooltipTheme theme, int borderStyle, CallbackInfo ci) {
         switch (borderStyle) {
             case CogMotif.ID -> TooltipMotifRegistry.COG.drawBorderPattern(context, x, y, w, h, theme, borderStyle);

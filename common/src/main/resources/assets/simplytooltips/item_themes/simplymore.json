@@ -5,6 +5,7 @@
     "simplyswords:emberlash": {"badges": ["UNIQUE", "BACKHAND BLADE"]},
     "simplyswords:soulstealer": {"badges": ["UNIQUE", "SAI"]},
     "simplyswords:waxweaver": {"badges": ["UNIQUE", "CLAYMORE"]},
+    "simplyswords:wraithfang": {"badges": ["UNIQUE", "CUTLASS"]},
 
     "simplymore:runefused_carver": {"theme": "runic", "badges": ["UPGRADE"]},
     "simplymore:netherfused_carver": {"theme": "ember", "badges": ["UPGRADE"]},

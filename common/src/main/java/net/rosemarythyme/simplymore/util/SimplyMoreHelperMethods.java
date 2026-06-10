@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.util;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -10,6 +11,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.particle.SimpleParticleType;
@@ -18,6 +20,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -25,6 +28,7 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
@@ -37,6 +41,19 @@ import java.text.DecimalFormat;
 public class SimplyMoreHelperMethods {
 
     protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+
+    public static void hitWithEnchants(PlayerEntity attacker, LivingEntity target, float damage) {
+        if(!(attacker.getWorld() instanceof ServerWorld world)) return;
+
+        ItemStack weapon = attacker.getStackInHand(Hand.MAIN_HAND);
+
+        DamageSource source = target.getDamageSources().playerAttack(attacker);
+        float damageTotal = EnchantmentHelper.getDamage(world, weapon, target, source, damage);
+
+        if (target.damage(source, damageTotal)) {
+            EnchantmentHelper.onTargetDamaged(world, target, source, weapon);
+        }
+    }
 
     public static void simplyMore$setAreaEffectCloudParameters(AreaEffectCloudEntity areaEffectCloudEntity, ParticleEffect particleEffect, int radius, float radiusGrowth, int radiusOnUse, LivingEntity owner, int duration) {
         if (areaEffectCloudEntity != null) {
@@ -84,6 +101,23 @@ public class SimplyMoreHelperMethods {
             attacker.getWorld().spawnEntity(auraEntity);
             attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BUCKET_FILL, attacker.getSoundCategory(), 2.0F, 0.3F);
         }
+    }
+
+    public static boolean shouldGrantLanceEffect(LivingEntity entity) {
+        return isLanceInMainHand(entity) && isRidingLivingEntity(entity) && isOffHandEmpty(entity);
+    }
+
+    private static boolean isLanceInMainHand(LivingEntity livingEntity) {
+
+        return livingEntity.getMainHandStack().getItem() instanceof Weapon weapon && weapon.swordType() == Weapon.SwordTypes.LANCE;
+    }
+
+    private static boolean isRidingLivingEntity(LivingEntity entity) {
+        return entity.getVehicle() instanceof LivingEntity;
+    }
+
+    private static boolean isOffHandEmpty(LivingEntity livingEntity) {
+        return !(livingEntity.getStackInHand(Hand.OFF_HAND).getItem() instanceof ToolItem);
     }
 
     public static boolean chance(LivingEntity player, float chance) {

@@ -39,6 +39,8 @@ public class ModTagRegistry {
 
     public static TagKey<Item> ALL = TagKey.of(RegistryKeys.ITEM, Identifier.of(SimplyMore.ID, "weapon_types/all"));
 
+    public static TagKey<Item> LANCE_EFFECT = TagKey.of(RegistryKeys.ITEM, Identifier.of(SimplyMore.ID, "lance_effect_override"));
+
     public static void registerModTags() {
         SimplyMore.LOGGER.info("Registering Tags for " + SimplyMore.ID);
     }

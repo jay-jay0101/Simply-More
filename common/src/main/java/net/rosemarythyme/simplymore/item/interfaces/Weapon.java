@@ -3,9 +3,8 @@ package net.rosemarythyme.simplymore.item.interfaces;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.ToolItem;
-import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 public interface Weapon {
 
@@ -16,7 +15,7 @@ public interface Weapon {
 
         if (entity.getVehicle() instanceof LivingEntity
                 && selected
-                && !(livingEntity.getStackInHand(Hand.OFF_HAND).getItem() instanceof ToolItem)) {
+                && SimplyMoreHelperMethods.shouldGrantLanceEffect(livingEntity)) {
             livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.LANCE), 9999999, 0));
         }
     }

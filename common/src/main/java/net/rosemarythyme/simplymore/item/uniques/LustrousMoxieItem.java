@@ -196,7 +196,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         @ValidatedInt.Restrict(min = 0)
         public int cooldown = 400;
         @ValidatedInt.Restrict(min = 0)
-        public int stunTime = 30;
+        public int stunTime = 20;
         @ValidatedInt.Restrict(min = 0)
         public int range = 20;
         @ValidatedInt.Restrict(min = 0)
