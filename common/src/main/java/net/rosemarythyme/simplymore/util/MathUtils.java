@@ -76,11 +76,11 @@ public class MathUtils {
     public static Box createCuboidBox(Vec3d centre, double negXOffset, double negYOffset, double negZOffset, double posXOffset, double posYOffset, double posZOffset) {
         return new Box(
                 centre.getX() + negXOffset,
-                centre.getX() + negYOffset,
-                centre.getX() + negZOffset,
+                centre.getY() + negYOffset,
+                centre.getZ() + negZOffset,
                 centre.getX() + posXOffset,
-                centre.getX() + posYOffset,
-                centre.getX() + posZOffset
+                centre.getY() + posYOffset,
+                centre.getZ() + posZOffset
         );
     }
 
