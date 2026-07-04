@@ -25,7 +25,8 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.CooldownOnUnselected;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -84,7 +85,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
 
                     for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(spawnX-0.75,user.getEyeY()-0.75,spawnZ-0.75,spawnX+0.75,user.getEyeY()+0.75,spawnZ+0.75)))
                     {
-                        if (SimplyMoreHelperMethods.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
+                        if (AttackUtils.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
 
                         entity.damage(user.getDamageSources().inFire(),effect.cindergorge.fireDamage);
                         entity.setOnFireFor(3);
@@ -121,7 +122,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
             detectCooldown(player, selected, stack, skillCooldown, false);
         }
 
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.LAVA);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.LAVA);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -11,7 +11,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Box;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 
 public class MistyEffect extends StatusEffect {
@@ -88,7 +88,7 @@ public class MistyEffect extends StatusEffect {
                 if (!player.canSee(target)) {
                     continue;
                 }
-                if (target == player || SimplyMoreHelperMethods.checkFriendlyFire(target, player)) {
+                if (target == player || AttackUtils.checkFriendlyFire(target, player)) {
                     continue;
                 }
                 if (teleportTarget == null) {

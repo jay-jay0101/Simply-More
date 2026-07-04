@@ -26,7 +26,9 @@ import net.rosemarythyme.simplymore.item.components.GrabbedComponent;
 import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.HelperMethods;
@@ -61,7 +63,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         Entity entity = HelperMethods.getTargetedEntity(user, 2);
 
         if(entity instanceof LivingEntity target) {
-            if(target == user || SimplyMoreHelperMethods.checkFriendlyFire(target, user) || target.isDead()) {
+            if(target == user || AttackUtils.checkFriendlyFire(target, user) || target.isDead()) {
                 return super.use(world, user, hand);
             }
 
@@ -176,7 +178,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
 
                     // Throw
                     if(player.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING)).getDuration() == 1) {
-                        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(player.getYaw()).mul(effect.myrmedge.throwStrength);
+                        Vector3d normalisedVector = MathUtils.getNormalised2dVector(player.getYaw()).mul(effect.myrmedge.throwStrength);
                         livingTarget.setVelocity(new Vec3d(
                                 normalisedVector.x(),
                                 0.2f,
@@ -190,7 +192,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -207,7 +209,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip7",SimplyMoreHelperMethods.translateTicks(
+        tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip7", MathUtils.translateTicks(
                 effect.myrmedge.grabTime
         )).setStyle(textStyle));
         tooltip.add(Text.literal(" "));

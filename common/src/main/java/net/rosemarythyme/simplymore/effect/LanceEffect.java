@@ -4,7 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 
 public class LanceEffect extends StatusEffect {
 
@@ -14,7 +14,7 @@ public class LanceEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
-        if (!SimplyMoreHelperMethods.shouldGrantLanceEffect(livingEntity))
+        if (!EntityUtils.shouldGrantLanceEffect(livingEntity))
             livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.LANCE));
         return super.applyUpdateEffect(livingEntity, amplifier);
     }

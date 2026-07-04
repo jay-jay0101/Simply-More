@@ -13,7 +13,8 @@ import net.minecraft.world.RaycastContext;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import org.joml.Vector3d;
@@ -55,7 +56,7 @@ public class KatanaItem extends MimicryItem {
 
             double distance = Vector3d.distance(currentPos.getX(), currentPos.getY(), currentPos.getZ(), maxDistance.getX(), maxDistance.getY(), maxDistance.getZ());
 
-            Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised3dVector(player);
+            Vector3d normalisedVector = MathUtils.getNormalised3dVector(player);
             for(int i = 0; i < 15; i++) {
                 double distanceInterval = distance/((double) 15 /(i+1));
 
@@ -67,7 +68,7 @@ public class KatanaItem extends MimicryItem {
 
                 List<LivingEntity> livingEntities = katanaAttack(player,slashPos.getX(), slashPos.getY(), slashPos.getZ(), 1.3f);
                 livingEntities.forEach(
-                        (target) -> SimplyMoreHelperMethods.hitWithEnchants(player, target, damage)
+                        (target) -> AttackUtils.hitWithEnchants(player, target, damage)
                 );
             }
         }

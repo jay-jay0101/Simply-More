@@ -32,7 +32,9 @@ import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.registry.ModTagRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -162,7 +164,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             stack.set(ModComponentRegistry.CHANGE.get(), false);
         }
 
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -294,7 +296,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public void jump(LivingEntity target, float xzStrength, float yStrength) {
-        Vector3d facingVector = SimplyMoreHelperMethods.getNormalised2dVector(target.getYaw()).mul(xzStrength);
+        Vector3d facingVector = MathUtils.getNormalised2dVector(target.getYaw()).mul(xzStrength);
         target.setVelocity(facingVector.x(), yStrength, facingVector.z());
         target.velocityModified = true;
     }
@@ -305,7 +307,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     public List<LivingEntity> sweepAttack(PlayerEntity player, float range, int angle) {
         Vec3d position = player.getEyePos();
-        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(player.getYaw() + angle);
+        Vector3d normalisedVector = MathUtils.getNormalised2dVector(player.getYaw() + angle);
 
         Vec3d particlePos = new Vec3d(
                 position.getX() + (normalisedVector.x() * range),
@@ -328,7 +330,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         ((ServerWorld) player.getWorld()).spawnParticles(ParticleTypes.SWEEP_ATTACK, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 1, 0, 0 , 0, 0);
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
+                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -348,7 +350,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
+                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -366,7 +368,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         for(int i = 0; i < 10; i++) {
             float particleRange = range / 1.5f;
 
-            Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(i * 36);
+            Vector3d normalisedVector = MathUtils.getNormalised2dVector(i * 36);
 
             double xPos = player.getX() + (normalisedVector.x() * particleRange);
             double yPos = player.getEyeY();
@@ -377,7 +379,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         }
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
+                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -397,7 +399,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
 
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
+                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
         ).toList();
     }
 
@@ -406,7 +408,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
         for (int j = 0; j < range/coverage; j++) {
 
-            Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised3dVector(player);
+            Vector3d normalisedVector = MathUtils.getNormalised3dVector(player);
 
 
 
@@ -431,7 +433,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             );
 
             List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                    livingEntity -> livingEntity != player && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player) && !targets.contains(livingEntity)
+                    livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player) && !targets.contains(livingEntity)
 
             ).toList();
 

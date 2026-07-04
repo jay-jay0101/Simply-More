@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import org.joml.Vector3f;
@@ -61,7 +62,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
         // Find the closest entity in the box
         for (LivingEntity livingEntity : this.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity == owner || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, owner)) {
+            if (livingEntity == owner || AttackUtils.checkFriendlyFire(livingEntity, owner)) {
                 continue;
             }
 

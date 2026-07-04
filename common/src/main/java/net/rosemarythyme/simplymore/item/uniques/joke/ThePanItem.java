@@ -18,7 +18,7 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -41,7 +41,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
             return super.postHit(stack, target, attacker);
         }
 
-        if (!SimplyMoreHelperMethods.chance(attacker, effect.the_pan.chance)) {
+        if (!MathUtils.chance(attacker, effect.the_pan.chance)) {
             return super.postHit(stack, target, attacker);
         }
 

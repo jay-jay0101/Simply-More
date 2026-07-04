@@ -23,7 +23,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -45,7 +47,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                 target.damage(attacker.getDamageSources().magic(),radiantMarkEffect.getAmplifier() + 1);
             }
-            if (SimplyMoreHelperMethods.chance(attacker, effect.lustrous_moxie.chance)) {
+            if (MathUtils.chance(attacker, effect.lustrous_moxie.chance)) {
                 if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                     int amplifier = radiantMarkEffect.getAmplifier() + 1;
                     int duration = 240 - (amplifier * 40);
@@ -81,7 +83,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         List<LivingEntity> potentiallyMarkedLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK))).findAny().orElse(null);
 
-        if (markedEntity == null || (markedEntity == user || SimplyMoreHelperMethods.checkFriendlyFire(markedEntity, user))) {
+        if (markedEntity == null || (markedEntity == user || AttackUtils.checkFriendlyFire(markedEntity, user))) {
             return null;
         }
 
@@ -108,7 +110,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     }
 
     private void knockbackAndDamageEntity(LivingEntity targetEntity, PlayerEntity user, float damage) {
-        if(targetEntity==user || SimplyMoreHelperMethods.checkFriendlyFire(targetEntity, user)) {
+        if(targetEntity==user || AttackUtils.checkFriendlyFire(targetEntity, user)) {
             return;
         }
 
@@ -164,7 +166,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.WAX_OFF);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.WAX_OFF);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class VipersCallProjectileAreaEffectCloudEntity extends AreaEffectCloudEn
 
         List<LivingEntity> entities = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox());
         for (LivingEntity target : entities) {
-            if (target.isAlive() && !target.isInvulnerable() && target!=livingEntity && !SimplyMoreHelperMethods.checkFriendlyFire(target, livingEntity)) {
+            if (target.isAlive() && !target.isInvulnerable() && target!=livingEntity && !AttackUtils.checkFriendlyFire(target, livingEntity)) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 60, 0));
                 target.damage(this.getDamageSources().magic(), 0.7f);
             }

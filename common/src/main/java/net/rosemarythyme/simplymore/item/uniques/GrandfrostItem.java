@@ -22,7 +22,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -40,7 +42,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (target.isBlocking() || SimplyMoreHelperMethods.chance(attacker, effect.grandfrost.chance)) {
+                if (target.isBlocking() || MathUtils.chance(attacker, effect.grandfrost.chance)) {
                     target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.CHILL), effect.grandfrost.chillTime, 0), attacker);
                 }
             }
@@ -61,7 +63,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
             boolean isNonTeammateNearby = false;
 
             for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity == user || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user)) {
+                if (livingEntity == user || AttackUtils.checkFriendlyFire(livingEntity, user)) {
                     continue;
                 }
 
@@ -98,7 +100,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

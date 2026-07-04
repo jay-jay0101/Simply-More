@@ -26,7 +26,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -44,7 +46,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (SimplyMoreHelperMethods.chance(attacker, effect.earthshatter.chance)) {
+            if (MathUtils.chance(attacker, effect.earthshatter.chance)) {
                 StatusEffectInstance armourCrunchEffect = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH));
                 if (armourCrunchEffect != null) {
                     int amplifier = armourCrunchEffect.getAmplifier() + 1;
@@ -113,7 +115,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         Box box = new Box(playerX - 4, playerY - 2, playerZ - 4, playerX + 4, playerY + 5, playerZ + 4);
         DamageSource damageSource = player.getDamageSources().playerAttack(player);
         for (LivingEntity livingEntity : serverWorld.getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity == player || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)) continue;
+            if (livingEntity == player || AttackUtils.checkFriendlyFire(livingEntity, player)) continue;
             livingEntity.damage(damageSource, 15);
             int effectTime = effect.earthshatter.slamEffectTime;
             livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH), effectTime, 2));
@@ -136,7 +138,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

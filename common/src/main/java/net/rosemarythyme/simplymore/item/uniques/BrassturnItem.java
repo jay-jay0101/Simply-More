@@ -34,7 +34,9 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -56,7 +58,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
         int oxidisation = getOxidisation(stack) + 1;
         saveOxidisation(stack, oxidisation);
 
-        if (SimplyMoreHelperMethods.chance(attacker, effect.brassturn.chance)) {
+        if (MathUtils.chance(attacker, effect.brassturn.chance)) {
 
             attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.ENTITY_ZOMBIE_INFECT, SoundCategory.PLAYERS, 0.5f, 2);
 
@@ -93,7 +95,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
             int oxidisation = getOxidisation(stack) - 1;
             saveOxidisation(stack, oxidisation);
 
-            if (SimplyMoreHelperMethods.chance(user, effect.brassturn.sparkChance)) {
+            if (MathUtils.chance(user, effect.brassturn.sparkChance)) {
                 serverWorld.spawnParticles(ParticleTypes.WAX_ON, user.getX(), user.getY(), user.getZ(), 20, 0.5, 1, 0.5, 0.2);
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.PLAYERS, 0.5f, 2);
                 int boxSize = 3;
@@ -101,7 +103,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
                 List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
                 for (LivingEntity livingEntity : livingEntities) {
-                    if (livingEntity == user || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user)) {
+                    if (livingEntity == user || AttackUtils.checkFriendlyFire(livingEntity, user)) {
                         continue;
                     }
 
@@ -125,7 +127,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
     }
 
     public static int getOxidisation(ItemStack stack) {
-        CounterComponent oxidisation = SimplyMoreHelperMethods.getCounterComponent(stack);
+        CounterComponent oxidisation = MathUtils.getCounterComponent(stack);
 
         if(oxidisation == null) {
             return 16;
@@ -135,13 +137,13 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
     }
 
     public static void saveOxidisation(ItemStack stack, int oxidisation) {
-        SimplyMoreHelperMethods.setCounterComponent(stack,
+        MathUtils.setCounterComponent(stack,
                 new CounterComponent(0, 16, 0).set(oxidisation));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         applyAttackSpeed(stack);
         super.inventoryTick(stack, world, entity, slot, selected);
     }

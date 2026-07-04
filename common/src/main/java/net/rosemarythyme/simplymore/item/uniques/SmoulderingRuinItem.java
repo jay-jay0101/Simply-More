@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -39,7 +40,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (SimplyMoreHelperMethods.chance(attacker, effect.smouldering_ruin.chance)) {
+        if (MathUtils.chance(attacker, effect.smouldering_ruin.chance)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, effect.smouldering_ruin.witherTime, 0), attacker);
             StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE));
             if (targetWitheringFateStatus != null) {
@@ -75,7 +76,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.CRIMSON_SPORE);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -4,6 +4,7 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class EruptionAreaEffectCloudEntity extends AreaEffectCloudEntity {
         List<LivingEntity> entities = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox());
         for (LivingEntity target : entities) {
             if (target.isAlive() && !target.isInvulnerable() && target != livingEntity) {
-                if (!SimplyMoreHelperMethods.checkFriendlyFire(target, livingEntity)) {
+                if (!AttackUtils.checkFriendlyFire(target, livingEntity)) {
                     target.damage(this.getDamageSources().inFire(), 1.0F);
                     target.setOnFireFor(3);
                 }

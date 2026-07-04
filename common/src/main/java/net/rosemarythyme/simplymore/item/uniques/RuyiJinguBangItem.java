@@ -20,7 +20,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -93,7 +94,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
                     Box box = new Box(userX - 1 + offsetX, userY - 1 + offsetY, userZ - 1 + offsetZ, userX + 1 + offsetX, userY + 1 + offsetY, userZ + 1 + offsetZ);
                     DamageSource damageSource = player.getDamageSources().playerAttack(player);
                     for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                        if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
+                        if (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
 
                         livingEntity.damage(damageSource, damage);
                         livingEntity.setVelocity(offsetX / i, offsetY / i, offsetZ / i);
@@ -108,7 +109,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.WAX_ON);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.WAX_ON);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.joml.Vector3f;
 
@@ -44,7 +45,7 @@ public class RiftAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
         Box box = new Box(getX() - 13, getY() - 13, getZ() - 13, getX() + 13, getY() + 13, getZ() + 13);
         for (LivingEntity entity : getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (entity == getOwner() || SimplyMoreHelperMethods.checkFriendlyFire(entity, getOwner())) {
+            if (entity == getOwner() || AttackUtils.checkFriendlyFire(entity, getOwner())) {
                 continue;
             }
 

@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -42,7 +43,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (SimplyMoreHelperMethods.chance(attacker, effect.tidebreaker.chance)) {
+            if (MathUtils.chance(attacker, effect.tidebreaker.chance)) {
                 if (!attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.TIDEBREAKER))) {
                     attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.TIDEBREAKER), effect.tidebreaker.cloudTime, 0), attacker);
                 }
@@ -111,7 +112,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
             if (lastHitTime > effect.tidebreaker.teleportTime)
                 resetLastHit();
         }
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -128,7 +129,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5",
-                SimplyMoreHelperMethods.translateTicks(effect.tidebreaker.teleportTime),
+                MathUtils.translateTicks(effect.tidebreaker.teleportTime),
                 effect.tidebreaker.range).setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);

@@ -24,7 +24,9 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -43,7 +45,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (SimplyMoreHelperMethods.chance(attacker, effect.stasis.chance)) {
+                if (MathUtils.chance(attacker, effect.stasis.chance)) {
                     attacker.getWorld().playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.PLAYERS,0.5f,2f);
                     ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),50,0.15,0.25,0.15,0.1);
                     if (target instanceof PlayerEntity playerTarget) {
@@ -103,7 +105,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         int boxRange = effect.stasis.range;
         Box box = new Box(user.getX() - boxRange, user.getY() - 2, user.getZ() - boxRange, user.getX() + boxRange, user.getY() + boxRange*2, user.getZ() + boxRange);
         for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (entity == user || SimplyMoreHelperMethods.checkFriendlyFire(entity, user)) {
+            if (entity == user || AttackUtils.checkFriendlyFire(entity, user)) {
                 continue;
             }
             entity.damage(player.getDamageSources().magic(), effect.stasis.strikeDamage);
@@ -131,7 +133,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.GLOW);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.GLOW);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

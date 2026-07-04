@@ -15,7 +15,7 @@ import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
 import net.rosemarythyme.simplymore.client.render.entity.CrowEntityRenderer;
 import net.rosemarythyme.simplymore.registry.ModEntityRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.MathUtils;
 
 @Environment(EnvType.CLIENT)
 public class SimplyMoreClientInit {
@@ -81,7 +81,7 @@ public class SimplyMoreClientInit {
 
         ItemPropertiesRegistry.register(ModItemsRegistry.BRASSTURN.get(), Identifier.of(SimplyMore.ID, "oxidisation"), (itemStack, clientWorld, livingEntity, a) -> {
 
-            int oxidisation = SimplyMoreHelperMethods.getCounterComponent(itemStack).value();
+            int oxidisation = MathUtils.getCounterComponent(itemStack).value();
             if(oxidisation >= 16) {
                 return 0.3f;
             } else if (oxidisation >= 11) {
@@ -94,7 +94,7 @@ public class SimplyMoreClientInit {
         });
 
         ItemPropertiesRegistry.register(ModItemsRegistry.DEATHS_EYRIE.get(), Identifier.of(SimplyMore.ID, "crows"),
-                (itemStack, clientWorld, livingEntity, a) -> SimplyMoreHelperMethods.getCounterComponent(itemStack).value() * 0.1f);
+                (itemStack, clientWorld, livingEntity, a) -> MathUtils.getCounterComponent(itemStack).value() * 0.1f);
 
         ItemPropertiesRegistry.register(ModItemsRegistry.RUYI_JINGU_BANG.get(), Identifier.of(SimplyMore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {
 

@@ -26,7 +26,9 @@ import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModEntityRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -57,7 +59,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient() && attacker instanceof PlayerEntity playerAttacker && !playerAttacker.getItemCooldownManager().isCoolingDown(this)) {
-            if (SimplyMoreHelperMethods.chance(attacker, effect.deaths_eyrie.chance)) {
+            if (MathUtils.chance(attacker, effect.deaths_eyrie.chance)) {
                 int effectTime = effect.deaths_eyrie.baseBleedTime;
                 effectTime += effect.deaths_eyrie.additionalBleedTime * getCrows(stack);
                 int amplifier = (int) Math.floor(0.75f * (getCrows(stack) -1));
@@ -95,7 +97,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
         if (user.getWorld().isClient) return super.use(world, user, hand);
 
         Entity entityTarget = HelperMethods.getTargetedEntity(user, 20);
-        if (entityTarget instanceof LivingEntity target && !SimplyMoreHelperMethods.checkFriendlyFire(target, user)) {
+        if (entityTarget instanceof LivingEntity target && !AttackUtils.checkFriendlyFire(target, user)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10, 0), user);
             List<CrowEntity> pets = world.getEntitiesByClass(CrowEntity.class, user.getBoundingBox().expand(50),
                     crowEntity -> crowEntity.getOwner() == user
@@ -120,7 +122,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
     public static int getCrows(ItemStack stack) {
         final int minCrows = 1; // Constant
 
-        int crows = SimplyMoreHelperMethods.getCounterComponent(stack).value();
+        int crows = MathUtils.getCounterComponent(stack).value();
 
         crows = Math.max(minCrows, crows);
         crows = Math.min(maxCrows, crows);
@@ -129,8 +131,8 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
     }
 
     public static void setCrows(ItemStack stack, int value) {
-        SimplyMoreHelperMethods.setCounterComponent(stack,
-                SimplyMoreHelperMethods.getCounterComponent(stack).set(value));
+        MathUtils.setCounterComponent(stack,
+                MathUtils.getCounterComponent(stack).set(value));
     }
 
     @Override
@@ -184,7 +186,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.WARPED_SPORE);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.WARPED_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

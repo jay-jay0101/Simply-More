@@ -21,7 +21,8 @@ import net.rosemarythyme.simplymore.entity.PoisonBoltAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -64,7 +65,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
             );
 
             boolean hasEnemies = user.getWorld().getNonSpectatingEntities(LivingEntity.class, entitySearchBox).stream()
-                    .anyMatch(entity -> entity != user && !SimplyMoreHelperMethods.checkFriendlyFire(entity, user));
+                    .anyMatch(entity -> entity != user && !AttackUtils.checkFriendlyFire(entity, user));
 
             int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
 
@@ -98,7 +99,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.SNEEZE, ParticleTypes.SNEEZE, ParticleTypes.SPORE_BLOSSOM_AIR);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

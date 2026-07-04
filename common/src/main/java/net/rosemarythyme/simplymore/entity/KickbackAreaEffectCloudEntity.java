@@ -11,6 +11,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.joml.Vector3f;
 
@@ -84,7 +85,7 @@ public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
             );
 
             for (LivingEntity livingEntity : getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, getOwner()) || livingEntity == getOwner() || livingEntity.isInvulnerable()) continue;
+                if (AttackUtils.checkFriendlyFire(livingEntity, getOwner()) || livingEntity == getOwner() || livingEntity.isInvulnerable()) continue;
 
                 livingEntity.damage(
                         getOwner().getDamageSources().explosion(this, getOwner()),

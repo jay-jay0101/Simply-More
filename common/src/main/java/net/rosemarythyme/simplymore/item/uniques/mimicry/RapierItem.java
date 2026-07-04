@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
@@ -46,7 +46,7 @@ public class RapierItem extends MimicryItem {
                     target -> {
                         if(target.isBlocking()) return;
                         target.timeUntilRegen = 0;
-                        SimplyMoreHelperMethods.hitWithEnchants(player, target, damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
@@ -64,7 +64,7 @@ public class RapierItem extends MimicryItem {
                     target -> {
                         if(target.isBlocking()) return;
                         target.timeUntilRegen = 0;
-                        SimplyMoreHelperMethods.hitWithEnchants(player, target, damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                     }
             );
         }

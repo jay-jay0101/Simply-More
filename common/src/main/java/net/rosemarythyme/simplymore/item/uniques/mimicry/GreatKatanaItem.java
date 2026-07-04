@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
@@ -47,9 +47,9 @@ public class GreatKatanaItem extends MimicryItem {
                             player.teleport(target.getX(), target.getY(), target.getZ(), false);
                             sweepAttack(player, 0.1f);
                             if (target == mainTarget) {
-                                SimplyMoreHelperMethods.hitWithEnchants(player, target, damage + mimicry.great_katana.extraDamage);
+                                AttackUtils.hitWithEnchants(player, target, damage + mimicry.great_katana.extraDamage);
                             } else {
-                                SimplyMoreHelperMethods.hitWithEnchants(player, target, damage);
+                                AttackUtils.hitWithEnchants(player, target, damage);
                             }
                         }
                 );

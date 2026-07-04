@@ -22,7 +22,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -44,7 +46,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         if (attacker.getWorld() instanceof ServerWorld serverworld
-                && SimplyMoreHelperMethods.chance(attacker, effect.soul_foreseer.chance)
+                && MathUtils.chance(attacker, effect.soul_foreseer.chance)
                 && !target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
             serverworld.playSound(null, attacker.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_NORDIC_27.get(), SoundCategory.PLAYERS);
             target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN), effect.soul_foreseer.effectTime, 0));
@@ -64,7 +66,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
             List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
             for (LivingEntity livingEntity : entities) {
-                if (livingEntity == player || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player) || !livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
+                if (livingEntity == player || AttackUtils.checkFriendlyFire(livingEntity, player) || !livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
                     continue;
                 }
 
@@ -87,7 +89,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.SOUL, ParticleTypes.SCULK_SOUL, ParticleTypes.WARPED_SPORE);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.SOUL, ParticleTypes.SCULK_SOUL, ParticleTypes.WARPED_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -101,7 +103,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip2").setStyle(textStyle));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip5", SimplyMoreHelperMethods.translateTicks(effect.soul_foreseer.foreseenTime)).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip5", MathUtils.translateTicks(effect.soul_foreseer.foreseenTime)).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.soul_foreseer.tooltip6").setStyle(textStyle));

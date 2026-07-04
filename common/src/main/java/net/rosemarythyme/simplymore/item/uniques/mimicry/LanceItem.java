@@ -11,7 +11,7 @@ import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
@@ -42,7 +42,7 @@ public class LanceItem extends MimicryItem {
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
-                        SimplyMoreHelperMethods.hitWithEnchants(player, target, damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
@@ -60,7 +60,7 @@ public class LanceItem extends MimicryItem {
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
-                        SimplyMoreHelperMethods.hitWithEnchants(player, target, damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         knockback(player, target, mimicry.lance.knockback);
                     }
             );

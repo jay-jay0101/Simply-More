@@ -23,7 +23,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.RiftAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -68,7 +70,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (SimplyMoreHelperMethods.chance(attacker, effect.matterbane.chance) && attacker instanceof PlayerEntity player) {
+            if (MathUtils.chance(attacker, effect.matterbane.chance) && attacker instanceof PlayerEntity player) {
                 fireBolt(player, getColor(attacker.getStackInHand(Hand.MAIN_HAND)));
             }
         }
@@ -97,7 +99,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y,z+dZ,1,0,0,0,0);
             for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.6+dX,y-0.6,z-0.6+dZ,x+0.6+dX,y+0.6,z+0.6+dZ)))
             {
-                if (SimplyMoreHelperMethods.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
+                if (AttackUtils.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
 
                 entity.damage(user.getDamageSources().magic(),effect.matterbane.damage);
             }
@@ -107,7 +109,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

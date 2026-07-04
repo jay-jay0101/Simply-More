@@ -22,7 +22,8 @@ import net.rosemarythyme.simplymore.entity.EruptionAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -42,7 +43,7 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        if (SimplyMoreHelperMethods.chance(attacker, effect.molten_flare.chance) || attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE))) {
+        if (MathUtils.chance(attacker, effect.molten_flare.chance) || attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE))) {
             eruption(attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE)) ?
                     effect.molten_flare.radiusEmpowered:
                     effect.molten_flare.radius, attacker);
@@ -68,7 +69,7 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.LAVA, ParticleTypes.LAVA, ParticleTypes.SMOKE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

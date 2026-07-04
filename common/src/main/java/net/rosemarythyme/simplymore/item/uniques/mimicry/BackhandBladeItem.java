@@ -11,7 +11,7 @@ import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
@@ -33,7 +33,7 @@ public class BackhandBladeItem extends MimicryItem {
 
             enemies.forEach(
                     target -> {
-                        SimplyMoreHelperMethods.hitWithEnchants(player, target, damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.BLINDNESS,

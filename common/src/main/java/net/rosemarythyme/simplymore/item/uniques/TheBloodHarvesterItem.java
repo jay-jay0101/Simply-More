@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -64,7 +65,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -77,12 +78,12 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip2",
-                SimplyMoreHelperMethods.toPercentage(effect.the_blood_harvester.lifesteal)).setStyle(textStyle));
+                MathUtils.toPercentage(effect.the_blood_harvester.lifesteal)).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3",
-                SimplyMoreHelperMethods.translateTicks(effect.the_blood_harvester.harvestTime),
-                SimplyMoreHelperMethods.toPercentage(effect.the_blood_harvester.harvestLifesteal)
+                MathUtils.translateTicks(effect.the_blood_harvester.harvestTime),
+                MathUtils.toPercentage(effect.the_blood_harvester.harvestLifesteal)
         ).setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);

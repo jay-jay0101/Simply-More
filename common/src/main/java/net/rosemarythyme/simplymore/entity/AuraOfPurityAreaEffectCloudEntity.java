@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class AuraOfPurityAreaEffectCloudEntity extends AreaEffectCloudEntity {
         super.tick();
         LivingEntity owner = this.getOwner();
         for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
-            if (target.isAlive() && (target == owner || SimplyMoreHelperMethods.checkFriendlyFire(target, owner))) {
+            if (target.isAlive() && (target == owner || AttackUtils.checkFriendlyFire(target, owner))) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 15, 1));
                 List.copyOf(target.getStatusEffects()).forEach(effect -> {
                     if (effect.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL) target.removeStatusEffect(effect.getEffectType());

@@ -31,7 +31,9 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -72,7 +74,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
 
         List<LivingEntity> livingEntities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         for (LivingEntity livingEntity : livingEntities) {
-            if (livingEntity == player || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)) {
+            if (livingEntity == player || AttackUtils.checkFriendlyFire(livingEntity, player)) {
                 continue;
             }
 
@@ -119,7 +121,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
 
             List<LivingEntity> livingEntities = entity.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
             for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity == entity || SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, (LivingEntity) entity)) {
+                if (livingEntity == entity || AttackUtils.checkFriendlyFire(livingEntity, (LivingEntity) entity)) {
                     continue;
                 }
 
@@ -133,7 +135,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -151,7 +153,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip5",
-                SimplyMoreHelperMethods.translateTicks(skillLength)).setStyle(textStyle));
+                MathUtils.translateTicks(skillLength)).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.blade_of_the_grotesque.tooltip7").setStyle(textStyle));
 

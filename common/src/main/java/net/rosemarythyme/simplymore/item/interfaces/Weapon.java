@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 
 public interface Weapon {
 
@@ -15,7 +15,7 @@ public interface Weapon {
 
         if (entity.getVehicle() instanceof LivingEntity
                 && selected
-                && SimplyMoreHelperMethods.shouldGrantLanceEffect(livingEntity)) {
+                && EntityUtils.shouldGrantLanceEffect(livingEntity)) {
             livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.LANCE), 9999999, 0));
         }
     }

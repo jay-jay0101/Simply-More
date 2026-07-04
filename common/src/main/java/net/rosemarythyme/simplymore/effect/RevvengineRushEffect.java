@@ -18,7 +18,8 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.entity.KickbackAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.uniques.RevvengineItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -40,7 +41,7 @@ public class RevvengineRushEffect extends StatusEffect {
             entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get(), SoundCategory.PLAYERS, 1, 1.2f);
 
         // Movement
-        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(entity.getYaw());
+        Vector3d normalisedVector = MathUtils.getNormalised2dVector(entity.getYaw());
         entity.setVelocity(normalisedVector.x() * 0.6, entity.getVelocity().getY(), normalisedVector.z()  * 0.6);
         entity.velocityModified = true;
 
@@ -111,7 +112,7 @@ public class RevvengineRushEffect extends StatusEffect {
         );
 
         List<LivingEntity> entities = entity.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> (livingEntity != entity && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, entity))).toList();
+                livingEntity -> (livingEntity != entity && !AttackUtils.checkFriendlyFire(livingEntity, entity))).toList();
 
         if(!entities.isEmpty()) {
             if(amplifier > 0) {
@@ -172,7 +173,7 @@ public class RevvengineRushEffect extends StatusEffect {
 
         user.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS));
         Vec3d position = user.getEyePos();
-        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(user.getYaw());
+        Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
 
         Vec3d particlePos = new Vec3d(
                 position.getX() + normalisedVector.x(),
@@ -190,7 +191,7 @@ public class RevvengineRushEffect extends StatusEffect {
 
         );
         for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
+            if (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
 
             livingEntity.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),

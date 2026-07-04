@@ -30,7 +30,9 @@ import net.rosemarythyme.simplymore.entity.GhostFallingBlockEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -100,7 +102,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         float chance = attacker.getVehicle() instanceof LivingEntity ?
                 effect.exedrill.chanceMounted:
                 effect.exedrill.chance;
-        if (SimplyMoreHelperMethods.chance(attacker, chance) && attacker instanceof PlayerEntity player) {
+        if (MathUtils.chance(attacker, chance) && attacker instanceof PlayerEntity player) {
             List<LivingEntity> targets = tremorEffectHitbox(5, attacker.getPos(), ((ServerWorld) attacker.getWorld()), player);
             setHeat(stack,
                     getHeat(stack) + effect.exedrill.trembleHeatAmount);
@@ -130,7 +132,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
 
     public static int getHeat(ItemStack stack) {
 
-        int heat = SimplyMoreHelperMethods.getCounterComponent(stack).value();
+        int heat = MathUtils.getCounterComponent(stack).value();
 
         heat = Math.max(minHeat, heat);
         heat = Math.min(maxHeat, heat);
@@ -139,8 +141,8 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
     }
 
     public static void setHeat(ItemStack stack, int value) {
-        SimplyMoreHelperMethods.setCounterComponent(stack,
-                SimplyMoreHelperMethods.getCounterComponent(stack).set(value));
+        MathUtils.setCounterComponent(stack,
+                MathUtils.getCounterComponent(stack).set(value));
     }
 
     @Override
@@ -150,7 +152,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         }
 
         for(int i = 0; i < effect.exedrill.rocksAmount; i++) {
-            Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(user.getYaw() + user.getRandom().nextBetween(-40,40));
+            Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw() + user.getRandom().nextBetween(-40,40));
             Vec3d rockVelocity = new Vec3d(
                     normalisedVector.x() * effect.exedrill.rockSpeed,
                     0.45f,
@@ -196,7 +198,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box)
                 .stream().filter(livingEntity ->
                         livingEntity != player
-                        && !SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, player)
+                        && !AttackUtils.checkFriendlyFire(livingEntity, player)
                         && !(livingEntity instanceof Ownable pet && pet.getOwner() == player)
                 ).toList();
     }
@@ -204,7 +206,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

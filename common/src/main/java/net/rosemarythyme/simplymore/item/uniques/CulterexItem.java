@@ -22,7 +22,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.HelperMethods;
@@ -46,7 +48,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         Entity entity = HelperMethods.getTargetedEntity(user, effect.culterex.range);
 
         if(entity instanceof LivingEntity target) {
-            if(target == user || SimplyMoreHelperMethods.checkFriendlyFire(target, user) || target.isDead()) {
+            if(target == user || AttackUtils.checkFriendlyFire(target, user) || target.isDead()) {
                 return super.use(world, user, hand);
             }
 
@@ -105,7 +107,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         if(target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX))
-                && SimplyMoreHelperMethods.chance(attacker, effect.culterex.chance)) {
+                && MathUtils.chance(attacker, effect.culterex.chance)) {
             int duration = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getDuration();
             int amplifier = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getAmplifier();
             duration += effect.culterex.extraDuration;
@@ -128,7 +130,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ENCHANT);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ENCHANT);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

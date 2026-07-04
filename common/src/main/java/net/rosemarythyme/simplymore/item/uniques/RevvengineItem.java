@@ -25,7 +25,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -49,7 +51,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        if (SimplyMoreHelperMethods.chance(attacker, effect.revvengine.chance)) {
+        if (MathUtils.chance(attacker, effect.revvengine.chance)) {
             target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), effect.revvengine.bleedTime, 0), attacker);
         }
 
@@ -190,7 +192,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
 
     public void phase1(LivingEntity user) {
         Vec3d position = user.getEyePos();
-        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(user.getYaw());
+        Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
 
         Vec3d particlePos = new Vec3d(
                 position.getX() + normalisedVector.x(),
@@ -208,7 +210,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
 
         );
         for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
+            if (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
 
             livingEntity.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),
@@ -246,7 +248,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ASH);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 

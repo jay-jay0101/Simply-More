@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.uniques.CindergorgeItem;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +24,7 @@ public abstract class PlayerEntityMixin {
 
 		if(player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof CindergorgeItem || player.getStackInHand(Hand.OFF_HAND).getItem() instanceof CindergorgeItem ) {
 			Entity attacker = source.getAttacker();
-			if(attacker != null && SimplyMoreHelperMethods.chance(player, ConfigWrapper.unique.cindergorge.chance)) {
+			if(attacker != null && MathUtils.chance(player, ConfigWrapper.unique.cindergorge.chance)) {
 				if(attacker.isOnFire()) {
 					attacker.damage(player.getDamageSources().onFire(), ConfigWrapper.unique.cindergorge.fireThornsDamage);
 				} else {

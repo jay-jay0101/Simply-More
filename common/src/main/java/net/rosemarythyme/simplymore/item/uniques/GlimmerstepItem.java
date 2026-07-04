@@ -25,7 +25,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -50,7 +52,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         float chance = attacker.getVehicle() instanceof LivingEntity ?
                 effect.glimmerstep.chanceMounted:
                 effect.glimmerstep.chance;
-        if (SimplyMoreHelperMethods.chance(attacker, chance)) {
+        if (MathUtils.chance(attacker, chance)) {
             if (attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT))) {
                 int amplifier = attacker.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier();
                 amplifier = Math.min(amplifier + 1, effect.glimmerstep.maxStarlight - 1);
@@ -128,7 +130,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
                     livingEntity -> livingEntity != user.getVehicle()
             ).forEach(
                     livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
-                            (SimplyMoreHelperMethods.checkFriendlyFire(livingEntity, user) || livingEntity == user)?
+                            (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user)?
                                     finalDamage * (effect.glimmerstep.glimmerstepAllyDamage) : finalDamage)
             );
 
@@ -162,7 +164,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
+        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
