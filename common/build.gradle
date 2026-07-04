@@ -22,6 +22,10 @@ dependencies {
 
 loom {
     accessWidenerPath = file("src/main/resources/simplymore.accesswidener")
+
+    mixin {
+        defaultRefmapName = "simplymore-refmap.json"
+    }
 }
 
 repositories {

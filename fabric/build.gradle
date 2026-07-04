@@ -10,6 +10,10 @@ architectury {
 
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
+
+    mixin {
+        defaultRefmapName = "simplymore-refmap.json"
+    }
 }
 
 configurations {
