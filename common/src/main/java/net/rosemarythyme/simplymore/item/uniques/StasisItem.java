@@ -103,19 +103,18 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
 
     private void damageAndElectrifyEnemies(LivingEntity user, PlayerEntity player, ServerWorld world) {
         int boxRange = effect.stasis.range;
-        Box box = new Box(user.getX() - boxRange, user.getY() - 2, user.getZ() - boxRange, user.getX() + boxRange, user.getY() + boxRange*2, user.getZ() + boxRange);
-        for (LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (entity == user || AttackUtils.checkFriendlyFire(entity, user)) {
-                continue;
-            }
-            entity.damage(player.getDamageSources().magic(), effect.stasis.strikeDamage);
+
+        Box box = MathUtils.createCuboidBox(user.getPos(), -boxRange, -2, -boxRange, boxRange, boxRange*2, boxRange);
+        List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+        for (LivingEntity target : targets) {
+            target.damage(player.getDamageSources().magic(), effect.stasis.strikeDamage);
 
             LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
             if (lightning != null) {
-                lightning.refreshPositionAfterTeleport(entity.getX(), entity.getY(), entity.getZ());
+                lightning.refreshPositionAfterTeleport(target.getX(), target.getY(), target.getZ());
                 lightning.setCosmetic(true);
                 world.spawnEntity(lightning);
-                entity.onStruckByLightning(world, lightning);
+                target.onStruckByLightning(world, lightning);
             }
         }
     }

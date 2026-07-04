@@ -22,6 +22,8 @@ import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
+
 public class SimplyMoreHelperMethods {
 
     // TODO: remove this class
@@ -64,10 +66,11 @@ public class SimplyMoreHelperMethods {
     public static void simplyMore$IdolUseEffects(Item item, PlayerEntity user, RegistryEntry<StatusEffect> statusEffect, int duration, SoundEvent soundEvent, float soundVolume, float soundPitch, ParticleEffect particleEffect, int particleCount, double deltaX, double deltaY, double deltaZ, double particleSpeed, int skillCooldown) {
         if (!user.getWorld().isClient()) {
             boolean isPositive = statusEffect.value().isBeneficial();
-            Box box = new Box(user.getX() - 10, user.getY() - 10, user.getZ() - 10, user.getX() + 10, user.getY() + 10, user.getZ() + 10);
-            for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                if ((livingEntity == user || AttackUtils.checkFriendlyFire(livingEntity, user)) != isPositive) continue;
 
+            Box box = MathUtils.createCubeBox(user.getPos(), 10);
+            List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+
+            for (LivingEntity livingEntity : targets) {
                 livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, duration));
             }
 

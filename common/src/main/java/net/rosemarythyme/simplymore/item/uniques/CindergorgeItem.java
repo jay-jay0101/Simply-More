@@ -21,11 +21,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.CooldownOnUnselected;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -74,21 +76,19 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
                 double sinYaw = Math.sin(yawAngle);
 
                 for (int distanceMultiplier = 1; distanceMultiplier < effect.cindergorge.range; distanceMultiplier++) {
-                    double offsetX = -distanceMultiplier * sinYaw;
-                    double offsetZ = distanceMultiplier * cosYaw;
+                    double offsetX = -distanceMultiplier * sinYaw * 1.2;
+                    double offsetZ = distanceMultiplier * cosYaw * 1.2;
 
-                    double spawnX = user.getX() + 1.2 * offsetX;
-                    double spawnZ = user.getZ() + 1.2 * offsetZ;
+                    Vec3d firePos = user.getEyePos().add(offsetX, 0, offsetZ);
 
-                    ((ServerWorld) world).spawnParticles(ParticleTypes.FLAME, spawnX, user.getEyeY(), spawnZ, 20, 0.2, 0.2, 0.2, 0.1);
-                    world.playSound(null, spawnX, user.getEyeY(), spawnZ, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 0.1f, 1f);
+                    ((ServerWorld) world).spawnParticles(ParticleTypes.FLAME, firePos.x, user.getEyeY(), firePos.z, 20, 0.2, 0.2, 0.2, 0.1);
+                    world.playSound(null, firePos.x, user.getEyeY(), firePos.z, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 0.1f, 1f);
 
-                    for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(spawnX-0.75,user.getEyeY()-0.75,spawnZ-0.75,spawnX+0.75,user.getEyeY()+0.75,spawnZ+0.75)))
-                    {
-                        if (AttackUtils.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
-
-                        entity.damage(user.getDamageSources().inFire(),effect.cindergorge.fireDamage);
-                        entity.setOnFireFor(3);
+                    Box box = MathUtils.createCubeBox(firePos, 0.75);
+                    List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+                    for (LivingEntity target : targets) {
+                        target.damage(user.getDamageSources().inFire(), effect.cindergorge.fireDamage);
+                        target.setOnFireFor(3);
                     }
                 }
         }

@@ -19,6 +19,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.RiftAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
@@ -97,11 +98,11 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             DustParticleEffect particleEffect = new DustParticleEffect(color,2);
 
             ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y,z+dZ,1,0,0,0,0);
-            for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.6+dX,y-0.6,z-0.6+dZ,x+0.6+dX,y+0.6,z+0.6+dZ)))
-            {
-                if (AttackUtils.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
 
-                entity.damage(user.getDamageSources().magic(),effect.matterbane.damage);
+            Box box = MathUtils.createCubeBox(new Vec3d(x, y, z).add(dX, 0, dZ), 0.6);
+            List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+            for (LivingEntity target : targets) {
+                target.damage(user.getDamageSources().magic(),effect.matterbane.damage);
             }
         }
     }

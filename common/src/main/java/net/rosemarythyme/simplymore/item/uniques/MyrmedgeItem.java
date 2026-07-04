@@ -63,9 +63,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         Entity entity = HelperMethods.getTargetedEntity(user, 2);
 
         if(entity instanceof LivingEntity target) {
-            if(target == user || AttackUtils.checkFriendlyFire(target, user) || target.isDead()) {
-                return super.use(world, user, hand);
-            }
+            if(!AttackUtils.canHitTarget(user, target)) return super.use(world, user, hand);
 
             stack.set(ModComponentRegistry.GRABBED.get(), new GrabbedComponent(target.getUuid()));
             user.getItemCooldownManager().set(this, skillCooldown);

@@ -32,6 +32,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -61,29 +62,21 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
     }
 
 
-    public static void causeStun(LivingEntity player) {
-        double boxRange = effect.blade_of_the_grotesque.auraRange;
-        Box box = new Box(
-                player.getX() + boxRange,
-                player.getY() + boxRange,
-                player.getZ() + boxRange,
-                player.getX() - boxRange,
-                player.getY() - boxRange,
-                player.getZ() - boxRange
-        );
+    public static void causeStun(LivingEntity attacker) {
+        Box box = MathUtils.createCubeBox(attacker.getPos(), effect.blade_of_the_grotesque.auraRange);
 
-        List<LivingEntity> livingEntities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-        for (LivingEntity livingEntity : livingEntities) {
-            if (livingEntity == player || AttackUtils.checkFriendlyFire(livingEntity, player)) {
-                continue;
-            }
-
-            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED), effect.blade_of_the_grotesque.auraStunTime),player);
+        List<LivingEntity> targets = AttackUtils.getTargets(attacker, box);
+        for (LivingEntity target : targets) {
+            target.addStatusEffect(
+                    new StatusEffectInstance(
+                            ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED),
+                            effect.blade_of_the_grotesque.auraStunTime),
+                    attacker
+            );
         }
     }
 
-    public void setSpeed(ItemStack stack) {
-        // Calculate
+    public void modifyStackAttributes(ItemStack stack) {
         AttributeModifiersComponent modifiers = stack.get(DataComponentTypes.ATTRIBUTE_MODIFIERS);
 
         if(modifiers == null) {
@@ -103,35 +96,25 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(world.getTime() % 20 == 0) {
-            setSpeed(stack);
+        if (world.getTime() % 40 == 0) {
+            modifyStackAttributes(stack);
+
         }
 
         if (world.getTime() % 40 == 0 && entity instanceof ServerPlayerEntity player && selected) {
-            ((ServerWorld) player.getWorld()).spawnParticles(ParticleTypes.BUBBLE_POP,player.getX(), player.getY(), player.getZ(), 200, 2,2,2, 0.1f);
-            double boxRange = effect.blade_of_the_grotesque.auraRange;
-            Box box = new Box(
-                    player.getX() + boxRange,
-                    player.getY() + boxRange,
-                    player.getZ() + boxRange,
-                    player.getX() - boxRange,
-                    player.getY() - boxRange,
-                    player.getZ() - boxRange
-            );
+            ServerWorld serverWorld = player.getServerWorld();
+            serverWorld.spawnParticles(ParticleTypes.BUBBLE_POP,player.getX(), player.getY(), player.getZ(), 200, 2,2,2, 0.1f);
 
-            List<LivingEntity> livingEntities = entity.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-            for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity == entity || AttackUtils.checkFriendlyFire(livingEntity, (LivingEntity) entity)) {
-                    continue;
-                }
+            Box box = MathUtils.createCubeBox(player.getPos(), effect.blade_of_the_grotesque.auraRange);
 
-                if(livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GROTESQUE_WARD))) {
-                    int amplifier = livingEntity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GROTESQUE_WARD)).getAmplifier();
-                    amplifier = Math.min(amplifier + 1, effect.blade_of_the_grotesque.maxAuraWard);
-                    livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.GROTESQUE_WARD),50,amplifier));
-                } else {
-                    livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.GROTESQUE_WARD),50,0));
-                }
+            List<LivingEntity> targets = AttackUtils.getTargets(player, box);
+            for (LivingEntity target : targets) {
+                EntityUtils.reapplyAndIncrementEffect(target,
+                        ModEffectsRegistry.getReference(ModEffectsRegistry.GROTESQUE_WARD),
+                        50,
+                        1,
+                        effect.blade_of_the_grotesque.maxAuraWard
+                );
             }
         }
 

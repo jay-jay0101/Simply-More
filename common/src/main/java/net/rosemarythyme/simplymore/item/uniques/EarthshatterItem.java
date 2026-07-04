@@ -112,10 +112,11 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         player.getItemCooldownManager().set(this, skillCooldown);
 
         // Damage entities in range
-        Box box = new Box(playerX - 4, playerY - 2, playerZ - 4, playerX + 4, playerY + 5, playerZ + 4);
+        Box box = MathUtils.createCuboidBox(player.getPos(), -4, -2, -4, +4,+5,+4);
+        List<LivingEntity> targets = AttackUtils.getTargets(player, box);
+
         DamageSource damageSource = player.getDamageSources().playerAttack(player);
-        for (LivingEntity livingEntity : serverWorld.getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity == player || AttackUtils.checkFriendlyFire(livingEntity, player)) continue;
+        for (LivingEntity livingEntity : targets) {
             livingEntity.damage(damageSource, 15);
             int effectTime = effect.earthshatter.slamEffectTime;
             livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH), effectTime, 2));

@@ -61,14 +61,11 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!player.getWorld().isClient()) {
             boolean hasAffectedEntity = false;
-            int boxRange = effect.soul_foreseer.range;
-            Box box = new Box(player.getX() - boxRange, player.getY() - boxRange, player.getZ() - boxRange, player.getX() + boxRange, player.getY() + boxRange, player.getZ() + 20);
-            List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
+            Box box = MathUtils.createCubeBox(player.getPos(), effect.soul_foreseer.range);
+            List<LivingEntity> targets = AttackUtils.getTargets(player, box);
 
-            for (LivingEntity livingEntity : entities) {
-                if (livingEntity == player || AttackUtils.checkFriendlyFire(livingEntity, player) || !livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
-                    continue;
-                }
+            for (LivingEntity livingEntity : targets) {
+                if (!livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) continue;
 
                 livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.soul_foreseer.effectTime, 3));

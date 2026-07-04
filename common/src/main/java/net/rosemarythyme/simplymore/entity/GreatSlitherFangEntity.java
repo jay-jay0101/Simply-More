@@ -93,9 +93,7 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, slowTime, 2), null);
                 target.damage(getDamageSources().playerAttack(null), damageAmount);
             } else {
-                if (AttackUtils.checkFriendlyFire(target, owner)) {
-                    return;
-                }
+                if (!AttackUtils.canHitTarget(target, owner)) return;
 
                 target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), venomTime, 0), owner);
                 target.damage(getDamageSources().playerAttack(((PlayerEntity) owner)), damageAmount);

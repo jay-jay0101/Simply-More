@@ -12,7 +12,10 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Box;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
+
+import java.util.List;
 
 public class MistyEffect extends StatusEffect {
 
@@ -75,20 +78,13 @@ public class MistyEffect extends StatusEffect {
             double x = player.getX() + (offsetDirectionX * i);
             double y = player.getY() + (offsetDirectionY * i);
             double z = player.getZ() + (offsetDirectionZ * i);
-            for (LivingEntity target : player.getEntityWorld().getNonSpectatingEntities(
-                    LivingEntity.class,
-                    new Box(
-                            x - boxSize,
-                            y - boxSize,
-                            z - boxSize,
-                            x + boxSize,
-                            y + boxSize,
-                            z + boxSize
-                    ))) {
+
+            Box box = MathUtils.createCubeBox(player.getPos(), boxSize);
+
+
+            List<LivingEntity> targets = AttackUtils.getTargets(player, box);
+            for (LivingEntity target : targets) {
                 if (!player.canSee(target)) {
-                    continue;
-                }
-                if (target == player || AttackUtils.checkFriendlyFire(target, player)) {
                     continue;
                 }
                 if (teleportTarget == null) {

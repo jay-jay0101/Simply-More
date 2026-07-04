@@ -80,14 +80,9 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     private LivingEntity locateRadiantMarkedTarget(PlayerEntity user) {
         int boxRange = effect.lustrous_moxie.range;
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
-        List<LivingEntity> potentiallyMarkedLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-        LivingEntity markedEntity = potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK))).findAny().orElse(null);
+        List<LivingEntity> potentiallyMarkedLivingEntities = AttackUtils.getTargets(user, box);
 
-        if (markedEntity == null || (markedEntity == user || AttackUtils.checkFriendlyFire(markedEntity, user))) {
-            return null;
-        }
-
-        return markedEntity;
+        return potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK))).findAny().orElse(null);
     }
 
     private void damageAndKnockbackAndTeleportToRadiantMarkedTarget(LivingEntity targetEntity, PlayerEntity user) {
@@ -110,9 +105,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     }
 
     private void knockbackAndDamageEntity(LivingEntity targetEntity, PlayerEntity user, float damage) {
-        if(targetEntity==user || AttackUtils.checkFriendlyFire(targetEntity, user)) {
-            return;
-        }
+        if(!AttackUtils.canHitTarget(targetEntity, user)) return;
 
         targetEntity.damage(user.getDamageSources().playerAttack(user), damage);
 

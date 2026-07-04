@@ -48,9 +48,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         Entity entity = HelperMethods.getTargetedEntity(user, effect.culterex.range);
 
         if(entity instanceof LivingEntity target) {
-            if(target == user || AttackUtils.checkFriendlyFire(target, user) || target.isDead()) {
-                return super.use(world, user, hand);
-            }
+            if(!AttackUtils.canHitTarget(target, user)) return super.use(world, user, hand);
 
             user.getItemCooldownManager().set(this, skillCooldown);
             target.addStatusEffect(new StatusEffectInstance(

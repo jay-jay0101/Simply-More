@@ -97,7 +97,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
         if (user.getWorld().isClient) return super.use(world, user, hand);
 
         Entity entityTarget = HelperMethods.getTargetedEntity(user, 20);
-        if (entityTarget instanceof LivingEntity target && !AttackUtils.checkFriendlyFire(target, user)) {
+        if (entityTarget instanceof LivingEntity target && AttackUtils.canHitTarget(target, user)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10, 0), user);
             List<CrowEntity> pets = world.getEntitiesByClass(CrowEntity.class, user.getBoundingBox().expand(50),
                     crowEntity -> crowEntity.getOwner() == user

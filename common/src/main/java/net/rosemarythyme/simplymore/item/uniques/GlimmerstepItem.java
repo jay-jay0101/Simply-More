@@ -126,11 +126,12 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             user.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT));
 
             float finalDamage = damage;
+            // todo: change
             livingEntities.stream().filter(
                     livingEntity -> livingEntity != user.getVehicle()
             ).forEach(
                     livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
-                            (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user)?
+                            (!AttackUtils.canHitTarget(livingEntity, user) || livingEntity == user)?
                                     finalDamage * (effect.glimmerstep.glimmerstepAllyDamage) : finalDamage)
             );
 

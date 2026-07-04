@@ -22,6 +22,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -55,17 +56,9 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
-            Box entitySearchBox = new Box(
-                    user.getX() - 5,
-                    user.getY() - 5,
-                    user.getZ() - 5,
-                    user.getX() + 5,
-                    user.getY() + 5,
-                    user.getZ() + 5
-            );
+            Box entitySearchBox = MathUtils.createCubeBox(user.getPos(), 5);
 
-            boolean hasEnemies = user.getWorld().getNonSpectatingEntities(LivingEntity.class, entitySearchBox).stream()
-                    .anyMatch(entity -> entity != user && !AttackUtils.checkFriendlyFire(entity, user));
+            boolean hasEnemies = !AttackUtils.getTargets(user, entitySearchBox).isEmpty();
 
             int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
 

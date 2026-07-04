@@ -98,18 +98,13 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
             if (MathUtils.chance(user, effect.brassturn.sparkChance)) {
                 serverWorld.spawnParticles(ParticleTypes.WAX_ON, user.getX(), user.getY(), user.getZ(), 20, 0.5, 1, 0.5, 0.2);
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.PLAYERS, 0.5f, 2);
-                int boxSize = 3;
-                Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
-                List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
-                for (LivingEntity livingEntity : livingEntities) {
-                    if (livingEntity == user || AttackUtils.checkFriendlyFire(livingEntity, user)) {
-                        continue;
-                    }
+                Box box = MathUtils.createCubeBox(user.getPos(), 3);
+                List<LivingEntity> targets = AttackUtils.getTargets(user, box);
 
+                for (LivingEntity livingEntity : targets) {
                     livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED), effect.brassturn.stunTime, 0));
                 }
-
             } else {
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.PLAYERS, 1f, 1);
             }

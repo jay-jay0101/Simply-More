@@ -18,13 +18,14 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 
 public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownable {
-    public Entity owner;
+    public LivingEntity owner;
     protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
 
@@ -62,7 +63,11 @@ public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownab
         UUID uUID;
         if (nbt.containsUuid("Owner")) {
             uUID = nbt.getUuid("Owner");
-            this.owner = ((ServerWorld) this.getWorld()).getEntity(uUID);
+            Entity entity = ((ServerWorld) this.getWorld()).getEntity(uUID);
+
+            if(entity instanceof LivingEntity livingEntity) {
+                this.owner = livingEntity;
+            }
         }
     }
 
@@ -113,26 +118,12 @@ public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownab
         this.setVelocity(this.getVelocity().multiply(0.98));
 
         // Hit Enemies
-        Box box = new Box(
-                this.getX() + 0.75,
-                this.getY() + 0.75,
-                this.getZ() + 0.75,
-                this.getX() - 0.75,
-                this.getY() - 0.75,
-                this.getZ() - 0.75
-        );
+        Box box = MathUtils.createCubeBox(getPos(), 0.75);
 
-        List<LivingEntity> livingEntities = this.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
+        List<LivingEntity> targets = AttackUtils.getTargets(owner, box);
 
         Entity ownerEntity = this.getOwner();
         if(ownerEntity == null) return;
-
-        List<LivingEntity> targets = livingEntities.stream().filter(livingEntity ->
-                livingEntity != ownerEntity
-                        && !AttackUtils.checkFriendlyFire(livingEntity, (LivingEntity) ownerEntity)
-                        && livingEntity != ownerEntity.getVehicle()
-        ).toList();
-
 
         targets.forEach(
                 target -> {

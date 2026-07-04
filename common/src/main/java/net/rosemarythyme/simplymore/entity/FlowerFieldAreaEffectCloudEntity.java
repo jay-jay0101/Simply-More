@@ -9,6 +9,8 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
+import java.util.List;
+
 public class FlowerFieldAreaEffectCloudEntity extends AreaEffectCloudEntity {
     public FlowerFieldAreaEffectCloudEntity(World world, double x, double y, double z, LivingEntity owner) {
         super(world, x, y, z);
@@ -19,13 +21,13 @@ public class FlowerFieldAreaEffectCloudEntity extends AreaEffectCloudEntity {
     public void tick() {
         super.tick();
         LivingEntity owner = this.getOwner();
-        for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
-            if (target.isAlive() && (target == owner || AttackUtils.checkFriendlyFire(target, owner))) {
-                if(this.age % 25 == 0) {
-                    target.heal(1);
-                }
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 50, 1));
+        List<LivingEntity> targets = AttackUtils.getTargets(owner, this.getBoundingBox());
+        
+        for (LivingEntity target : targets) {
+            if(this.age % 25 == 0) {
+                target.heal(1);
             }
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 50, 1));
         }
     }
 }

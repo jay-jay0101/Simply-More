@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -91,14 +92,14 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
 
                     user.getWorld().playSound(null, userX + offsetX, userY + offsetY, userZ + offsetZ, SoundRegistry.DARK_SWORD_BLOCK.get(), SoundCategory.PLAYERS, 0.2f, 1);
 
-                    Box box = new Box(userX - 1 + offsetX, userY - 1 + offsetY, userZ - 1 + offsetZ, userX + 1 + offsetX, userY + 1 + offsetY, userZ + 1 + offsetZ);
-                    DamageSource damageSource = player.getDamageSources().playerAttack(player);
-                    for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                        if (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
+                    Box box = MathUtils.createCubeBox(user.getPos().add(offsetX, offsetY, offsetZ), 1);
+                    List<LivingEntity> targets = AttackUtils.getTargets(user, box);
 
-                        livingEntity.damage(damageSource, damage);
-                        livingEntity.setVelocity(offsetX / i, offsetY / i, offsetZ / i);
-                        livingEntity.velocityModified = true;
+                    DamageSource damageSource = player.getDamageSources().playerAttack(player);
+                    for (LivingEntity target : targets) {
+                        target.damage(damageSource, damage);
+                        target.setVelocity(offsetX / i, offsetY / i, offsetZ / i);
+                        target.velocityModified = true;
                     }
 
                     ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CLOUD, userX + offsetX, userY + offsetY, userZ + offsetZ, 15, 1, 1, 1, 0.1);

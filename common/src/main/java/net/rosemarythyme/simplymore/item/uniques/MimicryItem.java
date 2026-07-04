@@ -329,9 +329,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
         ((ServerWorld) player.getWorld()).spawnParticles(ParticleTypes.SWEEP_ATTACK, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 1, 0, 0 , 0, 0);
 
-        return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
-        ).toList();
+        return AttackUtils.getTargets(player, box);
     }
 
     public List<LivingEntity> katanaAttack(PlayerEntity player, double x, double y, double z, float range) {
@@ -348,10 +346,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         ((ServerWorld) player.getWorld()).spawnParticles(ParticleTypes.SWEEP_ATTACK, x, y, z, (int)Math.pow(range, 2)*10, range, 2, range, 1f);
         player.getWorld().playSound(null, x, y, z, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1f, 1.5f);
 
-
-        return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
-        ).toList();
+        return AttackUtils.getTargets(player, box);
     }
 
     public List<LivingEntity> spinAttack(PlayerEntity player, float range) {
@@ -378,9 +373,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             player.getWorld().playSound(null, xPos, yPos, zPos, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1, player.getRandom().nextBetween(9,14)/10f);
         }
 
-        return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
-        ).toList();
+        return AttackUtils.getTargets(player, box);
     }
 
     public List<LivingEntity> slamAttack(PlayerEntity player, float range) {
@@ -398,9 +391,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5f, 1);
 
 
-        return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player)
-        ).toList();
+        return AttackUtils.getTargets(player, box);
     }
 
     public List<LivingEntity> stabAttack(PlayerEntity player, int range, float coverage) {
@@ -432,11 +423,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
                     z + coverage
             );
 
-            List<LivingEntity> entities = player.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                    livingEntity -> livingEntity != player && !AttackUtils.checkFriendlyFire(livingEntity, player) && !targets.contains(livingEntity)
-
-            ).toList();
-
+            List<LivingEntity> entities = AttackUtils.getTargets(player, box);
             targets.addAll(entities);
         }
 

@@ -18,15 +18,12 @@ public class EruptionAreaEffectCloudEntity extends AreaEffectCloudEntity {
     @Override
     public void tick() {
         super.tick();
-        LivingEntity livingEntity = this.getOwner();
-        List<LivingEntity> entities = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox());
-        for (LivingEntity target : entities) {
-            if (target.isAlive() && !target.isInvulnerable() && target != livingEntity) {
-                if (!AttackUtils.checkFriendlyFire(target, livingEntity)) {
-                    target.damage(this.getDamageSources().inFire(), 1.0F);
-                    target.setOnFireFor(3);
-                }
-            }
+        LivingEntity owner = this.getOwner();
+        List<LivingEntity> targets = AttackUtils.getTargets(owner, this.getBoundingBox());
+
+        for (LivingEntity target : targets) {
+            target.damage(this.getDamageSources().inFire(), 1.0F);
+            target.setOnFireFor(3);
         }
     }
 

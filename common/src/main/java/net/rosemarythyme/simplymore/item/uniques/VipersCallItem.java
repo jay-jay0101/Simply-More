@@ -18,16 +18,13 @@ import net.minecraft.registry.Registries;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.VipersCallProjectileAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.EffectRegistry;
-import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -41,17 +38,6 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
 
     public VipersCallItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!user.getWorld().isClient) {
-            VipersCallProjectileAreaEffectCloudEntity chakram = new VipersCallProjectileAreaEffectCloudEntity(user.getWorld(),user.getX(),user.getEyeY()-0.6,user.getZ(),user);
-            user.getWorld().spawnEntity(chakram);
-            user.getItemCooldownManager().set(this, skillCooldown);
-            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.DARK_SWORD_WHOOSH_02.get(), user.getSoundCategory(), 2F, 1F);
-        }
-        return super.use(world, user, hand);
     }
 
     @Override

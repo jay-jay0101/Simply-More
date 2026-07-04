@@ -79,14 +79,15 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
                     DustParticleEffect particleEffect = new DustParticleEffect(new Vector3f(0.05f,1f,0.1f),1);
 
                     ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y+dY,z+dZ,1,0,0,0,0);
-                    for (LivingEntity entity : user.getWorld().getNonSpectatingEntities(LivingEntity.class,new Box(x-0.25+dX,y-0.25+dY,z-0.25+dZ,x+0.25+dX,y+0.25+dY,z+0.25+dZ)))
-                    {
-                        if (AttackUtils.checkFriendlyFire(entity, user) || entity == user || entity.isInvulnerable()) continue;
-                        if (entity.isBlocking()) continue;
 
-                        entity.damage(user.getDamageSources().magic(), effect.boas_fang.spitDamage);
-                        entity.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
-                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, effect.boas_fang.poisonTime,1));
+                    Box box = MathUtils.createCubeBox(user.getEyePos().add(dX, dY, dZ), 0.25);
+                    List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+                    for (LivingEntity target : targets) {
+                        if (target.isBlocking()) continue;
+
+                        target.damage(user.getDamageSources().magic(), effect.boas_fang.spitDamage);
+                        target.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, effect.boas_fang.poisonTime,1));
                     }
                 }
                 user.setVelocity(user.getRotationVector().negate().multiply(effect.boas_fang.spitPushback));

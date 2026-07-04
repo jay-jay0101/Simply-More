@@ -12,8 +12,11 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.joml.Vector3f;
+
+import java.util.List;
 
 public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
@@ -74,25 +77,16 @@ public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
             getWorld().playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1,1);
 
-            Box box = new Box(
-                    getX() - 2,
-                    getY() - 2,
-                    getZ() - 2,
-                    getX() + 2,
-                    getY() + 2,
-                    getZ() + 2
+            Box box = MathUtils.createCubeBox(getPos(), 2);
+            List<LivingEntity> targets = AttackUtils.getTargets(getOwner(), box);
 
-            );
-
-            for (LivingEntity livingEntity : getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-                if (AttackUtils.checkFriendlyFire(livingEntity, getOwner()) || livingEntity == getOwner() || livingEntity.isInvulnerable()) continue;
-
-                livingEntity.damage(
+            for (LivingEntity target : targets) {
+                target.damage(
                         getOwner().getDamageSources().explosion(this, getOwner()),
                         effect.revvengine.explosionDamage
                 );
 
-                livingEntity.setOnFireFor(effect.revvengine.p3effectTime);
+                target.setOnFireFor(effect.revvengine.p3effectTime);
             }
         }
     }

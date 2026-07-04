@@ -5,7 +5,6 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Ownable;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -193,14 +192,9 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
                 1f
         );
 
-        Box box = new Box(player.getX() - range, player.getY() - 2, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
+        Box box = MathUtils.createCuboidBox(pos, -range, -2, -range, range, range, range);
 
-        return player.getWorld().getNonSpectatingEntities(LivingEntity.class, box)
-                .stream().filter(livingEntity ->
-                        livingEntity != player
-                        && !AttackUtils.checkFriendlyFire(livingEntity, player)
-                        && !(livingEntity instanceof Ownable pet && pet.getOwner() == player)
-                ).toList();
+        return AttackUtils.getTargets(player, box);
     }
 
 

@@ -101,18 +101,8 @@ public class RevvengineRushEffect extends StatusEffect {
                 position.getZ() + normalisedVector.z()
         );
 
-        Box box = new Box(
-                particlePos.getX() - 1,
-                particlePos.getY() - 1,
-                particlePos.getZ() - 1,
-                particlePos.getX() + 1,
-                particlePos.getY() + 1,
-                particlePos.getZ() + 1
-
-        );
-
-        List<LivingEntity> entities = entity.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> (livingEntity != entity && !AttackUtils.checkFriendlyFire(livingEntity, entity))).toList();
+        Box box = MathUtils.createCubeBox(particlePos, 1);
+        List<LivingEntity> entities = AttackUtils.getTargets(entity, box);
 
         if(!entities.isEmpty()) {
             if(amplifier > 0) {
@@ -181,26 +171,17 @@ public class RevvengineRushEffect extends StatusEffect {
                 position.getZ() + normalisedVector.z()
         );
 
-        Box box = new Box(
-                particlePos.getX() - 1,
-                particlePos.getY() - 1,
-                particlePos.getZ() - 1,
-                particlePos.getX() + 1,
-                particlePos.getY() + 1,
-                particlePos.getZ() + 1
-
-        );
-        for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
-
-            livingEntity.damage(
+        Box box = MathUtils.createCubeBox(particlePos, 1);
+        List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+        for (LivingEntity target : targets) {
+            target.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),
                     RevvengineItem.getHealthModifiedValue(user,
                             effect.revvengine.damageBuff,
                             damage) + damage
             );
 
-            livingEntity.addStatusEffect(
+            target.addStatusEffect(
                     new StatusEffectInstance(
                             ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
                             effectTime,
@@ -208,7 +189,7 @@ public class RevvengineRushEffect extends StatusEffect {
                     )
             );
 
-            livingEntity.addStatusEffect(
+            target.addStatusEffect(
                     new StatusEffectInstance(
                             StatusEffects.BLINDNESS,
                             effectTime,
@@ -217,7 +198,7 @@ public class RevvengineRushEffect extends StatusEffect {
             );
 
             if(isTier3) {
-                livingEntity.setOnFireFor(effectTime / 20f);
+                target.setOnFireFor(effectTime / 20f);
             }
 
             user.getWorld().playSound(null, particlePos.getX(), particlePos.getY(), particlePos.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1,0.5f);

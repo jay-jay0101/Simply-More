@@ -14,9 +14,12 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import org.joml.Vector3f;
+
+import java.util.List;
 
 public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
@@ -56,16 +59,14 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
         }
 
         // Create a box to search for entities
-        Box box = new Box(this.getX() - 50, this.getY() - 50, this.getZ() - 50, this.getX() + 50, this.getY() + 50, this.getZ() + 50);
+        Box box = MathUtils.createCubeBox(getPos(), 50);
         target = null;
         distance = 50;
 
-        // Find the closest entity in the box
-        for (LivingEntity livingEntity : this.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity == owner || AttackUtils.checkFriendlyFire(livingEntity, owner)) {
-                continue;
-            }
+        List<LivingEntity> targets = AttackUtils.getTargets(getOwner(), box);
 
+        // Find the closest entity in the box
+        for (LivingEntity livingEntity : targets) {
             double entityDistance = livingEntity.distanceTo(this);
             if (entityDistance > distance) {
                 continue;

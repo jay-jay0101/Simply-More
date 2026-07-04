@@ -22,13 +22,13 @@ public class AuraOfPurityAreaEffectCloudEntity extends AreaEffectCloudEntity {
     public void tick() {
         super.tick();
         LivingEntity owner = this.getOwner();
-        for (LivingEntity target : this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
-            if (target.isAlive() && (target == owner || AttackUtils.checkFriendlyFire(target, owner))) {
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 15, 1));
-                List.copyOf(target.getStatusEffects()).forEach(effect -> {
-                    if (effect.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL) target.removeStatusEffect(effect.getEffectType());
-                });
-            }
+        List<LivingEntity> targets = AttackUtils.getTargets(owner, this.getBoundingBox());
+
+        for (LivingEntity target : targets) {
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 15, 1));
+            List.copyOf(target.getStatusEffects()).forEach(effect -> {
+                if (effect.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL) target.removeStatusEffect(effect.getEffectType());
+            });
         }
     }
 }

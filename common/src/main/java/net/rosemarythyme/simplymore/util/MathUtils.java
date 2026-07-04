@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
@@ -59,5 +60,31 @@ public class MathUtils {
     public static CounterComponent setCounterComponent(ItemStack stack, CounterComponent component) {
         stack.set(ModComponentRegistry.COUNTER.get(), component);
         return component;
+    }
+
+    public static Box createCuboidBox(Vec3d centre, double xOffset, double yOffset, double zOffset) {
+        return new Box(
+                centre.getX() - xOffset,
+                centre.getY() - yOffset,
+                centre.getZ() - zOffset,
+                centre.getX() + xOffset,
+                centre.getY() + yOffset,
+                centre.getZ() + zOffset
+        );
+    }
+
+    public static Box createCuboidBox(Vec3d centre, double negXOffset, double negYOffset, double negZOffset, double posXOffset, double posYOffset, double posZOffset) {
+        return new Box(
+                centre.getX() + negXOffset,
+                centre.getX() + negYOffset,
+                centre.getX() + negZOffset,
+                centre.getX() + posXOffset,
+                centre.getX() + posYOffset,
+                centre.getX() + posZOffset
+        );
+    }
+
+    public static Box createCubeBox(Vec3d centre, double offset) {
+        return createCuboidBox(centre, offset, offset, offset);
     }
 }

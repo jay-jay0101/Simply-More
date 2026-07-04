@@ -7,7 +7,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Box;
 import net.sweenus.simplyswords.util.HelperMethods;
+
+import java.util.List;
 
 public class AttackUtils {
     public static void hitWithEnchants(PlayerEntity attacker, LivingEntity target, float damage) {
@@ -23,8 +26,22 @@ public class AttackUtils {
         }
     }
 
-    public static boolean checkFriendlyFire(LivingEntity livingEntity, LivingEntity livingEntityB) {
-        return !(HelperMethods.checkFriendlyFire(livingEntity, livingEntityB)
-                || HelperMethods.checkFriendlyFire(livingEntityB, livingEntity));
+    public static boolean canHitTarget(LivingEntity attacker, LivingEntity target) {
+        return attacker != null &&
+            target != null &&
+            target != attacker &&
+            target != attacker.getVehicle() &&
+            attacker != target.getVehicle() &&
+            !target.isInvulnerable() &&
+            !target.isDead() &&
+            HelperMethods.checkFriendlyFire(attacker, target);
+    }
+
+    public static List<LivingEntity> getTargets(LivingEntity attacker, Box box) {
+        if (attacker == null) return List.of();
+
+        return attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
+                (target) -> canHitTarget(attacker, target)
+        ).toList();
     }
 }

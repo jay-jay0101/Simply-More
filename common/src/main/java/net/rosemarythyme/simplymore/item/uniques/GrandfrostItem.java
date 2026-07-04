@@ -55,17 +55,13 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
             return super.use(world, user, hand);
         }
 
-        int boxSize = effect.grandfrost.blizzardRange;
-        Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
-        List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
+        Box box = MathUtils.createCubeBox(user.getPos(), effect.grandfrost.blizzardRange);
+        List<LivingEntity> livingEntities = AttackUtils.getTargets(user, box);
 
         if (livingEntities.size() > 1) {
             boolean isNonTeammateNearby = false;
 
             for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity == user || AttackUtils.checkFriendlyFire(livingEntity, user)) {
-                    continue;
-                }
 
                 isNonTeammateNearby = true;
 

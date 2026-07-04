@@ -200,26 +200,18 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
                 position.getZ() + normalisedVector.z()
         );
 
-        Box box = new Box(
-                particlePos.getX() - 1,
-                particlePos.getY() - 1,
-                particlePos.getZ() - 1,
-                particlePos.getX() + 1,
-                particlePos.getY() + 1,
-                particlePos.getZ() + 1
+        Box box = MathUtils.createCubeBox(user.getPos(), 1);
+        List<LivingEntity> targets = AttackUtils.getTargets(user, box);
 
-        );
-        for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (AttackUtils.checkFriendlyFire(livingEntity, user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
-
-            livingEntity.damage(
+        for (LivingEntity target : targets) {
+            target.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),
                     getHealthModifiedValue(user,
                             effect.revvengine.damageBuff,
                             effect.revvengine.p1damage) + effect.revvengine.p1damage
             );
 
-            livingEntity.addStatusEffect(
+            target.addStatusEffect(
                     new StatusEffectInstance(
                             ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
                             effect.revvengine.bleedTime,

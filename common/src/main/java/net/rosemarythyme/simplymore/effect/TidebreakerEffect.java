@@ -11,6 +11,10 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import org.spongepowered.asm.mixin.injection.At;
+
+import java.util.List;
 
 public class TidebreakerEffect extends StatusEffect {
 
@@ -43,10 +47,10 @@ public class TidebreakerEffect extends StatusEffect {
     }
 
     private void applyInsanityEffect(LivingEntity affectedEntity, ServerWorld serverWorld) {
-        for (LivingEntity target : serverWorld.getNonSpectatingEntities(LivingEntity.class, new Box(affectedEntity.getX() - 3, affectedEntity.getY() - 2, affectedEntity.getZ() - 3, affectedEntity.getX() + 3, affectedEntity.getY() + 8, affectedEntity.getZ() + 3))) {
-            if (target == affectedEntity || AttackUtils.checkFriendlyFire(target, affectedEntity)) {
-                continue;
-            }
+        Box box = MathUtils.createCubeBox(affectedEntity.getPos(), 3);
+        List<LivingEntity> targets = AttackUtils.getTargets(affectedEntity, box);
+
+        for (LivingEntity target : targets) {
             target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.INSANITY), 160, 0), affectedEntity);
         }
     }
