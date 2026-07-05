@@ -1078,6 +1078,9 @@
   "simplymore.unique_effect.mimicry.typeCooldown": "Specific Adaptation cooldown after use",
   "simplymore.unique_effect.mimicry.cooldown": "Shared Adaptation cooldown after use",
   "simplymore.unique_effect.mimicry.windup": "Wind-up for Adaptation abilities",
+  "simplymore.unique_effect.mimicry.baseCopyChance": "Base chance to copy from inventory",
+  "simplymore.unique_effect.mimicry.copyChancePerItem": "Additional chance per item to copy from inventory",
+  "simplymore.unique_effect.mimicry.maximumCopyChance": "Maximum chance to copy from inventory",
   "simplymore.unique_effect.mimicry.config": "Adaptation configs",
 
   "simplymore.unique_effect.mimicry.config.longsword": "§aLongsword§7",

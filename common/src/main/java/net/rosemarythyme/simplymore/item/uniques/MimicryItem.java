@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
 import dev.architectury.registry.registries.RegistrySupplier;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -230,7 +231,9 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        int chance = Math.min(15 + (availableForms.size() * 10), 50);
+        float chance = uniqueConfig.mimicry.baseCopyChance + (availableForms.size() * uniqueConfig.mimicry.copyChancePerItem);
+        chance = Math.min(chance, uniqueConfig.mimicry.maximumCopyChance);
+
         if(!MathUtils.chance(player, chance)) {
             return getRandom(currentForm, player);
         }
@@ -445,6 +448,12 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         public int cooldown = 60;
         @ValidatedInt.Restrict(min = 0)
         public int windup = 10;
+        @ValidatedFloat.Restrict(min=0, max = 1)
+        public float maximumCopyChance = 0.5f;
+        @ValidatedFloat.Restrict(min=0, max = 1)
+        public float copyChancePerItem = 0.1f;
+        @ValidatedFloat.Restrict(min=0, max = 1)
+        public float baseCopyChance = 0.15f;
 
         public MimicryConfig config = new MimicryConfig();
     }
