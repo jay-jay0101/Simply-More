@@ -21,6 +21,6 @@ public class CrowEntityRenderer extends MobEntityRenderer<CrowEntity, CrowEntity
 
     @Override
     public Identifier getTexture(CrowEntity entity) {
-        return Identifier.of(SimplyMore.ID, "textures/entity/crow.png");
+        return SimplyMore.identifier("textures/entity/crow.png");
     }
 }

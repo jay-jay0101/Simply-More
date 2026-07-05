@@ -8,7 +8,6 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.CrowEntity;
@@ -20,7 +19,7 @@ public class EntityRegistry {
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ENTITY_TYPE);
 
     public static final RegistrySupplier<EntityType<CrowEntity>> CROW = ENTITIES.register(
-            Identifier.of(SimplyMore.ID, "crow"),
+            SimplyMore.identifier("crow"),
             () -> EntityType.Builder.create(CrowEntity::new, SpawnGroup.MISC)
                     .dimensions(0.25f, 0.25f)
                     .makeFireImmune()
@@ -28,7 +27,7 @@ public class EntityRegistry {
     );
 
     public static final RegistrySupplier<EntityType<GhostFallingBlockEntity>> GHOST_FALLING_BLOCK = ENTITIES.register(
-            Identifier.of(SimplyMore.ID, "ghost_falling_block"),
+            SimplyMore.identifier("ghost_falling_block"),
             () -> EntityType.Builder.create((EntityType<GhostFallingBlockEntity> type, World world) -> new GhostFallingBlockEntity(type, world), SpawnGroup.MISC)
                     .dimensions(0.25f, 0.25f)
                     .build("ghost_falling_block")

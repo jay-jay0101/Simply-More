@@ -54,12 +54,12 @@ public class StatusEffectRegistry {
             "grasping",
             new MyrmedgeEffect(StatusEffectCategory.BENEFICIAL,7865862).addAttributeModifier(
                     EntityAttributes.GENERIC_ATTACK_SPEED,
-                    Identifier.of(SimplyMore.ID, "grasping_attack_speed"),
+                    SimplyMore.identifier("grasping_attack_speed"),
                     -99,
                     EntityAttributeModifier.Operation.ADD_VALUE
             ).addAttributeModifier(
                     EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                    Identifier.of(SimplyMore.ID, "grasping_damage"),
+                    SimplyMore.identifier("grasping_damage"),
                     -9999,
                     EntityAttributeModifier.Operation.ADD_VALUE
             )
@@ -69,7 +69,7 @@ public class StatusEffectRegistry {
             "soul_health",
             new StatusEffect(StatusEffectCategory.BENEFICIAL,7865862).addAttributeModifier(
                     EntityAttributes.GENERIC_MAX_HEALTH,
-                    Identifier.of(SimplyMore.ID, "soul_health"),
+                    SimplyMore.identifier("soul_health"),
                     2,
                     EntityAttributeModifier.Operation.ADD_VALUE
             )
@@ -100,7 +100,7 @@ public class StatusEffectRegistry {
             new MoltenFlareEffect(StatusEffectCategory.BENEFICIAL,13570080)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            Identifier.of(SimplyMore.ID, "molten_flare"),
+                            SimplyMore.identifier("molten_flare"),
                             effects.molten_flare.activeAttackSpeedBonus,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -115,7 +115,7 @@ public class StatusEffectRegistry {
             new LanceEffect(StatusEffectCategory.BENEFICIAL,0)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            Identifier.of(SimplyMore.ID, "lance_mounted"),
+                            SimplyMore.identifier("lance_mounted"),
                             attributes.weaponTypesDamage.lancefriendship_damage_modifier,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -125,12 +125,12 @@ public class StatusEffectRegistry {
             new HarvestEffect(StatusEffectCategory.BENEFICIAL,7865862)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            Identifier.of(SimplyMore.ID, "harvest_attack_speed"),
+                            SimplyMore.identifier("harvest_attack_speed"),
                             0.8,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            Identifier.of(SimplyMore.ID, "harvest_speed"),
+                            SimplyMore.identifier("harvest_speed"),
                             0.04,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -140,12 +140,12 @@ public class StatusEffectRegistry {
             new RageEffect(StatusEffectCategory.NEUTRAL,7865862)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            Identifier.of(SimplyMore.ID, "rage_damage"),
+                            SimplyMore.identifier("rage_damage"),
                             1.5,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            Identifier.of(SimplyMore.ID, "rage_speed"),
+                            SimplyMore.identifier("rage_speed"),
                             0.04,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -156,12 +156,12 @@ public class StatusEffectRegistry {
             new StatusEffect(StatusEffectCategory.HARMFUL, 1023141)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            Identifier.of(SimplyMore.ID, "grotesque_ward_damage"),
+                            SimplyMore.identifier("grotesque_ward_damage"),
                             -1,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            Identifier.of(SimplyMore.ID, "grotesque_ward_speed"),
+                            SimplyMore.identifier("grotesque_ward_speed"),
                             -0.01,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -172,17 +172,17 @@ public class StatusEffectRegistry {
             new SolidifyEffect(StatusEffectCategory.BENEFICIAL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
-                            Identifier.of(SimplyMore.ID, "solid_armor"),
+                            SimplyMore.identifier("solid_armor"),
                             effects.blade_of_the_grotesque.selfStunnedArmorBuff,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            Identifier.of(SimplyMore.ID, "solid_attack_speed"),
+                            SimplyMore.identifier("solid_attack_speed"),
                             -99,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            Identifier.of(SimplyMore.ID, "solid_damage"),
+                            SimplyMore.identifier("solid_damage"),
                             -9999,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -192,16 +192,16 @@ public class StatusEffectRegistry {
             new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
-                            Identifier.of(SimplyMore.ID, "stunned_armor"),
+                            SimplyMore.identifier("stunned_armor"),
                             effects.blade_of_the_grotesque.attackerStunnedArmorBuff,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            Identifier.of(SimplyMore.ID, "stunned_attack_speed"),
+                            SimplyMore.identifier("stunned_attack_speed"),
                             -99, EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            Identifier.of(SimplyMore.ID, "stunned_damage"),
+                            SimplyMore.identifier("stunned_damage"),
                             -9999,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -211,12 +211,12 @@ public class StatusEffectRegistry {
             new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            Identifier.of(SimplyMore.ID, "moxie_stun_attack_speed"),
+                            SimplyMore.identifier("moxie_stun_attack_speed"),
                             -99,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            Identifier.of(SimplyMore.ID, "moxie_stun_damage"),
+                            SimplyMore.identifier("moxie_stun_damage"),
                             -9999,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -226,7 +226,7 @@ public class StatusEffectRegistry {
             new StatusEffect(StatusEffectCategory.HARMFUL,2818819)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_MAX_HEALTH,
-                            Identifier.of(SimplyMore.ID, "withering_fate"),
+                            SimplyMore.identifier("withering_fate"),
                             -1, EntityAttributeModifier.Operation.ADD_VALUE)
     );
     public static final RegistrySupplier<StatusEffect> MISTIFIED = registerEffect(
@@ -238,11 +238,11 @@ public class StatusEffectRegistry {
             new InsanityEffect(StatusEffectCategory.HARMFUL,700)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            Identifier.of(SimplyMore.ID, "insanity_damage"),
+                            SimplyMore.identifier("insanity_damage"),
                             -3, EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            Identifier.of(SimplyMore.ID, "insanity_speed"),
+                            SimplyMore.identifier("insanity_speed"),
                             -0.03,
                             EntityAttributeModifier.Operation.ADD_VALUE)
     );
@@ -263,7 +263,7 @@ public class StatusEffectRegistry {
             new SuffocatingEffect(StatusEffectCategory.HARMFUL,0)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            Identifier.of(SimplyMore.ID, "constricted_speed"),
+                            SimplyMore.identifier("constricted_speed"),
                             -0.03,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -281,7 +281,7 @@ public class StatusEffectRegistry {
             new StatusEffect(StatusEffectCategory.HARMFUL,9849600)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
-                            Identifier.of(SimplyMore.ID, "armor_crunch"),
+                            SimplyMore.identifier("armor_crunch"),
                             -2,
                             EntityAttributeModifier.Operation.ADD_VALUE
             )

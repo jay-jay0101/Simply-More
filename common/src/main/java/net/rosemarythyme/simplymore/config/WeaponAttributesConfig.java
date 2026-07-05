@@ -10,7 +10,7 @@ import net.rosemarythyme.simplymore.SimplyMore;
 
 public class WeaponAttributesConfig extends Config {
     public WeaponAttributesConfig() {
-        super(Identifier.of(SimplyMore.ID, "weapon_attributes"));
+        super(SimplyMore.identifier("weapon_attributes"));
     }
 
     @RequiresAction(action = Action.RESTART)

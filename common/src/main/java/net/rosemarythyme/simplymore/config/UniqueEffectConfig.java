@@ -13,7 +13,7 @@ import net.rosemarythyme.simplymore.util.ConfigUtils;
 public class UniqueEffectConfig extends Config {
 
     public UniqueEffectConfig() {
-        super(Identifier.of(SimplyMore.ID, "unique_effect"));
+        super(SimplyMore.identifier("unique_effect"));
     }
 
     public ValidatedSet<Identifier> globalBlacklist = ConfigUtils.createEffectList(

@@ -86,7 +86,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, modifiers.with(
                 EntityAttributes.GENERIC_MOVEMENT_SPEED,
                 new EntityAttributeModifier(
-                        Identifier.of(SimplyMore.ID, "grotesque_slowdown"),
+                        SimplyMore.identifier("grotesque_slowdown"),
                         UNIQUE_CONFIG.blade_of_the_grotesque.selfSlow,
                         EntityAttributeModifier.Operation.ADD_VALUE
                 ),

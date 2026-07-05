@@ -32,7 +32,7 @@ public class SimplyMoreClientInit {
     public static void registerModelPredicates() {
         final int[] randomSprite = {0};
 
-        ItemPropertiesRegistry.register(ItemRegistry.TIMEKEEPER.get(), Identifier.of(SimplyMore.ID, "sun"), (itemStack, clientWorld, livingEntity, a) -> {
+        ItemPropertiesRegistry.register(ItemRegistry.TIMEKEEPER.get(), SimplyMore.identifier("sun"), (itemStack, clientWorld, livingEntity, a) -> {
 
             if (clientWorld == null) return 0f;
 
@@ -79,7 +79,7 @@ public class SimplyMoreClientInit {
             return 0xFF000000 | color.rgb();
         }), ItemRegistry.MATTERBANE);
 
-        ItemPropertiesRegistry.register(ItemRegistry.BRASSTURN.get(), Identifier.of(SimplyMore.ID, "oxidisation"), (itemStack, clientWorld, livingEntity, a) -> {
+        ItemPropertiesRegistry.register(ItemRegistry.BRASSTURN.get(), SimplyMore.identifier("oxidisation"), (itemStack, clientWorld, livingEntity, a) -> {
 
             int oxidisation = MathUtils.getCounterComponent(itemStack).value();
             if(oxidisation >= 16) {
@@ -93,10 +93,10 @@ public class SimplyMoreClientInit {
             return 0f;
         });
 
-        ItemPropertiesRegistry.register(ItemRegistry.DEATHS_EYRIE.get(), Identifier.of(SimplyMore.ID, "crows"),
+        ItemPropertiesRegistry.register(ItemRegistry.DEATHS_EYRIE.get(), SimplyMore.identifier("crows"),
                 (itemStack, clientWorld, livingEntity, a) -> MathUtils.getCounterComponent(itemStack).value() * 0.1f);
 
-        ItemPropertiesRegistry.register(ItemRegistry.RUYI_JINGU_BANG.get(), Identifier.of(SimplyMore.ID, "size"), (itemStack, clientWorld, livingEntity, a) -> {
+        ItemPropertiesRegistry.register(ItemRegistry.RUYI_JINGU_BANG.get(), SimplyMore.identifier("size"), (itemStack, clientWorld, livingEntity, a) -> {
 
             if (livingEntity == null)
                 return 0f;

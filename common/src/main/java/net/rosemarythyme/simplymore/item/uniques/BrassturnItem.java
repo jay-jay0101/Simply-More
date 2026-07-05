@@ -159,7 +159,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
         stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, modifiers.with(
                 EntityAttributes.GENERIC_ATTACK_SPEED,
                 new EntityAttributeModifier(
-                        Identifier.of(SimplyMore.ID, "oxidisation"),
+                        SimplyMore.identifier("oxidisation"),
                         attackSpeedModifier,
                         EntityAttributeModifier.Operation.ADD_VALUE
                 ),
