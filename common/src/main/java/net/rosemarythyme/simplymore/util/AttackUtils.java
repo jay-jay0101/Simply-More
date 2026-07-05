@@ -15,6 +15,10 @@ import java.util.List;
 public class AttackUtils {
     public static int INFINITE_DURATION = 9999999;
 
+    public static int getUseTicksFromInfiniteDuration(int duration) {
+        return INFINITE_DURATION - duration;
+    }
+
     public static void hitWithEnchants(PlayerEntity attacker, LivingEntity target, float damage) {
         if(!(attacker.getWorld() instanceof ServerWorld world)) return;
 

@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 
 public class MimicryEffect extends StatusEffect {
 
@@ -18,27 +19,25 @@ public class MimicryEffect extends StatusEffect {
     @Override
     public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
 
-        if(amplifier != 12) { // Chakram RC doesnt disable normal swings
-            livingEntity.addStatusEffect(
-                    new StatusEffectInstance(
-                            StatusEffects.MINING_FATIGUE,
-                            5,
-                            255
-                    )
-            );
+        livingEntity.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.MINING_FATIGUE,
+                        5,
+                        255
+                )
+        );
 
-            livingEntity.addStatusEffect(
-                    new StatusEffectInstance(
-                            StatusEffects.SLOWNESS,
-                            5,
-                            2
-                    )
-            );
-        }
+        livingEntity.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.SLOWNESS,
+                        5,
+                        2
+                )
+        );
 
         if(livingEntity instanceof PlayerEntity player && !player.getWorld().isClient()) {
             int duration = livingEntity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING)).getDuration();
-            int ticksUsed = MimicryItem.usageEffectTime - duration;
+            int ticksUsed = AttackUtils.getUseTicksFromInfiniteDuration(duration);
 
             MimicryItem item = (MimicryItem) ModItemsRegistry.MIMICRY_AMPLIFIERS.get(amplifier).get();
 
