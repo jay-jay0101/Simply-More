@@ -21,18 +21,18 @@ public class SimplyMore {
 	public static void init() {
 		ConfigWrapper.registerModConfigs();
 
-		ModEffectsRegistry.registerModEffects();
+		StatusEffectRegistry.registerModEffects();
 
-		ModEntityRegistry.registerModEntities();
+		EntityRegistry.registerModEntities();
 		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMoreClientInit::registerEntityRenderers);
 
-		ModItemsRegistry.registerModItems();
-		ModItemsRegistry.registerItemGroup();
-		ModRecipeTypeRegistry.registerModRecipes();
+		ItemRegistry.registerModItems();
+		ItemRegistry.registerItemGroup();
+		RecipeTypeRegistry.registerModRecipes();
 		TransformationRegistry.registerTransformations();
 
-		ModComponentRegistry.registerModComponents();
-		ModTagRegistry.registerModTags();
+		ItemComponentRegistry.registerModComponents();
+		TagRegistry.registerModTags();
 
 		SimplyMore.registerEvents();
 		TooltipMotifRegistry.registerModTooltipMotifs();

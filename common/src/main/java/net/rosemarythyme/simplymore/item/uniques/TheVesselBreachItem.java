@@ -19,8 +19,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -42,11 +42,11 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
                 if (!(target instanceof ArmorStandEntity)) {
-                    if (!attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAGE))) {
+                    if (!attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAGE))) {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_vessel_breach.rageLifesteal);
                     } else {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_vessel_breach.lifesteal);
-                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), UNIQUE_CONFIG.the_vessel_breach.bleedTime,0));
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED), UNIQUE_CONFIG.the_vessel_breach.bleedTime,0));
                     }
                 }
             }
@@ -58,7 +58,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
             user.damage(user.getDamageSources().genericKill(), user.getMaxHealth()* UNIQUE_CONFIG.the_vessel_breach.startupDamage);
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RAGE), UNIQUE_CONFIG.the_vessel_breach.rageTime, 0));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.RAGE), UNIQUE_CONFIG.the_vessel_breach.rageTime, 0));
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,12,4));
             user.getItemCooldownManager().set(this, skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
@@ -94,7 +94,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.THE_VESSEL_BREACH));
+            super(new ItemStackTooltipAppender(ItemRegistry.THE_VESSEL_BREACH));
         }
 
         @ValidatedInt.Restrict(min = 0)

@@ -7,8 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -28,7 +28,7 @@ public class QuarterstaffItem extends MimicryItem {
             jump(player, 0, 1.15f);
             player.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.LIGHTWEIGHT),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.LIGHTWEIGHT),
                             50,
                             0
                     )
@@ -47,7 +47,7 @@ public class QuarterstaffItem extends MimicryItem {
         }
 
         if(ticksUsed >= 15) {
-            player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
     }
 
@@ -63,7 +63,7 @@ public class QuarterstaffItem extends MimicryItem {
 
     public static class MimicryEffectSettings extends TooltipSettings {
         public MimicryEffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_QUARTERSTAFF));
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_QUARTERSTAFF));
         }
 
         public boolean disabled = false;

@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.registry.RegistryKey;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.sweenus.simplyswords.util.ModLootTableModifiers;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -28,27 +28,27 @@ public class LootTableModifierMixin {
                     target = "Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;addPool(Lnet/minecraft/loot/LootPool$Builder;)V"
             ))
     private static void simplyMore$addCommonWeapons(RegistryKey<?> key, LootEvent.LootTableModificationContext context, boolean builtin, CallbackInfo ci, @Local LootPool.Builder pool) {
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_BACKHAND_BLADE.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_DAGGER.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_DEER_HORNS.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_GRANDSWORD.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_KHOPESH.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_GREAT_KATANA.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_GREAT_SPEAR.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_LANCE.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_QUARTERSTAFF.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.IRON_PERNACH.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_BACKHAND_BLADE.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_DAGGER.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_DEER_HORNS.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_GRANDSWORD.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_KHOPESH.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_GREAT_KATANA.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_GREAT_SPEAR.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_LANCE.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_QUARTERSTAFF.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.IRON_PERNACH.get()));
 
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_BACKHAND_BLADE.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_DAGGER.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_DEER_HORNS.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_GRANDSWORD.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_KHOPESH.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_GREAT_KATANA.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_GREAT_SPEAR.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_LANCE.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_QUARTERSTAFF.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.GOLD_PERNACH.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_BACKHAND_BLADE.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_DAGGER.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_DEER_HORNS.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_GRANDSWORD.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_KHOPESH.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_GREAT_KATANA.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_GREAT_SPEAR.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_LANCE.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_QUARTERSTAFF.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.GOLD_PERNACH.get()));
     }
 
     @Inject(method = "lambda$init$3",
@@ -57,50 +57,50 @@ public class LootTableModifierMixin {
                     target = "Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;addPool(Lnet/minecraft/loot/LootPool$Builder;)V"
             ))
     private static void simplyMore$addRareWeapons(RegistryKey<?> key, LootEvent.LootTableModificationContext context, boolean builtin, CallbackInfo ci, @Local LootPool.Builder pool) {
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_BACKHAND_BLADE.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_DAGGER.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_DEER_HORNS.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_GRANDSWORD.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_KHOPESH.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_GREAT_KATANA.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_GREAT_SPEAR.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_LANCE.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_QUARTERSTAFF.get()));
-        pool.with(ItemEntry.builder(ModItemsRegistry.DIAMOND_PERNACH.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_BACKHAND_BLADE.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_DAGGER.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_DEER_HORNS.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_GRANDSWORD.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_KHOPESH.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_GREAT_KATANA.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_GREAT_SPEAR.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_LANCE.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_QUARTERSTAFF.get()));
+        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_PERNACH.get()));
     }
 
     @Unique
     private static final Set<RegistrySupplier<? extends Item>> simplyMore$lootableSuppliers = Set.of(
-            ModItemsRegistry.GREAT_SLITHER,
-            ModItemsRegistry.MOLTEN_FLARE,
-            ModItemsRegistry.GRANDFROST,
-            ModItemsRegistry.MIMICRY_LONGSWORD,
-            ModItemsRegistry.GLIMMERSTEP,
-            ModItemsRegistry.THE_BLOOD_HARVESTER,
-            ModItemsRegistry.MYRMEDGE,
-            ModItemsRegistry.BLACK_PEARL,
-            ModItemsRegistry.THE_VESSEL_BREACH,
-            ModItemsRegistry.BLADE_OF_THE_GROTESQUE,
-            ModItemsRegistry.VIPERS_CALL,
-            ModItemsRegistry.TIMEKEEPER,
-            ModItemsRegistry.MATTERBANE,
-            ModItemsRegistry.SMOULDERING_RUIN,
-            ModItemsRegistry.STASIS,
-            ModItemsRegistry.TIDEBREAKER,
-            ModItemsRegistry.RUYI_JINGU_BANG,
-            ModItemsRegistry.RUPTURED_IDOL,
-            ModItemsRegistry.BOAS_FANG,
-            ModItemsRegistry.EARTHSHATTER,
-            ModItemsRegistry.SOUL_FORESEER,
-            ModItemsRegistry.SERPENTINE_VALOUR,
-            ModItemsRegistry.LUSTROUS_MOXIE,
-            ModItemsRegistry.BRASSTURN,
-            ModItemsRegistry.CINDERGORGE,
-            ModItemsRegistry.DEATHS_EYRIE,
-            ModItemsRegistry.PERFORISCUS,
-            ModItemsRegistry.REVVENGINE,
-            ModItemsRegistry.EXEDRILL,
-            ModItemsRegistry.CULTEREX
+            ItemRegistry.GREAT_SLITHER,
+            ItemRegistry.MOLTEN_FLARE,
+            ItemRegistry.GRANDFROST,
+            ItemRegistry.MIMICRY_LONGSWORD,
+            ItemRegistry.GLIMMERSTEP,
+            ItemRegistry.THE_BLOOD_HARVESTER,
+            ItemRegistry.MYRMEDGE,
+            ItemRegistry.BLACK_PEARL,
+            ItemRegistry.THE_VESSEL_BREACH,
+            ItemRegistry.BLADE_OF_THE_GROTESQUE,
+            ItemRegistry.VIPERS_CALL,
+            ItemRegistry.TIMEKEEPER,
+            ItemRegistry.MATTERBANE,
+            ItemRegistry.SMOULDERING_RUIN,
+            ItemRegistry.STASIS,
+            ItemRegistry.TIDEBREAKER,
+            ItemRegistry.RUYI_JINGU_BANG,
+            ItemRegistry.RUPTURED_IDOL,
+            ItemRegistry.BOAS_FANG,
+            ItemRegistry.EARTHSHATTER,
+            ItemRegistry.SOUL_FORESEER,
+            ItemRegistry.SERPENTINE_VALOUR,
+            ItemRegistry.LUSTROUS_MOXIE,
+            ItemRegistry.BRASSTURN,
+            ItemRegistry.CINDERGORGE,
+            ItemRegistry.DEATHS_EYRIE,
+            ItemRegistry.PERFORISCUS,
+            ItemRegistry.REVVENGINE,
+            ItemRegistry.EXEDRILL,
+            ItemRegistry.CULTEREX
     );
     @Unique
     private static Set<Item> simplyMore$lootableItems = Set.of();

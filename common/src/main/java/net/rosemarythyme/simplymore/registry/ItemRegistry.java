@@ -25,7 +25,7 @@ import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
-import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompat;
+import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompatRegistry;
 import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.config.Config;
@@ -36,7 +36,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class ModItemsRegistry {
+public class ItemRegistry {
     static WeaponAttributesConfig attributes = ConfigWrapper.attributes;
     static UniqueEffectConfig effect = ConfigWrapper.unique;
 
@@ -1361,7 +1361,7 @@ public class ModItemsRegistry {
 
         if (Platform.isModLoaded("mythicmetals")) {
             SimplyMore.LOGGER.info("Registering Mythic Metals Compat for " + SimplyMore.ID);
-            MythicMetalsCompat.registerCompatItems();
+            MythicMetalsCompatRegistry.registerCompatItems();
         }
 
         ITEMS.register();
@@ -1439,7 +1439,7 @@ public class ModItemsRegistry {
 //        }
 //
         if (Platform.isModLoaded("mythicmetals")) {
-            MythicMetalsCompat.addToGroup(entries);
+            MythicMetalsCompatRegistry.addToGroup(entries);
         }
 
         entries.add(GREAT_SLITHER);

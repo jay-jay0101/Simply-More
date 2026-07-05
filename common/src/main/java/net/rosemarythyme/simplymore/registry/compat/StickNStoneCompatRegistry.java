@@ -7,7 +7,7 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class StickNStoneCompatRegistry {
 
     static final int wooden_modifier = attributes.typeDamageModifier.wooden_damage_modifier.get().intValue();
     static final int stone_modifier = attributes.typeDamageModifier.stone_damage_modifier.get().intValue();
-    public static final RegistrySupplier<Item> WOODEN_GREAT_KATANA = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_GREAT_KATANA = ItemRegistry.ITEMS.register(
             "wooden_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -29,7 +29,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_GREAT_KATANA = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_GREAT_KATANA = ItemRegistry.ITEMS.register(
             "stone_great_katana",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -42,7 +42,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_GRANDSWORD = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_GRANDSWORD = ItemRegistry.ITEMS.register(
             "wooden_grandsword",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -55,7 +55,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_GRANDSWORD = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_GRANDSWORD = ItemRegistry.ITEMS.register(
             "stone_grandsword",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -68,7 +68,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_BACKHAND_BLADE = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_BACKHAND_BLADE = ItemRegistry.ITEMS.register(
             "wooden_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -81,7 +81,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_BACKHAND_BLADE = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_BACKHAND_BLADE = ItemRegistry.ITEMS.register(
             "stone_backhand_blade",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -94,7 +94,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_LANCE = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_LANCE = ItemRegistry.ITEMS.register(
             "wooden_lance",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -107,7 +107,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_LANCE = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_LANCE = ItemRegistry.ITEMS.register(
             "stone_lance",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -120,7 +120,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_KHOPESH = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_KHOPESH = ItemRegistry.ITEMS.register(
             "wooden_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -133,7 +133,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_KHOPESH = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_KHOPESH = ItemRegistry.ITEMS.register(
             "stone_khopesh",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -146,7 +146,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_DAGGER = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_DAGGER = ItemRegistry.ITEMS.register(
             "wooden_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -159,7 +159,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_DAGGER = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_DAGGER = ItemRegistry.ITEMS.register(
             "stone_dagger",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -172,7 +172,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_PERNACH = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_PERNACH = ItemRegistry.ITEMS.register(
             "wooden_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -185,7 +185,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_PERNACH = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_PERNACH = ItemRegistry.ITEMS.register(
             "stone_pernach",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -198,7 +198,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_QUARTERSTAFF = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_QUARTERSTAFF = ItemRegistry.ITEMS.register(
             "wooden_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -211,7 +211,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_QUARTERSTAFF = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_QUARTERSTAFF = ItemRegistry.ITEMS.register(
             "stone_quarterstaff",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -224,7 +224,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_GREAT_SPEAR = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_GREAT_SPEAR = ItemRegistry.ITEMS.register(
             "wooden_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -237,7 +237,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_GREAT_SPEAR = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_GREAT_SPEAR = ItemRegistry.ITEMS.register(
             "stone_great_spear",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,
@@ -250,7 +250,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> WOODEN_DEER_HORNS = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> WOODEN_DEER_HORNS = ItemRegistry.ITEMS.register(
             "wooden_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.WOOD,
@@ -263,7 +263,7 @@ public class StickNStoneCompatRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> STONE_DEER_HORNS = ModItemsRegistry.ITEMS.register(
+    public static final RegistrySupplier<Item> STONE_DEER_HORNS = ItemRegistry.ITEMS.register(
             "stone_deer_horns",
             () -> new SimplyMoreSwordItem(
                     ToolMaterials.STONE,

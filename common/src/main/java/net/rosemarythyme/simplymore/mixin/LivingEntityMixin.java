@@ -6,7 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,7 +32,7 @@ public abstract class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "heal", cancellable = true)
 	private void simplyMore$heal(float amount, CallbackInfo info) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
-		if(livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED))) {
+		if(livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED))) {
 			float f = livingEntity.getHealth();
 			if (f > 0.0F) {
 				livingEntity.setHealth(f + amount/2);

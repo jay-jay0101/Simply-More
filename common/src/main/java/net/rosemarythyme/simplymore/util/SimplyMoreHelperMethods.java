@@ -19,7 +19,7 @@ import net.minecraft.util.math.Box;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -81,9 +81,9 @@ public class SimplyMoreHelperMethods {
     }
 
     public static void simplyMore$onDamageEffects(float amount, DamageSource source, CallbackInfo info, LivingEntity livingEntity) {
-        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.SOLIDIFIED))) {
+        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED))) {
             if (source.getAttacker() != livingEntity) {
-                livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.SOLIDIFIED));
+                livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED));
                 BladeOfTheGrotesqueItem.causeStun(livingEntity);
 
                 info.cancel();
@@ -91,9 +91,9 @@ public class SimplyMoreHelperMethods {
             }
         }
 
-        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLESSING))) {
+        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING))) {
 
-            livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLESSING));
+            livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING));
 
             livingEntity.heal(effect.holylight.blessingHeal);
 
@@ -104,9 +104,9 @@ public class SimplyMoreHelperMethods {
             return;
         }
 
-        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.CURSE))) {
+        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE))) {
 
-            livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.CURSE));
+            livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE));
 
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.darksent.curseWeakenTime,3));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.darksent.curseWeakenTime,0));

@@ -21,8 +21,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
@@ -47,11 +47,11 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
 
         if (attacker.getWorld() instanceof ServerWorld serverworld
                 && MathUtils.chance(attacker, UNIQUE_CONFIG.soul_foreseer.chance)
-                && !target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) {
+                && !target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FORESEEN))) {
             serverworld.playSound(null, attacker.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_NORDIC_27.get(), SoundCategory.PLAYERS);
             serverworld.spawnParticles(ParticleTypes.SOUL_FIRE_FLAME, attacker.getX(), attacker.getY() + 1, attacker.getZ(), 50, 0.25f, 0.25f, 0.25f, 0.1);
 
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN), UNIQUE_CONFIG.soul_foreseer.effectTime, 0));
+            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.FORESEEN), UNIQUE_CONFIG.soul_foreseer.effectTime, 0));
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10, 0));
         }
 
@@ -66,9 +66,9 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
             List<LivingEntity> targets = AttackUtils.getTargets(player, box);
 
             for (LivingEntity livingEntity : targets) {
-                if (!livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN))) continue;
+                if (!livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FORESEEN))) continue;
 
-                livingEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.FORESEEN));
+                livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FORESEEN));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, UNIQUE_CONFIG.soul_foreseer.effectTime, 3));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, UNIQUE_CONFIG.soul_foreseer.effectTime, 0));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, UNIQUE_CONFIG.soul_foreseer.effectTime, 1));
@@ -107,7 +107,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.SOUL_FORESEER));
+            super(new ItemStackTooltipAppender(ItemRegistry.SOUL_FORESEER));
         }
 
         @ValidatedInt.Restrict(min = 0)

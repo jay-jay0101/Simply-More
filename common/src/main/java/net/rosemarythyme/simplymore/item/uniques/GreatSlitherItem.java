@@ -18,8 +18,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.GreatSlitherFangEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -41,7 +41,7 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
         if (!attacker.getWorld().isClient()) {
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.great_slither.chance)) {
                 if(target.hasStatusEffect(StatusEffects.POISON)) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), UNIQUE_CONFIG.great_slither.venomTime, 0), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM), UNIQUE_CONFIG.great_slither.venomTime, 0), attacker);
                 } else {
                     target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, UNIQUE_CONFIG.great_slither.poisonTime, 0), attacker);
                 }
@@ -102,7 +102,7 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.GREAT_SLITHER));
+            super(new ItemStackTooltipAppender(ItemRegistry.GREAT_SLITHER));
         }
 
         @ValidatedInt.Restrict(min = 0)

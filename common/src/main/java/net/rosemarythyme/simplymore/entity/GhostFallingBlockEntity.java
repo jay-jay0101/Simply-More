@@ -16,7 +16,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import org.jetbrains.annotations.Nullable;
@@ -130,7 +130,7 @@ public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownab
                     target.damage(this.getDamageSources().fallingBlock(this), effect.exedrill.rockDamage);
                     target.addStatusEffect(
                             new StatusEffectInstance(
-                                    ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED),
+                                    StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED),
                                     effect.exedrill.rockStunTime
                             )
                     );

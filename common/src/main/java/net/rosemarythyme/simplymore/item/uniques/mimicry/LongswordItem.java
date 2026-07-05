@@ -6,8 +6,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -35,7 +35,7 @@ public class LongswordItem extends MimicryItem {
         }
 
         if(ticksUsed >= 13) {
-            player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
     }
 
@@ -51,7 +51,7 @@ public class LongswordItem extends MimicryItem {
 
     public static class MimicryEffectSettings extends TooltipSettings {
         public MimicryEffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_LONGSWORD));
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_LONGSWORD));
         }
 
         public boolean disabled = false;

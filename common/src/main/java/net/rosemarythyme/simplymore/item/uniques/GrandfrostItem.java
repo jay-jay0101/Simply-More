@@ -20,8 +20,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -43,7 +43,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
                 if (target.isBlocking() || MathUtils.chance(attacker, UNIQUE_CONFIG.grandfrost.chance)) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.CHILL), UNIQUE_CONFIG.grandfrost.chillTime, 0), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.CHILL), UNIQUE_CONFIG.grandfrost.chillTime, 0), attacker);
                 }
             }
         return super.postHit(stack, target, attacker);
@@ -80,7 +80,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
                 double normalizedDeltaX = deltaX / distance;
                 double normalizedDeltaZ = deltaZ / distance;
 
-                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.CHILL), UNIQUE_CONFIG.grandfrost.blizzardEffectTime, 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.CHILL), UNIQUE_CONFIG.grandfrost.blizzardEffectTime, 0));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, UNIQUE_CONFIG.grandfrost.blizzardEffectTime, 3));
                 livingEntity.setVelocity(normalizedDeltaX * knockbackStrength, 0.4, normalizedDeltaZ * knockbackStrength);
                 livingEntity.velocityModified = true;
@@ -118,7 +118,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.GRANDFROST));
+            super(new ItemStackTooltipAppender(ItemRegistry.GRANDFROST));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

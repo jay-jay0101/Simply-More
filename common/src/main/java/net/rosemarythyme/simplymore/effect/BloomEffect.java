@@ -5,7 +5,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 
 public class BloomEffect extends StatusEffect {
 
@@ -15,8 +15,8 @@ public class BloomEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int Amplifier) {
-        if(entity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM))) {
-            int duration = entity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM)).getDuration();
+        if(entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM))) {
+            int duration = entity.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)).getDuration();
             int interval = 0;
 
             switch (Amplifier) {

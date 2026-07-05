@@ -29,8 +29,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
@@ -53,7 +53,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.SOLIDIFIED),skillLength));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED),skillLength));
             user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.UI_STONECUTTER_TAKE_RESULT, user.getSoundCategory(), 2F, 1F);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.ASH,user.getX(),user.getEyeY()-0.25,user.getZ(),1000,0.2,0.5,0.2,1);
             user.getItemCooldownManager().set(this, skillCooldown);
@@ -69,7 +69,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
         for (LivingEntity target : targets) {
             target.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED),
                             UNIQUE_CONFIG.blade_of_the_grotesque.auraStunTime),
                     attacker
             );
@@ -110,7 +110,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
             List<LivingEntity> targets = AttackUtils.getTargets(player, box);
             for (LivingEntity target : targets) {
                 EntityUtils.reapplyAndIncrementEffect(target,
-                        ModEffectsRegistry.getReference(ModEffectsRegistry.GROTESQUE_WARD),
+                        StatusEffectRegistry.getReference(StatusEffectRegistry.GROTESQUE_WARD),
                         50,
                         1,
                         UNIQUE_CONFIG.blade_of_the_grotesque.maxAuraWard
@@ -145,7 +145,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.BLADE_OF_THE_GROTESQUE));
+            super(new ItemStackTooltipAppender(ItemRegistry.BLADE_OF_THE_GROTESQUE));
         }
 
         @ValidatedInt.Restrict(min = 0)

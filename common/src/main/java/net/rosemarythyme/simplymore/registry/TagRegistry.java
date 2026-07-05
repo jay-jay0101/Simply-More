@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class ModTagRegistry {
+public class TagRegistry {
     public static TagKey<Item> LONGSWORD = TagKey.of(RegistryKeys.ITEM, Identifier.of(SimplyMore.ID, "weapon_types/longswords"));
     public static TagKey<Item> TWINBLADE = TagKey.of(RegistryKeys.ITEM, Identifier.of(SimplyMore.ID, "weapon_types/twinblades"));
     public static TagKey<Item> RAPIER = TagKey.of(RegistryKeys.ITEM, Identifier.of(SimplyMore.ID, "weapon_types/rapiers"));

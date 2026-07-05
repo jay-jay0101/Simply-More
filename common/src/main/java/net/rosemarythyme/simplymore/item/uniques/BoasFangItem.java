@@ -22,8 +22,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -46,7 +46,7 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.boas_fang.chance)) {
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.SUFFOCATION), UNIQUE_CONFIG.boas_fang.suffocationTime));
+                target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.SUFFOCATION), UNIQUE_CONFIG.boas_fang.suffocationTime));
             }
         }
         return super.postHit(stack, target, attacker);
@@ -127,7 +127,7 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.BOAS_FANG));
+            super(new ItemStackTooltipAppender(ItemRegistry.BOAS_FANG));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

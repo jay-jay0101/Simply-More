@@ -9,8 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -30,7 +30,7 @@ public class LanceItem extends MimicryItem {
             jump(player, 3.2f,0.4f);
             player.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.LIGHTWEIGHT),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.LIGHTWEIGHT),
                             20,
                             0
                     )
@@ -68,7 +68,7 @@ public class LanceItem extends MimicryItem {
         }
 
         if(ticksUsed >= 36) {
-            player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
     }
 
@@ -84,7 +84,7 @@ public class LanceItem extends MimicryItem {
 
     public static class MimicryEffectSettings extends TooltipSettings {
         public MimicryEffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_LANCE));
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_LANCE));
         }
 
         public boolean disabled = false;

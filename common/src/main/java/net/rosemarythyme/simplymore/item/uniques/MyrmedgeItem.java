@@ -23,9 +23,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.GrabbedComponent;
-import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -65,12 +65,12 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         if(entity instanceof LivingEntity target) {
             if(!AttackUtils.canHitTarget(user, target)) return super.use(world, user, hand);
 
-            stack.set(ModComponentRegistry.GRABBED.get(), new GrabbedComponent(target.getUuid()));
+            stack.set(ItemComponentRegistry.GRABBED.get(), new GrabbedComponent(target.getUuid()));
             user.getItemCooldownManager().set(this, skillCooldown);
 
             user.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.GRASPING),
                             UNIQUE_CONFIG.myrmedge.grabTime
                     )
             );
@@ -125,13 +125,13 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         // Grasping
         if(entity instanceof PlayerEntity player
         && (selected || ( player.getOffHandStack() == stack  && player.getMainHandStack().getItem() != stack.getItem() ))
-        && player.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING))
+        && player.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.GRASPING))
         && !player.getWorld().isClient
         && player.isAlive()) {
 
 
-            if(stack.get(ModComponentRegistry.GRABBED.get()) != null) {
-                UUID uuid = stack.get(ModComponentRegistry.GRABBED.get()).entityId();
+            if(stack.get(ItemComponentRegistry.GRABBED.get()) != null) {
+                UUID uuid = stack.get(ItemComponentRegistry.GRABBED.get()).entityId();
                 Entity target = ((ServerWorld) world).getEntity(uuid);
 
                 if(target instanceof LivingEntity livingTarget && livingTarget.isAlive()) {
@@ -175,7 +175,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
                     }
 
                     // Throw
-                    if(player.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING)).getDuration() == 1) {
+                    if(player.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.GRASPING)).getDuration() == 1) {
                         Vector3d normalisedVector = MathUtils.getNormalised2dVector(player.getYaw()).mul(UNIQUE_CONFIG.myrmedge.throwStrength);
                         livingTarget.setVelocity(new Vec3d(
                                 normalisedVector.x(),
@@ -185,7 +185,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
                         livingTarget.velocityModified = true;
                     }
                 } else {
-                    player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING));
+                    player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.GRASPING));
                 }
             }
         }
@@ -218,7 +218,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.MYRMEDGE));
+            super(new ItemStackTooltipAppender(ItemRegistry.MYRMEDGE));
         }
 
         @ValidatedFloat.Restrict(min = 0f)

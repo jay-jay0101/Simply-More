@@ -18,8 +18,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -42,11 +42,11 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.smouldering_ruin.chance)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, UNIQUE_CONFIG.smouldering_ruin.witherTime, 0), attacker);
-            StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE));
+            StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WITHERING_FATE));
             if (targetWitheringFateStatus != null) {
                 target.addStatusEffect(
                         new StatusEffectInstance(
-                                ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE),
+                                StatusEffectRegistry.getReference(StatusEffectRegistry.WITHERING_FATE),
                                 targetWitheringFateStatus.getDuration(),
                                 targetWitheringFateStatus.getAmplifier() + 1
                         ), attacker);
@@ -68,7 +68,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
             user.velocityModified = true;
 
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_FLYBY_01.get(), SoundCategory.PLAYERS, 1, 1);
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED),10000,0));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.MISTIFIED),10000,0));
             user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
@@ -100,7 +100,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.SMOULDERING_RUIN));
+            super(new ItemStackTooltipAppender(ItemRegistry.SMOULDERING_RUIN));
         }
 
         @ValidatedInt.Restrict(min = 0)

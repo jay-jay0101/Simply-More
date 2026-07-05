@@ -18,7 +18,7 @@ import net.rosemarythyme.simplymore.effect.*;
 import java.util.HexFormat;
 
 
-public class ModEffectsRegistry {
+public class StatusEffectRegistry {
     static WeaponAttributesConfig attributes = ConfigWrapper.attributes;
     static UniqueEffectConfig effects = ConfigWrapper.unique;
 

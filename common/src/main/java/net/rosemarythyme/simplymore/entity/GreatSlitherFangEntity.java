@@ -11,7 +11,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 
 public class GreatSlitherFangEntity extends EvokerFangsEntity {
@@ -89,13 +89,13 @@ public class GreatSlitherFangEntity extends EvokerFangsEntity {
         int slowTime = effect.great_slither.fangsSlowTime;
         if (target.isAlive() && !target.isInvulnerable() && target != owner) {
             if (owner == null) {
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), venomTime, 0), null);
+                target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM), venomTime, 0), null);
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, slowTime, 2), null);
                 target.damage(getDamageSources().playerAttack(null), damageAmount);
             } else {
                 if (!AttackUtils.canHitTarget(target, owner)) return;
 
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), venomTime, 0), owner);
+                target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM), venomTime, 0), owner);
                 target.damage(getDamageSources().playerAttack(((PlayerEntity) owner)), damageAmount);
             }
         }

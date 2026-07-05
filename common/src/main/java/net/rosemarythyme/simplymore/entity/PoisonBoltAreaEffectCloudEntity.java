@@ -12,7 +12,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
@@ -123,7 +123,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
         } else {
             // Damage the target
             target.damage(owner.getDamageSources().magic(), effect.serpentine_valour.damage);
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), effect.serpentine_valour.venomTime));
+            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM), effect.serpentine_valour.venomTime));
             this.discard();
             this.getWorld().playSound(null, this.getBlockPos(), SoundRegistry.DARK_SWORD_ATTACK_WITH_BLOOD_01.get(), SoundCategory.PLAYERS, 0.4f, 1);
         }

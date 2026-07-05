@@ -20,8 +20,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.EruptionAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -43,11 +43,11 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        if (MathUtils.chance(attacker, UNIQUE_CONFIG.molten_flare.chance) || attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE))) {
-            eruption(attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE)) ?
+        if (MathUtils.chance(attacker, UNIQUE_CONFIG.molten_flare.chance) || attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MOLTEN_FLARE))) {
+            eruption(attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MOLTEN_FLARE)) ?
                     UNIQUE_CONFIG.molten_flare.radiusEmpowered:
                     UNIQUE_CONFIG.molten_flare.radius, attacker);
-            attacker.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE));
+            attacker.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MOLTEN_FLARE));
         }
         return super.postHit(stack, target, attacker);
     }
@@ -55,7 +55,7 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE),100));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.MOLTEN_FLARE),100));
             user.getItemCooldownManager().set(this, skillCooldown);
         }
         return super.use(world, user, hand);
@@ -91,7 +91,7 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.MOLTEN_FLARE));
+            super(new ItemStackTooltipAppender(ItemRegistry.MOLTEN_FLARE));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

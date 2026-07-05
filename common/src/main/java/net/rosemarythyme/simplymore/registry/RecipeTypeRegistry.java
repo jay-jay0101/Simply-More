@@ -7,7 +7,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.recipe.MatterbaneClearRecipe;
 
-public class ModRecipeTypeRegistry {
+public class RecipeTypeRegistry {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.RECIPE_SERIALIZER);
 

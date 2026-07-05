@@ -17,7 +17,7 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.entity.KickbackAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.uniques.RevvengineItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -123,7 +123,7 @@ public class RevvengineRushEffect extends StatusEffect {
         }
 
         // On End Effect
-        if (entity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS)) && entity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS)).getDuration() < 10) {
+        if (entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS)) && entity.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS)).getDuration() < 10) {
             if(amplifier > 0) {
                 causeSlash(
                         entity,
@@ -161,7 +161,7 @@ public class RevvengineRushEffect extends StatusEffect {
     public void causeSlash(LivingEntity user, int effectTime, float damage, boolean isTier3) {
         if(user.getWorld().isClient) return;
 
-        user.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS));
+        user.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS));
         Vec3d position = user.getEyePos();
         Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
 
@@ -183,7 +183,7 @@ public class RevvengineRushEffect extends StatusEffect {
 
             target.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
                             effectTime,
                             0
                     )

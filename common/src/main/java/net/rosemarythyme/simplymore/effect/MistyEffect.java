@@ -10,7 +10,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Box;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -27,8 +27,8 @@ public class MistyEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
-        if(affectedEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED))) {
-            int effectDuration = affectedEntity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED)).getDuration();
+        if(affectedEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MISTIFIED))) {
+            int effectDuration = affectedEntity.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MISTIFIED)).getDuration();
 
             if (effectDuration >= 9960
                     && effectDuration < 9990
@@ -44,7 +44,7 @@ public class MistyEffect extends StatusEffect {
                 LivingEntity teleportTarget = findTeleportTarget(playerEntity, forwardDirectionX, forwardDirectionY, forwardDirectionZ);
 
                 if (teleportTarget != null) {
-                    playerEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED));
+                    playerEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MISTIFIED));
                     double distanceToTarget = Math.sqrt(
                             Math.pow(playerEntity.getX() - teleportTarget.getX(), 2)
                                     + Math.pow(playerEntity.getY() - teleportTarget.getY(), 2)
@@ -57,7 +57,7 @@ public class MistyEffect extends StatusEffect {
             }
 
             if (affectedEntity.isOnGround() && effectDuration < 9980) {
-                affectedEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MISTIFIED));
+                affectedEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MISTIFIED));
             }
 
             if (!affectedEntity.getWorld().isClient) {
@@ -95,7 +95,7 @@ public class MistyEffect extends StatusEffect {
                         amplifier = 20;
                     }
                     amplifier--;
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE), 600, amplifier));
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WITHERING_FATE), 600, amplifier));
                     target.damage(player.getDamageSources().playerAttack(player), 8);
                 }
             }

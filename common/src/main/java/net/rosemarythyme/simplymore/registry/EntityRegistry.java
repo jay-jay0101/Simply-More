@@ -14,7 +14,7 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.CrowEntity;
 import net.rosemarythyme.simplymore.entity.GhostFallingBlockEntity;
 
-public class ModEntityRegistry {
+public class EntityRegistry {
 
     public static final DeferredRegister<EntityType<?>> ENTITIES =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ENTITY_TYPE);

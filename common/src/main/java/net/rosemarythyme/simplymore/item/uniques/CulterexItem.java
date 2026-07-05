@@ -22,8 +22,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
@@ -64,13 +64,13 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM, SoundCategory.PLAYERS, 1,0.65f);
             user.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM, SoundCategory.PLAYERS, 1,0.65f);
 
-            if(target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX))) {
-                int amplifier = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getAmplifier() + 1;
-                target.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX));
+            if(target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX))) {
+                int amplifier = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX)).getAmplifier() + 1;
+                target.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX));
 
                 user.addStatusEffect(
                         new StatusEffectInstance(
-                                ModEffectsRegistry.getReference(ModEffectsRegistry.SOUL_HEALTH),
+                                StatusEffectRegistry.getReference(StatusEffectRegistry.SOUL_HEALTH),
                                 amplifier * 100,
                                 amplifier - 1
                         )
@@ -91,7 +91,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
 
                 target.addStatusEffect(
                         new StatusEffectInstance(
-                                ModEffectsRegistry.getReference(ModEffectsRegistry.HEX),
+                                StatusEffectRegistry.getReference(StatusEffectRegistry.HEX),
                                 duration,
                                 0
                         )
@@ -107,15 +107,15 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        if(target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX))
+        if(target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX))
                 && MathUtils.chance(attacker, UNIQUE_CONFIG.culterex.chance)) {
-            int duration = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getDuration();
-            int amplifier = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getAmplifier();
+            int duration = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX)).getDuration();
+            int amplifier = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX)).getAmplifier();
             duration += UNIQUE_CONFIG.culterex.extraDuration;
 
             target.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.HEX),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.HEX),
                             duration,
                             amplifier
                     )
@@ -155,7 +155,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.CULTEREX));
+            super(new ItemStackTooltipAppender(ItemRegistry.CULTEREX));
         }
 
 

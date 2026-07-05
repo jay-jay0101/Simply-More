@@ -18,8 +18,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -41,11 +41,11 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
                 if (!(target instanceof ArmorStandEntity)) {
-                    if (!attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HARVEST))) {
+                    if (!attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HARVEST))) {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.harvestLifesteal);
                     } else {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.lifesteal);
-                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), UNIQUE_CONFIG.the_blood_harvester.bleedTime,0));
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED), UNIQUE_CONFIG.the_blood_harvester.bleedTime,0));
                     }
                 }
             }
@@ -55,7 +55,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.HARVEST), UNIQUE_CONFIG.the_blood_harvester.harvestTime, 0));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.HARVEST), UNIQUE_CONFIG.the_blood_harvester.harvestTime, 0));
             user.getItemCooldownManager().set(this, skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SWORD_ATTACK_WITH_BLOOD_04.get(), user.getSoundCategory(), 2F, 0F);
@@ -91,7 +91,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.THE_BLOOD_HARVESTER));
+            super(new ItemStackTooltipAppender(ItemRegistry.THE_BLOOD_HARVESTER));
         }
 
 

@@ -28,10 +28,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.MimicryConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
-import net.rosemarythyme.simplymore.registry.ModTagRegistry;
+import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.TagRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -86,13 +86,13 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
             user.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING),
                             AttackUtils.INFINITE_DURATION,
                             getAmplifier(stack.getItem())
                     )
             );
 
-            stack.set(ModComponentRegistry.CHANGE.get(), true);
+            stack.set(ItemComponentRegistry.CHANGE.get(), true);
         }
 
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -100,8 +100,8 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
 
     public static int getAmplifier(Item item) {
-        for (RegistrySupplier<Item> registry : ModItemsRegistry.MIMICRY_AMPLIFIERS) {
-            if(registry.get() == item) return ModItemsRegistry.MIMICRY_AMPLIFIERS.indexOf(registry);
+        for (RegistrySupplier<Item> registry : ItemRegistry.MIMICRY_AMPLIFIERS) {
+            if(registry.get() == item) return ItemRegistry.MIMICRY_AMPLIFIERS.indexOf(registry);
         }
 
         return -1;
@@ -119,10 +119,10 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        Boolean shouldChange = stack.get(ModComponentRegistry.CHANGE.get());
+        Boolean shouldChange = stack.get(ItemComponentRegistry.CHANGE.get());
 
         if(shouldChange == null) {
-            stack.set(ModComponentRegistry.CHANGE.get(), false);
+            stack.set(ItemComponentRegistry.CHANGE.get(), false);
             shouldChange = false;
         }
 
@@ -141,7 +141,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         player.getItemCooldownManager().set(stack.getItem(), UNIQUE_CONFIG.mimicry.typeCooldown);
         String currentForm = null;
 
-        for (Map.Entry<String, RegistrySupplier<Item>> itemEntry : ModItemsRegistry.MIMICRY_ITEMS.entrySet()) {
+        for (Map.Entry<String, RegistrySupplier<Item>> itemEntry : ItemRegistry.MIMICRY_ITEMS.entrySet()) {
             if(itemEntry.getValue().get() == stack.getItem()) {
                 currentForm = itemEntry.getKey();
             }
@@ -150,12 +150,12 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         String newForm = getWeightedRandomForm(currentForm, player);
         if(newForm == null) return;
 
-        Item newItem = ModItemsRegistry.MIMICRY_ITEMS.get(newForm).get();
+        Item newItem = ItemRegistry.MIMICRY_ITEMS.get(newForm).get();
         player.getItemCooldownManager().set(newItem, UNIQUE_CONFIG.mimicry.cooldown);
 
         if(newItem instanceof MimicryItem mimicryItem) {
             ItemStack newItemStack = stack.copyComponentsToNewStack(mimicryItem, 1);
-            newItemStack.set(ModComponentRegistry.CHANGE.get(), false);
+            newItemStack.set(ItemComponentRegistry.CHANGE.get(), false);
 
             int slotIndex = player.getInventory().getSlotWithStack(stack);
             if(slotIndex != -1) {
@@ -169,7 +169,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public String getWeaponType(Item item) {
-        for(Map.Entry<String, TagKey<Item>> tagKeyEntry : ModTagRegistry.MIMICRY_TAGS.entrySet()) {
+        for(Map.Entry<String, TagKey<Item>> tagKeyEntry : TagRegistry.MIMICRY_TAGS.entrySet()) {
             TagKey<Item> itemTagKey = tagKeyEntry.getValue();
 
             if (Registries.ITEM.getEntry(item).isIn(itemTagKey))
@@ -184,19 +184,19 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public boolean isFormEnabled(String form, PlayerEntity user) {
-        return isFormEnabled(((MimicryItem) ModItemsRegistry.MIMICRY_ITEMS.get(form).get()), user);
+        return isFormEnabled(((MimicryItem) ItemRegistry.MIMICRY_ITEMS.get(form).get()), user);
     }
 
     public abstract boolean isFormDisabledInConfig();
 
     public boolean isUsingAbility(PlayerEntity player) {
-        return player.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
+        return player.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
     }
 
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
-        if(otherStack.isIn(ModTagRegistry.ALL) && !isUsingAbility(player)) {
+        if(otherStack.isIn(TagRegistry.ALL) && !isUsingAbility(player)) {
             String clickedItemType = getWeaponType(otherStack.getItem());
-            Item newItem = ModItemsRegistry.MIMICRY_ITEMS.get(clickedItemType).get();
+            Item newItem = ItemRegistry.MIMICRY_ITEMS.get(clickedItemType).get();
 
             if(newItem instanceof MimicryItem mimicryItem && isFormEnabled(mimicryItem, player)) {
                 ItemStack newStack = stack.copyComponentsToNewStack(mimicryItem, 1);
@@ -221,7 +221,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         inventoryStacks.addAll(player.getInventory().offHand);
 
         for (ItemStack stack : inventoryStacks) {
-            if(stack.isIn(ModTagRegistry.ALL)) {
+            if(stack.isIn(TagRegistry.ALL)) {
                 String form = getWeaponType(stack.getItem());
                 if(form != null && isFormEnabled(form, player)) {
                     if(!availableForms.contains(form)) {
@@ -250,7 +250,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     public String getRandom(String currentForm, PlayerEntity player) {
         List<String> availableForms = new ArrayList<>();
 
-        for(Map.Entry<String, RegistrySupplier<Item>> weaponType : ModItemsRegistry.MIMICRY_ITEMS.entrySet()) {
+        for(Map.Entry<String, RegistrySupplier<Item>> weaponType : ItemRegistry.MIMICRY_ITEMS.entrySet()) {
             String form =  weaponType.getKey();
 
             if(isFormEnabled(form, player) && !availableForms.contains(form) && !form.equals(currentForm)) {
@@ -439,7 +439,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_LONGSWORD));
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_LONGSWORD));
         }
 
         @ValidatedInt.Restrict(min = 0)

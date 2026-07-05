@@ -24,8 +24,8 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -47,19 +47,19 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.earthshatter.chance)) {
-                StatusEffectInstance armourCrunchEffect = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH));
+                StatusEffectInstance armourCrunchEffect = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.ARMOUR_CRUNCH));
                 if (armourCrunchEffect != null) {
                     int amplifier = armourCrunchEffect.getAmplifier() + 1;
                     target.addStatusEffect(
                             new StatusEffectInstance(
-                                    ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH),
+                                    StatusEffectRegistry.getReference(StatusEffectRegistry.ARMOUR_CRUNCH),
                                     200,
                                     amplifier
                             ), attacker);
                 } else {
                     target.addStatusEffect(
                             new StatusEffectInstance(
-                                    ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH),
+                                    StatusEffectRegistry.getReference(StatusEffectRegistry.ARMOUR_CRUNCH),
                                     200,
                                     0
                             ), attacker);
@@ -119,7 +119,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         for (LivingEntity livingEntity : targets) {
             livingEntity.damage(damageSource, 15);
             int effectTime = UNIQUE_CONFIG.earthshatter.slamEffectTime;
-            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH), effectTime, 2));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.ARMOUR_CRUNCH), effectTime, 2));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, effectTime, 1));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effectTime, 1));
             livingEntity.setVelocity(0, 1.2, 0);
@@ -163,7 +163,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.EARTHSHATTER));
+            super(new ItemStackTooltipAppender(ItemRegistry.EARTHSHATTER));
         }
 
 

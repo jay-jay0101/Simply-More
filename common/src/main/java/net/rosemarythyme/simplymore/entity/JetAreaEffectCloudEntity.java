@@ -11,7 +11,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.joml.Vector3f;
 
@@ -40,7 +40,7 @@ public class JetAreaEffectCloudEntity extends AreaEffectCloudEntity {
                 entity.addVelocity(0d,0.45d,0d);
             }
 
-            entity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.LIGHTWEIGHT), 35, 0));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.LIGHTWEIGHT), 35, 0));
 
             entity.addVelocity(new Vec3d(0d, 0.1d, 0d));
             entity.velocityModified = true;

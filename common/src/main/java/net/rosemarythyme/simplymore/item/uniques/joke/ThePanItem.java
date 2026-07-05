@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -89,7 +89,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.THE_PAN));
+            super(new ItemStackTooltipAppender(ItemRegistry.THE_PAN));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

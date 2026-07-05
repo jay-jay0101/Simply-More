@@ -23,8 +23,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -52,7 +52,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.revvengine.chance)) {
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), UNIQUE_CONFIG.revvengine.bleedTime, 0), attacker);
+            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED), UNIQUE_CONFIG.revvengine.bleedTime, 0), attacker);
         }
 
 
@@ -184,7 +184,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
         }
 
         if(time>0) {
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RAVENOUS), time, amplifier));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS), time, amplifier));
         }
 
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
@@ -213,7 +213,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
 
             target.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
                             UNIQUE_CONFIG.revvengine.bleedTime,
                             0
                     )
@@ -262,7 +262,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.REVVENGINE));
+            super(new ItemStackTooltipAppender(ItemRegistry.REVVENGINE));
         }
 
         @ValidatedInt.Restrict(min = 0)

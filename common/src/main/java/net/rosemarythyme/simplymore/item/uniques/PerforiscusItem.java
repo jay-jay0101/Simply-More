@@ -16,8 +16,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.FlowerFieldAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -41,14 +41,14 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        int amplifier = attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM)) ?
-                attacker.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM)).getAmplifier() +1 : 0;
+        int amplifier = attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)) ?
+                attacker.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)).getAmplifier() +1 : 0;
 
         amplifier = Math.min(amplifier, maxBloom);
 
         attacker.addStatusEffect(
                 new StatusEffectInstance(
-                        ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM),
+                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM),
                         UNIQUE_CONFIG.perforiscus.bloomTime,
                         amplifier
                 )
@@ -62,7 +62,7 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
         int amplifier = 0;
 
         try {
-            amplifier = user.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM)).getAmplifier();
+            amplifier = user.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)).getAmplifier();
         } catch (NullPointerException ignored) {
         }
 
@@ -77,12 +77,12 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
                     )
             );
 
-            StatusEffectInstance effect = user.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM));
-            user.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM));
+            StatusEffectInstance effect = user.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM));
+            user.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM));
 
             if(amplifier > 7) {
                 user.addStatusEffect(new StatusEffectInstance(
-                        ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM),
+                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM),
                         effect.getDuration(),
                         effect.getAmplifier() - 8
                 ));
@@ -119,7 +119,7 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.PERFORISCUS));
+            super(new ItemStackTooltipAppender(ItemRegistry.PERFORISCUS));
         }
 
         @ValidatedInt.Restrict(min = 0)

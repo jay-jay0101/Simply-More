@@ -17,8 +17,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AuraOfCorruptionAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -71,7 +71,7 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
         SimplyMoreHelperMethods.simplyMore$IdolUseEffects(
                 this,
                 user,
-                ModEffectsRegistry.getReference(ModEffectsRegistry.CURSE),
+                StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE),
                 160,
                 SoundEvents.ENTITY_EVOKER_PREPARE_ATTACK,
                 2F,
@@ -107,7 +107,7 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.DARKSENT));
+            super(new ItemStackTooltipAppender(ItemRegistry.DARKSENT));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

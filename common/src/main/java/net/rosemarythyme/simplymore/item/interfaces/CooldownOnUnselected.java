@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.components.UsageComponent;
-import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
+import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
 
 public interface CooldownOnUnselected {
 
@@ -21,11 +21,11 @@ public interface CooldownOnUnselected {
         offhand = offhand == null ? component.offhand() : offhand;
         previousOffhand = previousOffhand == null ? component.offhandPrevious() : previousOffhand;
 
-        stack.set(ModComponentRegistry.USAGE.get(), new UsageComponent(using, offhand, previousOffhand));
+        stack.set(ItemComponentRegistry.USAGE.get(), new UsageComponent(using, offhand, previousOffhand));
     }
 
     static UsageComponent getComponent(ItemStack stack) {
-        return stack.getOrDefault(ModComponentRegistry.USAGE.get(), new UsageComponent(false, false, false));
+        return stack.getOrDefault(ItemComponentRegistry.USAGE.get(), new UsageComponent(false, false, false));
     }
 
     default void startUsing(ItemStack stack, Hand hand) {

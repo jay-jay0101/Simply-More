@@ -18,8 +18,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -44,8 +44,8 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.tidebreaker.chance)) {
-                if (!attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.TIDEBREAKER))) {
-                    attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.TIDEBREAKER), UNIQUE_CONFIG.tidebreaker.cloudTime, 0), attacker);
+                if (!attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.TIDEBREAKER))) {
+                    attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.TIDEBREAKER), UNIQUE_CONFIG.tidebreaker.cloudTime, 0), attacker);
                 }
             }
 
@@ -142,7 +142,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.TIDEBREAKER));
+            super(new ItemStackTooltipAppender(ItemRegistry.TIDEBREAKER));
         }
 
         @ValidatedInt.Restrict(min = 0)

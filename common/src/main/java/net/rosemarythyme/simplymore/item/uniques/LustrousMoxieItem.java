@@ -21,8 +21,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -43,17 +43,17 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            StatusEffectInstance radiantMarkEffect = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK));
-            if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
+            StatusEffectInstance radiantMarkEffect = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK));
+            if (target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                 target.damage(attacker.getDamageSources().magic(),radiantMarkEffect.getAmplifier() + 1);
             }
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.lustrous_moxie.chance)) {
-                if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
+                if (target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                     int amplifier = radiantMarkEffect.getAmplifier() + 1;
                     int duration = 240 - (amplifier * 40);
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK), duration, amplifier), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK), duration, amplifier), attacker);
                 } else {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK), 200, 0), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK), 200, 0), attacker);
                 }
             }
         }
@@ -71,7 +71,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             damageAndKnockbackAndTeleportToRadiantMarkedTarget(target, user);
             damageAndKnockbackNearbyNonRadiantMarkedEntities(target, user);
 
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED_MOXIE), UNIQUE_CONFIG.lustrous_moxie.stunTime, 0));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED_MOXIE), UNIQUE_CONFIG.lustrous_moxie.stunTime, 0));
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
             user.getItemCooldownManager().set(this, skillCooldown);
         }
@@ -82,14 +82,14 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> potentiallyMarkedLivingEntities = AttackUtils.getTargets(user, box);
 
-        return potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK))).findAny().orElse(null);
+        return potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK))).findAny().orElse(null);
     }
 
     private void damageAndKnockbackAndTeleportToRadiantMarkedTarget(LivingEntity targetEntity, PlayerEntity user) {
         if (targetEntity == user.getAttacking()) {
             user.teleport(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ(), false);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 2, user.getZ(), 500, 3, 3, 3, 0);
-            targetEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK));
+            targetEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK));
             knockbackAndDamageEntity(targetEntity, user, UNIQUE_CONFIG.lustrous_moxie.targetDamage);
         }
     }
@@ -183,7 +183,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.LUSTROUS_MOXIE));
+            super(new ItemStackTooltipAppender(ItemRegistry.LUSTROUS_MOXIE));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

@@ -23,8 +23,8 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -53,12 +53,12 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
                 UNIQUE_CONFIG.glimmerstep.chanceMounted:
                 UNIQUE_CONFIG.glimmerstep.chance;
         if (MathUtils.chance(attacker, chance)) {
-            if (attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT))) {
-                int amplifier = attacker.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier();
+            if (attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT))) {
+                int amplifier = attacker.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT)).getAmplifier();
                 amplifier = Math.min(amplifier + 1, UNIQUE_CONFIG.glimmerstep.maxStarlight - 1);
-                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, amplifier), attacker);
+                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, amplifier), attacker);
             } else {
-                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, 0), attacker);
+                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, 0), attacker);
             }
 
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, UNIQUE_CONFIG.glimmerstep.blindTime));
@@ -73,7 +73,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 
-        if(!user.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT))) {
+        if(!user.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT))) {
             return TypedActionResult.fail(itemStack);
         }
 
@@ -117,13 +117,13 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
             float damage;
             try {
-                damage = UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight * (user.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier() + 1);
+                damage = UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight * (user.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT)).getAmplifier() + 1);
             } catch (NullPointerException e) {
                 damage = UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight;
             }
 
             ((PlayerEntity) user).getItemCooldownManager().set(this, skillCooldown);
-            user.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT));
+            user.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT));
 
             float finalDamage = damage;
             // todo: change
@@ -191,7 +191,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.GLIMMERSTEP));
+            super(new ItemStackTooltipAppender(ItemRegistry.GLIMMERSTEP));
         }
 
         @ValidatedInt.Restrict(min = 0)

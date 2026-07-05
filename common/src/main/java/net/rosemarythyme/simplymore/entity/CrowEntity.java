@@ -38,8 +38,8 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.uniques.DeathsEyrieItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -111,7 +111,7 @@ public class CrowEntity extends TameableEntity implements Ownable {
         // Checking if owner is still wielding the weapon
         PlayerEntity player = (PlayerEntity) this.getOwner();
         if (player != null) {
-            if (player.getItemCooldownManager().isCoolingDown(ModItemsRegistry.DEATHS_EYRIE.get())) {
+            if (player.getItemCooldownManager().isCoolingDown(ItemRegistry.DEATHS_EYRIE.get())) {
                 if(this.getAttackingTime() >= -1) {
                     this.setNoGravity(true);
                     this.setNoDrag(true);
@@ -155,7 +155,7 @@ public class CrowEntity extends TameableEntity implements Ownable {
                         this.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, 10,0, true, false));
                         this.owner.heal(effect.deaths_eyrie.deathsEyrieCrowAttackHeal);
                         target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,effect.deaths_eyrie.crowBlindTime));
-                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),effect.deaths_eyrie.crowBleedTime));
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),effect.deaths_eyrie.crowBleedTime));
 
                         if (target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE) != null) {
                             target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)

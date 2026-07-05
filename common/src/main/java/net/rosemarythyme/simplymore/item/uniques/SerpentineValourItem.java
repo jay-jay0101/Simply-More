@@ -19,8 +19,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.PoisonBoltAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -45,7 +45,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM))) {
+        if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM))) {
             target.timeUntilRegen = 0;
             target.damage(target.getDamageSources().generic(), UNIQUE_CONFIG.serpentine_valour.damageBonus);
         }
@@ -114,7 +114,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.SERPENTINE_VALOUR));
+            super(new ItemStackTooltipAppender(ItemRegistry.SERPENTINE_VALOUR));
         }
 
         @ValidatedInt.Restrict(min = 0)

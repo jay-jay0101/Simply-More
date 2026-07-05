@@ -9,10 +9,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class TidebreakerEffect extends StatusEffect {
         List<LivingEntity> targets = AttackUtils.getTargets(affectedEntity, box);
 
         for (LivingEntity target : targets) {
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.INSANITY), 160, 0), affectedEntity);
+            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.INSANITY), 160, 0), affectedEntity);
         }
     }
 

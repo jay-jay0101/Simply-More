@@ -23,9 +23,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.CrowEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModEntityRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -65,7 +65,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
                 int amplifier = (int) Math.floor(0.75f * (getCrows(stack) -1));
 
                 target.addStatusEffect(new StatusEffectInstance(
-                        ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
+                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
                         effectTime,
                         amplifier
                 ));
@@ -155,7 +155,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
                 } else if (pets.size() < crows) {
                     double dX = player.getRandom().nextBetween(-15,15) / 10d;
                     double dZ = player.getRandom().nextBetween(-15,15) / 10d;
-                    CrowEntity crowEntity = new CrowEntity(ModEntityRegistry.CROW.get(), world);
+                    CrowEntity crowEntity = new CrowEntity(EntityRegistry.CROW.get(), world);
                     crowEntity.setOwner(player);
                     crowEntity.setPos(player.getX()+dX, player.getEyeY()+1, player.getZ()+dZ);
 
@@ -212,7 +212,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.DEATHS_EYRIE));
+            super(new ItemStackTooltipAppender(ItemRegistry.DEATHS_EYRIE));
         }
 
 

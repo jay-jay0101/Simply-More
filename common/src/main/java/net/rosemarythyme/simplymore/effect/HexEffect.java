@@ -9,7 +9,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class HexEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int Amplifier) {
-        StatusEffectInstance effect = entity.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX));
+        StatusEffectInstance effect = entity.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX));
         if(entity.getWorld().isClient)
             return super.applyUpdateEffect(entity, Amplifier);
 
@@ -33,7 +33,7 @@ public class HexEffect extends StatusEffect {
         if(effect.getDuration() % 100 == 5) {
             entity.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.getReference(ModEffectsRegistry.HEX),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.HEX),
                             effect.getDuration(),
                             effect.getAmplifier() + 1
                     )
@@ -196,7 +196,7 @@ public class HexEffect extends StatusEffect {
         if(effect.getAmplifier() >= 4) {
             List<StatusEffectInstance> negativeEffects = entity.getStatusEffects().stream().filter(
                     statusEffectInstance -> !statusEffectInstance.getEffectType().value().isBeneficial() &&
-                            statusEffectInstance.getEffectType() != ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)
+                            statusEffectInstance.getEffectType() != StatusEffectRegistry.getReference(StatusEffectRegistry.HEX)
             ).filter(
                     statusEffectInstance ->
                             !ConfigUtils.isEffectBlacklisted(statusEffectInstance.getEffectType(), UNIQUE_CONFIG.culterex.blacklist, UNIQUE_CONFIG.culterex.includeGlobalBlacklist)
@@ -228,7 +228,7 @@ public class HexEffect extends StatusEffect {
         }
 
         if(effect.getAmplifier() >= 8) {
-            entity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX));
+            entity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX));
         }
 
         return super.applyUpdateEffect(entity, Amplifier);

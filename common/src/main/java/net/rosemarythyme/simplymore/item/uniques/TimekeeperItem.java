@@ -13,8 +13,8 @@ import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.DayTimeComponent;
-import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -52,14 +52,14 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
             boolean isFixedTime = world.getDimension().hasFixedTime();
 
             if (isFixedTime) {
-                stack.set(ModComponentRegistry.DAYTIME.get(),
+                stack.set(ItemComponentRegistry.DAYTIME.get(),
                         DayTimeComponent.of(DayTimeComponent.DayForm.TIMELESS));
             } else {
                 if (dayTime < 13000) {
-                    stack.set(ModComponentRegistry.DAYTIME.get(),
+                    stack.set(ItemComponentRegistry.DAYTIME.get(),
                             DayTimeComponent.of(DayTimeComponent.DayForm.DAY));
                 } else {
-                    stack.set(ModComponentRegistry.DAYTIME.get(),
+                    stack.set(ItemComponentRegistry.DAYTIME.get(),
                             DayTimeComponent.of(DayTimeComponent.DayForm.NIGHT));
                 }
             }
@@ -96,7 +96,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.TIMEKEEPER)); // TODO: gotta change this probably
+            super(new ItemStackTooltipAppender(ItemRegistry.TIMEKEEPER)); // TODO: gotta change this probably
         }
 
         @ValidatedInt.Restrict(min = 0)

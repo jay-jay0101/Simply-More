@@ -32,8 +32,8 @@ import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.entity.JetAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -103,7 +103,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
                 List<LivingEntity> targets = AttackUtils.getTargets(user, box);
 
                 for (LivingEntity livingEntity : targets) {
-                    livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0));
+                    livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0));
                 }
             } else {
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.PLAYERS, 1f, 1);
@@ -186,7 +186,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.BRASSTURN));
+            super(new ItemStackTooltipAppender(ItemRegistry.BRASSTURN));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

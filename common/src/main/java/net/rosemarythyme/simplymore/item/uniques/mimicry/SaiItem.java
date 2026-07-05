@@ -9,8 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -46,7 +46,7 @@ public class SaiItem extends MimicryItem {
                         AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
                                         mimicryConfig.sai.effectTime,
                                         0
                                 )
@@ -63,14 +63,14 @@ public class SaiItem extends MimicryItem {
         }
 
         if(ticksUsed >= 15) {
-            player.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
 
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {
         public MimicryEffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.MIMICRY_SAI));
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_SAI));
         }
 
         public boolean disabled = false;

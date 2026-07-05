@@ -18,8 +18,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
@@ -67,7 +67,7 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
         SimplyMoreHelperMethods.simplyMore$IdolUseEffects(
                 this,
                 user,
-                ModEffectsRegistry.getReference(ModEffectsRegistry.BLESSING),
+                StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING),
                 160,
                 SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON,
                 2F,
@@ -106,7 +106,7 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {
-            super(new ItemStackTooltipAppender(ModItemsRegistry.HOLYLIGHT));
+            super(new ItemStackTooltipAppender(ItemRegistry.HOLYLIGHT));
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)

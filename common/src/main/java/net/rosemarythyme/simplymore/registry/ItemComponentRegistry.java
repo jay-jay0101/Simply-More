@@ -12,7 +12,7 @@ import net.rosemarythyme.simplymore.item.components.DayTimeComponent;
 import net.rosemarythyme.simplymore.item.components.GrabbedComponent;
 import net.rosemarythyme.simplymore.item.components.UsageComponent;
 
-public class ModComponentRegistry {
+public class ItemComponentRegistry {
     public static final DeferredRegister<ComponentType<?>> COMPONENT_TYPES = DeferredRegister.create(SimplyMore.ID, RegistryKeys.DATA_COMPONENT_TYPE);
 
     public static final RegistrySupplier<ComponentType<CounterComponent>> COUNTER = COMPONENT_TYPES.register("counter",

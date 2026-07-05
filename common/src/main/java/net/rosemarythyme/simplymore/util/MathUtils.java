@@ -7,7 +7,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.ModComponentRegistry;
+import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
 import org.joml.Vector3d;
 
 import java.text.DecimalFormat;
@@ -47,8 +47,8 @@ public class MathUtils {
 
     public static CounterComponent getCounterComponent(ItemStack stack) {
         if((stack.getItem() instanceof SimplyMoreUniqueSwordItem swordItem)) {
-            if(stack.getComponents().contains(ModComponentRegistry.COUNTER.get())) {
-                return stack.getComponents().get(ModComponentRegistry.COUNTER.get());
+            if(stack.getComponents().contains(ItemComponentRegistry.COUNTER.get())) {
+                return stack.getComponents().get(ItemComponentRegistry.COUNTER.get());
             } else {
                 return setCounterComponent(stack, swordItem.getDefaultComponent());
             }
@@ -58,7 +58,7 @@ public class MathUtils {
     }
 
     public static CounterComponent setCounterComponent(ItemStack stack, CounterComponent component) {
-        stack.set(ModComponentRegistry.COUNTER.get(), component);
+        stack.set(ItemComponentRegistry.COUNTER.get(), component);
         return component;
     }
 
