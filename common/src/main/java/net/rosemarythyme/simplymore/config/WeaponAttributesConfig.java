@@ -24,6 +24,7 @@ public class WeaponAttributesConfig extends Config {
     @RequiresAction(action = Action.RESTART)
     public UniqueWeaponsSwingSpeed uniqueWeaponsSwingSpeed = new UniqueWeaponsSwingSpeed();
 
+    @RequiresAction(action = Action.RESTART)
     public static class WeaponTiersModifiers extends ConfigSection {
         // Stick n' Stone compat
         public ValidatedCondition<Float> wooden_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "sticknstone");
@@ -34,6 +35,7 @@ public class WeaponAttributesConfig extends Config {
         public ValidatedCondition<Float> tidesinger_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "mythicmetals");
     }
 
+    @RequiresAction(action = Action.RESTART)
     public static class WeaponTypesDamage extends ConfigSection {
         public int greatkatana_damage_modifier = 1;
         public int grandsword_damage_modifier = 6;
@@ -48,6 +50,7 @@ public class WeaponAttributesConfig extends Config {
         public int deerhorns_damage_modifier = -1;
     }
 
+    @RequiresAction(action = Action.RESTART)
     public static class WeaponTypesSwingSpeed extends ConfigSection {
         public float greatkatana_attack_speed = -2.6f;
         public float grandsword_attack_speed = -3.4f;
@@ -61,10 +64,11 @@ public class WeaponAttributesConfig extends Config {
         public float deerhorns_attack_speed = -1.9f;
     }
 
+    @RequiresAction(action = Action.RESTART)
     public static class UniqueWeaponsDamage extends ConfigSection {
         public int greatslither_damage_modifier = 5;
-        public int moltenflare_damage_modifier = 7;
-        public int grandfrost_damage_modifier = 8;
+        public int moltenflare_damage_modifier = 10;
+        public int grandfrost_damage_modifier = 11;
         public int glimmerstep_damage_modifier = 3;
         public int thebloodharvester_damage_modifier = 2;
         public int jesterpenetrate_damage_modifier = 0;
@@ -100,6 +104,7 @@ public class WeaponAttributesConfig extends Config {
         public int culterex_damage_modifier = 2;
     }
 
+    @RequiresAction(action = Action.RESTART)
     public static class UniqueWeaponsSwingSpeed extends ConfigSection {
         public float greatslither_attack_speed = -2.6f;
         public float moltenflare_attack_speed = -3.4f;
