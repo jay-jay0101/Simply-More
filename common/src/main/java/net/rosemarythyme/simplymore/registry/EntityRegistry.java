@@ -35,11 +35,7 @@ public class EntityRegistry {
     );
 
 
-    public static void registerModEntities() {
-        SimplyMore.LOGGER.info("Registering Entities for " + SimplyMore.ID);
-
-
-        // Register Entities
+    public static void register() {
         ENTITIES.register();
         EntityAttributeRegistry.register(CROW, CrowEntity::createMobAttributes);
     }

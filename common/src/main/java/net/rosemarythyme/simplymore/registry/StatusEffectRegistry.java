@@ -287,10 +287,7 @@ public class StatusEffectRegistry {
             )
     );
     
-    public static void registerModEffects() {
-        SimplyMore.LOGGER.info("Registering Status Effects for " + SimplyMore.ID);
-
-        // Register
+    public static void register() {
         EFFECTS.register();
     }
 

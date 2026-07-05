@@ -17,7 +17,7 @@ public class RecipeTypeRegistry {
                     MatterbaneClearRecipe.Serializer::new
             );
 
-    public static void registerModRecipes() {
+    public static void register() {
         RECIPES.register();
     }
 }

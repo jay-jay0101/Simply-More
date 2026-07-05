@@ -41,8 +41,7 @@ public class TagRegistry {
 
     public static TagKey<Item> LANCE_EFFECT = TagKey.of(RegistryKeys.ITEM, Identifier.of(SimplyMore.ID, "lance_effect_override"));
 
-    public static void registerModTags() {
-        SimplyMore.LOGGER.info("Registering Tags for " + SimplyMore.ID);
+    public static void register() {
     }
 
     public static final Map<String, TagKey<Item>> MIMICRY_TAGS = Map.ofEntries(

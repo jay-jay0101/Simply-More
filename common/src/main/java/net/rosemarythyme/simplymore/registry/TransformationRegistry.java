@@ -6,7 +6,7 @@ import net.sweenus.simplyswords.api.SimplySwordsAPI;
 
 public class TransformationRegistry {
 
-    public static void registerTransformations() {
+    public static void register() {
         SimplySwordsAPI.registerTransformation(Blocks.SLIME_BLOCK, Identifier.of("simplymore", "great_slither"));
         SimplySwordsAPI.registerTransformation(Blocks.BASALT, Identifier.of("simplymore", "molten_flare"));
         SimplySwordsAPI.registerTransformation(Blocks.BLUE_ICE, Identifier.of("simplymore", "grandfrost"));

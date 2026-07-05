@@ -40,7 +40,7 @@ public class ItemComponentRegistry {
                     .codec(Codec.BOOL)
                     .packetCodec(PacketCodecs.BOOL).build());
 
-    public static void registerModComponents() {
+    public static void register() {
         COMPONENT_TYPES.register();
     }
 }

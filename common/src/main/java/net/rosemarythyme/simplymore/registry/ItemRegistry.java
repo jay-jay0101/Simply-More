@@ -1352,15 +1352,12 @@ public class ItemRegistry {
                     MIMICRY_LONGSWORD)
     );
 
-    public static void registerModItems() {
-        SimplyMore.LOGGER.info("Registering Items for " + SimplyMore.ID);
+    public static void register() {
         if (Platform.isModLoaded("sticknstone")) {
-            SimplyMore.LOGGER.info("Registering Stick N Stone Compat for " + SimplyMore.ID);
             StickNStoneCompatRegistry.registerCompatItems();
         }
 
         if (Platform.isModLoaded("mythicmetals")) {
-            SimplyMore.LOGGER.info("Registering Mythic Metals Compat for " + SimplyMore.ID);
             MythicMetalsCompatRegistry.registerCompatItems();
         }
 

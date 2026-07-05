@@ -10,7 +10,7 @@ public class TooltipMotifRegistry {
     public static final DeathMotif DEATH = new DeathMotif();
     public static final BloodMotif BLOOD = new BloodMotif();
 
-    public static void registerModTooltipMotifs() {
+    public static void register() {
         MotifRegistry.register("cog", COG);
         MotifRegistry.register("death", DEATH);
         MotifRegistry.register("blood", BLOOD);

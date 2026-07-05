@@ -21,5 +21,5 @@ public class ConfigWrapper {
                 ).withFailTitle(Text.translatable("config.simplymore.condition.mod_not_loaded." + mod + ".title"));
     }
 
-    public static void registerModConfigs(){}
+    public static void register(){}
 }
