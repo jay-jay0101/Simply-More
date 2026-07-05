@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -38,20 +39,20 @@ public class GrandswordItem extends MimicryItem {
             if(ticksUsed % 10 != 0) return;
 
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicry.grandsword.damage;
+            float damage = mimicryConfig.grandsword.damage;
 
             enemies.forEach(
                     target -> {
-                        breakShield(target);
+                        AttackUtils.breakShield(target);
                         AttackUtils.hitWithEnchants(player, target, damage);
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.STRENGTH,
-                                        mimicry.grandsword.effectTime,
+                                        mimicryConfig.grandsword.effectTime,
                                         0
                                 )
                         );
-                        knockback(player, target, mimicry.grandsword.knockback);
+                        knockback(player, target, mimicryConfig.grandsword.knockback);
                     }
             );
         }
@@ -63,17 +64,12 @@ public class GrandswordItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.grandsword.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.grandsword");
+        return mimicryConfig.grandsword.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.grandsword.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.grandsword.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

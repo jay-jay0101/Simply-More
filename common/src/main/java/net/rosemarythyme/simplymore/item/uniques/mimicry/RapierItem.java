@@ -13,6 +13,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -24,21 +25,16 @@ public class RapierItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.rapier.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.rapier");
+        return mimicryConfig.rapier.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.rapier.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.rapier.tooltip1").setStyle(Styles.TEXT));
     }
 
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = mimicry.rapier.damage;
+        float damage = mimicryConfig.rapier.damage;
 
         if(ticksUsed == 4 || ticksUsed == 16) {
             List<LivingEntity> enemies = stabAttack(player, 3, 0.25f);
@@ -50,7 +46,7 @@ public class RapierItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
-                                        mimicry.rapier.effectTime,
+                                        mimicryConfig.rapier.effectTime,
                                         0
                                 )
                         );

@@ -51,13 +51,13 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
         if (attacker.getWorld().isClient())
             return super.postHit(stack, target, attacker);
 
-        if (MathUtils.chance(attacker, effect.revvengine.chance)) {
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), effect.revvengine.bleedTime, 0), attacker);
+        if (MathUtils.chance(attacker, uniqueConfig.revvengine.chance)) {
+            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), uniqueConfig.revvengine.bleedTime, 0), attacker);
         }
 
 
         float extraDamage = getHealthModifiedValue(attacker,
-                effect.revvengine.damageBuff,
+                uniqueConfig.revvengine.damageBuff,
                 (float) HelperMethods.getEntityAttackDamage(attacker));
 
         if (attacker instanceof PlayerEntity playerAttacker) {
@@ -96,7 +96,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
 
         int ticksUsed = this.getMaxUseTime(stack, user) - remainingUseTicks;
 
-        if(ticksUsed >= effect.revvengine.p3windup) {
+        if(ticksUsed >= uniqueConfig.revvengine.p3windup) {
             ((ServerWorld) user.getWorld()).spawnParticles(
                     new DustParticleEffect(
                             new Vector3f(0f,0f,0f),
@@ -122,7 +122,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
                     0.2f,
                     0.3f
             );
-        } else if(ticksUsed >= effect.revvengine.p2windup) {
+        } else if(ticksUsed >= uniqueConfig.revvengine.p2windup) {
             ((ServerWorld) user.getWorld()).spawnParticles(
                     new DustParticleEffect(
                             new Vector3f(0.5f,0.5f,0.5f),
@@ -137,7 +137,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
                     0.75f,
                     0.3f
             );
-        } else if(ticksUsed >= effect.revvengine.p1windup) {
+        } else if(ticksUsed >= uniqueConfig.revvengine.p1windup) {
             ((ServerWorld) user.getWorld()).spawnParticles(
                     new DustParticleEffect(
                             new Vector3f(1f,1f,1f),
@@ -170,16 +170,16 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
         int time = 0;
         int amplifier = 0;
 
-        if(ticksUsed >= effect.revvengine.p3windup) {
+        if(ticksUsed >= uniqueConfig.revvengine.p3windup) {
             amplifier = 1;
-            time = (int) getHealthModifiedValue(user, effect.revvengine.rangeBuff, 45);
+            time = (int) getHealthModifiedValue(user, uniqueConfig.revvengine.rangeBuff, 45);
             time += 40;
-            ((PlayerEntity) user).getItemCooldownManager().set(this, effect.revvengine.p3cooldown);
-        } else if(ticksUsed >= effect.revvengine.p2windup) {
-            time = (int) getHealthModifiedValue(user, effect.revvengine.rangeBuff, 25);
+            ((PlayerEntity) user).getItemCooldownManager().set(this, uniqueConfig.revvengine.p3cooldown);
+        } else if(ticksUsed >= uniqueConfig.revvengine.p2windup) {
+            time = (int) getHealthModifiedValue(user, uniqueConfig.revvengine.rangeBuff, 25);
             time += 25;
-            ((PlayerEntity) user).getItemCooldownManager().set(this, effect.revvengine.p2cooldown);
-        } else if(ticksUsed >= effect.revvengine.p1windup) {
+            ((PlayerEntity) user).getItemCooldownManager().set(this, uniqueConfig.revvengine.p2cooldown);
+        } else if(ticksUsed >= uniqueConfig.revvengine.p1windup) {
             phase1(user);
         }
 
@@ -207,20 +207,20 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem {
             target.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),
                     getHealthModifiedValue(user,
-                            effect.revvengine.damageBuff,
-                            effect.revvengine.p1damage) + effect.revvengine.p1damage
+                            uniqueConfig.revvengine.damageBuff,
+                            uniqueConfig.revvengine.p1damage) + uniqueConfig.revvengine.p1damage
             );
 
             target.addStatusEffect(
                     new StatusEffectInstance(
                             ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
-                            effect.revvengine.bleedTime,
+                            uniqueConfig.revvengine.bleedTime,
                             0
                     )
             );
         }
 
-        ((PlayerEntity) user).getItemCooldownManager().set(this, effect.revvengine.p1cooldown);
+        ((PlayerEntity) user).getItemCooldownManager().set(this, uniqueConfig.revvengine.p1cooldown);
 
         user.getWorld().playSound(null, particlePos.getX(), particlePos.getY(), particlePos.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1,0.5f);
 

@@ -13,6 +13,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class GreatKatanaItem extends MimicryItem {
 
         if(ticksUsed == 30) {
             List<LivingEntity> enemies = slamAttack(player, 6);
-            float damage = mimicry.great_katana.damage;
+            float damage = mimicryConfig.great_katana.damage;
 
             if(!enemies.isEmpty()) {
                 LivingEntity mainTarget = enemies.get(player.getRandom().nextBetween(0, enemies.size() - 1));
@@ -47,7 +48,7 @@ public class GreatKatanaItem extends MimicryItem {
                             player.teleport(target.getX(), target.getY(), target.getZ(), false);
                             sweepAttack(player, 0.1f);
                             if (target == mainTarget) {
-                                AttackUtils.hitWithEnchants(player, target, damage + mimicry.great_katana.extraDamage);
+                                AttackUtils.hitWithEnchants(player, target, damage + mimicryConfig.great_katana.extraDamage);
                             } else {
                                 AttackUtils.hitWithEnchants(player, target, damage);
                             }
@@ -65,17 +66,12 @@ public class GreatKatanaItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.great_katana.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.great_katana");
+        return mimicryConfig.great_katana.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.great_katana.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.great_katana.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

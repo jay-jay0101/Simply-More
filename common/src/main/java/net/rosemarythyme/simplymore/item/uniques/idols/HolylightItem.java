@@ -30,7 +30,7 @@ import java.util.List;
 
 public class HolylightItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = effect.holylight.cooldown;
+    int skillCooldown = uniqueConfig.holylight.cooldown;
 
     public HolylightItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -53,7 +53,7 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
                         attacker.getZ(),
                         attacker
                 ),
-                effect.holylight.spreadChance
+                uniqueConfig.holylight.spreadChance
         );
 
         return super.postHit(stack, target, attacker);
@@ -92,7 +92,7 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip6",
-                effect.holylight.blessingHeal/2).setStyle(textStyle));
+                uniqueConfig.holylight.blessingHeal/2).setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

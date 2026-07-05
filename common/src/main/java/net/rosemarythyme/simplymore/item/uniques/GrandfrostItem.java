@@ -33,7 +33,7 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.grandfrost.cooldown;
+    int skillCooldown = uniqueConfig.grandfrost.cooldown;
 
     public GrandfrostItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.GRANDSWORD, settings);
@@ -42,8 +42,8 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (target.isBlocking() || MathUtils.chance(attacker, effect.grandfrost.chance)) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.CHILL), effect.grandfrost.chillTime, 0), attacker);
+                if (target.isBlocking() || MathUtils.chance(attacker, uniqueConfig.grandfrost.chance)) {
+                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.CHILL), uniqueConfig.grandfrost.chillTime, 0), attacker);
                 }
             }
         return super.postHit(stack, target, attacker);
@@ -55,7 +55,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
             return super.use(world, user, hand);
         }
 
-        Box box = MathUtils.createCubeBox(user.getPos(), effect.grandfrost.blizzardRange);
+        Box box = MathUtils.createCubeBox(user.getPos(), uniqueConfig.grandfrost.blizzardRange);
         List<LivingEntity> livingEntities = AttackUtils.getTargets(user, box);
 
         if (livingEntities.size() > 1) {
@@ -76,12 +76,12 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
                     return super.use(world, user, hand);
                 }
 
-                float knockbackStrength = effect.grandfrost.blizzardStrength;
+                float knockbackStrength = uniqueConfig.grandfrost.blizzardStrength;
                 double normalizedDeltaX = deltaX / distance;
                 double normalizedDeltaZ = deltaZ / distance;
 
-                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.CHILL), effect.grandfrost.blizzardEffectTime, 0));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.grandfrost.blizzardEffectTime, 3));
+                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.CHILL), uniqueConfig.grandfrost.blizzardEffectTime, 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, uniqueConfig.grandfrost.blizzardEffectTime, 3));
                 livingEntity.setVelocity(normalizedDeltaX * knockbackStrength, 0.4, normalizedDeltaZ * knockbackStrength);
                 livingEntity.velocityModified = true;
             }

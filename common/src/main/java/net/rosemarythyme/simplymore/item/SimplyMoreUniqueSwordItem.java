@@ -30,7 +30,7 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
     String[] repairIngredient;
     final SwordTypes swordType;
 
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static UniqueEffectConfig uniqueConfig = ConfigWrapper.unique;
 
     public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
         super(toolMaterial, settings.fireproof().attributeModifiers(

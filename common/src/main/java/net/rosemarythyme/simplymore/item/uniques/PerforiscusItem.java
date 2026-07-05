@@ -26,7 +26,7 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.perforiscus.cooldown;
+    int skillCooldown = uniqueConfig.perforiscus.cooldown;
 
     public static final int maxBloom = 15;
 
@@ -49,7 +49,7 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
         attacker.addStatusEffect(
                 new StatusEffectInstance(
                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLOOM),
-                        effect.perforiscus.bloomTime,
+                        uniqueConfig.perforiscus.bloomTime,
                         amplifier
                 )
         );

@@ -13,6 +13,8 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class AttackUtils {
+    public static int INFINITE_DURATION = 9999999;
+
     public static void hitWithEnchants(PlayerEntity attacker, LivingEntity target, float damage) {
         if(!(attacker.getWorld() instanceof ServerWorld world)) return;
 
@@ -43,5 +45,9 @@ public class AttackUtils {
         return attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
                 (target) -> canHitTarget(attacker, target)
         ).toList();
+    }
+
+    public static void breakShield(LivingEntity target) {
+        if(target.isBlocking() && target instanceof PlayerEntity playerEntity) playerEntity.disableShield();
     }
 }

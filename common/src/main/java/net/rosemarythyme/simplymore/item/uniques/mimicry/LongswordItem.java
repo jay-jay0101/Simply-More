@@ -11,6 +11,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -23,12 +24,12 @@ public class LongswordItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 3) {
             List<LivingEntity> enemies = sweepAttack(player, 1.6f);
-            float damage = mimicry.longsword.damage + (enemies.size() * mimicry.longsword.extraDamage);
+            float damage = mimicryConfig.longsword.damage + (enemies.size() * mimicryConfig.longsword.extraDamage);
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicry.longsword.knockback);
+                        knockback(player, target, mimicryConfig.longsword.knockback);
                     }
             );
         }
@@ -40,17 +41,12 @@ public class LongswordItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.longsword.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.longsword");
+        return mimicryConfig.longsword.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.longsword.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.longsword.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

@@ -11,6 +11,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -23,12 +24,12 @@ public class GreataxeItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 5f);
-            float damage = mimicry.greataxe.damage;
+            float damage = mimicryConfig.greataxe.damage;
             enemies.forEach(
                     target -> {
-                        breakShield(target);
+                        AttackUtils.breakShield(target);
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicry.greataxe.knockback);
+                        knockback(player, target, mimicryConfig.greataxe.knockback);
                     }
             );
         }
@@ -40,17 +41,12 @@ public class GreataxeItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.greataxe.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.greataxe");
+        return mimicryConfig.greataxe.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.greataxe.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.greataxe.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

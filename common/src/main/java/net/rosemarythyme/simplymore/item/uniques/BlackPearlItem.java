@@ -32,7 +32,7 @@ import java.util.List;
 
 
 public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.black_pearl.cooldown;
+    int skillCooldown = uniqueConfig.black_pearl.cooldown;
 
     public BlackPearlItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -42,7 +42,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, effect.black_pearl.chance)) {
+            if (MathUtils.chance(attacker, uniqueConfig.black_pearl.chance)) {
                 List<StatusEffectInstance> positiveEffects = target.getStatusEffects().stream()
                         .filter(effect -> effect.getEffectType().value().getCategory() == StatusEffectCategory.BENEFICIAL)
                         .toList();

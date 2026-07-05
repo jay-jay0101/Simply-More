@@ -36,7 +36,7 @@ import java.util.List;
 
 public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = effect.matterbane.cooldown;
+    int skillCooldown = uniqueConfig.matterbane.cooldown;
 
     public MatterbaneItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -71,7 +71,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, effect.matterbane.chance) && attacker instanceof PlayerEntity player) {
+            if (MathUtils.chance(attacker, uniqueConfig.matterbane.chance) && attacker instanceof PlayerEntity player) {
                 fireBolt(player, getColor(attacker.getStackInHand(Hand.MAIN_HAND)));
             }
         }
@@ -80,7 +80,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
 
     public void fireBolt(PlayerEntity user, Vector3f color) {
         user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.ENTITY_ZOMBIE_VILLAGER_CONVERTED, user.getSoundCategory(), 1F, 2F);
-        for(int j = 0; j< effect.matterbane.range * 4; j++) {
+        for(int j = 0; j< uniqueConfig.matterbane.range * 4; j++) {
 
             float yaw = (float) Math.toRadians(user.getYaw()+90);
 
@@ -102,7 +102,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             Box box = MathUtils.createCubeBox(new Vec3d(x, y, z).add(dX, 0, dZ), 0.6);
             List<LivingEntity> targets = AttackUtils.getTargets(user, box);
             for (LivingEntity target : targets) {
-                target.damage(user.getDamageSources().magic(),effect.matterbane.damage);
+                target.damage(user.getDamageSources().magic(), uniqueConfig.matterbane.damage);
             }
         }
     }
@@ -122,7 +122,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip2", effect.matterbane.range).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip2", uniqueConfig.matterbane.range).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.matterbane.tooltip5").setStyle(textStyle));

@@ -35,7 +35,7 @@ public class ModComponentRegistry {
                     .codec(GrabbedComponent.CODEC)
                     .packetCodec(GrabbedComponent.PACKET_CODEC).build());
 
-    public static final RegistrySupplier<ComponentType<Boolean>> CHANGE = COMPONENT_TYPES.register("charge",
+    public static final RegistrySupplier<ComponentType<Boolean>> CHANGE = COMPONENT_TYPES.register("should_change",
             () -> ComponentType.<Boolean>builder()
                     .codec(Codec.BOOL)
                     .packetCodec(PacketCodecs.BOOL).build());

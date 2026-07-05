@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -25,13 +26,13 @@ public class PernachItem extends MimicryItem {
 
     @Override
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = mimicry.pernach.damage;
+        float damage = mimicryConfig.pernach.damage;
 
         if(ticksUsed == 3 || ticksUsed == 12) {
             List<LivingEntity> enemies = sweepAttack(player, 1.4f);
             enemies.forEach(
                     target -> {
-                        if(target.isBlocking()) breakShield(target);
+                        if(target.isBlocking()) AttackUtils.breakShield(target);
                         AttackUtils.hitWithEnchants(player, target, damage);
                     }
             );
@@ -47,21 +48,21 @@ public class PernachItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.pernach.effectTime,
+                                        mimicryConfig.pernach.effectTime,
                                         1
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WEAKNESS,
-                                        mimicry.pernach.effectTime,
+                                        mimicryConfig.pernach.effectTime,
                                         0
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
-                                        mimicry.pernach.effectTime,
+                                        mimicryConfig.pernach.effectTime,
                                         0
                                 )
                         );
@@ -76,17 +77,12 @@ public class PernachItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.pernach.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.pernach");
+        return mimicryConfig.pernach.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.pernach.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.pernach.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

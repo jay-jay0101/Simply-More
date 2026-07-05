@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 
 
 public class VipersCallItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.vipers_call.vipersCallCooldown;
+    int skillCooldown = uniqueConfig.vipers_call.vipersCallCooldown;
 
     public VipersCallItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -67,7 +67,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
             blacklist = Stream.concat(
                     Set.of(EffectRegistry.FATAL_FLICKER.get(), StatusEffects.ABSORPTION.value(),
                             EffectRegistry.FLAMESEED.get(), EffectRegistry.FRENZY.get()).stream(),
-                    effect.vipers_call.blacklist.stream()
+                    uniqueConfig.vipers_call.blacklist.stream()
             ).collect(Collectors.toSet());
         }
 

@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -26,22 +27,22 @@ public class GreathammerItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 6 || ticksUsed == 18) {
             List<LivingEntity> enemies = slamAttack(player, 6f);
-            float damage = mimicry.greathammer.damage;
+            float damage = mimicryConfig.greathammer.damage;
             enemies.forEach(
                     target -> {
-                        breakShield(target);
+                        AttackUtils.breakShield(target);
                         AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.greathammer.effectTime,
+                                        mimicryConfig.greathammer.effectTime,
                                         1
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WEAKNESS,
-                                        mimicry.greathammer.effectTime,
+                                        mimicryConfig.greathammer.effectTime,
                                         1
                                 )
                         );
@@ -56,17 +57,12 @@ public class GreathammerItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.greathammer.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.greathammer");
+        return mimicryConfig.greathammer.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.greathammer.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.greathammer.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

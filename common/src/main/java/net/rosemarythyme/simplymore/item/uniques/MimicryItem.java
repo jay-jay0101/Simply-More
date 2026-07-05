@@ -20,7 +20,6 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.Box;
@@ -43,19 +42,11 @@ import org.joml.Vector3d;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 
 public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
-    protected final Style textStyle = Styles.TEXT;
-    protected final Style abilityStyle = Styles.ABILITY;
-    protected final Style rightClickStyle = Styles.RIGHT_CLICK;
 
-    protected static MimicryConfig mimicry = effect.mimicry.config;
-
-    int skillBetweenComboCooldown = effect.mimicry.cooldown;
-    int skillCooldown = effect.mimicry.typeCooldown;
-    public static final int usageEffectTime = 9999999;
+    protected static MimicryConfig mimicryConfig = uniqueConfig.mimicry.config;
 
     public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, swordType, settings);
@@ -70,7 +61,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 
-        if(user.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING))) {
+        if(isUsingAbility(user)) {
             return TypedActionResult.fail(itemStack);
         }
 
@@ -82,7 +73,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (user.getWorld().isClient || !(user instanceof PlayerEntity)) {
+        if (user.getWorld().isClient() || !(user instanceof PlayerEntity)) {
             super.usageTick(world, user, stack, remainingUseTicks);
             return;
         }
@@ -95,7 +86,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             user.addStatusEffect(
                     new StatusEffectInstance(
                             ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING),
-                            usageEffectTime,
+                            AttackUtils.INFINITE_DURATION,
                             getAmplifier(stack.getItem())
                     )
             );
@@ -117,7 +108,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return effect.mimicry.windup;
+        return uniqueConfig.mimicry.windup;
     }
 
     @Override
@@ -127,53 +118,56 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (Boolean.TRUE.equals(stack.get(ModComponentRegistry.CHANGE.get()))
-                && entity instanceof PlayerEntity playerEntity
-                && !playerEntity.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING))
-                && !playerEntity.getWorld().isClient
-        ) {
-            playerEntity.getItemCooldownManager().set(stack.getItem(), skillCooldown);
-            String currentForm = null;
+        Boolean shouldChange = stack.get(ModComponentRegistry.CHANGE.get());
 
-            for (Map.Entry<String, RegistrySupplier<Item>> itemEntry : ModItemsRegistry.MIMICRY_ITEMS.entrySet()) {
-                if(itemEntry.getValue().get() == stack.getItem()) {
-                    currentForm = itemEntry.getKey();
-                }
-            }
-
-            String newForm = getWeightedRandomForm(currentForm, playerEntity);
-            Item newItem = ModItemsRegistry.MIMICRY_ITEMS.get(newForm).get();
-            playerEntity.getItemCooldownManager().set(newItem, skillBetweenComboCooldown);
-
-            if(newItem instanceof MimicryItem mimicryItem) {
-                ItemStack newItemStack = stack.copyComponentsToNewStack(mimicryItem, 1);
-                newItemStack.set(ModComponentRegistry.CHANGE.get(), false);
-
-                int slotIndex = playerEntity.getInventory().getSlotWithStack(stack);
-                if(slotIndex != -1) {
-                    playerEntity.getInventory().setStack(slotIndex, newItemStack);
-                } else {
-                    if(playerEntity.getOffHandStack() == stack) {
-                        playerEntity.setStackInHand(Hand.OFF_HAND, newItemStack);
-                    }
-                }
-            }
+        if(shouldChange == null) {
+            stack.set(ModComponentRegistry.CHANGE.get(), false);
+            shouldChange = false;
         }
 
-        if(stack.get(ModComponentRegistry.CHANGE.get()) == null) {
-            stack.set(ModComponentRegistry.CHANGE.get(), false);
+        if (shouldChange
+                && entity instanceof PlayerEntity player
+                && !isUsingAbility(player)
+                && !world.isClient()) {
+            swapForm(player, stack);
         }
 
         VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
-    public Text getMimicryFormName() {
-        return null;
+    public void swapForm(PlayerEntity player, ItemStack stack) {
+        player.getItemCooldownManager().set(stack.getItem(), uniqueConfig.mimicry.typeCooldown);
+        String currentForm = null;
+
+        for (Map.Entry<String, RegistrySupplier<Item>> itemEntry : ModItemsRegistry.MIMICRY_ITEMS.entrySet()) {
+            if(itemEntry.getValue().get() == stack.getItem()) {
+                currentForm = itemEntry.getKey();
+            }
+        }
+
+        String newForm = getWeightedRandomForm(currentForm, player);
+        if(newForm == null) return;
+
+        Item newItem = ModItemsRegistry.MIMICRY_ITEMS.get(newForm).get();
+        player.getItemCooldownManager().set(newItem, uniqueConfig.mimicry.cooldown);
+
+        if(newItem instanceof MimicryItem mimicryItem) {
+            ItemStack newItemStack = stack.copyComponentsToNewStack(mimicryItem, 1);
+            newItemStack.set(ModComponentRegistry.CHANGE.get(), false);
+
+            int slotIndex = player.getInventory().getSlotWithStack(stack);
+            if(slotIndex != -1) {
+                player.getInventory().setStack(slotIndex, newItemStack);
+            } else {
+                if(player.getOffHandStack() == stack) {
+                    player.setStackInHand(Hand.OFF_HAND, newItemStack);
+                }
+            }
+        }
     }
 
-
-    public String checkItem(Item item) {
+    public String getWeaponType(Item item) {
         for(Map.Entry<String, TagKey<Item>> tagKeyEntry : ModTagRegistry.MIMICRY_TAGS.entrySet()) {
             TagKey<Item> itemTagKey = tagKeyEntry.getValue();
 
@@ -188,21 +182,27 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         return !user.getItemCooldownManager().isCoolingDown(item) && !item.isFormDisabledInConfig();
     }
 
-    public boolean isFormDisabledInConfig() {
-        return false;
+    public boolean isFormEnabled(String form, PlayerEntity user) {
+        return isFormEnabled(((MimicryItem) ModItemsRegistry.MIMICRY_ITEMS.get(form).get()), user);
+    }
+
+    public abstract boolean isFormDisabledInConfig();
+
+    public boolean isUsingAbility(PlayerEntity player) {
+        return player.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING));
     }
 
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
-        if(otherStack.isIn(ModTagRegistry.ALL) && !player.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MIMICRY_HAPPENING))) {
-            String clickedItemType = checkItem(otherStack.getItem());
-            Item itemToTransformInto = ModItemsRegistry.MIMICRY_ITEMS.get(clickedItemType).get();
+        if(otherStack.isIn(ModTagRegistry.ALL) && !isUsingAbility(player)) {
+            String clickedItemType = getWeaponType(otherStack.getItem());
+            Item newItem = ModItemsRegistry.MIMICRY_ITEMS.get(clickedItemType).get();
 
-            if(itemToTransformInto instanceof MimicryItem mimicryItem && isFormEnabled(mimicryItem, player)) {
-                ItemStack newItem = stack.copyComponentsToNewStack(mimicryItem, 1);
+            if(newItem instanceof MimicryItem mimicryItem && isFormEnabled(mimicryItem, player)) {
+                ItemStack newStack = stack.copyComponentsToNewStack(mimicryItem, 1);
 
                 int slotIndex = player.getInventory().getSlotWithStack(stack);
                 if(slotIndex != -1) {
-                    player.getInventory().setStack(slotIndex, newItem);
+                    player.getInventory().setStack(slotIndex, newStack);
 
                     player.giveItemStack(otherStack);
                     return true;
@@ -216,59 +216,63 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     public String getWeightedRandomForm(String currentForm, PlayerEntity player) {
         List<String> availableForms = new ArrayList<>();
 
-        // list weapon items in inventory
-        for (int i = 0; i < 36; i++) {
-            ItemStack itemStack = player.getInventory().getStack(i);
+        List<ItemStack> inventoryStacks = new ArrayList<>(player.getInventory().main);
+        inventoryStacks.addAll(player.getInventory().offHand);
 
-            if(itemStack.isIn(ModTagRegistry.ALL)) {
-                String formString = checkItem(itemStack.getItem());
-                if(formString != null && isFormEnabled(((MimicryItem) ModItemsRegistry.MIMICRY_ITEMS.get(formString).get()), player)) {
-                    if(!availableForms.contains(formString)) {
-                        availableForms.add(formString);
+        for (ItemStack stack : inventoryStacks) {
+            if(stack.isIn(ModTagRegistry.ALL)) {
+                String form = getWeaponType(stack.getItem());
+                if(form != null && isFormEnabled(form, player)) {
+                    if(!availableForms.contains(form)) {
+                        availableForms.add(form);
                     }
                 }
             }
         }
 
-        // Chance to turn into an item in your inventory, dependent on the amount of weapons in your inventory
-        // max chance 50%
         int chance = Math.min(15 + (availableForms.size() * 10), 50);
-        if(player.getRandom().nextBetween(1,100) < chance) {
-            availableForms.clear();
+        if(!MathUtils.chance(player, chance)) {
+            return getRandom(currentForm, player);
         }
 
-        // Cannot change into the current form
         availableForms.remove(currentForm);
 
-        /* otherwise, choose randomly */
         if(availableForms.isEmpty()) {
-            for(Map.Entry<String, RegistrySupplier<Item>> itemEntry : ModItemsRegistry.MIMICRY_ITEMS.entrySet()) {
-                String formString =  itemEntry.getKey();
-                Item formItem = itemEntry.getValue().get();
+            return getRandom(currentForm, player);
+        }
 
-                if(isFormEnabled((MimicryItem) formItem, player) && !availableForms.contains(formString) && !formString.equals(currentForm)) {
-                    availableForms.add(formString);
-                }
+        return availableForms.get(player.getRandom().nextInt(availableForms.size()));
+    }
+
+    public String getRandom(String currentForm, PlayerEntity player) {
+        List<String> availableForms = new ArrayList<>();
+
+        for(Map.Entry<String, RegistrySupplier<Item>> weaponType : ModItemsRegistry.MIMICRY_ITEMS.entrySet()) {
+            String form =  weaponType.getKey();
+
+            if(isFormEnabled(form, player) && !availableForms.contains(form) && !form.equals(currentForm)) {
+                availableForms.add(form);
             }
         }
 
-        return availableForms.get(new Random().nextInt(availableForms.size()));
+        return availableForms.isEmpty() ?
+                null :
+                availableForms.get(player.getRandom().nextInt(availableForms.size()));
     }
 
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
-    }
+    public abstract void usageTimeline(PlayerEntity player, int ticksUsed);
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip4").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip6").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.tooltip6").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
         appendSpecificTooltip(tooltip);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
@@ -428,10 +432,6 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         }
 
         return targets;
-    }
-
-    public static void breakShield(LivingEntity target) {
-        if(target.isBlocking() && target instanceof PlayerEntity playerEntity) playerEntity.disableShield();
     }
 
     public static class EffectSettings extends TooltipSettings {

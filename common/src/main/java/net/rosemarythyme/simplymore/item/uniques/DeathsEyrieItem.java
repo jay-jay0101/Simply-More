@@ -47,7 +47,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
         return new CounterComponent(0, 5);
     }
 
-    int skillCooldown = effect.deaths_eyrie.cooldown;
+    int skillCooldown = uniqueConfig.deaths_eyrie.cooldown;
     public static final int maxCrows = 5;
 
 
@@ -59,9 +59,9 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient() && attacker instanceof PlayerEntity playerAttacker && !playerAttacker.getItemCooldownManager().isCoolingDown(this)) {
-            if (MathUtils.chance(attacker, effect.deaths_eyrie.chance)) {
-                int effectTime = effect.deaths_eyrie.baseBleedTime;
-                effectTime += effect.deaths_eyrie.additionalBleedTime * getCrows(stack);
+            if (MathUtils.chance(attacker, uniqueConfig.deaths_eyrie.chance)) {
+                int effectTime = uniqueConfig.deaths_eyrie.baseBleedTime;
+                effectTime += uniqueConfig.deaths_eyrie.additionalBleedTime * getCrows(stack);
                 int amplifier = (int) Math.floor(0.75f * (getCrows(stack) -1));
 
                 target.addStatusEffect(new StatusEffectInstance(
@@ -106,7 +106,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
             if (!pets.isEmpty()) {
                 AtomicInteger offset = new AtomicInteger();
                 pets.forEach(crowEntity -> {
-                    crowEntity.setAttackingTime(offset.get() + (pets.size() * effect.deaths_eyrie.crowAttackTimePerCrow));
+                    crowEntity.setAttackingTime(offset.get() + (pets.size() * uniqueConfig.deaths_eyrie.crowAttackTimePerCrow));
                     offset.getAndIncrement();
                     crowEntity.setAttackingUuid(target.getUuid());
                 });

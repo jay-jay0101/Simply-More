@@ -40,7 +40,7 @@ import java.util.UUID;
 
 
 public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.myrmedge.cooldown + effect.myrmedge.grabTime;
+    int skillCooldown = uniqueConfig.myrmedge.cooldown + uniqueConfig.myrmedge.grabTime;
 
     public MyrmedgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -71,7 +71,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
             user.addStatusEffect(
                     new StatusEffectInstance(
                             ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING),
-                            effect.myrmedge.grabTime
+                            uniqueConfig.myrmedge.grabTime
                     )
             );
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_EVOKER_FANGS_ATTACK, SoundCategory.PLAYERS, 1,1.5f);
@@ -88,7 +88,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
 
         if (attacker instanceof PlayerEntity playerAttacker) {
             float extraDamage = getHungerModifiedValue(playerAttacker,
-                    effect.myrmedge.maxDamageBonus,
+                    uniqueConfig.myrmedge.maxDamageBonus,
                     (float) HelperMethods.getEntityAttackDamage(attacker));
 
             target.timeUntilRegen = 0;
@@ -176,7 +176,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
 
                     // Throw
                     if(player.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.GRASPING)).getDuration() == 1) {
-                        Vector3d normalisedVector = MathUtils.getNormalised2dVector(player.getYaw()).mul(effect.myrmedge.throwStrength);
+                        Vector3d normalisedVector = MathUtils.getNormalised2dVector(player.getYaw()).mul(uniqueConfig.myrmedge.throwStrength);
                         livingTarget.setVelocity(new Vec3d(
                                 normalisedVector.x(),
                                 0.2f,
@@ -208,7 +208,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip7", MathUtils.translateTicks(
-                effect.myrmedge.grabTime
+                uniqueConfig.myrmedge.grabTime
         )).setStyle(textStyle));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplymore.myrmedge.tooltip8").setStyle(textStyle));

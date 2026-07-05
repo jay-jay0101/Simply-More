@@ -32,7 +32,7 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.the_vessel_breach.cooldown;
+    int skillCooldown = uniqueConfig.the_vessel_breach.cooldown;
 
     public TheVesselBreachItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -43,10 +43,10 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
             if (!attacker.getWorld().isClient()) {
                 if (!(target instanceof ArmorStandEntity)) {
                     if (!attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RAGE))) {
-                        attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * effect.the_vessel_breach.rageLifesteal);
+                        attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * uniqueConfig.the_vessel_breach.rageLifesteal);
                     } else {
-                        attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * effect.the_vessel_breach.lifesteal);
-                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), effect.the_vessel_breach.bleedTime,0));
+                        attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * uniqueConfig.the_vessel_breach.lifesteal);
+                        target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED), uniqueConfig.the_vessel_breach.bleedTime,0));
                     }
                 }
             }
@@ -57,8 +57,8 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient) {
-            user.damage(user.getDamageSources().genericKill(), user.getMaxHealth()*effect.the_vessel_breach.startupDamage);
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RAGE), effect.the_vessel_breach.rageTime, 0));
+            user.damage(user.getDamageSources().genericKill(), user.getMaxHealth()* uniqueConfig.the_vessel_breach.startupDamage);
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.RAGE), uniqueConfig.the_vessel_breach.rageTime, 0));
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,12,4));
             user.getItemCooldownManager().set(this, skillCooldown);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.CRIMSON_SPORE, user.getX(), user.getY() + 0.5, user.getZ(), 500, 0.5, 0.5, 0.5, 0.25);
@@ -82,12 +82,12 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip2",
-                MathUtils.toPercentage(effect.the_vessel_breach.lifesteal)).setStyle(textStyle));
+                MathUtils.toPercentage(uniqueConfig.the_vessel_breach.lifesteal)).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip3",
-                MathUtils.toPercentage(effect.the_vessel_breach.startupDamage),
-                MathUtils.toPercentage(effect.the_vessel_breach.rageLifesteal)).setStyle(textStyle));
+                MathUtils.toPercentage(uniqueConfig.the_vessel_breach.startupDamage),
+                MathUtils.toPercentage(uniqueConfig.the_vessel_breach.rageLifesteal)).setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

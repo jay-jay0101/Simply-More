@@ -34,7 +34,7 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.lustrous_moxie.cooldown;
+    int skillCooldown = uniqueConfig.lustrous_moxie.cooldown;
 
     public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -47,7 +47,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                 target.damage(attacker.getDamageSources().magic(),radiantMarkEffect.getAmplifier() + 1);
             }
-            if (MathUtils.chance(attacker, effect.lustrous_moxie.chance)) {
+            if (MathUtils.chance(attacker, uniqueConfig.lustrous_moxie.chance)) {
                 if (target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
                     int amplifier = radiantMarkEffect.getAmplifier() + 1;
                     int duration = 240 - (amplifier * 40);
@@ -71,14 +71,14 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             damageAndKnockbackAndTeleportToRadiantMarkedTarget(target, user);
             damageAndKnockbackNearbyNonRadiantMarkedEntities(target, user);
 
-            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED_MOXIE), effect.lustrous_moxie.stunTime, 0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED_MOXIE), uniqueConfig.lustrous_moxie.stunTime, 0));
             user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get(), SoundCategory.PLAYERS);
             user.getItemCooldownManager().set(this, skillCooldown);
         }
     }
 
     private LivingEntity locateRadiantMarkedTarget(PlayerEntity user) {
-        int boxRange = effect.lustrous_moxie.range;
+        int boxRange = uniqueConfig.lustrous_moxie.range;
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> potentiallyMarkedLivingEntities = AttackUtils.getTargets(user, box);
 
@@ -90,17 +90,17 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
             user.teleport(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ(), false);
             ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 2, user.getZ(), 500, 3, 3, 3, 0);
             targetEntity.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.RADIANT_MARK));
-            knockbackAndDamageEntity(targetEntity, user, effect.lustrous_moxie.targetDamage);
+            knockbackAndDamageEntity(targetEntity, user, uniqueConfig.lustrous_moxie.targetDamage);
         }
     }
 
     private void damageAndKnockbackNearbyNonRadiantMarkedEntities(LivingEntity targetEntity, PlayerEntity user) {
-        int boxRange = effect.lustrous_moxie.aoe;
+        int boxRange = uniqueConfig.lustrous_moxie.aoe;
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
         List<LivingEntity> nearbyLivingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         nearbyLivingEntities.remove(targetEntity);
         for (LivingEntity livingEntity : nearbyLivingEntities) {
-            knockbackAndDamageEntity(livingEntity, user, effect.lustrous_moxie.aoeDamage);
+            knockbackAndDamageEntity(livingEntity, user, uniqueConfig.lustrous_moxie.aoeDamage);
         }
     }
 
@@ -123,7 +123,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
         double normalizedDeltaX = deltaX / distance;
         double normalizedDeltaZ = deltaZ / distance;
 
-        targetEntity.setVelocity(normalizedDeltaX * effect.lustrous_moxie.knockbackStrength, 0.2, normalizedDeltaZ * effect.lustrous_moxie.knockbackStrength);
+        targetEntity.setVelocity(normalizedDeltaX * uniqueConfig.lustrous_moxie.knockbackStrength, 0.2, normalizedDeltaZ * uniqueConfig.lustrous_moxie.knockbackStrength);
         targetEntity.velocityModified = true;
     }
 

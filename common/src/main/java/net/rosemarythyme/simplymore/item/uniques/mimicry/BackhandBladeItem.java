@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class BackhandBladeItem extends MimicryItem {
             jump(player,3f,0f);
 
             List<LivingEntity> enemies = sweepAttack(player, 2f);
-            float damage = mimicry.backhand_blade.damage;
+            float damage = mimicryConfig.backhand_blade.damage;
 
             enemies.forEach(
                     target -> {
@@ -37,7 +38,7 @@ public class BackhandBladeItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.BLINDNESS,
-                                        mimicry.backhand_blade.effectTime,
+                                        mimicryConfig.backhand_blade.effectTime,
                                         0
                                 )
                         );
@@ -55,17 +56,12 @@ public class BackhandBladeItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.backhand_blade.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.backhand_blade");
+        return mimicryConfig.backhand_blade.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.backhand_blade.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.backhand_blade.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

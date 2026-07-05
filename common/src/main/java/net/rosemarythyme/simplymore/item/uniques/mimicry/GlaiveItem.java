@@ -11,6 +11,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class GlaiveItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 2) {
             List<LivingEntity> enemies = sweepAttack(player, 3f);
-            float damage = mimicry.glaive.damage;
+            float damage = mimicryConfig.glaive.damage;
             enemies.forEach(
                     target -> {
                         target.dismountVehicle();
@@ -39,17 +40,12 @@ public class GlaiveItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.glaive.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.glaive");
+        return mimicryConfig.glaive.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.glaive.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.glaive.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

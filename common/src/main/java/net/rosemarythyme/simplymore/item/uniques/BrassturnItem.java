@@ -58,7 +58,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
         int oxidisation = getOxidisation(stack) + 1;
         saveOxidisation(stack, oxidisation);
 
-        if (MathUtils.chance(attacker, effect.brassturn.chance)) {
+        if (MathUtils.chance(attacker, uniqueConfig.brassturn.chance)) {
 
             attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.ENTITY_ZOMBIE_INFECT, SoundCategory.PLAYERS, 0.5f, 2);
 
@@ -91,11 +91,11 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (getOxidisation(stack) <= 0) user.stopUsingItem();
 
-        if (remainingUseTicks % effect.brassturn.scrapeTime == 0 && user.getWorld() instanceof ServerWorld serverWorld) {
+        if (remainingUseTicks % uniqueConfig.brassturn.scrapeTime == 0 && user.getWorld() instanceof ServerWorld serverWorld) {
             int oxidisation = getOxidisation(stack) - 1;
             saveOxidisation(stack, oxidisation);
 
-            if (MathUtils.chance(user, effect.brassturn.sparkChance)) {
+            if (MathUtils.chance(user, uniqueConfig.brassturn.sparkChance)) {
                 serverWorld.spawnParticles(ParticleTypes.WAX_ON, user.getX(), user.getY(), user.getZ(), 20, 0.5, 1, 0.5, 0.2);
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.PLAYERS, 0.5f, 2);
 
@@ -103,7 +103,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
                 List<LivingEntity> targets = AttackUtils.getTargets(user, box);
 
                 for (LivingEntity livingEntity : targets) {
-                    livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED), effect.brassturn.stunTime, 0));
+                    livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED), uniqueConfig.brassturn.stunTime, 0));
                 }
             } else {
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.PLAYERS, 1f, 1);

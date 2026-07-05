@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class LanceItem extends MimicryItem {
 
         if(ticksUsed==19) {
             List<LivingEntity> enemies = stabAttack(player, 4,0.8f);
-            float damage = mimicry.lance.firstDamage;
+            float damage = mimicryConfig.lance.firstDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -46,7 +47,7 @@ public class LanceItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.lance.effectTime,
+                                        mimicryConfig.lance.effectTime,
                                         2
                                 )
                         );
@@ -56,12 +57,12 @@ public class LanceItem extends MimicryItem {
 
         if(ticksUsed==27) {
             List<LivingEntity> enemies = stabAttack(player, 4,0.8f);
-            float damage = mimicry.lance.secondDamage;
+            float damage = mimicryConfig.lance.secondDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicry.lance.knockback);
+                        knockback(player, target, mimicryConfig.lance.knockback);
                     }
             );
         }
@@ -73,17 +74,12 @@ public class LanceItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.lance.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.lance");
+        return mimicryConfig.lance.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.lance.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.lance.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

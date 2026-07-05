@@ -36,7 +36,7 @@ import java.util.List;
 
 
 public class BoasFangItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.boas_fang.cooldown;
+    int skillCooldown = uniqueConfig.boas_fang.cooldown;
 
     public BoasFangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -45,8 +45,8 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, effect.boas_fang.chance)) {
-                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.SUFFOCATION), effect.boas_fang.suffocationTime));
+            if (MathUtils.chance(attacker, uniqueConfig.boas_fang.chance)) {
+                target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.SUFFOCATION), uniqueConfig.boas_fang.suffocationTime));
             }
         }
         return super.postHit(stack, target, attacker);
@@ -85,15 +85,15 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
                     for (LivingEntity target : targets) {
                         if (target.isBlocking()) continue;
 
-                        target.damage(user.getDamageSources().magic(), effect.boas_fang.spitDamage);
+                        target.damage(user.getDamageSources().magic(), uniqueConfig.boas_fang.spitDamage);
                         target.setVelocity(velocityX/2,velocityY/2,velocityZ/2);
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, effect.boas_fang.poisonTime,1));
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, uniqueConfig.boas_fang.poisonTime,1));
                     }
                 }
-                user.setVelocity(user.getRotationVector().negate().multiply(effect.boas_fang.spitPushback));
+                user.setVelocity(user.getRotationVector().negate().multiply(uniqueConfig.boas_fang.spitPushback));
                 user.setVelocity(user.getVelocity().x, 0.0, user.getVelocity().z);
                 user.velocityModified = true;
-                user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, effect.boas_fang.spitSpeedTime,1));
+                user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, uniqueConfig.boas_fang.spitSpeedTime,1));
             }
 
 

@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.timekeeper.cooldown;
+    int skillCooldown = uniqueConfig.timekeeper.cooldown;
 
     public TimekeeperItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);

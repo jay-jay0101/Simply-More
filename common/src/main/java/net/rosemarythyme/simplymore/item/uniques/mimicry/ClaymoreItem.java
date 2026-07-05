@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -37,23 +38,23 @@ public class ClaymoreItem extends MimicryItem {
 
         if(ticksUsed==22) {
             List<LivingEntity> enemies = slamAttack(player, 5f);
-            float damage = mimicry.claymore.damage;
+            float damage = mimicryConfig.claymore.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicry.claymore.knockback);
+                        knockback(player, target, mimicryConfig.claymore.knockback);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.claymore.effectTime,
+                                        mimicryConfig.claymore.effectTime,
                                         1
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WEAKNESS,
-                                        mimicry.claymore.effectTime,
+                                        mimicryConfig.claymore.effectTime,
                                         0
                                 )
                         );
@@ -68,17 +69,12 @@ public class ClaymoreItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.claymore.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.claymore");
+        return mimicryConfig.claymore.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.claymore.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.claymore.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

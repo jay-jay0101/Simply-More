@@ -13,6 +13,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class HalberdItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 5.5f);
-            float damage = mimicry.halberd.damage;
+            float damage = mimicryConfig.halberd.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -34,7 +35,7 @@ public class HalberdItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
-                                        mimicry.halberd.effectTime,
+                                        mimicryConfig.halberd.effectTime,
                                         1
                                 )
                         );
@@ -48,7 +49,7 @@ public class HalberdItem extends MimicryItem {
             if(ticksUsed % 7 != 0) return;
 
             List<LivingEntity> enemies = sweepAttack(player, 3.2f);
-            float damage = mimicry.halberd.damage;
+            float damage = mimicryConfig.halberd.damage;
 
             enemies.forEach(
                     target -> {
@@ -57,7 +58,7 @@ public class HalberdItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
-                                        mimicry.halberd.effectTime,
+                                        mimicryConfig.halberd.effectTime,
                                         1
                                 )
                         );
@@ -72,17 +73,12 @@ public class HalberdItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.halberd.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.halberd");
+        return mimicryConfig.halberd.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.halberd.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.halberd.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class TwinbladeItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 4.5f);
-            float damage = mimicry.twinblade.firstDamage;
+            float damage = mimicryConfig.twinblade.firstDamage;
 
             enemies.forEach(
                     target -> {
@@ -35,7 +36,7 @@ public class TwinbladeItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.twinblade.effectTime,
+                                        mimicryConfig.twinblade.effectTime,
                                         1
                                 )
                         );
@@ -45,13 +46,13 @@ public class TwinbladeItem extends MimicryItem {
 
         if(ticksUsed == 24) {
             List<LivingEntity> enemies = spinAttack(player, 4.5f);
-            float damage = mimicry.twinblade.secondDamage;
+            float damage = mimicryConfig.twinblade.secondDamage;
 
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicry.twinblade.knockback);
+                        knockback(player, target, mimicryConfig.twinblade.knockback);
                     }
             );
         }
@@ -63,17 +64,12 @@ public class TwinbladeItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.twinblade.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.twinblade");
+        return mimicryConfig.twinblade.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.twinblade.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.twinblade.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

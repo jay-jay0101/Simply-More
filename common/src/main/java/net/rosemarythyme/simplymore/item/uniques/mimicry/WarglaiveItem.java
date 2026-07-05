@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class WarglaiveItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicry.warglaive.firstDamage;
+            float damage = mimicryConfig.warglaive.firstDamage;
 
             enemies.forEach(
                     target -> {
@@ -35,7 +36,7 @@ public class WarglaiveItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.warglaive.effectTime,
+                                        mimicryConfig.warglaive.effectTime,
                                         0
                                 )
                         );
@@ -49,7 +50,7 @@ public class WarglaiveItem extends MimicryItem {
 
         if(ticksUsed == 30) {
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicry.warglaive.secondDamage;
+            float damage = mimicryConfig.warglaive.secondDamage;
 
             enemies.forEach(
                     target -> {
@@ -58,7 +59,7 @@ public class WarglaiveItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.warglaive.effectTime,
+                                        mimicryConfig.warglaive.effectTime,
                                         0
                                 )
                         );
@@ -73,17 +74,12 @@ public class WarglaiveItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.warglaive.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.warglaive");
+        return mimicryConfig.warglaive.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.warglaive.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.warglaive.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

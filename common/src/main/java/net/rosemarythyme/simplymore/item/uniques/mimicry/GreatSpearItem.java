@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class GreatSpearItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 6) {
             List<LivingEntity> enemies = slamAttack(player, 4f);
-            float damage = mimicry.great_spear.slamDamage;
+            float damage = mimicryConfig.great_spear.slamDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -35,7 +36,7 @@ public class GreatSpearItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.MINING_FATIGUE,
-                                        mimicry.great_spear.effectTime,
+                                        mimicryConfig.great_spear.effectTime,
                                         25
                                 )
                         );
@@ -46,12 +47,12 @@ public class GreatSpearItem extends MimicryItem {
 
         if(ticksUsed == 18) {
             List<LivingEntity> enemies = stabAttack(player, 6,0.8f);
-            float damage = mimicry.great_spear.stabDamage;
+            float damage = mimicryConfig.great_spear.stabDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player,target, mimicry.great_spear.knockback);
+                        knockback(player,target, mimicryConfig.great_spear.knockback);
                     }
             );
         }
@@ -63,17 +64,12 @@ public class GreatSpearItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.great_spear.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.great_spear");
+        return mimicryConfig.great_spear.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.great_spear.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.great_spear.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

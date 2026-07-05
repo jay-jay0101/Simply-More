@@ -11,6 +11,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -23,11 +24,11 @@ public class CutlassItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 3) {
             List<LivingEntity> enemies = sweepAttack(player, 2f);
-            float damage = mimicry.cutlass.damage;
+            float damage = mimicryConfig.cutlass.damage;
             enemies.forEach(
                     target -> {
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, -mimicry.cutlass.pull);
+                        knockback(player, target, -mimicryConfig.cutlass.pull);
                     }
             );
         }
@@ -39,17 +40,12 @@ public class CutlassItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.cutlass.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.cutlass");
+        return mimicryConfig.cutlass.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.cutlass.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.cutlass.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

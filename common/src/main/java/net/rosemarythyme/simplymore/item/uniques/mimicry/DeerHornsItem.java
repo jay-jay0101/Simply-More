@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class DeerHornsItem extends MimicryItem {
             }
 
             List<LivingEntity> enemies = spinAttack(player, 1.2f);
-            float damage = mimicry.deer_horns.damage;
+            float damage = mimicryConfig.deer_horns.damage;
 
             enemies.forEach(
                     target -> {
@@ -55,7 +56,7 @@ public class DeerHornsItem extends MimicryItem {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SPEED,
-                                        mimicry.deer_horns.effectTime,
+                                        mimicryConfig.deer_horns.effectTime,
                                         1
                                 )
                         );
@@ -70,17 +71,12 @@ public class DeerHornsItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.deer_horns.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.deer_horns");
+        return mimicryConfig.deer_horns.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.deer_horns.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.deer_horns.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

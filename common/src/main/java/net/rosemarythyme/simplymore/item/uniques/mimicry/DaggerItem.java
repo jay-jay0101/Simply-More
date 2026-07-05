@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class DaggerItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 3) {
             List<LivingEntity> enemies = sweepAttack(player, 1.4f);
-            float damage = mimicry.dagger.damage;
+            float damage = mimicryConfig.dagger.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -34,7 +35,7 @@ public class DaggerItem extends MimicryItem {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.INVISIBILITY,
-                                        mimicry.dagger.effectTime
+                                        mimicryConfig.dagger.effectTime
                                 )
                         );
                     }
@@ -52,17 +53,12 @@ public class DaggerItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.dagger.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.dagger");
+        return mimicryConfig.dagger.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.dagger.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.dagger.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

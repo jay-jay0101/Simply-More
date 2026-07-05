@@ -34,7 +34,7 @@ import java.util.List;
 
 
 public class CulterexItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.culterex.cooldown;
+    int skillCooldown = uniqueConfig.culterex.cooldown;
 
     public CulterexItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -45,7 +45,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         if(user.getWorld().isClient)
             return super.use(world, user, hand);
 
-        Entity entity = HelperMethods.getTargetedEntity(user, effect.culterex.range);
+        Entity entity = HelperMethods.getTargetedEntity(user, uniqueConfig.culterex.range);
 
         if(entity instanceof LivingEntity target) {
             if(!AttackUtils.canHitTarget(target, user)) return super.use(world, user, hand);
@@ -79,11 +79,11 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
             } else {
                 List<StatusEffectInstance> statusEffects = target.getStatusEffects().stream()
                         .filter(statusEffectInstance -> statusEffectInstance.getEffectType().value().isBeneficial()).toList();
-                int duration = effect.culterex.baseDuration;
+                int duration = uniqueConfig.culterex.baseDuration;
 
                 for(StatusEffectInstance statusEffect : statusEffects) {
                     int amplifier = statusEffect.getAmplifier() + 1;
-                    duration += amplifier * effect.culterex.durationPerEffectLevel;
+                    duration += amplifier * uniqueConfig.culterex.durationPerEffectLevel;
                 }
 
                 target.addStatusEffect(
@@ -105,10 +105,10 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         if(target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX))
-                && MathUtils.chance(attacker, effect.culterex.chance)) {
+                && MathUtils.chance(attacker, uniqueConfig.culterex.chance)) {
             int duration = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getDuration();
             int amplifier = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getAmplifier();
-            duration += effect.culterex.extraDuration;
+            duration += uniqueConfig.culterex.extraDuration;
 
             target.addStatusEffect(
                     new StatusEffectInstance(

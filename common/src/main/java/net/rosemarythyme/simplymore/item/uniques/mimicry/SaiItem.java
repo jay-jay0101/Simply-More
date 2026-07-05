@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -25,21 +26,16 @@ public class SaiItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.sai.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.sai");
+        return mimicryConfig.sai.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.sai.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.sai.tooltip1").setStyle(Styles.TEXT));
     }
 
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = mimicry.sai.damage;
+        float damage = mimicryConfig.sai.damage;
 
         if(ticksUsed == 4 || ticksUsed == 7 || ticksUsed == 10) {
             List<LivingEntity> enemies = stabAttack(player, 2, 0.25f);
@@ -51,14 +47,14 @@ public class SaiItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         ModEffectsRegistry.getReference(ModEffectsRegistry.BLEED),
-                                        mimicry.sai.effectTime,
+                                        mimicryConfig.sai.effectTime,
                                         0
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.BLINDNESS,
-                                        mimicry.sai.effectTime,
+                                        mimicryConfig.sai.effectTime,
                                         0
                                 )
                         );

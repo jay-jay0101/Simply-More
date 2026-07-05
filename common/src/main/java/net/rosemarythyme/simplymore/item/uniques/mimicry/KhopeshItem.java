@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class KhopeshItem extends MimicryItem {
 
         if(ticksUsed == 14) {
             List<LivingEntity> enemies = sweepAttack(player, 1.2f);
-            float damage = mimicry.khopesh.damage;
+            float damage = mimicryConfig.khopesh.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -38,7 +39,7 @@ public class KhopeshItem extends MimicryItem {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SPEED,
-                                        mimicry.khopesh.effectTime,
+                                        mimicryConfig.khopesh.effectTime,
                                         2
                                 )
                         );
@@ -55,17 +56,12 @@ public class KhopeshItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.khopesh.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.khopesh");
+        return mimicryConfig.khopesh.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.khopesh.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.khopesh.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

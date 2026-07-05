@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -25,24 +26,19 @@ public class SpearItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.spear.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.spear");
+        return mimicryConfig.spear.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.spear.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.spear.tooltip1").setStyle(Styles.TEXT));
     }
 
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 6 || ticksUsed == 10) {
             List<LivingEntity> enemies = stabAttack(player, 5, 0.4f);
 
-            float damage = mimicry.spear.damage;
+            float damage = mimicryConfig.spear.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -51,7 +47,7 @@ public class SpearItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.spear.effectTime,
+                                        mimicryConfig.spear.effectTime,
                                         0
                                 )
                         );
@@ -61,16 +57,16 @@ public class SpearItem extends MimicryItem {
         if(ticksUsed == 20) {
             List<LivingEntity> enemies = stabAttack(player, 5, 0.4f);
 
-            float damage = mimicry.spear.finalDamage;
+            float damage = mimicryConfig.spear.finalDamage;
             enemies.forEach(
                     target -> {
-                        breakShield(target);
+                        AttackUtils.breakShield(target);
                         target.timeUntilRegen = 0;
                         AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicry.spear.effectTime,
+                                        mimicryConfig.spear.effectTime,
                                         0
                                 )
                         );

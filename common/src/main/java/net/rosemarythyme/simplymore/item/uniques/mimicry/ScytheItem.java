@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ScytheItem extends MimicryItem {
 
         if(ticksUsed == 15 || ticksUsed == 30 || ticksUsed == 45) {
             List<LivingEntity> enemies = sweepAttack(player, 2.8f);
-            float damage = mimicry.scythe.damage;
+            float damage = mimicryConfig.scythe.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -38,7 +39,7 @@ public class ScytheItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WITHER,
-                                        mimicry.scythe.effectTime
+                                        mimicryConfig.scythe.effectTime
                                 )
                         );
                     }
@@ -52,7 +53,7 @@ public class ScytheItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WITHER,
-                                        mimicry.scythe.effectTime
+                                        mimicryConfig.scythe.effectTime
                                 )
                         );
                     }
@@ -66,7 +67,7 @@ public class ScytheItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WITHER,
-                                        mimicry.scythe.effectTime
+                                        mimicryConfig.scythe.effectTime
                                 )
                         );
                     }
@@ -80,17 +81,12 @@ public class ScytheItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicry.scythe.disabled;
-    }
-
-    @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.scythe");
+        return mimicryConfig.scythe.disabled;
     }
 
     @Override
     public void appendSpecificTooltip(List<Text> tooltip) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.scythe.tooltip1").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.mimicry.scythe.tooltip1").setStyle(Styles.TEXT));
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {
