@@ -7,11 +7,17 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
+import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.ConfigUtils;
 
 import java.util.List;
 
 public class HexEffect extends StatusEffect {
+
+    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+
 
     public HexEffect(StatusEffectCategory category, int color) {
         super(category, color);
@@ -191,6 +197,9 @@ public class HexEffect extends StatusEffect {
             List<StatusEffectInstance> negativeEffects = entity.getStatusEffects().stream().filter(
                     statusEffectInstance -> !statusEffectInstance.getEffectType().value().isBeneficial() &&
                             statusEffectInstance.getEffectType() != ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)
+            ).filter(
+                    statusEffectInstance ->
+                            !ConfigUtils.isEffectBlacklisted(statusEffectInstance.getEffectType(), UNIQUE_CONFIG.culterex.blacklist, UNIQUE_CONFIG.culterex.includeGlobalBlacklist)
             ).toList();
 
             negativeEffects.forEach(

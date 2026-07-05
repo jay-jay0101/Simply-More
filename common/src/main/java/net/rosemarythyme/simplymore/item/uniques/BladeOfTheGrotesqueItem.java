@@ -42,8 +42,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.blade_of_the_grotesque.cooldown;
-    int skillLength = uniqueConfig.blade_of_the_grotesque.selfStunTime;
+    int skillCooldown = UNIQUE_CONFIG.blade_of_the_grotesque.cooldown;
+    int skillLength = UNIQUE_CONFIG.blade_of_the_grotesque.selfStunTime;
 
     public BladeOfTheGrotesqueItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -63,14 +63,14 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
 
 
     public static void causeStun(LivingEntity attacker) {
-        Box box = MathUtils.createCubeBox(attacker.getPos(), uniqueConfig.blade_of_the_grotesque.auraRange);
+        Box box = MathUtils.createCubeBox(attacker.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange);
 
         List<LivingEntity> targets = AttackUtils.getTargets(attacker, box);
         for (LivingEntity target : targets) {
             target.addStatusEffect(
                     new StatusEffectInstance(
                             ModEffectsRegistry.getReference(ModEffectsRegistry.STUNNED),
-                            uniqueConfig.blade_of_the_grotesque.auraStunTime),
+                            UNIQUE_CONFIG.blade_of_the_grotesque.auraStunTime),
                     attacker
             );
         }
@@ -87,7 +87,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
                 EntityAttributes.GENERIC_MOVEMENT_SPEED,
                 new EntityAttributeModifier(
                         Identifier.of(SimplyMore.ID, "grotesque_slowdown"),
-                        uniqueConfig.blade_of_the_grotesque.selfSlow,
+                        UNIQUE_CONFIG.blade_of_the_grotesque.selfSlow,
                         EntityAttributeModifier.Operation.ADD_VALUE
                 ),
                 AttributeModifierSlot.MAINHAND
@@ -105,7 +105,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
             ServerWorld serverWorld = player.getServerWorld();
             serverWorld.spawnParticles(ParticleTypes.BUBBLE_POP,player.getX(), player.getY(), player.getZ(), 200, 2,2,2, 0.1f);
 
-            Box box = MathUtils.createCubeBox(player.getPos(), uniqueConfig.blade_of_the_grotesque.auraRange);
+            Box box = MathUtils.createCubeBox(player.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange);
 
             List<LivingEntity> targets = AttackUtils.getTargets(player, box);
             for (LivingEntity target : targets) {
@@ -113,7 +113,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
                         ModEffectsRegistry.getReference(ModEffectsRegistry.GROTESQUE_WARD),
                         50,
                         1,
-                        uniqueConfig.blade_of_the_grotesque.maxAuraWard
+                        UNIQUE_CONFIG.blade_of_the_grotesque.maxAuraWard
                 );
             }
         }

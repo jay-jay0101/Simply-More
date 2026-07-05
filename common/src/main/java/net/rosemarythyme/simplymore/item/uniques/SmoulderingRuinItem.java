@@ -31,7 +31,7 @@ import java.util.List;
 
 
 public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.smouldering_ruin.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.smouldering_ruin.cooldown;
 
     public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -40,8 +40,8 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (MathUtils.chance(attacker, uniqueConfig.smouldering_ruin.chance)) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, uniqueConfig.smouldering_ruin.witherTime, 0), attacker);
+        if (MathUtils.chance(attacker, UNIQUE_CONFIG.smouldering_ruin.chance)) {
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, UNIQUE_CONFIG.smouldering_ruin.witherTime, 0), attacker);
             StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.WITHERING_FATE));
             if (targetWitheringFateStatus != null) {
                 target.addStatusEffect(

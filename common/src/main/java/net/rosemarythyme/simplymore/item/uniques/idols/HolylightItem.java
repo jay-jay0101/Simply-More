@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.item.uniques.idols;
 
+import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
@@ -10,15 +11,16 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.util.ConfigUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -30,7 +32,7 @@ import java.util.List;
 
 public class HolylightItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = uniqueConfig.holylight.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.holylight.cooldown;
 
     public HolylightItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -45,6 +47,7 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
                 1.0D,
                 1.0D,
                 1.0D,
+
                 0.0D,
                 new AuraOfPurityAreaEffectCloudEntity(
                         attacker.getWorld(),
@@ -53,7 +56,7 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
                         attacker.getZ(),
                         attacker
                 ),
-                uniqueConfig.holylight.spreadChance
+                UNIQUE_CONFIG.holylight.chance
         );
 
         return super.postHit(stack, target, attacker);
@@ -82,17 +85,14 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.holylight.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.holylight.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.holylight.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.holylight.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(Styles.RIGHT_CLICK));
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip6",
-                uniqueConfig.holylight.blessingHeal/2).setStyle(textStyle));
+                UNIQUE_CONFIG.holylight.blessingHeal/2).setStyle(Styles.TEXT));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
@@ -110,10 +110,14 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem {
         }
 
         @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float spreadChance = 0.15f;
+        public float chance = 0.15f;
         @ValidatedFloat.Restrict(min = 0f)
         public float blessingHeal = 4f;
         @ValidatedInt.Restrict(min = 0)
         public int cooldown = 800;
+        public boolean includeGlobalBlacklist = true;
+        public ValidatedSet<Identifier> blacklist = ConfigUtils.createEffectList(
+                Identifier.of("simplyswords:battle_fatigue")
+        );
     }
 }

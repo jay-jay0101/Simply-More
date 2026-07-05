@@ -38,7 +38,7 @@ import java.util.List;
 
 public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements CooldownOnUnselected {
 
-    int skillCooldown = uniqueConfig.cindergorge.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.cindergorge.cooldown;
 
     public CindergorgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -67,7 +67,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
         }
 
         float originalYaw = user.getYaw();
-        float turnAngle = 54f * (1 - ((float) remainingUseTicks / uniqueConfig.cindergorge.maxUseTime));
+        float turnAngle = 54f * (1 - ((float) remainingUseTicks / UNIQUE_CONFIG.cindergorge.maxUseTime));
         user.setYaw(originalYaw + turnAngle);
 
         if(user instanceof ServerPlayerEntity) {
@@ -75,7 +75,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
                 double cosYaw = Math.cos(yawAngle);
                 double sinYaw = Math.sin(yawAngle);
 
-                for (int distanceMultiplier = 1; distanceMultiplier < uniqueConfig.cindergorge.range; distanceMultiplier++) {
+                for (int distanceMultiplier = 1; distanceMultiplier < UNIQUE_CONFIG.cindergorge.range; distanceMultiplier++) {
                     double offsetX = -distanceMultiplier * sinYaw * 1.2;
                     double offsetZ = distanceMultiplier * cosYaw * 1.2;
 
@@ -87,7 +87,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
                     Box box = MathUtils.createCubeBox(firePos, 0.75);
                     List<LivingEntity> targets = AttackUtils.getTargets(user, box);
                     for (LivingEntity target : targets) {
-                        target.damage(user.getDamageSources().inFire(), uniqueConfig.cindergorge.fireDamage);
+                        target.damage(user.getDamageSources().inFire(), UNIQUE_CONFIG.cindergorge.fireDamage);
                         target.setOnFireFor(3);
                     }
                 }
@@ -97,7 +97,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
 
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        float relativeTime = (1 - ((float) remainingUseTicks / uniqueConfig.cindergorge.maxUseTime));
+        float relativeTime = (1 - ((float) remainingUseTicks / UNIQUE_CONFIG.cindergorge.maxUseTime));
         float cooldown = skillCooldown * relativeTime;
         cooldown = Math.max(cooldown, 120f);
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, (int) (150f * relativeTime)));
@@ -107,7 +107,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return uniqueConfig.cindergorge.maxUseTime;
+        return UNIQUE_CONFIG.cindergorge.maxUseTime;
     }
 
     @Override

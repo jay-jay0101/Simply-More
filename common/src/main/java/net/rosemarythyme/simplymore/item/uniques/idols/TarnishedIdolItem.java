@@ -44,7 +44,7 @@ public class TarnishedIdolItem extends SimplyMoreUniqueSwordItem {
                         attacker.getZ(),
                         attacker
                 ),
-                uniqueConfig.darksent.chance
+                UNIQUE_CONFIG.darksent.chance
         );
 
         return super.postHit(stack, target, attacker);

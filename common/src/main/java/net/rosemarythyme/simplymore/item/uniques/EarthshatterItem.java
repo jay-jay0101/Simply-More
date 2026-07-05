@@ -37,7 +37,7 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.earthshatter.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.earthshatter.cooldown;
 
     public EarthshatterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.GRANDSWORD, settings);
@@ -46,7 +46,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, uniqueConfig.earthshatter.chance)) {
+            if (MathUtils.chance(attacker, UNIQUE_CONFIG.earthshatter.chance)) {
                 StatusEffectInstance armourCrunchEffect = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH));
                 if (armourCrunchEffect != null) {
                     int amplifier = armourCrunchEffect.getAmplifier() + 1;
@@ -118,7 +118,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         DamageSource damageSource = player.getDamageSources().playerAttack(player);
         for (LivingEntity livingEntity : targets) {
             livingEntity.damage(damageSource, 15);
-            int effectTime = uniqueConfig.earthshatter.slamEffectTime;
+            int effectTime = UNIQUE_CONFIG.earthshatter.slamEffectTime;
             livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.ARMOUR_CRUNCH), effectTime, 2));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, effectTime, 1));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effectTime, 1));

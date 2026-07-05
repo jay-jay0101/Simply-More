@@ -36,7 +36,7 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.glimmerstep.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.glimmerstep.cooldown;
 
     public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
@@ -50,18 +50,18 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         float chance = attacker.getVehicle() instanceof LivingEntity ?
-                uniqueConfig.glimmerstep.chanceMounted:
-                uniqueConfig.glimmerstep.chance;
+                UNIQUE_CONFIG.glimmerstep.chanceMounted:
+                UNIQUE_CONFIG.glimmerstep.chance;
         if (MathUtils.chance(attacker, chance)) {
             if (attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT))) {
                 int amplifier = attacker.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier();
-                amplifier = Math.min(amplifier + 1, uniqueConfig.glimmerstep.maxStarlight - 1);
-                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), uniqueConfig.glimmerstep.starlightTime, amplifier), attacker);
+                amplifier = Math.min(amplifier + 1, UNIQUE_CONFIG.glimmerstep.maxStarlight - 1);
+                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, amplifier), attacker);
             } else {
-                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), uniqueConfig.glimmerstep.starlightTime, 0), attacker);
+                attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, 0), attacker);
             }
 
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, uniqueConfig.glimmerstep.blindTime));
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, UNIQUE_CONFIG.glimmerstep.blindTime));
 
             attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.PLAYERS, 1f,2f);
         }
@@ -102,24 +102,24 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
                 user.getX(),
                 user.getEyeY(),
                 user.getZ(),
-                Math.min(ticksUsed, Math.min(60, uniqueConfig.glimmerstep.explosionWindup)),
+                Math.min(ticksUsed, Math.min(60, UNIQUE_CONFIG.glimmerstep.explosionWindup)),
                 4f,
                 4f,
                 4f,
                 0f
         );
 
-        if(ticksUsed == uniqueConfig.glimmerstep.explosionWindup) {
+        if(ticksUsed == UNIQUE_CONFIG.glimmerstep.explosionWindup) {
             user.stopUsingItem();
 
-            int boxSize = uniqueConfig.glimmerstep.explosionRange;
+            int boxSize = UNIQUE_CONFIG.glimmerstep.explosionRange;
             Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
             List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
             float damage;
             try {
-                damage = uniqueConfig.glimmerstep.explosionDamagePerStarlight * (user.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier() + 1);
+                damage = UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight * (user.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.STARLIGHT)).getAmplifier() + 1);
             } catch (NullPointerException e) {
-                damage = uniqueConfig.glimmerstep.explosionDamagePerStarlight;
+                damage = UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight;
             }
 
             ((PlayerEntity) user).getItemCooldownManager().set(this, skillCooldown);
@@ -132,7 +132,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             ).forEach(
                     livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
                             (!AttackUtils.canHitTarget(livingEntity, user) || livingEntity == user)?
-                                    finalDamage * (uniqueConfig.glimmerstep.glimmerstepAllyDamage) : finalDamage)
+                                    finalDamage * (UNIQUE_CONFIG.glimmerstep.glimmerstepAllyDamage) : finalDamage)
             );
 
             ((ServerWorld) user.getWorld()).spawnParticles(
@@ -178,7 +178,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip2",
-                uniqueConfig.glimmerstep.maxStarlight).setStyle(textStyle));
+                UNIQUE_CONFIG.glimmerstep.maxStarlight).setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.glimmerstep.tooltip5").setStyle(textStyle));
         tooltip.add(Text.literal(""));

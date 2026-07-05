@@ -33,7 +33,7 @@ import java.util.List;
 
 
 public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.molten_flare.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.molten_flare.cooldown;
 
     public MoltenFlareItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.GRANDSWORD, settings);
@@ -43,10 +43,10 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        if (MathUtils.chance(attacker, uniqueConfig.molten_flare.chance) || attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE))) {
+        if (MathUtils.chance(attacker, UNIQUE_CONFIG.molten_flare.chance) || attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE))) {
             eruption(attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE)) ?
-                    uniqueConfig.molten_flare.radiusEmpowered:
-                    uniqueConfig.molten_flare.radius, attacker);
+                    UNIQUE_CONFIG.molten_flare.radiusEmpowered:
+                    UNIQUE_CONFIG.molten_flare.radius, attacker);
             attacker.removeStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.MOLTEN_FLARE));
         }
         return super.postHit(stack, target, attacker);

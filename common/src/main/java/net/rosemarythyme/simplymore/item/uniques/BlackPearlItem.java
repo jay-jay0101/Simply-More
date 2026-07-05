@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
+import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
@@ -15,12 +16,15 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.BlackPearlFireballEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.rosemarythyme.simplymore.util.ConfigUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -32,7 +36,7 @@ import java.util.List;
 
 
 public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.black_pearl.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.black_pearl.cooldown;
 
     public BlackPearlItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -42,18 +46,19 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, uniqueConfig.black_pearl.chance)) {
-                List<StatusEffectInstance> positiveEffects = target.getStatusEffects().stream()
+            if (MathUtils.chance(attacker, UNIQUE_CONFIG.black_pearl.chance)) {
+                List<StatusEffectInstance> possibleEffects = target.getStatusEffects().stream()
                         .filter(effect -> effect.getEffectType().value().getCategory() == StatusEffectCategory.BENEFICIAL)
+                        .filter(effect -> !ConfigUtils.isEffectBlacklisted(effect.getEffectType(), UNIQUE_CONFIG.black_pearl.blacklist, UNIQUE_CONFIG.black_pearl.includeGlobalBlacklist))
                         .toList();
 
-                if (!positiveEffects.isEmpty()) {
-                    StatusEffectInstance plunderedEffect = positiveEffects.get(attacker.getRandom().nextInt(positiveEffects.size()));
+                if (!possibleEffects.isEmpty()) {
+                    StatusEffectInstance plunderedEffect = possibleEffects.get(attacker.getRandom().nextInt(possibleEffects.size()));
 
                     int amplifier = Math.min(plunderedEffect.getAmplifier(), 4);
                     int duration = Math.min(plunderedEffect.getDuration(), 600);
 
-                    if (plunderedEffect.getDuration() == -1) {
+                    if (plunderedEffect.getDuration() == StatusEffectInstance.INFINITE) {
                         duration = 600;
                     }
 
@@ -71,6 +76,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
+    //TODO: redo
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!user.getWorld().isClient()) {
             float velocityPower = 3.0f;
@@ -124,5 +130,9 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
         public float chance = 0.1f;
         @ValidatedInt.Restrict(min = 0)
         public int cooldown = 180;
+        public boolean includeGlobalBlacklist = true;
+        public ValidatedSet<Identifier> blacklist = ConfigUtils.createEffectList(
+                SimplyMore.identifier("blessing")
+        );
     }
 }

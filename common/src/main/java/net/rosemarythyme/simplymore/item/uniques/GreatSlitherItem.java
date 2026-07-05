@@ -30,7 +30,7 @@ import java.util.List;
 
 
 public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.great_slither.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.great_slither.cooldown;
 
     public GreatSlitherItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -39,11 +39,11 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, uniqueConfig.great_slither.chance)) {
+            if (MathUtils.chance(attacker, UNIQUE_CONFIG.great_slither.chance)) {
                 if(target.hasStatusEffect(StatusEffects.POISON)) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), uniqueConfig.great_slither.venomTime, 0), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM), UNIQUE_CONFIG.great_slither.venomTime, 0), attacker);
                 } else {
-                    target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, uniqueConfig.great_slither.poisonTime, 0), attacker);
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, UNIQUE_CONFIG.great_slither.poisonTime, 0), attacker);
                 }
             }
         }
@@ -63,7 +63,7 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
             double cosYaw = Math.cos(yawAngle);
             double sinYaw = Math.sin(yawAngle);
 
-            for (int distanceMultiplier = 1; distanceMultiplier < uniqueConfig.great_slither.range; distanceMultiplier++) {
+            for (int distanceMultiplier = 1; distanceMultiplier < UNIQUE_CONFIG.great_slither.range; distanceMultiplier++) {
                 double offsetX = -distanceMultiplier * sinYaw;
                 double offsetZ = distanceMultiplier * cosYaw;
 

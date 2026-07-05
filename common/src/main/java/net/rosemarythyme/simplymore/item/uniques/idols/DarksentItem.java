@@ -31,7 +31,7 @@ import java.util.List;
 
 public class DarksentItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = uniqueConfig.darksent.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.darksent.cooldown;
 
     public DarksentItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -60,7 +60,7 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
                         attacker.getZ(),
                         attacker
                 ),
-                uniqueConfig.darksent.chance
+                UNIQUE_CONFIG.darksent.chance
         );
 
         return super.postHit(stack, target, attacker);
@@ -100,7 +100,7 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip6").setStyle(textStyle));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip9",
-                MathUtils.toPercentage(uniqueConfig.darksent.curseDamageMultiplier)).setStyle(textStyle));
+                MathUtils.toPercentage(UNIQUE_CONFIG.darksent.curseDamageMultiplier)).setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

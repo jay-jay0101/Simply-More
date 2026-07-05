@@ -45,7 +45,7 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
                         attacker.getZ(),
                         attacker
                 ),
-                uniqueConfig.holylight.spreadChance
+                UNIQUE_CONFIG.holylight.chance
         );
 
         return super.postHit(stack, target, attacker);

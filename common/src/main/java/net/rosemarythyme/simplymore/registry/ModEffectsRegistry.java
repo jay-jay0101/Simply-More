@@ -37,7 +37,7 @@ public class ModEffectsRegistry {
 
     public static final RegistrySupplier<StatusEffect> MIMICRY_HAPPENING = registerEffect(
             "mimicry_happening",
-            new MimicryEffect(StatusEffectCategory.NEUTRAL,0)
+            new MimicryEffect(StatusEffectCategory.BENEFICIAL,0)
     );
 
     public static final RegistrySupplier<StatusEffect> HEX = registerEffect(
@@ -52,7 +52,7 @@ public class ModEffectsRegistry {
 
     public static final RegistrySupplier<StatusEffect> GRASPING = registerEffect(
             "grasping",
-            new MyrmedgeEffect(StatusEffectCategory.NEUTRAL,7865862).addAttributeModifier(
+            new MyrmedgeEffect(StatusEffectCategory.BENEFICIAL,7865862).addAttributeModifier(
                     EntityAttributes.GENERIC_ATTACK_SPEED,
                     Identifier.of(SimplyMore.ID, "grasping_attack_speed"),
                     -99,
@@ -97,7 +97,7 @@ public class ModEffectsRegistry {
     );
     public static final RegistrySupplier<StatusEffect> MOLTEN_FLARE = registerEffect(
             "molten_flare",
-            new MoltenFlareEffect(StatusEffectCategory.NEUTRAL,13570080)
+            new MoltenFlareEffect(StatusEffectCategory.BENEFICIAL,13570080)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             Identifier.of(SimplyMore.ID, "molten_flare"),
@@ -112,7 +112,7 @@ public class ModEffectsRegistry {
 
     public static final RegistrySupplier<StatusEffect> LANCE = registerEffect(
             "lance_mounted",
-            new LanceEffect(StatusEffectCategory.NEUTRAL,0)
+            new LanceEffect(StatusEffectCategory.BENEFICIAL,0)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
                             Identifier.of(SimplyMore.ID, "lance_mounted"),
@@ -169,7 +169,7 @@ public class ModEffectsRegistry {
 
     public static final RegistrySupplier<StatusEffect> SOLIDIFIED = registerEffect(
             "solidified",
-            new SolidifyEffect(StatusEffectCategory.NEUTRAL,8948877)
+            new SolidifyEffect(StatusEffectCategory.BENEFICIAL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             Identifier.of(SimplyMore.ID, "solid_armor"),

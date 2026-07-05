@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
+import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
@@ -17,12 +18,14 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.ConfigUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -34,7 +37,7 @@ import java.util.List;
 
 
 public class CulterexItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.culterex.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.culterex.cooldown;
 
     public CulterexItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -45,7 +48,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         if(user.getWorld().isClient)
             return super.use(world, user, hand);
 
-        Entity entity = HelperMethods.getTargetedEntity(user, uniqueConfig.culterex.range);
+        Entity entity = HelperMethods.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range);
 
         if(entity instanceof LivingEntity target) {
             if(!AttackUtils.canHitTarget(target, user)) return super.use(world, user, hand);
@@ -79,11 +82,11 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
             } else {
                 List<StatusEffectInstance> statusEffects = target.getStatusEffects().stream()
                         .filter(statusEffectInstance -> statusEffectInstance.getEffectType().value().isBeneficial()).toList();
-                int duration = uniqueConfig.culterex.baseDuration;
+                int duration = UNIQUE_CONFIG.culterex.baseDuration;
 
                 for(StatusEffectInstance statusEffect : statusEffects) {
                     int amplifier = statusEffect.getAmplifier() + 1;
-                    duration += amplifier * uniqueConfig.culterex.durationPerEffectLevel;
+                    duration += amplifier * UNIQUE_CONFIG.culterex.durationPerEffectLevel;
                 }
 
                 target.addStatusEffect(
@@ -105,10 +108,10 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
             return super.postHit(stack, target, attacker);
 
         if(target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX))
-                && MathUtils.chance(attacker, uniqueConfig.culterex.chance)) {
+                && MathUtils.chance(attacker, UNIQUE_CONFIG.culterex.chance)) {
             int duration = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getDuration();
             int amplifier = target.getStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.HEX)).getAmplifier();
-            duration += uniqueConfig.culterex.extraDuration;
+            duration += UNIQUE_CONFIG.culterex.extraDuration;
 
             target.addStatusEffect(
                     new StatusEffectInstance(
@@ -168,6 +171,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
         public int durationPerEffectLevel = 60;
         @ValidatedInt.Restrict(min = 0)
         public int range = 30;
+        public boolean includeGlobalBlacklist = true;
+        public ValidatedSet<Identifier> blacklist = ConfigUtils.createEffectList();
     }
-
 }

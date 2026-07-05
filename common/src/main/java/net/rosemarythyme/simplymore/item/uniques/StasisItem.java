@@ -34,8 +34,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class StasisItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.stasis.cooldown;
-    int onHitCooldown = uniqueConfig.stasis.stunTime;
+    int skillCooldown = UNIQUE_CONFIG.stasis.cooldown;
+    int onHitCooldown = UNIQUE_CONFIG.stasis.stunTime;
 
 
     public StasisItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -45,7 +45,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
             if (!attacker.getWorld().isClient()) {
-                if (MathUtils.chance(attacker, uniqueConfig.stasis.chance)) {
+                if (MathUtils.chance(attacker, UNIQUE_CONFIG.stasis.chance)) {
                     attacker.getWorld().playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.PLAYERS,0.5f,2f);
                     ((ServerWorld) attacker.getWorld()).spawnParticles(ParticleTypes.ELECTRIC_SPARK,attacker.getX(),attacker.getY()+0.5,attacker.getZ(),50,0.15,0.25,0.15,0.1);
                     if (target instanceof PlayerEntity playerTarget) {
@@ -102,12 +102,12 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     }
 
     private void damageAndElectrifyEnemies(LivingEntity user, PlayerEntity player, ServerWorld world) {
-        int boxRange = uniqueConfig.stasis.range;
+        int boxRange = UNIQUE_CONFIG.stasis.range;
 
         Box box = MathUtils.createCuboidBox(user.getPos(), -boxRange, -2, -boxRange, boxRange, boxRange*2, boxRange);
         List<LivingEntity> targets = AttackUtils.getTargets(user, box);
         for (LivingEntity target : targets) {
-            target.damage(player.getDamageSources().magic(), uniqueConfig.stasis.strikeDamage);
+            target.damage(player.getDamageSources().magic(), UNIQUE_CONFIG.stasis.strikeDamage);
 
             LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
             if (lightning != null) {
@@ -121,7 +121,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return uniqueConfig.stasis.strikeWindup;
+        return UNIQUE_CONFIG.stasis.strikeWindup;
     }
 
 

@@ -47,7 +47,7 @@ import java.util.Map;
 
 public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
-    protected static MimicryConfig mimicryConfig = uniqueConfig.mimicry.config;
+    protected static MimicryConfig mimicryConfig = UNIQUE_CONFIG.mimicry.config;
 
     public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, swordType, settings);
@@ -109,7 +109,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return uniqueConfig.mimicry.windup;
+        return UNIQUE_CONFIG.mimicry.windup;
     }
 
     @Override
@@ -138,7 +138,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public void swapForm(PlayerEntity player, ItemStack stack) {
-        player.getItemCooldownManager().set(stack.getItem(), uniqueConfig.mimicry.typeCooldown);
+        player.getItemCooldownManager().set(stack.getItem(), UNIQUE_CONFIG.mimicry.typeCooldown);
         String currentForm = null;
 
         for (Map.Entry<String, RegistrySupplier<Item>> itemEntry : ModItemsRegistry.MIMICRY_ITEMS.entrySet()) {
@@ -151,7 +151,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         if(newForm == null) return;
 
         Item newItem = ModItemsRegistry.MIMICRY_ITEMS.get(newForm).get();
-        player.getItemCooldownManager().set(newItem, uniqueConfig.mimicry.cooldown);
+        player.getItemCooldownManager().set(newItem, UNIQUE_CONFIG.mimicry.cooldown);
 
         if(newItem instanceof MimicryItem mimicryItem) {
             ItemStack newItemStack = stack.copyComponentsToNewStack(mimicryItem, 1);
@@ -231,8 +231,8 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        float chance = uniqueConfig.mimicry.baseCopyChance + (availableForms.size() * uniqueConfig.mimicry.copyChancePerItem);
-        chance = Math.min(chance, uniqueConfig.mimicry.maximumCopyChance);
+        float chance = UNIQUE_CONFIG.mimicry.baseCopyChance + (availableForms.size() * UNIQUE_CONFIG.mimicry.copyChancePerItem);
+        chance = Math.min(chance, UNIQUE_CONFIG.mimicry.maximumCopyChance);
 
         if(!MathUtils.chance(player, chance)) {
             return getRandom(currentForm, player);

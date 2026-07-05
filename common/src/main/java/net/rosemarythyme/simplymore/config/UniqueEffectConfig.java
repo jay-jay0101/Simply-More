@@ -1,12 +1,14 @@
 package net.rosemarythyme.simplymore.config;
 
 import me.fzzyhmstrs.fzzy_config.config.Config;
+import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.uniques.*;
 import net.rosemarythyme.simplymore.item.uniques.idols.DarksentItem;
 import net.rosemarythyme.simplymore.item.uniques.idols.HolylightItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
+import net.rosemarythyme.simplymore.util.ConfigUtils;
 
 public class UniqueEffectConfig extends Config {
 
@@ -14,6 +16,15 @@ public class UniqueEffectConfig extends Config {
         super(Identifier.of(SimplyMore.ID, "unique_effect"));
     }
 
+    public ValidatedSet<Identifier> globalBlacklist = ConfigUtils.createEffectList(
+            Identifier.of("simplyswords:magislam"),
+            Identifier.of("simplyswords:fatal_flicker"),
+            SimplyMore.identifier("grasping"),
+            SimplyMore.identifier("lance_mounted"),
+            SimplyMore.identifier("mimicry_happening"),
+            SimplyMore.identifier("mistified"),
+            SimplyMore.identifier("rage")
+    );
     public BlackPearlItem.EffectSettings black_pearl = new BlackPearlItem.EffectSettings();
     public BladeOfTheGrotesqueItem.EffectSettings blade_of_the_grotesque = new BladeOfTheGrotesqueItem.EffectSettings();
     public BoasFangItem.EffectSettings boas_fang = new BoasFangItem.EffectSettings();

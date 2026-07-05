@@ -33,7 +33,7 @@ import java.util.List;
 
 
 public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.serpentine_valour.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.serpentine_valour.cooldown;
 
     public SerpentineValourItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
@@ -47,7 +47,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem {
 
         if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.VENOM))) {
             target.timeUntilRegen = 0;
-            target.damage(target.getDamageSources().generic(), uniqueConfig.serpentine_valour.damageBonus);
+            target.damage(target.getDamageSources().generic(), UNIQUE_CONFIG.serpentine_valour.damageBonus);
         }
 
         return super.postHit(stack, target, attacker);

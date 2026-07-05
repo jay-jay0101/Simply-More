@@ -31,7 +31,7 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = uniqueConfig.ruyi_jingu_bang.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.ruyi_jingu_bang.cooldown;
 
     public RuyiJinguBangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);

@@ -34,13 +34,13 @@ public class AttackUtils {
 
     public static boolean canHitTarget(LivingEntity attacker, LivingEntity target) {
         return attacker != null &&
-            target != null &&
-            target != attacker &&
-            target != attacker.getVehicle() &&
-            attacker != target.getVehicle() &&
-            !target.isInvulnerable() &&
-            !target.isDead() &&
-            HelperMethods.checkFriendlyFire(attacker, target);
+                target != null &&
+                target != attacker &&
+                target != attacker.getVehicle() &&
+                attacker != target.getVehicle() &&
+                !target.isInvulnerable() &&
+                !target.isDead() &&
+                HelperMethods.checkFriendlyFire(attacker, target);
     }
 
     public static List<LivingEntity> getTargets(LivingEntity attacker, Box box) {
@@ -48,6 +48,14 @@ public class AttackUtils {
 
         return attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
                 (target) -> canHitTarget(attacker, target)
+        ).toList();
+    }
+
+    public static List<LivingEntity> getAllies(LivingEntity attacker, Box box) {
+        if (attacker == null) return List.of();
+
+        return attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
+                (target) -> !HelperMethods.checkFriendlyFire(attacker, target)
         ).toList();
     }
 

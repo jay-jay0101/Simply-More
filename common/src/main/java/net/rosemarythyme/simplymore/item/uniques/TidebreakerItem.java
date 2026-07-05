@@ -32,7 +32,7 @@ import java.util.List;
 
 public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = uniqueConfig.tidebreaker.cooldown;
+    int skillCooldown = UNIQUE_CONFIG.tidebreaker.cooldown;
     int lastHitTime;
     LivingEntity lastHit;
 
@@ -43,9 +43,9 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, uniqueConfig.tidebreaker.chance)) {
+            if (MathUtils.chance(attacker, UNIQUE_CONFIG.tidebreaker.chance)) {
                 if (!attacker.hasStatusEffect(ModEffectsRegistry.getReference(ModEffectsRegistry.TIDEBREAKER))) {
-                    attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.TIDEBREAKER), uniqueConfig.tidebreaker.cloudTime, 0), attacker);
+                    attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.getReference(ModEffectsRegistry.TIDEBREAKER), UNIQUE_CONFIG.tidebreaker.cloudTime, 0), attacker);
                 }
             }
 
@@ -65,7 +65,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         if (lastHit == null
                 || !lastHit.isAlive()
                 || lastHit.getWorld() != user.getWorld()
-                || lastHit.distanceTo(user) > uniqueConfig.tidebreaker.range)
+                || lastHit.distanceTo(user) > UNIQUE_CONFIG.tidebreaker.range)
             return super.use(world, user, hand);
 
         if (shouldTeleport(user, lastHit)) {
@@ -79,7 +79,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     }
 
     private boolean shouldTeleport(PlayerEntity user, LivingEntity target) {
-        return target.getWorld() == user.getWorld() && target.distanceTo(user) <= uniqueConfig.tidebreaker.range;
+        return target.getWorld() == user.getWorld() && target.distanceTo(user) <= UNIQUE_CONFIG.tidebreaker.range;
     }
 
     private void swapUserAndTarget(PlayerEntity user, LivingEntity target) {
@@ -109,7 +109,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         if (!world.isClient) {
             lastHitTime++;
 
-            if (lastHitTime > uniqueConfig.tidebreaker.teleportTime)
+            if (lastHitTime > UNIQUE_CONFIG.tidebreaker.teleportTime)
                 resetLastHit();
         }
         VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
@@ -129,8 +129,8 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5",
-                MathUtils.translateTicks(uniqueConfig.tidebreaker.teleportTime),
-                uniqueConfig.tidebreaker.range).setStyle(textStyle));
+                MathUtils.translateTicks(UNIQUE_CONFIG.tidebreaker.teleportTime),
+                UNIQUE_CONFIG.tidebreaker.range).setStyle(textStyle));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

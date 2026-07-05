@@ -40,8 +40,8 @@ import org.joml.Vector3d;
 import java.util.List;
 
 public class ExedrillItem extends SimplyMoreUniqueSwordItem{
-    int skillCooldown = uniqueConfig.exedrill.cooldown;
-    static int maxHeat = uniqueConfig.exedrill.maxHeat;
+    int skillCooldown = UNIQUE_CONFIG.exedrill.cooldown;
+    static int maxHeat = UNIQUE_CONFIG.exedrill.maxHeat;
     static final int minHeat = 0; // Constant
 
     @Override
@@ -74,14 +74,14 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
 
                         livingEntity.damage(
                                 player.getDamageSources().explosion(player, player),
-                                uniqueConfig.exedrill.explosionDamage
+                                UNIQUE_CONFIG.exedrill.explosionDamage
                         );
 
                         double deltaX = livingEntity.getX() - player.getX();
                         double deltaZ = livingEntity.getZ() - player.getZ();
                         double distance = Math.hypot(deltaX, deltaZ);
 
-                        float knockbackStrength = uniqueConfig.exedrill.earthquakeStrength;
+                        float knockbackStrength = UNIQUE_CONFIG.exedrill.earthquakeStrength;
                         double normalizedDeltaX = deltaX / distance;
                         double normalizedDeltaZ = deltaZ / distance;
 
@@ -95,19 +95,19 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         }
 
         setHeat(stack,
-                getHeat(stack) + uniqueConfig.exedrill.hitHeatAmount);
+                getHeat(stack) + UNIQUE_CONFIG.exedrill.hitHeatAmount);
 
         // Tremors
         float chance = attacker.getVehicle() instanceof LivingEntity ?
-                uniqueConfig.exedrill.chanceMounted:
-                uniqueConfig.exedrill.chance;
+                UNIQUE_CONFIG.exedrill.chanceMounted:
+                UNIQUE_CONFIG.exedrill.chance;
         if (MathUtils.chance(attacker, chance) && attacker instanceof PlayerEntity player) {
             List<LivingEntity> targets = tremorEffectHitbox(5, attacker.getPos(), ((ServerWorld) attacker.getWorld()), player);
             setHeat(stack,
-                    getHeat(stack) + uniqueConfig.exedrill.trembleHeatAmount);
+                    getHeat(stack) + UNIQUE_CONFIG.exedrill.trembleHeatAmount);
             attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5f,0.5f);
 
-            int effectTime = uniqueConfig.exedrill.trembleEffectTime;
+            int effectTime = UNIQUE_CONFIG.exedrill.trembleEffectTime;
             targets.forEach(
                     entity -> {
                         if(attacker.getVehicle() == entity) return;
@@ -150,12 +150,12 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
             return super.use(world, user, hand);
         }
 
-        for(int i = 0; i < uniqueConfig.exedrill.rocksAmount; i++) {
+        for(int i = 0; i < UNIQUE_CONFIG.exedrill.rocksAmount; i++) {
             Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw() + user.getRandom().nextBetween(-40,40));
             Vec3d rockVelocity = new Vec3d(
-                    normalisedVector.x() * uniqueConfig.exedrill.rockSpeed,
+                    normalisedVector.x() * UNIQUE_CONFIG.exedrill.rockSpeed,
                     0.45f,
-                    normalisedVector.z() * uniqueConfig.exedrill.rockSpeed
+                    normalisedVector.z() * UNIQUE_CONFIG.exedrill.rockSpeed
             );
 
             GhostFallingBlockEntity rock = new GhostFallingBlockEntity(

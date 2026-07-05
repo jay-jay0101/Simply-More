@@ -827,9 +827,13 @@
   "simplymore.weapon_attributes.uniqueWeaponsSwingSpeed.culterex_attack_speed": "§6Culterex§7 attack speed",
 
   "simplymore.unique_effect": "Unique Effects",
+  "simplymore.unique_effect.globalBlacklist": "Global Effect Blacklist",
+
   "simplymore.unique_effect.black_pearl": "§6[Black Pearl]§7",
   "simplymore.unique_effect.black_pearl.chance": "Plunder Chance",
   "simplymore.unique_effect.black_pearl.cooldown": "Fireball Cooldown",
+  "simplymore.unique_effect.black_pearl.includeGlobalBlacklist": "Plunder includes Global Effect Blacklist",
+  "simplymore.unique_effect.black_pearl.blacklist": "Plunder Effect Blacklist",
 
   "simplymore.unique_effect.blade_of_the_grotesque": "§6[Blade of the Grotesque]§7",
   "simplymore.unique_effect.blade_of_the_grotesque.selfStunTime": "False Appearance duration",
@@ -932,14 +936,16 @@
   "simplymore.unique_effect.the_pan.knockbackStrength": "Kitchen Magic knockback",
 
   "simplymore.unique_effect.holylight": "§6[Holylight]§7",
-  "simplymore.unique_effect.holylight.spreadChance": "Blessed water spread chance",
-  "simplymore.unique_effect.holylight.spreadChance.desc": "Affects Holylight + Ascended Idol",
+  "simplymore.unique_effect.holylight.chance": "Blessed water spread chance",
+  "simplymore.unique_effect.holylight.chance.desc": "Affects Holylight + Ascended Idol",
   "simplymore.unique_effect.holylight.blessingHeal": "Blessing heal",
   "simplymore.unique_effect.holylight.cooldown": "Blessing cooldown",
+  "simplymore.unique_effect.holylight.includeGlobalBlacklist": "Blessed includes Global Effect Blacklist",
+  "simplymore.unique_effect.holylight.blacklist": "Blessed Effect Blacklist",
 
   "simplymore.unique_effect.darksent": "§6[Darksent]§7",
-  "simplymore.unique_effect.darksent.spreadChance": "Accursed water spread chance",
-  "simplymore.unique_effect.darksent.spreadChance.desc": "Affects Darksent + Tarnished Idol",
+  "simplymore.unique_effect.darksent.chance": "Accursed water spread chance",
+  "simplymore.unique_effect.darksent.chance.desc": "Affects Darksent + Tarnished Idol",
   "simplymore.unique_effect.darksent.curseWeakenTime": "Curse weakness duration",
   "simplymore.unique_effect.darksent.curseDamageModifier": "Damage modifier when inflicted with curse",
   "simplymore.unique_effect.darksent.cooldown": "Curse cooldown",
@@ -954,6 +960,9 @@
   "simplymore.unique_effect.soul_foreseer.chance": "Soul Foresight chance",
   "simplymore.unique_effect.soul_foreseer.range": "Soul Retraction range",
   "simplymore.unique_effect.soul_foreseer.effectTime": "Soul Retraction blindness duration",
+  "simplymore.unique_effect.soul_foreseer.cooldown": "Soul Retraction cooldown",
+  "simplymore.unique_effect.soul_foreseer.includeGlobalBlacklist": "Soul Foresight includes Global Effect Blacklist",
+  "simplymore.unique_effect.soul_foreseer.blacklist": "Soul Foresight Effect Blacklist",
 
   "simplymore.unique_effect.stasis": "§6[Stasis]§7",
   "simplymore.unique_effect.stasis.cooldown": "Heaven's Call cooldown",
@@ -998,8 +1007,9 @@
   "simplymore.unique_effect.timekeeper.chance.desc": "Affects Curse of Ra, Curse of Khonsu and Curse of Thoth",
 
   "simplymore.unique_effect.vipers_call": "§6[Viper's Call]§7",
-  "simplymore.unique_effect.vipers_call.vipersCallCooldown": "Circle of Venom cooldown",
-  "simplymore.unique_effect.vipers_call.blacklist": "Unending Poison blacklist",
+  "simplymore.unique_effect.vipers_call.cooldown": "Circle of Venom cooldown",
+  "simplymore.unique_effect.vipers_call.includeGlobalBlacklist": "Unending Venom includes Global Effect Blacklist",
+  "simplymore.unique_effect.vipers_call.blacklist": "Unending Venom blacklist",
 
   "simplymore.unique_effect.brassturn": "§6[Brassturn]§7",
   "simplymore.unique_effect.brassturn.chance": "Jetstream chance",
@@ -1073,6 +1083,8 @@
   "simplymore.unique_effect.culterex.chance": "Hex duration bonus on hit chance",
   "simplymore.unique_effect.culterex.durationPerEffectLevel": "Hex duration bonus per positive effect",
   "simplymore.unique_effect.culterex.range": "Hex range",
+  "simplymore.unique_effect.culterex.includeGlobalBlacklist": "Hex includes Global Effect Blacklist",
+  "simplymore.unique_effect.culterex.blacklist": "Hex Effect Blacklist",
 
   "simplymore.unique_effect.mimicry": "§6[Mimi-cry]§7",
   "simplymore.unique_effect.mimicry.typeCooldown": "Specific Adaptation cooldown after use",
