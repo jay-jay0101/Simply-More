@@ -8,7 +8,7 @@ public class CogMotif implements BackgroundMotif {
 
     @Override
     public void draw(DrawContext context, int x, int y, int width, int height, long timeMs) {
-        float rot = (timeMs / 10f) % 360;
+        float rot = (timeMs % 3600) / 10f;
 
         drawCog(context, x + width - 60, y + (int) Math.floor(height*0.2f), 20, 7, 7, rot + 45);
         drawCog(context, x + 40, y + (int) Math.floor(height*0.4f), 15, 5, 5, rot);
