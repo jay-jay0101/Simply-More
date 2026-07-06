@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -23,24 +24,11 @@ public class JesterPenetrateItem extends SimplyMoreSwordItem {
 
     public JesterPenetrateItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
-//        this.repairIngredient = new String[]{
-//                "minecraft:white_wool",
-//                "minecraft:orange_wool",
-//                "minecraft:magenta_wool",
-//                "minecraft:light_blue_wool",
-//                "minecraft:yellow_wool",
-//                "minecraft:lime_wool",
-//                "minecraft:pink_wool",
-//                "minecraft:gray_wool",
-//                "minecraft:light_gray_wool",
-//                "minecraft:cyan_wool",
-//                "minecraft:purple_wool",
-//                "minecraft:blue_wool",
-//                "minecraft:brown_wool",
-//                "minecraft:green_wool",
-//                "minecraft:red_wool",
-//                "minecraft:black_wool"
-//        };
+    }
+
+    @Override
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        return ingredient.isIn(ItemTags.WOOL) || super.canRepair(stack, ingredient);
     }
 
     @Override
