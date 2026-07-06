@@ -24,11 +24,11 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.GrabbedComponent;
 import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.HelperMethods;
@@ -43,7 +43,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.myrmedge.cooldown + UNIQUE_CONFIG.myrmedge.grabTime;
 
     public MyrmedgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
     public static float getHungerModifiedValue(PlayerEntity entity, float percentage, float value) {
@@ -190,8 +190,12 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.ASH);
     }
 
     @Override

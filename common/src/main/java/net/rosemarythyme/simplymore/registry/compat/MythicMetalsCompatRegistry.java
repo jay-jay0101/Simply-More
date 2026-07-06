@@ -64,46 +64,46 @@ public class MythicMetalsCompatRegistry {
         itemList.add(ItemRegistry.ITEMS.register(name + "_great_katana", () -> createSword(material,
                 attributes.weaponTypesDamage.greatkatana_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_grandsword", () -> createSword(material,
                 attributes.weaponTypesDamage.grandsword_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                Weapon.SwordTypes.GRANDSWORD, settings)));
+                Weapon.SwordType.GRANDSWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_backhand_blade", () -> createSword(material,
                 attributes.weaponTypesDamage.backhandblade_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_lance", () -> createSword(material,
                 attributes.weaponTypesDamage.lance_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                Weapon.SwordTypes.LANCE, settings)));
+                Weapon.SwordType.LANCE, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_khopesh", () -> createSword(material,
                 attributes.weaponTypesDamage.khopesh_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_dagger", () -> createSword(material,
                 attributes.weaponTypesDamage.dagger_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_pernach", () -> createSword(material,
                 attributes.weaponTypesDamage.pernach_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_quarterstaff", () -> createSword(material,
                 attributes.weaponTypesDamage.quarterstaff_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_great_spear", () -> createSword(material,
                 attributes.weaponTypesDamage.greatspear_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_deer_horns", () -> createSword(material,
                 attributes.weaponTypesDamage.deerhorns_damage_modifier + damageModifier,
                 attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                Weapon.SwordTypes.SWORD, settings)));
+                Weapon.SwordType.SWORD, settings)));
     }
 
-    public static SwordItem createSword(ToolMaterial material, int damage, float attackSpeed, Weapon.SwordTypes type, Item.Settings settings) {
+    public static SwordItem createSword(ToolMaterial material, int damage, float attackSpeed, Weapon.SwordType type, Item.Settings settings) {
         return switch (material) {
             case MythicToolMaterials.LEGENDARY_BANGLUM ->
                     new LegendaryBanglumSwordItem(material, damage, attackSpeed, type, settings);

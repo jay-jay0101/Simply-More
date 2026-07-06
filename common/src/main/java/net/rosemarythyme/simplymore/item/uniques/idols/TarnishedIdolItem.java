@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.entity.AuraOfCorruptionAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -19,7 +20,12 @@ import java.util.List;
 public class TarnishedIdolItem extends SimplyMoreUniqueSwordItem {
 
     public TarnishedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return FootfallParticles.none();
     }
 
     @Override

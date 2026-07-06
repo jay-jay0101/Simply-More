@@ -3,7 +3,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -26,7 +25,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -39,7 +38,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.black_pearl.cooldown;
 
     public BlackPearlItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
 
@@ -100,9 +99,8 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.LANDING_HONEY, ParticleTypes.LANDING_HONEY, ParticleTypes.ASH);
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.LANDING_HONEY, ParticleTypes.LANDING_HONEY, ParticleTypes.ASH);
     }
 
     @Override

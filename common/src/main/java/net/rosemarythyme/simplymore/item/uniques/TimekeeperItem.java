@@ -15,7 +15,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.DayTimeComponent;
 import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 
@@ -26,7 +26,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.timekeeper.cooldown;
 
     public TimekeeperItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
 
@@ -53,20 +53,24 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
 
             if (isFixedTime) {
                 stack.set(ItemComponentRegistry.DAYTIME.get(),
-                        DayTimeComponent.of(DayTimeComponent.DayForm.TIMELESS));
+                        DayTimeComponent.of(DayTimeComponent.DayTimeForm.TIMELESS));
             } else {
                 if (dayTime < 13000) {
                     stack.set(ItemComponentRegistry.DAYTIME.get(),
-                            DayTimeComponent.of(DayTimeComponent.DayForm.DAY));
+                            DayTimeComponent.of(DayTimeComponent.DayTimeForm.DAY));
                 } else {
                     stack.set(ItemComponentRegistry.DAYTIME.get(),
-                            DayTimeComponent.of(DayTimeComponent.DayForm.NIGHT));
+                            DayTimeComponent.of(DayTimeComponent.DayTimeForm.NIGHT));
                 }
             }
         }
 
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.ASH);
     }
 
     @Override

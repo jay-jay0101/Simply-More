@@ -23,12 +23,12 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.CrowEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
 
     @Override
-    public CounterComponent getDefaultComponent() {
+    public CounterComponent getDefaultCounterComponent() {
         return new CounterComponent(0, 5);
     }
 
@@ -52,7 +52,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
 
 
     public DeathsEyrieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
 
@@ -186,8 +186,12 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.WARPED_SPORE);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.WARPED_SPORE);
     }
 
     @Override

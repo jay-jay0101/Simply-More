@@ -20,7 +20,7 @@ import java.util.List;
 
 public class LanceItem extends MimicryItem {
     public LanceItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
     }
 
 

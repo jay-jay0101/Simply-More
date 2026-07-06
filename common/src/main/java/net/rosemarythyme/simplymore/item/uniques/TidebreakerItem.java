@@ -21,7 +21,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -37,7 +37,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     LivingEntity lastHit;
 
     public TidebreakerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
     
     @Override
@@ -112,10 +112,13 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
             if (lastHitTime > UNIQUE_CONFIG.tidebreaker.teleportTime)
                 resetLastHit();
         }
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
+    }
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {

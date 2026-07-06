@@ -2,7 +2,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -23,11 +22,11 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -39,7 +38,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.glimmerstep.cooldown;
 
     public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
     }
 
 
@@ -164,9 +163,8 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.ELECTRIC_SPARK, ParticleTypes.ELECTRIC_SPARK, ParticleTypes.FIREWORK);
     }
 
     @Override

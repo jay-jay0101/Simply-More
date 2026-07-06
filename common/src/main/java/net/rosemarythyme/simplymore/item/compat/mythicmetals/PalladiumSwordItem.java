@@ -12,7 +12,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import java.util.List;
 
 public class PalladiumSwordItem extends SimplyMoreSwordItem {
-    public PalladiumSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings, String... repairIngredient) {
+    public PalladiumSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings, String... repairIngredient) {
         super(toolMaterial, attackDamage, attackSpeed, swordType, settings, repairIngredient);
     }
 

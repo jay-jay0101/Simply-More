@@ -3,7 +3,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -31,7 +30,7 @@ import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -45,12 +44,12 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
     static final int minHeat = 0; // Constant
 
     @Override
-    public CounterComponent getDefaultComponent() {
+    public CounterComponent getDefaultCounterComponent() {
         return new CounterComponent(minHeat, maxHeat);
     }
 
     public ExedrillItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.LANCE, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
     }
 
 
@@ -197,11 +196,9 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         return AttackUtils.getTargets(player, box);
     }
 
-
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.ASH);
     }
 
     @Override

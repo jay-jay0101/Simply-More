@@ -27,6 +27,7 @@ import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -39,7 +40,7 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.boas_fang.cooldown;
 
     public BoasFangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
     @Override
@@ -103,10 +104,8 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.SPORE_BLOSSOM_AIR);
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.SPORE_BLOSSOM_AIR);
     }
 
     @Override

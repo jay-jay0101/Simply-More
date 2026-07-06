@@ -6,6 +6,7 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -14,7 +15,12 @@ import java.util.List;
 public class RupturedIdolItem extends SimplyMoreUniqueSwordItem {
 
     public RupturedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return FootfallParticles.none();
     }
 
     @Override

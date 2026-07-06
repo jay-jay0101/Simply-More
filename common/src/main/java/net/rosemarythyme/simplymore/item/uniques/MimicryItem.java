@@ -34,7 +34,7 @@ import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.TagRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -49,7 +49,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     protected static MimicryConfig mimicryConfig = UNIQUE_CONFIG.mimicry.config;
 
-    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
+    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, swordType, settings);
     }
 
@@ -133,8 +133,12 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             swapForm(player, stack);
         }
 
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.ASH);
     }
 
     public void swapForm(PlayerEntity player, ItemStack stack) {

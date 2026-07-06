@@ -90,7 +90,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.greatkatana_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -101,7 +101,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.greatkatana_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -112,7 +112,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.greatkatana_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -123,7 +123,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.greatkatana_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -134,7 +134,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.greatkatana_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof()
             )
     );
@@ -146,7 +146,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.grandsword_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                    Weapon.SwordTypes.GRANDSWORD,
+                    Weapon.SwordType.GRANDSWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -157,7 +157,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.grandsword_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                    Weapon.SwordTypes.GRANDSWORD,
+                    Weapon.SwordType.GRANDSWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -168,7 +168,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.grandsword_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                    Weapon.SwordTypes.GRANDSWORD,
+                    Weapon.SwordType.GRANDSWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -179,7 +179,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.grandsword_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                    Weapon.SwordTypes.GRANDSWORD,
+                    Weapon.SwordType.GRANDSWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -190,7 +190,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.grandsword_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                    Weapon.SwordTypes.GRANDSWORD,
+                    Weapon.SwordType.GRANDSWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -203,7 +203,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.backhandblade_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -214,7 +214,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.backhandblade_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -225,7 +225,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.backhandblade_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -236,7 +236,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.backhandblade_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -247,7 +247,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.backhandblade_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof()
             )
     );
@@ -259,7 +259,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.lance_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                    Weapon.SwordTypes.LANCE,
+                    Weapon.SwordType.LANCE,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -270,7 +270,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.lance_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                    Weapon.SwordTypes.LANCE,
+                    Weapon.SwordType.LANCE,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -281,7 +281,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.lance_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                    Weapon.SwordTypes.LANCE,
+                    Weapon.SwordType.LANCE,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -292,7 +292,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.lance_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                    Weapon.SwordTypes.LANCE,
+                    Weapon.SwordType.LANCE,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -303,7 +303,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.lance_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                    Weapon.SwordTypes.LANCE,
+                    Weapon.SwordType.LANCE,
                     new Item.Settings().fireproof()
             )
     );
@@ -315,7 +315,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.khopesh_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -326,7 +326,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.khopesh_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -337,7 +337,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.khopesh_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -348,7 +348,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.khopesh_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -359,7 +359,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.khopesh_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof()
             )
     );
@@ -371,7 +371,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.dagger_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -382,7 +382,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.dagger_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -393,7 +393,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.dagger_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -404,7 +404,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.dagger_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -415,7 +415,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.dagger_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof()
             )
     );
@@ -427,7 +427,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.pernach_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -438,7 +438,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.pernach_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -449,7 +449,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.pernach_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -460,7 +460,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.pernach_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:netherite_ingot"
             )
@@ -471,7 +471,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.pernach_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings()
             )
     );
@@ -483,7 +483,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.quarterstaff_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -494,7 +494,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.quarterstaff_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -505,7 +505,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.quarterstaff_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -516,7 +516,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.quarterstaff_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -527,7 +527,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.quarterstaff_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof()
             )
     );
@@ -539,7 +539,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.greatspear_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -550,7 +550,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.greatspear_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -561,7 +561,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.greatspear_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -572,7 +572,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.greatspear_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -583,7 +583,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.greatspear_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof()
             )
     );
@@ -595,7 +595,7 @@ public class ItemRegistry {
                     ToolMaterials.IRON,
                     attributes.weaponTypesDamage.deerhorns_damage_modifier + iron_modifier,
                     attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:iron_ingot"
             )
@@ -606,7 +606,7 @@ public class ItemRegistry {
                     ToolMaterials.GOLD,
                     attributes.weaponTypesDamage.deerhorns_damage_modifier + gold_modifier,
                     attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:gold_ingot"
             )
@@ -617,7 +617,7 @@ public class ItemRegistry {
                     ToolMaterials.DIAMOND,
                     attributes.weaponTypesDamage.deerhorns_damage_modifier + diamond_modifier,
                     attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "minecraft:diamond"
             )
@@ -628,7 +628,7 @@ public class ItemRegistry {
                     ToolMaterials.NETHERITE,
                     attributes.weaponTypesDamage.deerhorns_damage_modifier + netherite_modifier,
                     attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof(),
                     "minecraft:netherite_ingot"
             )
@@ -639,7 +639,7 @@ public class ItemRegistry {
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
                     attributes.weaponTypesDamage.deerhorns_damage_modifier + runic_modifier,
                     attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings().fireproof()
             )
     );

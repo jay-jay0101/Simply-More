@@ -23,7 +23,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
@@ -35,6 +34,7 @@ import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -46,7 +46,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
     int skillLength = UNIQUE_CONFIG.blade_of_the_grotesque.selfStunTime;
 
     public BladeOfTheGrotesqueItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
 
@@ -98,7 +98,6 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (world.getTime() % 40 == 0) {
             modifyStackAttributes(stack);
-
         }
 
         if (world.getTime() % 40 == 0 && entity instanceof ServerPlayerEntity player && selected) {
@@ -118,8 +117,12 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
             }
         }
 
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.SMOKE, ParticleTypes.SMOKE, ParticleTypes.ASH);
     }
 
     @Override

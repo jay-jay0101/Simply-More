@@ -2,7 +2,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -18,10 +17,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -34,7 +33,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.smouldering_ruin.cooldown;
 
     public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
 
@@ -75,9 +74,8 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.CRIMSON_SPORE);
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.CRIMSON_SPORE);
     }
 
     @Override

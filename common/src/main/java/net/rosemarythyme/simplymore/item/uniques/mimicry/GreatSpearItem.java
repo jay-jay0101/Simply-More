@@ -20,7 +20,7 @@ import java.util.List;
 
 public class GreatSpearItem extends MimicryItem {
     public GreatSpearItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
 

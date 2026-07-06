@@ -8,19 +8,17 @@ import net.rosemarythyme.simplymore.util.EntityUtils;
 
 public interface Weapon {
 
-    SwordTypes swordType();
+    SwordType getSwordType();
 
-    static void causeLanceEffect(Entity entity, boolean selected) {
+    static void tryGrantLanceEffect(Entity entity) {
         if(!(entity instanceof LivingEntity livingEntity)) return;
 
-        if (entity.getVehicle() instanceof LivingEntity
-                && selected
-                && EntityUtils.shouldGrantLanceEffect(livingEntity)) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.LANCE), 9999999, 0));
+        if (EntityUtils.shouldGrantLanceEffect(livingEntity)) {
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.LANCE), StatusEffectInstance.INFINITE, 0));
         }
     }
 
-    enum SwordTypes {
+    enum SwordType {
         SWORD,
         LANCE,
         GRANDSWORD

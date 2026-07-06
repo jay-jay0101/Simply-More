@@ -19,7 +19,7 @@ public abstract class LivingEntityMixin {
 	private boolean simplyMore$disablesShield(boolean originalReturnValue) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		ItemStack mainHandStack = livingEntity.getEquippedStack(EquipmentSlot.MAINHAND);
-		if (mainHandStack.getItem() instanceof Weapon weapon && weapon.swordType() == Weapon.SwordTypes.GRANDSWORD) return true;
+		if (mainHandStack.getItem() instanceof Weapon weapon && weapon.getSwordType() == Weapon.SwordType.GRANDSWORD) return true;
 		return originalReturnValue;
 	}
 

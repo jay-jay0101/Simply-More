@@ -22,7 +22,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.greatkatana_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -35,7 +35,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.greatkatana_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -48,7 +48,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.grandsword_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                    Weapon.SwordTypes.GRANDSWORD,
+                    Weapon.SwordType.GRANDSWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -61,7 +61,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.grandsword_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                    Weapon.SwordTypes.GRANDSWORD,
+                    Weapon.SwordType.GRANDSWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -74,7 +74,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.backhandblade_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -87,7 +87,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.backhandblade_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -100,7 +100,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.lance_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                    Weapon.SwordTypes.LANCE,
+                    Weapon.SwordType.LANCE,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -113,7 +113,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.lance_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                    Weapon.SwordTypes.LANCE,
+                    Weapon.SwordType.LANCE,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -126,7 +126,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.khopesh_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -139,7 +139,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.khopesh_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -152,7 +152,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.dagger_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -165,7 +165,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.dagger_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -178,7 +178,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.pernach_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -191,7 +191,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.pernach_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -204,7 +204,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.quarterstaff_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -217,7 +217,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.quarterstaff_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -230,7 +230,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.greatspear_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -243,7 +243,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.greatspear_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"
@@ -256,7 +256,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.WOOD,
                     attributes.weaponTypesDamage.deerhorns_damage_modifier + wooden_modifier,
                     attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "wooden"
@@ -269,7 +269,7 @@ public class StickNStoneCompatRegistry {
                     ToolMaterials.STONE,
                     attributes.weaponTypesDamage.deerhorns_damage_modifier + stone_modifier,
                     attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                    Weapon.SwordTypes.SWORD,
+                    Weapon.SwordType.SWORD,
                     new Item.Settings(),
                     "tag",
                     "stone"

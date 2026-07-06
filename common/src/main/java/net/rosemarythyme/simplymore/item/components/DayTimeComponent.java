@@ -18,7 +18,7 @@ public record DayTimeComponent(boolean isDay, boolean isTimeless) {
             DayTimeComponent::new
     );
     
-    public static DayTimeComponent of(DayForm form) {
+    public static DayTimeComponent of(DayTimeForm form) {
         return switch (form) {
             case DAY -> new DayTimeComponent(true, false);
             case NIGHT -> new DayTimeComponent(false, false);
@@ -26,19 +26,15 @@ public record DayTimeComponent(boolean isDay, boolean isTimeless) {
         };
     }
 
-    public DayForm getForm() {
+    public DayTimeForm getForm() {
         if(this.isTimeless) {
-            return DayForm.TIMELESS;
-        } else {
-            if (this.isDay) {
-                return DayForm.DAY;
-            } else {
-                return DayForm.NIGHT;
-            }
+            return DayTimeForm.TIMELESS;
         }
+
+        return this.isDay ? DayTimeForm.DAY : DayTimeForm.NIGHT;
     }
     
-    public enum DayForm {
+    public enum DayTimeForm {
         DAY,
         NIGHT,
         TIMELESS

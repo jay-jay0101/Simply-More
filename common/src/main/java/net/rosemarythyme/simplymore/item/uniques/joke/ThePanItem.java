@@ -31,8 +31,8 @@ public class ThePanItem extends SimplyMoreSwordItem {
     protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
     public ThePanItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
-        this.repairIngredient = new String[]{"minecraft:iron_ingot"};
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+//        this.repairIngredient = new String[]{"minecraft:iron_ingot"};
     }
 
     @Override

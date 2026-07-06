@@ -15,28 +15,29 @@ import net.sweenus.simplyswords.item.RunicSwordItem;
 import java.util.List;
 
 public class SimplyMoreRunicSwordItem extends RunicSwordItem implements Weapon {
-    String[] repairIngredient;
-    final SwordTypes swordType;
+    private final SwordType swordType;
 
-    public SimplyMoreRunicSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings, String... repairIngredient) {
-        super(toolMaterial, settings.attributeModifiers(
-                SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
+    public SimplyMoreRunicSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings, String... repairIngredient) {
+        super(toolMaterial, settings.attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
 
-        this.repairIngredient = repairIngredient;
         this.swordType = swordType;
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        Weapon.causeLanceEffect(entity, selected);
+        if(selected && swordType == SwordType.LANCE) {
+            Weapon.tryGrantLanceEffect(entity);
+        }
+
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public SwordTypes swordType() {
+    public SwordType getSwordType() {
         return swordType;
     }
 
+    @Override
     protected void generateDynamicTooltip(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
         SimplySwordsClientAPI.generateDynamicTooltip(itemStack, tooltipContext, tooltip, type, "simplymore", "oracle_index:books/simplymore/weapon_types", "oracle_index:books/simplymore/unique_weapons", "oracle_index:books/simplyswords/runic-powers", null);
     }

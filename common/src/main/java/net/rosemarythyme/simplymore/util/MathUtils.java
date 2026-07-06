@@ -50,7 +50,7 @@ public class MathUtils {
             if(stack.getComponents().contains(ItemComponentRegistry.COUNTER.get())) {
                 return stack.getComponents().get(ItemComponentRegistry.COUNTER.get());
             } else {
-                return setCounterComponent(stack, swordItem.getDefaultComponent());
+                return setCounterComponent(stack, swordItem.getDefaultCounterComponent());
             }
         }
 

@@ -28,7 +28,7 @@ import net.rosemarythyme.simplymore.item.interfaces.CooldownOnUnselected;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -41,7 +41,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
     int skillCooldown = UNIQUE_CONFIG.cindergorge.cooldown;
 
     public CindergorgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordTypes.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
 
@@ -122,8 +122,12 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
             detectCooldown(player, selected, stack, skillCooldown, false);
         }
 
-        VisualEffectsUtils.handleFootfalls(entity, stack, world, ParticleTypes.LAVA);
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.LAVA);
     }
 
     @Override

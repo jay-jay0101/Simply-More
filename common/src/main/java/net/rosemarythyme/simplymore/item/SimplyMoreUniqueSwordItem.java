@@ -1,75 +1,85 @@
 package net.rosemarythyme.simplymore.item;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
-import net.rosemarythyme.simplymore.item.uniques.idols.DarksentItem;
-import net.rosemarythyme.simplymore.item.uniques.idols.HolylightItem;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
 import net.sweenus.simplyswords.util.Styles;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implements Weapon {
-    public CounterComponent getDefaultComponent() {
-        return new CounterComponent(0, 0);
-    }
-
-    String[] repairIngredient;
-    final SwordTypes swordType;
-
     protected static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+    private final SwordType swordType;
 
-    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordTypes swordType, Settings settings) {
+    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings) {
         super(toolMaterial, settings.fireproof().attributeModifiers(
                 SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
 
         this.swordType = swordType;
-        this.repairIngredient = new String[]{"simplyswords:runic_tablet"};
     }
 
     @Override
-    public SwordTypes swordType() {
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        if(selected && swordType == SwordType.LANCE) {
+            Weapon.tryGrantLanceEffect(entity);
+        }
+
+        FootfallParticles footfallParticles = getFootfalls();
+        if(footfallParticles.hasParticles()) {
+            VisualEffectsUtils.handleFootfalls(entity, stack, world, footfallParticles);
+        }
+
+        super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    public CounterComponent getDefaultCounterComponent() {
+        return new CounterComponent(0, 0);
+    }
+
+    @Override
+    public SwordType getSwordType() {
         return swordType;
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        List<Item> potentialIngredients = new ArrayList<>(List.of());
-        Arrays.stream(this.repairIngredient).toList().forEach(
-                (repIngredient) -> potentialIngredients.add(
-                        Registries.ITEM.get(Identifier.of(repIngredient))));
-        return potentialIngredients.contains(ingredient.getItem());
+    public Text getName(ItemStack stack) {
+        if (stack.getItem() instanceof LegendaryItem) {
+            return Text.translatable(stack.getTranslationKey()).setStyle(Styles.LEGENDARY);
+        }
+
+        return Text.translatable(stack.getTranslationKey()).setStyle(Styles.UNIQUE);
     }
 
     @Override
-    public Text getName(ItemStack stack) {
-        if (stack.getItem() instanceof HolylightItem || stack.getItem() instanceof DarksentItem) {
-            return Text.translatable(stack.getTranslationKey()).setStyle(Styles.LEGENDARY);
-        } else {
-            return Text.translatable(stack.getTranslationKey()).setStyle(Styles.UNIQUE);
-        }
-    }
-
     protected void generateDynamicTooltip(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
         SimplySwordsClientAPI.generateDynamicTooltip(itemStack, tooltipContext, tooltip, type, "simplymore", "oracle_index:books/simplymore/weapon_types", "oracle_index:books/simplymore/unique_weapons", "", getConfigPath());
     }
 
     @Override
     protected Identifier getConfigPath() {
-        return Identifier.of("simplymore.unique_effect." + this.asItem().getRegistryEntry().registryKey().getValue().getPath());
+        Identifier id = Registries.ITEM.getEntry(this)
+                .getKey().map(RegistryKey::getValue).orElse(SimplyMore.identifier("empty"));
+
+        return Identifier.of("simplymore.unique_effect." + id.getPath());
     }
 
+    public abstract FootfallParticles getFootfalls();
 }
