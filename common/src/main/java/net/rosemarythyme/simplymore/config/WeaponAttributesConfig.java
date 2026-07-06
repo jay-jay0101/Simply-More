@@ -5,7 +5,6 @@ import me.fzzyhmstrs.fzzy_config.annotations.RequiresAction;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedCondition;
-import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 
 public class WeaponAttributesConfig extends Config {

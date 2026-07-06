@@ -7,7 +7,6 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import net.minecraft.text.Text;
 
 public class ConfigWrapper {
-    // Configs
     public static final WeaponAttributesConfig attributes = ConfigApiJava.registerAndLoadConfig(WeaponAttributesConfig::new);
     public static final UniqueEffectConfig unique = ConfigApiJava.registerAndLoadConfig(UniqueEffectConfig::new);
 
