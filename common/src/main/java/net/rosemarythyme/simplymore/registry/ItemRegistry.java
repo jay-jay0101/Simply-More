@@ -59,7 +59,7 @@ public class ItemRegistry {
                             .maxCount(1)
                             .fireproof()
                             .rarity(Rarity.EPIC),
-                    RuneCarverItem.Types.RUNEFUSED
+                    RuneCarverItem.Type.RUNEFUSED
             )
     );
     public static final RegistrySupplier<Item> NETHERFUSED_CARVER = ITEMS.register(
@@ -69,7 +69,7 @@ public class ItemRegistry {
                             .maxCount(1)
                             .fireproof()
                             .rarity(Rarity.EPIC),
-                    RuneCarverItem.Types.NETHERFUSED
+                    RuneCarverItem.Type.NETHERFUSED
             )
     );
 
