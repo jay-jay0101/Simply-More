@@ -1,26 +1,25 @@
 package net.rosemarythyme.simplymore.client.tooltip.motifs;
 
 import net.minecraft.client.gui.DrawContext;
-import net.sweenus.simplytooltips.api.TooltipTheme;
 import net.sweenus.simplytooltips.client.render.motif.BackgroundMotif;
 
 public class CogMotif implements BackgroundMotif {
     public static final int ID = 9312_001;
 
     @Override
-    public void draw(DrawContext context, int x, int y, int w, int h, long timeMs) {
+    public void draw(DrawContext context, int x, int y, int width, int height, long timeMs) {
+        float rot = (timeMs / 10f) % 360;
 
-        float rot = (timeMs / 10) % 360;
-        drawCog(context, x + w - 60, y + (int) Math.floor(h*0.2f), 20, 7, 7, rot + 45, 0xC0c15a36, 0xA04a1300);
-        drawCog(context, x + 40, y + (int) Math.floor(h*0.4f), 15, 5, 5, rot, 0xC0c15a36, 0xA04a1300);
-        drawCog(context, x + w - 30, y + (int) Math.floor(h*0.5f), 10, 3, 4, rot + 80, 0xC0c15a36, 0xA04a1300);
-        drawCog(context, x + (w/2), y + (int) Math.floor(h*0.6f), 15, 5, 5, rot + 20, 0xC0c15a36, 0xA04a1300);
-        drawCog(context, x + 50, y + (int) Math.floor(h*0.8f), 10, 3, 4, rot + 80, 0xC0c15a36, 0xA04a1300);
+        drawCog(context, x + width - 60, y + (int) Math.floor(height*0.2f), 20, 7, 7, rot + 45);
+        drawCog(context, x + 40, y + (int) Math.floor(height*0.4f), 15, 5, 5, rot);
+        drawCog(context, x + width - 30, y + (int) Math.floor(height*0.5f), 10, 3, 4, rot + 80);
+        drawCog(context, x + (width/2), y + (int) Math.floor(height*0.6f), 15, 5, 5, rot + 20);
+        drawCog(context, x + 50, y + (int) Math.floor(height*0.8f), 10, 3, 4, rot + 80);
     }
 
-    public void drawBorderPattern(DrawContext context, int x, int y, int w, int h, TooltipTheme theme, int borderStyle) {
-        int cogColor = 0xC0c15a36, armColor = 0xA04a1300;
-        for (int px = x + 12, i = 0; px < x + w - 10; px += 14, i++) {
+    public void drawBorderPattern(DrawContext context, int x, int y, int width, int height) {
+        int cogColor = 0xC0C15A36, armColor = 0xA04A1300;
+        for (int px = x + 12, i = 0; px < x + width - 10; px += 14, i++) {
             context.fill(px - 1, y + 1, px, y + 3, cogColor);
             context.fill(px, y + 2, px + 1, y + 3, cogColor);
             context.fill(px + 1, y + 1, px + 2, y + 3, cogColor);
@@ -31,33 +30,35 @@ public class CogMotif implements BackgroundMotif {
             context.fill(px + 2, y + 1, px + 3, y + 2, armColor);
             context.fill(px + 2, y + 3, px + 3, y + 4, armColor);
 
-            context.fill(px + 1, y - 1 + h, px, y - 3 + h, cogColor);
-            context.fill(px, y - 2 + h, px - 1, y - 3 + h, cogColor);
-            context.fill(px - 1, y - 1 + h, px - 2, y - 3 + h, cogColor);
+            context.fill(px + 1, y - 1 + height, px, y - 3 + height, cogColor);
+            context.fill(px, y - 2 + height, px - 1, y - 3 + height, cogColor);
+            context.fill(px - 1, y - 1 + height, px - 2, y - 3 + height, cogColor);
 
-            context.fill(px + 2, y - 1 + h, px + 1, y - 2 + h, armColor);
-            context.fill(px + 2, y - 3 + h, px + 1, y - 4 + h, armColor);
-            context.fill(px, y - 3 + h, px - 1, y - 4 + h, armColor);
-            context.fill(px - 2, y - 1 + h, px - 3, y - 2 + h, armColor);
-            context.fill(px - 2, y - 3 + h, px - 3, y - 4 + h, armColor);
+            context.fill(px + 2, y - 1 + height, px + 1, y - 2 + height, armColor);
+            context.fill(px + 2, y - 3 + height, px + 1, y - 4 + height, armColor);
+            context.fill(px, y - 3 + height, px - 1, y - 4 + height, armColor);
+            context.fill(px - 2, y - 1 + height, px - 3, y - 2 + height, armColor);
+            context.fill(px - 2, y - 3 + height, px - 3, y - 4 + height, armColor);
         }
     }
 
 
-    public void drawCog(DrawContext context, int cx, int cy, int radius, int innerRadius, int armSize, float rot, int color, int borderColor) {
+    public void drawCog(DrawContext context, int cx, int cy, int radius, int innerRadius, int armSize, float rot) {
         final int ARMS = 6;
+        final int COLOR = 0xC0C15A36;
+        final int BORDER_COLOR = 0xA04A1300;
+
         for(int i = 0; i < ARMS; i++) {
-            int gx = radius;
             float gRot = rot + (360 * ((float) i / ARMS));
 
             double a = Math.toRadians(gRot);
             double s = Math.sin(a);
             double c = Math.cos(a);
 
-            int rx = (int) Math.ceil((gx * c));
-            int ry = (int) Math.ceil((gx * s));
+            int rx = (int) Math.ceil(radius * c);
+            int ry = (int) Math.ceil(radius * s);
 
-            drawRotatedSquare(context, cx + rx, cy + ry, armSize, -gRot, borderColor);
+            drawRotatedSquare(context, cx + rx, cy + ry, armSize, -gRot, BORDER_COLOR);
         }
 
         for(int dx = -(radius - 1); dx <= radius - 1; dx++) {
@@ -65,10 +66,10 @@ public class CogMotif implements BackgroundMotif {
             int dy2 = (int) Math.ceil(Math.sqrt((innerRadius * innerRadius) - (dx * dx)));
 
             if(dy2 > 0) {
-                context.fill(cx + dx, cy + dy, cx + dx + 1, cy + dy2, color);
-                context.fill(cx + dx, cy - dy + 1, cx + dx + 1, cy - dy2 + 1, color);
+                context.fill(cx + dx, cy + dy, cx + dx + 1, cy + dy2, COLOR);
+                context.fill(cx + dx, cy - dy + 1, cx + dx + 1, cy - dy2 + 1, COLOR);
             } else {
-                context.fill(cx + dx, cy + dy, cx + dx + 1, (cy - dy) + 1, color);
+                context.fill(cx + dx, cy + dy, cx + dx + 1, (cy - dy) + 1, COLOR);
             }
         }
     }

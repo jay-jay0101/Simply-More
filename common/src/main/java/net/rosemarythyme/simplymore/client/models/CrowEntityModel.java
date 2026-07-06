@@ -5,15 +5,10 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.animations.CrowEntityAnimations;
 import net.rosemarythyme.simplymore.entity.CrowEntity;
 
-
-// Made with Blockbench 4.11.2
-// Exported for Minecraft version 1.17+ for Yarn
-// Paste this class into your mod and generate all required imports
 public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
 	public static final EntityModelLayer CROW_LAYER = new EntityModelLayer(SimplyMore.identifier("crow"), "bone");
 

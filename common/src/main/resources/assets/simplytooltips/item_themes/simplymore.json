@@ -1,5 +1,6 @@
 {
   "items": {
+    "simplyswords:mjolnir": {"badges": ["UNIQUE", "CHAKRAM"]},
     "simplyswords:enigma": {"badges": ["UNIQUE", "GRANDSWORD"]},
     "simplyswords:ribboncleaver": {"badges": ["UNIQUE", "GRANDSWORD"]},
     "simplyswords:emberlash": {"badges": ["UNIQUE", "BACKHAND BLADE"]},

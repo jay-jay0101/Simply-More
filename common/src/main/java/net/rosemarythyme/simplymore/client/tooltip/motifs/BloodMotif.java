@@ -1,7 +1,6 @@
 package net.rosemarythyme.simplymore.client.tooltip.motifs;
 
 import net.minecraft.client.gui.DrawContext;
-import net.sweenus.simplytooltips.api.TooltipTheme;
 import net.sweenus.simplytooltips.client.render.TooltipPainter;
 import net.sweenus.simplytooltips.client.render.motif.BackgroundMotif;
 
@@ -27,7 +26,7 @@ public class BloodMotif implements BackgroundMotif {
         }
     }
 
-    public void drawBorderPattern(DrawContext context, int x, int y, int w, int h, TooltipTheme theme, int borderStyle) {
+    public void drawBorderPattern(DrawContext context, int x, int y, int w, int h) {
         int color = 0xC0220000;
         for (int px = x + 8, i = 0; px < x + w - 8; px += 3, i = ++i % 3) {
             switch(i) {

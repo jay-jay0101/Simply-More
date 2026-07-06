@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.client.render.entity;
 
-import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
@@ -12,11 +11,6 @@ public class CrowEntityRenderer extends MobEntityRenderer<CrowEntity, CrowEntity
 
     public CrowEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new CrowEntityModel(context.getPart(CrowEntityModel.CROW_LAYER)), 0.1f);
-    }
-
-    @Override
-    public boolean shouldRender(CrowEntity entity, Frustum frustum, double x, double y, double z) {
-        return entity.squaredDistanceTo(x, y, z) < 1024 * 1024; // Adjust distance as needed
     }
 
     @Override

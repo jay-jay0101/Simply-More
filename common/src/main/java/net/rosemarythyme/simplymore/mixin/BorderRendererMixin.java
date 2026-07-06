@@ -17,9 +17,9 @@ public class BorderRendererMixin {
     @Inject(at=@At("HEAD"), method = "drawBorderPattern", cancellable = true)
     private static void simplymore$drawBorderPattern(DrawContext context, int x, int y, int w, int h, TooltipTheme theme, int borderStyle, CallbackInfo ci) {
         switch (borderStyle) {
-            case CogMotif.ID -> TooltipMotifRegistry.COG.drawBorderPattern(context, x, y, w, h, theme, borderStyle);
-            case DeathMotif.ID -> TooltipMotifRegistry.DEATH.drawBorderPattern(context, x, y, w, h, theme, borderStyle);
-            case BloodMotif.ID -> TooltipMotifRegistry.BLOOD.drawBorderPattern(context, x, y, w, h, theme, borderStyle);
+            case CogMotif.ID -> TooltipMotifRegistry.COG.drawBorderPattern(context, x, y, w, h);
+            case DeathMotif.ID -> TooltipMotifRegistry.DEATH.drawBorderPattern(context, x, y, w, h);
+            case BloodMotif.ID -> TooltipMotifRegistry.BLOOD.drawBorderPattern(context, x, y, w, h);
             default -> {
                 return;
             }
