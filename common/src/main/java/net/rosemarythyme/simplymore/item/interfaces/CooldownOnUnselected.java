@@ -8,14 +8,15 @@ import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.components.UsageComponent;
 import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
 
+// TODO: remove when updating Cindergorge
 public interface CooldownOnUnselected {
 
-    default void cooldown(PlayerEntity user, int time) {
+    default void beginCooldown(PlayerEntity user, int time) {
         user.stopUsingItem();
         user.getItemCooldownManager().set((Item) this, time);
     }
 
-    static void setComponent(ItemStack stack, Boolean using, Boolean offhand, Boolean previousOffhand) {
+    static void updateComponent(ItemStack stack, Boolean using, Boolean offhand, Boolean previousOffhand) {
         UsageComponent component = getComponent(stack);
         using = using == null ? component.using() : using;
         offhand = offhand == null ? component.offhand() : offhand;
@@ -29,13 +30,13 @@ public interface CooldownOnUnselected {
     }
 
     default void startUsing(ItemStack stack, Hand hand) {
-        setComponent(stack, true, null, null);
+        updateComponent(stack, true, null, null);
 
         if(getOffhand(stack) != null) {
-            setComponent(stack, null, null, getOffhand(stack));
+            updateComponent(stack, null, null, getOffhand(stack));
         }
 
-        setComponent(stack, null, hand == Hand.OFF_HAND, null);
+        updateComponent(stack, null, hand == Hand.OFF_HAND, null);
     }
 
     default Boolean getUsing(ItemStack stack) {
@@ -55,7 +56,7 @@ public interface CooldownOnUnselected {
     }
 
     default void endUsing(ItemStack stack) {
-        setComponent(stack, false, false, false);
+        updateComponent(stack, false, false, false);
     }
 
     default void detectCooldown(PlayerEntity user, boolean selected, ItemStack stack, int time, boolean twoHanded) {
@@ -77,7 +78,7 @@ public interface CooldownOnUnselected {
             return;
         }
 
-        cooldown(user, time);
+        beginCooldown(user, time);
         endUsing(stack);
     }
 }
