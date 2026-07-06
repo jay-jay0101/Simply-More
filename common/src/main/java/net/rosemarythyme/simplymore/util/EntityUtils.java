@@ -10,7 +10,7 @@ import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 
 public class EntityUtils {
     public static boolean shouldGrantLanceEffect(LivingEntity entity) {
-        return isLanceInMainHand(entity) && isRidingLivingEntity(entity) && isOffHandEmpty(entity);
+        return isLanceInMainHand(entity) && isRidingLivingEntity(entity);
     }
 
     private static boolean isLanceInMainHand(LivingEntity livingEntity) {
@@ -20,10 +20,6 @@ public class EntityUtils {
 
     private static boolean isRidingLivingEntity(LivingEntity entity) {
         return entity.getVehicle() instanceof LivingEntity;
-    }
-
-    private static boolean isOffHandEmpty(LivingEntity livingEntity) {
-        return !(livingEntity.getStackInHand(Hand.OFF_HAND).getItem() instanceof ToolItem);
     }
 
     public static void reapplyAndIncrementEffect(LivingEntity entity, RegistryEntry<StatusEffect> effect, int duration, int additionalAmplifier, int maxAmplifier) {

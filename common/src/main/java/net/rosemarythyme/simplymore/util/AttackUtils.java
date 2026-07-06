@@ -19,6 +19,15 @@ public class AttackUtils {
         return INFINITE_DURATION - duration;
     }
 
+    public static void applyExtraDamage(LivingEntity target, float damageBonus, DamageSource source) {
+        int regenTime = target.timeUntilRegen;
+
+        target.timeUntilRegen = 0;
+        target.damage(source, damageBonus);
+
+        target.timeUntilRegen = regenTime;
+    }
+
     public static void hitWithEnchants(PlayerEntity attacker, LivingEntity target, float damage) {
         if(!(attacker.getWorld() instanceof ServerWorld world)) return;
 

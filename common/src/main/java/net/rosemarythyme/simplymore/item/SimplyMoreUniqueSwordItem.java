@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.item;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -37,11 +38,16 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(selected && swordType == SwordType.LANCE) {
-            Weapon.tryGrantLanceEffect(entity);
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if(swordType == SwordType.LANCE) {
+            Weapon.tryGrantLanceEffect(attacker, target);
         }
 
+        return super.postHit(stack, target, attacker);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         FootfallParticles footfallParticles = getFootfalls();
         if(footfallParticles.hasParticles()) {
             VisualEffectsUtils.handleFootfalls(entity, stack, world, footfallParticles);

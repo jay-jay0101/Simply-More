@@ -20,11 +20,11 @@ public class UniqueEffectConfig extends Config {
             Identifier.of("simplyswords:magislam"),
             Identifier.of("simplyswords:fatal_flicker"),
             SimplyMore.identifier("grasping"),
-            SimplyMore.identifier("lance_mounted"),
             SimplyMore.identifier("mimicry_happening"),
             SimplyMore.identifier("mistified"),
             SimplyMore.identifier("rage")
     );
+
     public BlackPearlItem.EffectSettings black_pearl = new BlackPearlItem.EffectSettings();
     public BladeOfTheGrotesqueItem.EffectSettings blade_of_the_grotesque = new BladeOfTheGrotesqueItem.EffectSettings();
     public BoasFangItem.EffectSettings boas_fang = new BoasFangItem.EffectSettings();

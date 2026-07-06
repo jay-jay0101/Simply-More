@@ -110,16 +110,6 @@ public class StatusEffectRegistry {
             new ChillEffect(StatusEffectCategory.HARMFUL,10875635)
     );
 
-    public static final RegistrySupplier<StatusEffect> LANCE = registerEffect(
-            "lance_mounted",
-            new LanceEffect(StatusEffectCategory.BENEFICIAL,0)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            SimplyMore.identifier("lance_mounted"),
-                            attributes.weaponTypesDamage.lancefriendship_damage_modifier,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
-    );
     public static final RegistrySupplier<StatusEffect> HARVEST = registerEffect(
             "harvest",
             new HarvestEffect(StatusEffectCategory.BENEFICIAL,7865862)
@@ -135,6 +125,7 @@ public class StatusEffectRegistry {
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
     );
+
     public static final RegistrySupplier<StatusEffect> RAGE = registerEffect(
             "rage",
             new RageEffect(StatusEffectCategory.NEUTRAL,7865862)

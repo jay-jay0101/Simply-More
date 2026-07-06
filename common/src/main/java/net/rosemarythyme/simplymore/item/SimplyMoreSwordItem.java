@@ -1,6 +1,6 @@
 package net.rosemarythyme.simplymore.item;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -8,7 +8,6 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.SimplySwordsSwordItem;
@@ -25,12 +24,12 @@ public class SimplyMoreSwordItem extends SimplySwordsSwordItem implements Weapon
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(selected && swordType == SwordType.LANCE) {
-            Weapon.tryGrantLanceEffect(entity);
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if(swordType == SwordType.LANCE) {
+            Weapon.tryGrantLanceEffect(attacker, target);
         }
 
-        super.inventoryTick(stack, world, entity, slot, selected);
+        return super.postHit(stack, target, attacker);
     }
 
     @Override
