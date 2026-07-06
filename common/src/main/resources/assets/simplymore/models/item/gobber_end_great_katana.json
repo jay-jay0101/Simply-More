@@ -1,6 +1,0 @@
-{
-  "parent": "simplymore:item/template/great_katana",
-  "textures": {
-    "layer0": "simplymore:item/great_katana/gobber_end"
-  }
-}

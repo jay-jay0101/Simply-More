@@ -1,6 +1,0 @@
-{
-  "parent": "simplyswords:item/long_handheld",
-  "textures": {
-    "layer0": "simplymore:item/great_spear/gobber_nether"
-  }
-}

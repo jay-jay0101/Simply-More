@@ -1417,10 +1417,6 @@ public class ItemRegistry {
         entries.add(RUNIC_GREAT_SPEAR);
         entries.add(RUNIC_DEER_HORNS);
 
-//        if (Platform.isModLoaded("gobber2")) {
-//            Gobber2CompatRegistry.addToGroup(entries);
-//        }
-//
         if (Platform.isModLoaded("mythicmetals")) {
             MythicMetalsCompatRegistry.addToGroup(entries);
         }
