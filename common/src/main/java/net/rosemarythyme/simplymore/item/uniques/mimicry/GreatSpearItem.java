@@ -14,11 +14,12 @@ import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class GreatSpearItem extends MimicryItem {
+public class GreatSpearItem extends MimicryItem implements TwoHandedWeapon {
     public GreatSpearItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }

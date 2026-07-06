@@ -29,6 +29,7 @@ import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.util.Styles;
@@ -37,7 +38,7 @@ import org.joml.Vector3f;
 
 import java.util.List;
 
-public class RevvengineItem extends SimplyMoreUniqueSwordItem {
+public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
 
     public RevvengineItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);

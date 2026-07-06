@@ -17,12 +17,13 @@ import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.util.Styles;
 import org.joml.Vector3d;
 
 import java.util.List;
 
-public class KatanaItem extends MimicryItem {
+public class KatanaItem extends MimicryItem implements TwoHandedWeapon {
     public KatanaItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }

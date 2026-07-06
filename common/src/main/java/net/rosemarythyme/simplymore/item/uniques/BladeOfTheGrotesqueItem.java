@@ -33,15 +33,15 @@ import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem {
+public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
     int skillCooldown = UNIQUE_CONFIG.blade_of_the_grotesque.cooldown;
     int skillLength = UNIQUE_CONFIG.blade_of_the_grotesque.selfStunTime;
 

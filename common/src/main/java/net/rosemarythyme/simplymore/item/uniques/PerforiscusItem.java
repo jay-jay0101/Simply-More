@@ -20,11 +20,12 @@ import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
+public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
     int skillCooldown = UNIQUE_CONFIG.perforiscus.cooldown;
 
     public static final int maxBloom = 15;

@@ -27,12 +27,13 @@ import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem {
+public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
     int skillCooldown = UNIQUE_CONFIG.lustrous_moxie.cooldown;
 
     public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {

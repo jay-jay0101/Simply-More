@@ -31,6 +31,7 @@ import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.util.Styles;
@@ -40,7 +41,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem {
+public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
 
     @Override
     public CounterComponent getDefaultCounterComponent() {
