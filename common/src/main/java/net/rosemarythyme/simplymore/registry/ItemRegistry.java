@@ -15,7 +15,6 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
-import net.rosemarythyme.simplymore.item.RemovedItem;
 import net.rosemarythyme.simplymore.item.RuneCarverItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreRunicSwordItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
@@ -730,12 +729,6 @@ public class ItemRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> SCARAB_ROLLER = ITEMS.register(
-            "scarab_roller",
-            () -> new RemovedItem(new Item.Settings().maxCount(1),
-                    MYRMEDGE)
-    );
-
     public static final RegistrySupplier<Item> BLACK_PEARL = ITEMS.register(
             "black_pearl",
             () -> new BlackPearlItem(
@@ -1343,13 +1336,6 @@ public class ItemRegistry {
                             .fireproof()
                             .rarity(Rarity.EPIC)
             )
-    );
-
-    public static final RegistrySupplier<Item> MIMICRY = ITEMS.register(
-            "mimicry",
-            () -> new RemovedItem(
-                    new Item.Settings(),
-                    MIMICRY_LONGSWORD)
     );
 
     public static void register() {

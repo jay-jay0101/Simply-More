@@ -33,11 +33,6 @@
   "effect.simplymore.soul_health": "Soul Health",
   "effect.simplymore.mimicry_happening": "Martial",
 
-  "item.simplymore.removed_item": "???",
-  "item.simplymore.removed_item.tooltip1": "This item was either removed or",
-  "item.simplymore.removed_item.tooltip2": "had its internal ID changed.",
-  "item.simplymore.removed_item.tooltip3": "Right Click to turn this into:",
-
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
   "item.simplymore.runefused_carver.tooltip1": "Can be used to form the rune socket on a unique weapon that doesn't have it.",
