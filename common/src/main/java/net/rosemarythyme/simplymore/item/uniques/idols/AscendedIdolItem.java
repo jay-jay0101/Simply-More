@@ -4,13 +4,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.util.Styles;
 
@@ -35,23 +32,23 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        SimplyMoreHelperMethods.simplyMore$IdolHitEffects(
-                attacker,
-                ParticleTypes.FALLING_WATER,
-                300,
-                1,
-                1,
-                1,
-                0,
-                new AuraOfPurityAreaEffectCloudEntity(
-                        attacker.getWorld(),
-                        attacker.getX(),
-                        attacker.getY(),
-                        attacker.getZ(),
-                        attacker
-                ),
-                UNIQUE_CONFIG.holylight.chance
-        );
+//        SimplyMoreHelperMethods.simplyMore$IdolHitEffects(
+//                attacker,
+//                ParticleTypes.FALLING_WATER,
+//                300,
+//                1,
+//                1,
+//                1,
+//                0,
+//                new AuraOfPurityEntity(
+//                        attacker.getWorld(),
+//                        attacker.getX(),
+//                        attacker.getY(),
+//                        attacker.getZ(),
+//                        attacker
+//                ),
+//                UNIQUE_CONFIG.holylight.chance
+//        );
 
         return super.postHit(stack, target, attacker);
     }

@@ -15,7 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
+import net.rosemarythyme.simplymore.entity.AuraOfPurityEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
@@ -40,24 +40,26 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem implements Legendar
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        SimplyMoreHelperMethods.simplyMore$IdolHitEffects(
-                attacker,
-                ParticleTypes.FALLING_WATER,
-                300,
-                1.0D,
-                1.0D,
-                1.0D,
+//        SimplyMoreHelperMethods.simplyMore$IdolHitEffects(
+//                attacker,
+//                ParticleTypes.FALLING_WATER,
+//                300,
+//                1.0D,
+//                1.0D,
+//                1.0D,
+//
+//                0.0D,
+//                new AuraOfPurityEntity(
+//                        attacker.getWorld(),
+//                        attacker.getX(),
+//                        attacker.getY(),
+//                        attacker.getZ(),
+//                        attacker
+//                ),
+//                UNIQUE_CONFIG.holylight.chance
+//        );
 
-                0.0D,
-                new AuraOfPurityAreaEffectCloudEntity(
-                        attacker.getWorld(),
-                        attacker.getX(),
-                        attacker.getY(),
-                        attacker.getZ(),
-                        attacker
-                ),
-                UNIQUE_CONFIG.holylight.chance
-        );
+        attacker.getWorld().spawnEntity(new AuraOfPurityEntity(attacker, attacker.getPos()));
 
         return super.postHit(stack, target, attacker);
     }
