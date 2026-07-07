@@ -5,10 +5,11 @@ package net.rosemarythyme.simplymore.registry;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.world.World;
+import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityEntity;
@@ -20,33 +21,32 @@ public class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITIES =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ENTITY_TYPE);
 
-    public static final RegistrySupplier<EntityType<CrowEntity>> CROW = ENTITIES.register(
-            SimplyMore.identifier("crow"),
-            () -> EntityType.Builder.create(CrowEntity::new, SpawnGroup.MISC)
+    public static final RegistrySupplier<EntityType<CrowEntity>> CROW = registerType(
+            EntityType.Builder.create(CrowEntity::new, SpawnGroup.MISC)
                     .dimensions(0.25f, 0.25f)
-                    .makeFireImmune()
-                    .build("crow")
+                    .makeFireImmune(),
+            "crow"
+    );
+
+    public static final RegistrySupplier<EntityType<GhostFallingBlockEntity>> GHOST_FALLING_BLOCK = registerType(
+            EntityType.Builder.<GhostFallingBlockEntity>create(GhostFallingBlockEntity::new, SpawnGroup.MISC)
+                    .dimensions(1f, 1f),
+            "ghost_falling_block"
     );
 
     public static final RegistrySupplier<EntityType<AuraOfPurityEntity>> AURA_OF_PURITY =
-            registerPlacementEntity("aura_of_purity", AuraOfPurityEntity::new);
+            registerMarkerEntity("aura_of_purity", AuraOfPurityEntity::new);
 
-    public static final RegistrySupplier<EntityType<GhostFallingBlockEntity>> GHOST_FALLING_BLOCK = ENTITIES.register(
-            SimplyMore.identifier("ghost_falling_block"),
-            () -> EntityType.Builder.create((EntityType<GhostFallingBlockEntity> type, World world) -> new GhostFallingBlockEntity(type, world), SpawnGroup.MISC)
-                    .dimensions(0.25f, 0.25f)
-                    .build("ghost_falling_block")
-    );
+    public static <T extends Entity> RegistrySupplier<EntityType<T>> registerType(EntityType.Builder<T> builder, String name) {
+        Identifier id = SimplyMore.identifier(name);
+        return ENTITIES.register(id, () -> builder.build(id.toString()));
+    }
 
-    public static <T extends AbstractAbilityPlacementEntity> RegistrySupplier<EntityType<T>> registerPlacementEntity(String name, EntityType.EntityFactory<T> entity) {
-        return ENTITIES.register(
-                SimplyMore.identifier(name),
-                () -> EntityType.Builder.create(entity, SpawnGroup.MISC)
-                        .dimensions(0f, 0f)
-                        .maxTrackingRange(0)
-                        .disableSummon()
-                        .build(name)
-        );
+    public static <T extends AbstractAbilityPlacementEntity> RegistrySupplier<EntityType<T>> registerMarkerEntity(String name, EntityType.EntityFactory<T> entity) {
+        return registerType(EntityType.Builder.create(entity, SpawnGroup.MISC)
+                .dimensions(0f, 0f)
+                .maxTrackingRange(0)
+                .disableSummon(), name);
     }
 
     public static void register() {

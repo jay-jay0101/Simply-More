@@ -1,97 +1,54 @@
 package net.rosemarythyme.simplymore.entity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LandingBlock;
-import net.minecraft.entity.*;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.FallingBlockEntity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
-import org.jetbrains.annotations.Nullable;
+import net.rosemarythyme.simplymore.registry.EntityRegistry;
 
-import java.util.List;
-import java.util.UUID;
-
-public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownable {
-    public LivingEntity owner;
+public class GhostFallingBlockEntity extends FallingBlockEntity {
     protected static UniqueEffectConfig effect = ConfigWrapper.unique;
 
 
-    public GhostFallingBlockEntity(EntityType<? extends FallingBlockEntity> entityType, World world) {
+    public GhostFallingBlockEntity(EntityType<? extends GhostFallingBlockEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public GhostFallingBlockEntity(World world, double x, double y, double z, Vec3d velocity, LivingEntity owner) {
-        this(EntityType.FALLING_BLOCK, world);
-        this.intersectionChecked = true;
-        this.setPosition(x, y, z);
+    public GhostFallingBlockEntity(World world, Vec3d pos, Vec3d velocity) {
+        this(EntityRegistry.GHOST_FALLING_BLOCK.get(), world);
+        this.refreshPositionAfterTeleport(pos);
         this.setVelocity(velocity);
-        this.prevX = x;
-        this.prevY = y;
-        this.prevZ = z;
-        this.dropItem = false;
-        this.owner = owner;
-        this.setFallingBlockPos(this.getBlockPos());
     }
 
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-
-        if(this.getOwner() != null) {
-            nbt.putUuid("Owner", this.getOwner().getUuid());
-        }
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-
-        UUID uUID;
-        if (nbt.containsUuid("Owner")) {
-            uUID = nbt.getUuid("Owner");
-            Entity entity = ((ServerWorld) this.getWorld()).getEntity(uUID);
-
-            if(entity instanceof LivingEntity livingEntity) {
-                this.owner = livingEntity;
-            }
-        }
-    }
-
-    @Override
-    public void onDestroyedOnLanding(Block block, BlockPos pos) {
-        if (block instanceof LandingBlock) {
-            this.destroy();
-        }
     }
 
     public void destroy() {
-        this.playSound(SoundEvents.BLOCK_STONE_BREAK, 1f, 1f);
-        ((ServerWorld) this.getWorld()).spawnParticles(new BlockStateParticleEffect(
-                        ParticleTypes.BLOCK,
-                        Blocks.STONE.getDefaultState()
-                ),
-                this.getX(),
-                this.getY(),
-                this.getZ(),
-                15,
-                0.25f,
-                0.25f,
-                0.25f,
-                0.5f
+        this.playSound(getBlockState().getSoundGroup().getBreakSound(), 1f, 1f);
+
+        BlockStateParticleEffect breakParticle = new BlockStateParticleEffect(
+                ParticleTypes.BLOCK,
+                getBlockState()
+        );
+
+        ((ServerWorld) this.getWorld()).spawnParticles(breakParticle,
+                this.getX(), this.getY(), this.getZ(),
+                15, 0.25f, 0.25f, 0.25f, 0.5f
         );
         this.discard();
     }
@@ -104,47 +61,11 @@ public class GhostFallingBlockEntity extends FallingBlockEntity implements Ownab
         }
 
         this.move(MovementType.SELF, this.getVelocity());
-        if (!this.getWorld().isClient) {
-            BlockPos blockPos = this.getBlockPos();
 
-            if (this.isOnGround()) {
-                this.destroy();
-            } else if (!this.getWorld().isClient
-                    && (this.timeFalling > 100 && (blockPos.getY() <= this.getWorld().getBottomY() || blockPos.getY() > this.getWorld().getTopY()) || this.timeFalling > 600)) {
-                this.destroy();
-            }
-        }
-
-        this.setVelocity(this.getVelocity().multiply(0.98));
-
-        // Hit Enemies
-        Box box = MathUtils.createCubeBox(getPos(), 0.75);
-
-        List<LivingEntity> targets = AttackUtils.getTargets(owner, box);
-
-        Entity ownerEntity = this.getOwner();
-        if(ownerEntity == null) return;
-
-        targets.forEach(
-                target -> {
-                    target.damage(this.getDamageSources().fallingBlock(this), effect.exedrill.rockDamage);
-                    target.addStatusEffect(
-                            new StatusEffectInstance(
-                                    StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED),
-                                    effect.exedrill.rockStunTime
-                            )
-                    );
-                }
-        );
-
-        if(!targets.isEmpty()) {
+        if (!this.getWorld().isClient() && (this.isOnGround() || this.timeFalling >= 600)) {
             this.destroy();
         }
 
-    }
-
-    @Override
-    public @Nullable Entity getOwner() {
-        return this.owner;
+        this.setVelocity(this.getVelocity().multiply(0.98));
     }
 }

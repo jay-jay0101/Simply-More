@@ -24,7 +24,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.GhostFallingBlockEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
@@ -157,19 +156,19 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
                     normalisedVector.z() * UNIQUE_CONFIG.exedrill.rockSpeed
             );
 
-            GhostFallingBlockEntity rock = new GhostFallingBlockEntity(
-                    world,
-                    user.getX(),
-                    user.getY(),
-                    user.getZ(),
-                    rockVelocity,
-                    user
-            );
+//            GhostFallingBlockEntity rock = new GhostFallingBlockEntity(
+//                    world,
+//                    user.getX(),
+//                    user.getY(),
+//                    user.getZ(),
+//                    rockVelocity,
+//                    user
+//            );
 
             NbtCompound nbt = new NbtCompound();
             nbt.put("BlockState", NbtHelper.fromBlockState(Blocks.STONE.getDefaultState()));
-            rock.readCustomDataFromNbt(nbt);
-            user.getWorld().spawnEntity(rock);
+//            rock.readCustomDataFromNbt(nbt);
+//            user.getWorld().spawnEntity(rock);
             user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_AMETHYST_CLUSTER_BREAK, SoundCategory.PLAYERS, 0.5f,0.5f);
         }
 
