@@ -19,7 +19,7 @@ public class EruptionAreaEffectCloudEntity extends AreaEffectCloudEntity {
     public void tick() {
         super.tick();
         LivingEntity owner = this.getOwner();
-        List<LivingEntity> targets = AttackUtils.getTargets(owner, this.getBoundingBox());
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(owner, this.getBoundingBox());
 
         for (LivingEntity target : targets) {
             target.damage(this.getDamageSources().inFire(), 1.0F);

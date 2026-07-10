@@ -78,7 +78,7 @@ public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
             getWorld().playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1,1);
 
             Box box = MathUtils.createCubeBox(getPos(), 2);
-            List<LivingEntity> targets = AttackUtils.getTargets(getOwner(), box);
+            List<LivingEntity> targets = AttackUtils.cuboidAttack(getOwner(), box);
 
             for (LivingEntity target : targets) {
                 target.damage(

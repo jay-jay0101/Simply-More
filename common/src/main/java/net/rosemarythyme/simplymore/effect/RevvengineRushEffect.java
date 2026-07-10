@@ -102,7 +102,7 @@ public class RevvengineRushEffect extends StatusEffect {
         );
 
         Box box = MathUtils.createCubeBox(particlePos, 1);
-        List<LivingEntity> entities = AttackUtils.getTargets(entity, box);
+        List<LivingEntity> entities = AttackUtils.cuboidAttack(entity, box);
 
         if(!entities.isEmpty()) {
             if(amplifier > 0) {
@@ -172,7 +172,7 @@ public class RevvengineRushEffect extends StatusEffect {
         );
 
         Box box = MathUtils.createCubeBox(particlePos, 1);
-        List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
         for (LivingEntity target : targets) {
             target.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),

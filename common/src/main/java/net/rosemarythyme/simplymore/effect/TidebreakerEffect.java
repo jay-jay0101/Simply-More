@@ -47,7 +47,7 @@ public class TidebreakerEffect extends StatusEffect {
 
     private void applyInsanityEffect(LivingEntity affectedEntity, ServerWorld serverWorld) {
         Box box = MathUtils.createCubeBox(affectedEntity.getPos(), 3);
-        List<LivingEntity> targets = AttackUtils.getTargets(affectedEntity, box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(affectedEntity, box);
 
         for (LivingEntity target : targets) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.INSANITY), 160, 0), affectedEntity);

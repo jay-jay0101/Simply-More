@@ -68,7 +68,7 @@ public class SimplyMoreHelperMethods {
             boolean isPositive = statusEffect.value().isBeneficial();
 
             Box box = MathUtils.createCubeBox(user.getPos(), 10);
-            List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+            List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
 
             for (LivingEntity livingEntity : targets) {
                 livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, duration));

@@ -82,7 +82,7 @@ public class MistyEffect extends StatusEffect {
             Box box = MathUtils.createCubeBox(player.getPos(), boxSize);
 
 
-            List<LivingEntity> targets = AttackUtils.getTargets(player, box);
+            List<LivingEntity> targets = AttackUtils.cuboidAttack(player, box);
             for (LivingEntity target : targets) {
                 if (!player.canSee(target)) {
                     continue;

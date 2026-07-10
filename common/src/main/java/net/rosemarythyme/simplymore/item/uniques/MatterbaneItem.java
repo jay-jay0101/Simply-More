@@ -99,7 +99,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y,z+dZ,1,0,0,0,0);
 
             Box box = MathUtils.createCubeBox(new Vec3d(x, y, z).add(dX, 0, dZ), 0.6);
-            List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+            List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
             for (LivingEntity target : targets) {
                 target.damage(user.getDamageSources().magic(), UNIQUE_CONFIG.matterbane.damage);
             }

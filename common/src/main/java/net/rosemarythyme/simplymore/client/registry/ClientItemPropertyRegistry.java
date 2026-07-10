@@ -1,37 +1,21 @@
-package net.rosemarythyme.simplymore.client;
+package net.rosemarythyme.simplymore.client.registry;
 
-import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
-import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.item.ItemPropertiesRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
-import net.rosemarythyme.simplymore.client.render.entity.CrowEntityRenderer;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
 import java.util.Set;
 
-@Environment(EnvType.CLIENT)
-public class SimplyMoreClientInit {
-
-    @Environment(EnvType.CLIENT)
-    public static void registerEntityRenderers() {
-        EntityRendererRegistry.register(EntityRegistry.CROW, CrowEntityRenderer::new);
-        EntityModelLayerRegistry.register(CrowEntityModel.CROW_LAYER, CrowEntityModel::getTexturedModelData);
-
-        EntityRendererRegistry.register(EntityRegistry.GHOST_FALLING_BLOCK, FallingBlockEntityRenderer::new);
-    }
-
+public class ClientItemPropertyRegistry {
     public static void registerCounterItemProperty(Item item, Identifier id) {
         ItemPropertiesRegistry.register(item, id, (stack, client, entity, a) -> {
             CounterComponent counter = MathUtils.getCounterComponent(stack);
@@ -80,7 +64,7 @@ public class SimplyMoreClientInit {
     }
 
     @Environment(EnvType.CLIENT)
-    public static void registerModelPredicates() {
+    public static void register() {
         registerDyeableItemProperty(ItemRegistry.MATTERBANE.get(), 1.75f, 0);
 
         registerCounterItemProperty(ItemRegistry.BRASSTURN.get(), SimplyMore.identifier("oxidisation"));

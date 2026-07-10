@@ -25,7 +25,7 @@ public class AuraOfCorruptionAreaEffectCloudEntity extends AreaEffectCloudEntity
     public void tick() {
         super.tick();
         LivingEntity owner = this.getOwner();
-        List<LivingEntity> targets = AttackUtils.getTargets(owner, this.getBoundingBox());
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(owner, this.getBoundingBox());
 
         for (LivingEntity target : targets) {
             if (!target.hasStatusEffect(StatusEffects.WITHER)) target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER,20,1));

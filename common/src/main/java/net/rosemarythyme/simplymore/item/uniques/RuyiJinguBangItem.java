@@ -92,7 +92,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
                     user.getWorld().playSound(null, userX + offsetX, userY + offsetY, userZ + offsetZ, SoundRegistry.DARK_SWORD_BLOCK.get(), SoundCategory.PLAYERS, 0.2f, 1);
 
                     Box box = MathUtils.createCubeBox(user.getPos().add(offsetX, offsetY, offsetZ), 1);
-                    List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+                    List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
 
                     DamageSource damageSource = player.getDamageSources().playerAttack(player);
                     for (LivingEntity target : targets) {

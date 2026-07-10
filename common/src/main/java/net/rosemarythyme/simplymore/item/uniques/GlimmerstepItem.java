@@ -130,7 +130,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
                     livingEntity -> livingEntity != user.getVehicle()
             ).forEach(
                     livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
-                            (!AttackUtils.canHitTarget(livingEntity, user) || livingEntity == user)?
+                            (!AttackUtils.canTarget(livingEntity, user, AttackUtils.AttackTarget.ENEMIES) || livingEntity == user)?
                                     finalDamage * (UNIQUE_CONFIG.glimmerstep.glimmerstepAllyDamage) : finalDamage)
             );
 

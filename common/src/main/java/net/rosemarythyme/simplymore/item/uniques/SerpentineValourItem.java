@@ -58,7 +58,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem implements T
         if (!user.getWorld().isClient()) {
             Box entitySearchBox = MathUtils.createCubeBox(user.getPos(), 5);
 
-            boolean hasEnemies = !AttackUtils.getTargets(user, entitySearchBox).isEmpty();
+            boolean hasEnemies = !AttackUtils.cuboidAttack(user, entitySearchBox).isEmpty();
 
             int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
 

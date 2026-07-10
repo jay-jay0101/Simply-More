@@ -65,7 +65,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
     public static void causeStun(LivingEntity attacker) {
         Box box = MathUtils.createCubeBox(attacker.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange);
 
-        List<LivingEntity> targets = AttackUtils.getTargets(attacker, box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(attacker, box);
         for (LivingEntity target : targets) {
             target.addStatusEffect(
                     new StatusEffectInstance(
@@ -106,7 +106,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
 
             Box box = MathUtils.createCubeBox(player.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange);
 
-            List<LivingEntity> targets = AttackUtils.getTargets(player, box);
+            List<LivingEntity> targets = AttackUtils.cuboidAttack(player, box);
             for (LivingEntity target : targets) {
                 EntityUtils.reapplyAndIncrementEffect(target,
                         StatusEffectRegistry.getReference(StatusEffectRegistry.GROTESQUE_WARD),

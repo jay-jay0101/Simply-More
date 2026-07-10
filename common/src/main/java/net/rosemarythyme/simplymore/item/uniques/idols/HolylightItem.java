@@ -4,23 +4,28 @@ import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -69,7 +74,7 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem implements Legendar
         SimplyMoreHelperMethods.simplyMore$IdolUseEffects(
                 this,
                 user,
-                StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING),
+                ,
                 160,
                 SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON,
                 2F,
@@ -82,6 +87,22 @@ public class HolylightItem extends SimplyMoreUniqueSwordItem implements Legendar
                 0.1D,
                 skillCooldown
         );
+
+        if(user.getWorld().isClient()) return super.use(world, user, hand);
+
+            boolean isPositive = statusEffect.value().isBeneficial();
+
+            Box box = MathUtils.createCubeBox(user.getPos(), 10);
+            List<LivingEntity> targets = AttackUtils.cubeAttack(user, user.getPos(), 10, AttackUtils.AttackTarget.ALLIES_AND_USER);
+
+            for (LivingEntity livingEntity : targets) {
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING), 100));
+            }
+
+            user.getWorld().playSound(null, user.getBlockPos(), soundEvent, user.getSoundCategory(), soundVolume, soundPitch);
+            ((ServerWorld) user.getWorld()).spawnParticles(particleEffect, user.getX(), user.getY() + 1, user.getZ(), particleCount, deltaX, deltaY, deltaZ, particleSpeed);
+            user.getItemCooldownManager().set(item, skillCooldown);
+
         return super.use(world, user, hand);
     }
 

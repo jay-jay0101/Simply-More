@@ -99,7 +99,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.PLAYERS, 0.5f, 2);
 
                 Box box = MathUtils.createCubeBox(user.getPos(), 3);
-                List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+                List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
 
                 for (LivingEntity livingEntity : targets) {
                     livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0));

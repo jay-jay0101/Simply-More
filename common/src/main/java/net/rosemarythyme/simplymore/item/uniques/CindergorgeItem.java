@@ -85,7 +85,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
                     world.playSound(null, firePos.x, user.getEyeY(), firePos.z, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 0.1f, 1f);
 
                     Box box = MathUtils.createCubeBox(firePos, 0.75);
-                    List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+                    List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
                     for (LivingEntity target : targets) {
                         target.damage(user.getDamageSources().inFire(), UNIQUE_CONFIG.cindergorge.fireDamage);
                         target.setOnFireFor(3);

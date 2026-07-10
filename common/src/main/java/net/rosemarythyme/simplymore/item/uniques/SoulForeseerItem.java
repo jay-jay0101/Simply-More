@@ -63,7 +63,7 @@ public class SoulForeseerItem extends SimplyMoreUniqueSwordItem implements TwoHa
         if (!player.getWorld().isClient()) {
             boolean hasAffectedEntity = false;
             Box box = MathUtils.createCubeBox(player.getPos(), UNIQUE_CONFIG.soul_foreseer.range);
-            List<LivingEntity> targets = AttackUtils.getTargets(player, box);
+            List<LivingEntity> targets = AttackUtils.cuboidAttack(player, box);
 
             for (LivingEntity livingEntity : targets) {
                 if (!livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FORESEEN))) continue;

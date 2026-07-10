@@ -192,7 +192,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
 
         Box box = MathUtils.createCuboidBox(pos, -range, -2, -range, range, range, range);
 
-        return AttackUtils.getTargets(player, box);
+        return AttackUtils.cuboidAttack(player, box);
     }
 
     @Override

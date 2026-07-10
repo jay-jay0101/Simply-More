@@ -3,17 +3,42 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
 public class AttackUtils {
     public static int INFINITE_DURATION = 9999999;
+
+    public enum AttackTarget {
+        OTHERS_AND_USER_NEGATIVELY(true, true, true, false),
+        OTHERS_AND_USER_POSITIVELY(true, true, true, true),
+        OTHERS_NEGATIVELY(false, true, true, false),
+        OTHERS_POSITIVELY(false, true, true, true),
+        ALLIES_AND_USER(true, true, false, true),
+        ALLIES(false, true, false, true),
+        ENEMIES_AND_USER(true, false, true, false),
+        ENEMIES(false, false, true, false);
+
+        public final boolean canHitUser;
+        public final boolean canHitAllies;
+        public final boolean canHitEnemies;
+        public final boolean canHitPetOrMount;
+
+        AttackTarget(boolean canHitUser, boolean canHitAllies, boolean canHitEnemies, boolean canHitPetOrMount) {
+            this.canHitAllies = canHitAllies;
+            this.canHitEnemies = canHitEnemies;
+            this.canHitUser = canHitUser;
+            this.canHitPetOrMount = canHitPetOrMount;
+        }
+    }
 
     public static int getUseTicksFromInfiniteDuration(int duration) {
         return INFINITE_DURATION - duration;
@@ -41,30 +66,48 @@ public class AttackUtils {
         }
     }
 
-    public static boolean canHitTarget(LivingEntity attacker, LivingEntity target) {
-        return attacker != null &&
-                target != null &&
-                target != attacker &&
-                target != attacker.getVehicle() &&
-                attacker != target.getVehicle() &&
-                !target.isInvulnerable() &&
-                !target.isDead() &&
-                HelperMethods.checkFriendlyFire(attacker, target);
+    public static boolean isPetOrMount(LivingEntity entity, LivingEntity entity2) {
+        return entity == entity2.getVehicle() ||
+                entity2 == entity.getVehicle() ||
+                (entity instanceof TameableEntity ownableEntity && ownableEntity.getOwner() == entity2) ||
+                (entity2 instanceof TameableEntity ownableEntity2 && ownableEntity2.getOwner() == entity);
     }
 
-    public static List<LivingEntity> getTargets(LivingEntity attacker, Box box) {
-        if (attacker == null) return List.of();
+    public static boolean canTarget(LivingEntity attacker, LivingEntity target, AttackTarget targetType) {
+        if(attacker == null || target == null) return false;
 
-        return attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                (target) -> canHitTarget(attacker, target)
+        if(!targetType.canHitUser && attacker == target) return false;
+
+        boolean isEnemy = HelperMethods.checkFriendlyFire(target, attacker);
+        if(!targetType.canHitEnemies && isEnemy) return false;
+        if(!targetType.canHitAllies && !isEnemy) return false;
+
+        return targetType.canHitPetOrMount || !isPetOrMount(attacker, target);
+    }
+
+    public static List<LivingEntity> cylinderAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
+        float horizontalDistance = horizontalRange * horizontalRange;
+
+        return cuboidAttack(attacker, centerPos, horizontalRange, verticalRange, targetType).stream().filter(
+                (target) -> target.squaredDistanceTo(new Vec3d(centerPos.x, target.getY(), centerPos.z)) < horizontalDistance
         ).toList();
     }
 
-    public static List<LivingEntity> getAllies(LivingEntity attacker, Box box) {
+    public static List<LivingEntity> cuboidAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
+        Box box = MathUtils.createCuboidBox(centerPos, horizontalRange, verticalRange, horizontalRange);
+        return boxAttack(attacker, box, targetType);
+    }
+
+    public static List<LivingEntity> cubeAttack(LivingEntity attacker, Vec3d centerPos, float range, AttackTarget targetType) {
+        Box box = MathUtils.createCubeBox(centerPos, range);
+        return boxAttack(attacker, box, targetType);
+    }
+
+    public static List<LivingEntity> boxAttack(LivingEntity attacker, Box box, AttackTarget targetType) {
         if (attacker == null) return List.of();
 
         return attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                (target) -> !HelperMethods.checkFriendlyFire(attacker, target)
+                (target) -> canTarget(attacker, target, targetType)
         ).toList();
     }
 

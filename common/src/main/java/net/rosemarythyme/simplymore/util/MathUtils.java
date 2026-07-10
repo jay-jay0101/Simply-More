@@ -34,6 +34,14 @@ public class MathUtils {
         );
     }
 
+    public static float clampedLerp(float input, float inputMinimum, float inputMaximum, float outputMinimum, float outputMaximum) {
+        float inputRange = inputMaximum - inputMinimum;
+        float outputRange = outputMaximum - outputMinimum;
+        float normalisedInput = Math.clamp((input - inputMinimum) / inputRange, 0, 1);
+
+        return (normalisedInput * outputRange) + outputMinimum;
+    }
+
     public static String translateTicks(int ticks) {
         float seconds = ticks / 20f;
         return new DecimalFormat("#.##").format(seconds);

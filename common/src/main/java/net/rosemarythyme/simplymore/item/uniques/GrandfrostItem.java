@@ -56,7 +56,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHand
         }
 
         Box box = MathUtils.createCubeBox(user.getPos(), UNIQUE_CONFIG.grandfrost.blizzardRange);
-        List<LivingEntity> livingEntities = AttackUtils.getTargets(user, box);
+        List<LivingEntity> livingEntities = AttackUtils.cuboidAttack(user, box);
 
         if (livingEntities.size() > 1) {
             boolean isNonTeammateNearby = false;

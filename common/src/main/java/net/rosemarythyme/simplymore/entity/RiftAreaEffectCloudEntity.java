@@ -47,7 +47,7 @@ public class RiftAreaEffectCloudEntity extends AreaEffectCloudEntity {
         ((ServerWorld) getWorld()).spawnParticles(bigParticle, getX(), getY(), getZ(), 2, 0.2, 0.2, 0.2, 0.3);
 
         Box box = MathUtils.createCubeBox(getPos(), 13);
-        List<LivingEntity> targets = AttackUtils.getTargets(getOwner(), box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(getOwner(), box);
         for (LivingEntity target : targets) {
 
             double distanceSquared = squaredDistanceTo(target.getX(), target.getY(), target.getZ());

@@ -104,7 +104,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
         int boxRange = UNIQUE_CONFIG.stasis.range;
 
         Box box = MathUtils.createCuboidBox(user.getPos(), -boxRange, -2, -boxRange, boxRange, boxRange*2, boxRange);
-        List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
         for (LivingEntity target : targets) {
             target.damage(player.getDamageSources().magic(), UNIQUE_CONFIG.stasis.strikeDamage);
 

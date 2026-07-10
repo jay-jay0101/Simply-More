@@ -2,7 +2,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -26,7 +25,6 @@ import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -82,7 +80,7 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
                     ((ServerWorld) user.getWorld()).spawnParticles(particleEffect,x+dX,y+dY,z+dZ,1,0,0,0,0);
 
                     Box box = MathUtils.createCubeBox(user.getEyePos().add(dX, dY, dZ), 0.25);
-                    List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+                    List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
                     for (LivingEntity target : targets) {
                         if (target.isBlocking()) continue;
 

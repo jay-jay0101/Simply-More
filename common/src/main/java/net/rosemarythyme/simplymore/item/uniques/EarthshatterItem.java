@@ -113,7 +113,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHa
 
         // Damage entities in range
         Box box = MathUtils.createCuboidBox(player.getPos(), -4, -2, -4, +4,+5,+4);
-        List<LivingEntity> targets = AttackUtils.getTargets(player, box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(player, box);
 
         DamageSource damageSource = player.getDamageSources().playerAttack(player);
         for (LivingEntity livingEntity : targets) {

@@ -80,7 +80,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     private LivingEntity locateRadiantMarkedTarget(PlayerEntity user) {
         int boxRange = UNIQUE_CONFIG.lustrous_moxie.range;
         Box box = new Box(user.getX() - boxRange,user.getY() - boxRange,user.getZ() - boxRange,user.getX() + boxRange,user.getY() + boxRange,user.getZ() + boxRange);
-        List<LivingEntity> potentiallyMarkedLivingEntities = AttackUtils.getTargets(user, box);
+        List<LivingEntity> potentiallyMarkedLivingEntities = AttackUtils.cuboidAttack(user, box);
 
         return potentiallyMarkedLivingEntities.stream().filter(livingEntity -> livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK))).findAny().orElse(null);
     }
@@ -105,7 +105,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     }
 
     private void knockbackAndDamageEntity(LivingEntity targetEntity, PlayerEntity user, float damage) {
-        if(!AttackUtils.canHitTarget(targetEntity, user)) return;
+        if(!AttackUtils.canTarget(targetEntity, user, AttackUtils.AttackTarget.ENEMIES)) return;
 
         targetEntity.damage(user.getDamageSources().playerAttack(user), damage);
 

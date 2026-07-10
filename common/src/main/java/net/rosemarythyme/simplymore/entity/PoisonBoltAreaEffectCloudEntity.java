@@ -63,7 +63,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
         target = null;
         distance = 50;
 
-        List<LivingEntity> targets = AttackUtils.getTargets(getOwner(), box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(getOwner(), box);
 
         // Find the closest entity in the box
         for (LivingEntity livingEntity : targets) {

@@ -4,7 +4,7 @@ import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.utils.Env;
 import dev.architectury.utils.EnvExecutor;
 import net.minecraft.util.Identifier;
-import net.rosemarythyme.simplymore.client.SimplyMoreClientInit;
+import net.rosemarythyme.simplymore.client.registry.ClientEntityRendererRegistry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
 import net.rosemarythyme.simplymore.registry.*;
@@ -24,12 +24,14 @@ public class SimplyMore {
 		StatusEffectRegistry.register();
 
 		EntityRegistry.register();
-		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMoreClientInit::registerEntityRenderers);
+		EnvExecutor.runInEnv(Env.CLIENT, () -> ClientEntityRendererRegistry::register);
 
 		ItemRegistry.register();
 		ItemRegistry.registerItemGroup();
 		RecipeTypeRegistry.register();
 		TransformationRegistry.register();
+
+		ParticleRegistry.register();
 
 		ItemComponentRegistry.register();
 		TagRegistry.register();

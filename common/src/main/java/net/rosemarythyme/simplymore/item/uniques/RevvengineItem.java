@@ -201,7 +201,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
         );
 
         Box box = MathUtils.createCubeBox(user.getPos(), 1);
-        List<LivingEntity> targets = AttackUtils.getTargets(user, box);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
 
         for (LivingEntity target : targets) {
             target.damage(

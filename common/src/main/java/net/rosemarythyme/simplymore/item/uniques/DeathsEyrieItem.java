@@ -98,7 +98,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
         if (user.getWorld().isClient) return super.use(world, user, hand);
 
         Entity entityTarget = HelperMethods.getTargetedEntity(user, 20);
-        if (entityTarget instanceof LivingEntity target && AttackUtils.canHitTarget(target, user)) {
+        if (entityTarget instanceof LivingEntity target && AttackUtils.canTarget(target, user, AttackUtils.AttackTarget.ENEMIES)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10, 0), user);
             List<CrowEntity> pets = world.getEntitiesByClass(CrowEntity.class, user.getBoundingBox().expand(50),
                     crowEntity -> crowEntity.getOwner() == user
