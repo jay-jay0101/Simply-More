@@ -52,4 +52,15 @@ public class StaticWaterParticle extends SpriteBillboardParticle {
             return createHolyWater(world, x, y, z, provider);
         }
     }
+
+    public static class UnholyWaterFactory implements ParticleFactory<SimpleParticleType> {
+        final SpriteProvider provider;
+        public UnholyWaterFactory(SpriteProvider spriteProvider) {
+            this.provider = spriteProvider;
+        }
+
+        public Particle createParticle(SimpleParticleType particleType, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+            return createUnholyWater(world, x, y, z, provider);
+        }
+    }
 }

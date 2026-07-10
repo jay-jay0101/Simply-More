@@ -16,6 +16,11 @@ public class ParticleRegistry {
             () -> new SimpleParticleType(true) {}
     );
 
+    public static final RegistrySupplier<SimpleParticleType> UNHOLY_WATER = PARTICLES.register(
+            "unholy_water",
+            () -> new SimpleParticleType(true) {}
+    );
+
     public static void register() {
         PARTICLES.register();
     }

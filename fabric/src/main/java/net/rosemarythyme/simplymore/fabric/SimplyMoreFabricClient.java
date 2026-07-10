@@ -18,5 +18,6 @@ public class SimplyMoreFabricClient implements ClientModInitializer {
 
     public void registerParticles() {
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.HOLY_WATER.get(), StaticWaterParticle.HolyWaterFactory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.UNHOLY_WATER.get(), StaticWaterParticle.UnholyWaterFactory::new);
     }
 }

@@ -3,11 +3,14 @@ package net.rosemarythyme.simplymore.item.uniques.idols;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -19,6 +22,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
@@ -67,22 +71,18 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem implements Legendary
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        SimplyMoreHelperMethods.simplyMore$IdolUseEffects(
-                this,
-                user,
-                StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE),
-                160,
-                SoundEvents.ENTITY_EVOKER_PREPARE_ATTACK,
-                2F,
-                1.5F,
-                ParticleTypes.SCULK_SOUL,
-                50,
-                0.25D,
-                0.5D,
-                0.25D,
-                0.1D,
-                skillCooldown
-        );
+        if(!(user.getWorld() instanceof ServerWorld serverWorld)) return super.use(world, user, hand);
+
+        List<LivingEntity> targets = AttackUtils.cubeAttack(user, user.getPos(), 10, AttackUtils.AttackTarget.ENEMIES);
+
+        for (LivingEntity livingEntity : targets) {
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE), 100));
+        }
+
+        serverWorld.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON, SoundCategory.PLAYERS, 1, 1.5f);
+        serverWorld.spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 1, user.getZ(), 50, 0.25, 0.5, 0.25, 0.1);
+        user.getItemCooldownManager().set(this, skillCooldown);
+
         return super.use(world, user, hand);
     }
 

@@ -24,11 +24,14 @@ public class SimplyMoreForgeClient {
 
     @SubscribeEvent
     public static void onRegisterParticleFactories(RegisterParticleProvidersEvent event) {
-        ParticleRegistry.HOLY_WATER.ifPresent(particle -> {
-            event.registerSpriteSet(
-                    particle,
-                    StaticWaterParticle.HolyWaterFactory::new
-            );
-        });
+        ParticleRegistry.HOLY_WATER.ifPresent(particle -> event.registerSpriteSet(
+                particle,
+                StaticWaterParticle.HolyWaterFactory::new
+        ));
+
+        ParticleRegistry.UNHOLY_WATER.ifPresent(particle -> event.registerSpriteSet(
+                particle,
+                StaticWaterParticle.UnholyWaterFactory::new
+        ));
     }
 }
