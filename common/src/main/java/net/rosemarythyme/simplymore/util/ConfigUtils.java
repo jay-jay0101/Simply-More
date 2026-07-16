@@ -4,12 +4,8 @@ import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.minecraft.ValidatedIdentifier;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
-
-import java.util.Optional;
 
 public class ConfigUtils {
     public static ValidatedSet<Identifier> createEffectList(Identifier... defaults) {
@@ -18,14 +14,13 @@ public class ConfigUtils {
         ).toList()).toSet(defaults);
     }
 
-    public static boolean isEffectBlacklisted(RegistryEntry<StatusEffect> effect, ValidatedSet<Identifier> set, boolean shouldIncludeGlobal) {
-        Optional<Identifier> effectId = effect.getKey().map(RegistryKey::getValue);
-        if(effectId.isEmpty()) return false;
+    public static boolean isEffectBlacklisted(StatusEffect effect, ValidatedSet<Identifier> set, boolean shouldIncludeGlobal) {
+        Identifier effectId = Registries.STATUS_EFFECT.getId(effect);
 
         if (shouldIncludeGlobal) {
-            if(ConfigWrapper.unique.globalBlacklist.contains(effectId.get())) return true;
+            if(ConfigWrapper.unique.globalBlacklist.contains(effectId)) return true;
         }
 
-        return set.contains(effectId.get());
+        return set.contains(effectId);
     }
 }

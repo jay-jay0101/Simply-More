@@ -10,6 +10,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
@@ -85,33 +87,42 @@ public class AttackUtils {
         return targetType.canHitPetOrMount || !isPetOrMount(attacker, target);
     }
 
-    public static List<LivingEntity> cylinderAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
+    public static TargetList cylinderAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
         float horizontalDistance = horizontalRange * horizontalRange;
 
-        return cuboidAttack(attacker, centerPos, horizontalRange, verticalRange, targetType).stream().filter(
+        return cuboidAttack(attacker, centerPos, horizontalRange, verticalRange, targetType).filter(
                 (target) -> target.squaredDistanceTo(new Vec3d(centerPos.x, target.getY(), centerPos.z)) < horizontalDistance
-        ).toList();
+        );
     }
 
-    public static List<LivingEntity> cuboidAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
+    public static TargetList cuboidAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
         Box box = MathUtils.createCuboidBox(centerPos, horizontalRange, verticalRange, horizontalRange);
         return boxAttack(attacker, box, targetType);
     }
 
-    public static List<LivingEntity> cubeAttack(LivingEntity attacker, Vec3d centerPos, float range, AttackTarget targetType) {
+    // TODO: REMOVE, ITS ONLY HERE TO KEEP THE MOD COMPILING
+    public static List<LivingEntity> cuboidAttack(LivingEntity attacker, Box box) {
+        return List.of();
+    }
+
+    public static TargetList cubeAttack(LivingEntity attacker, Vec3d centerPos, float range, AttackTarget targetType) {
         Box box = MathUtils.createCubeBox(centerPos, range);
         return boxAttack(attacker, box, targetType);
     }
 
-    public static List<LivingEntity> boxAttack(LivingEntity attacker, Box box, AttackTarget targetType) {
-        if (attacker == null) return List.of();
+    public static TargetList boxAttack(LivingEntity attacker, Box box, AttackTarget targetType) {
+        if (attacker == null) return TargetList.empty();
 
-        return attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
+        return new TargetList(attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box)).filter(
                 (target) -> canTarget(attacker, target, targetType)
-        ).toList();
+        );
     }
 
     public static void breakShield(LivingEntity target) {
         if(target.isBlocking() && target instanceof PlayerEntity playerEntity) playerEntity.disableShield();
+    }
+
+    public static void spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner) {
+        owner.getWorld().spawnEntity(ability);
     }
 }

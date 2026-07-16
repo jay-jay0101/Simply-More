@@ -3,30 +3,27 @@ package net.rosemarythyme.simplymore.entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.registry.ParticleRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.PredicateUtils;
 import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import org.jetbrains.annotations.NotNull;
 
-public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
+public class AuraOfCorruptionEntity extends AbstractAbilityPlacementEntity {
     public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
 
-    public AuraOfPurityEntity(EntityType<AuraOfPurityEntity> entityType,  World world) {
+    public AuraOfCorruptionEntity(EntityType<AuraOfCorruptionEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public AuraOfPurityEntity(@NotNull LivingEntity owner, Vec3d position) {
-        super(owner, position, EntityRegistry.AURA_OF_PURITY.get());
+    public AuraOfCorruptionEntity(@NotNull LivingEntity owner, Vec3d position) {
+        super(owner, position, EntityRegistry.AURA_OF_CORRUPTION.get());
     }
 
     @Override
@@ -36,15 +33,7 @@ public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
 
     public void visual(float range) {
         ServerWorld world = (ServerWorld) getWorld();
-        VisualEffectsUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), range, 100);
-
-        float pulseRadius = MathUtils.clampedLerp(age % 20, 0, 20, 0, 4f);
-
-        if(pulseRadius == 0) {
-            world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.PLAYERS, 1, 1);
-        }
-
-        VisualEffectsUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), pulseRadius, 100);
+        VisualEffectsUtils.particleRing(world, this.getPos(), ParticleTypes.SQUID_INK, range, 100);
     }
 
     @Override
@@ -56,9 +45,7 @@ public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
 
         LivingEntity owner = this.getOwner();
         AttackUtils.cylinderAttack(owner, this.getPos(), range, 2, AttackUtils.AttackTarget.ALLIES_AND_USER)
-            .applyEffect(StatusEffects.STRENGTH, 15, 1)
-            .removeStatusEffects(PredicateUtils.createForEffectBlacklist(UNIQUE_CONFIG.holylight.blacklist, UNIQUE_CONFIG.holylight.includeGlobalBlacklist)
-                    .and(PredicateUtils.HARMFUL_EFFECT)
-        );
+            .applyDurationDependantEffect(StatusEffects.WITHER, 20, 1)
+            .applyEffect(StatusEffects.WEAKNESS, 40, 0);
     }
 }

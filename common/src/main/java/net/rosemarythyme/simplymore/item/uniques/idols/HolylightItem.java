@@ -3,29 +3,25 @@ package net.rosemarythyme.simplymore.item.uniques.idols;
 import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.AuraOfPurityEntity;
-import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -33,53 +29,23 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 
-public class HolylightItem extends SimplyMoreUniqueSwordItem implements LegendaryItem {
-
-    int skillCooldown = UNIQUE_CONFIG.holylight.cooldown;
+public class HolylightItem extends AscendedIdolItem implements LegendaryItem {
 
     public HolylightItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-//        SimplyMoreHelperMethods.simplyMore$IdolHitEffects(
-//                attacker,
-//                ParticleTypes.FALLING_WATER,
-//                300,
-//                1.0D,
-//                1.0D,
-//                1.0D,
-//
-//                0.0D,
-//                new AuraOfPurityEntity(
-//                        attacker.getWorld(),
-//                        attacker.getX(),
-//                        attacker.getY(),
-//                        attacker.getZ(),
-//                        attacker
-//                ),
-//                UNIQUE_CONFIG.holylight.chance
-//        );
-
-        attacker.getWorld().spawnEntity(new AuraOfPurityEntity(attacker, attacker.getPos()));
-
-        return super.postHit(stack, target, attacker);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if(!(user.getWorld() instanceof ServerWorld serverWorld)) return super.use(world, user, hand);
+        if(world.isClient) return super.use(world, user, hand);
 
-        List<LivingEntity> targets = AttackUtils.cubeAttack(user, user.getPos(), 10, AttackUtils.AttackTarget.ALLIES_AND_USER);
+        AttackUtils.cubeAttack(user, user.getPos(), 10, AttackUtils.AttackTarget.ALLIES_AND_USER)
+                .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING), 100, 0);
 
-        for (LivingEntity livingEntity : targets) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING), 100));
-        }
+        VisualEffectsUtils.playSound(world,user.getPos(), Sound.of(SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON).setPitch(1.5f));
+        VisualEffectsUtils.particleAroundEntity(user, ParticleTypes.WAX_OFF, 50, 0.25d, 0.1f);
 
-        serverWorld.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON, SoundCategory.PLAYERS, 1, 1.5f);
-        serverWorld.spawnParticles(ParticleTypes.WAX_OFF, user.getX(), user.getY() + 1, user.getZ(), 50, 0.25, 0.5, 0.25, 0.1);
-        user.getItemCooldownManager().set(this, skillCooldown);
+        user.getItemCooldownManager().set(this, UNIQUE_CONFIG.holylight.cooldown);
 
         return super.use(world, user, hand);
     }

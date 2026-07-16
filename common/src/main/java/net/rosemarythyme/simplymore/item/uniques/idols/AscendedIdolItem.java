@@ -4,11 +4,18 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.rosemarythyme.simplymore.entity.AuraOfPurityEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -32,23 +39,14 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-//        SimplyMoreHelperMethods.simplyMore$IdolHitEffects(
-//                attacker,
-//                ParticleTypes.FALLING_WATER,
-//                300,
-//                1,
-//                1,
-//                1,
-//                0,
-//                new AuraOfPurityEntity(
-//                        attacker.getWorld(),
-//                        attacker.getX(),
-//                        attacker.getY(),
-//                        attacker.getZ(),
-//                        attacker
-//                ),
-//                UNIQUE_CONFIG.holylight.chance
-//        );
+        if(attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
+
+        if (MathUtils.chance(attacker, UNIQUE_CONFIG.holylight.chance)) {
+            VisualEffectsUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_WATER, 300, 1d, 0f);
+            VisualEffectsUtils.playSound(attacker.getWorld(), attacker.getPos(), Sound.of(SoundEvents.ITEM_BUCKET_FILL).setPitch(0.3f));
+
+            AttackUtils.spawnAbility(new AuraOfPurityEntity(attacker, attacker.getPos()), attacker);
+        }
 
         return super.postHit(stack, target, attacker);
     }

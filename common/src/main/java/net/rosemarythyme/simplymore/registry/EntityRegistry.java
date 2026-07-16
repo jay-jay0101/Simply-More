@@ -11,10 +11,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
-import net.rosemarythyme.simplymore.entity.AuraOfPurityEntity;
-import net.rosemarythyme.simplymore.entity.CrowEntity;
-import net.rosemarythyme.simplymore.entity.GhostFallingBlockEntity;
+import net.rosemarythyme.simplymore.entity.*;
 
 public class EntityRegistry {
 
@@ -36,6 +33,9 @@ public class EntityRegistry {
 
     public static final RegistrySupplier<EntityType<AuraOfPurityEntity>> AURA_OF_PURITY =
             registerMarkerEntity("aura_of_purity", AuraOfPurityEntity::new);
+
+    public static final RegistrySupplier<EntityType<AuraOfCorruptionEntity>> AURA_OF_CORRUPTION =
+            registerMarkerEntity("aura_of_corruption", AuraOfCorruptionEntity::new);
 
     public static <T extends Entity> RegistrySupplier<EntityType<T>> registerType(EntityType.Builder<T> builder, String name) {
         Identifier id = SimplyMore.identifier(name);
