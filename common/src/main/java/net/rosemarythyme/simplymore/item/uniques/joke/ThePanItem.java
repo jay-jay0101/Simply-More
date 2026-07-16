@@ -1,7 +1,6 @@
 package net.rosemarythyme.simplymore.item.uniques.joke;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,11 +9,9 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
@@ -29,7 +26,7 @@ import java.util.List;
 
 public class ThePanItem extends SimplyMoreSwordItem {
 
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static final UniqueEffectConfig UNIQUE_EFFECT = ConfigWrapper.unique;
 
     public ThePanItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
@@ -46,7 +43,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
             return super.postHit(stack, target, attacker);
         }
 
-        if (!MathUtils.chance(attacker, effect.the_pan.chance)) {
+        if (!MathUtils.chance(attacker, UNIQUE_EFFECT.the_pan.chance)) {
             return super.postHit(stack, target, attacker);
         }
 
@@ -62,7 +59,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
             return super.postHit(stack, target, attacker);
         }
 
-        float knockbackStrength = effect.the_pan.knockbackStrength;
+        float knockbackStrength = UNIQUE_EFFECT.the_pan.knockbackStrength;
 
         double normalizedDeltaX = deltaX / distance;
         double normalizedDeltaZ = deltaZ / distance;
@@ -76,18 +73,10 @@ public class ThePanItem extends SimplyMoreSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(stack, world, entity, slot, selected);
-    }
-
-    @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip2").setStyle(Styles.TEXT));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

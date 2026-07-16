@@ -3,7 +3,7 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
@@ -29,5 +29,9 @@ public class EntityUtils {
         }
 
         entity.addStatusEffect(new StatusEffectInstance(effect, duration, Math.min(amplifier, maxAmplifier)));
+    }
+
+    public static boolean isHolding(LivingEntity entity, ItemStack stack) {
+        return entity.getStackInHand(Hand.MAIN_HAND).equals(stack);
     }
 }
