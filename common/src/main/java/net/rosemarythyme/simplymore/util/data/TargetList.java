@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -25,6 +26,12 @@ public record TargetList(List<LivingEntity> targets) {
     public TargetList applyEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier) {
         return this.forEach((entity) -> entity.addStatusEffect(
                 new StatusEffectInstance(effect, duration, amplifier))
+        );
+    }
+
+    public TargetList incrementEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier, int maxAmplifier) {
+        return this.forEach((entity) -> EntityUtils.reapplyAndIncrementEffect(
+                entity, effect, duration, amplifier, maxAmplifier)
         );
     }
 

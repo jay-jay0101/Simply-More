@@ -87,15 +87,15 @@ public class AttackUtils {
         return targetType.canHitPetOrMount || !isPetOrMount(attacker, target);
     }
 
-    public static TargetList cylinderAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
-        float horizontalDistance = horizontalRange * horizontalRange;
+    public static TargetList cylinderAttack(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, AttackTarget targetType) {
+        double horizontalDistance = horizontalRange * horizontalRange;
 
         return cuboidAttack(attacker, centerPos, horizontalRange, verticalRange, targetType).filter(
                 (target) -> target.squaredDistanceTo(new Vec3d(centerPos.x, target.getY(), centerPos.z)) < horizontalDistance
         );
     }
 
-    public static TargetList cuboidAttack(LivingEntity attacker, Vec3d centerPos, float horizontalRange, float verticalRange, AttackTarget targetType) {
+    public static TargetList cuboidAttack(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, AttackTarget targetType) {
         Box box = MathUtils.createCuboidBox(centerPos, horizontalRange, verticalRange, horizontalRange);
         return boxAttack(attacker, box, targetType);
     }
@@ -105,7 +105,7 @@ public class AttackUtils {
         return List.of();
     }
 
-    public static TargetList cubeAttack(LivingEntity attacker, Vec3d centerPos, float range, AttackTarget targetType) {
+    public static TargetList cubeAttack(LivingEntity attacker, Vec3d centerPos, double range, AttackTarget targetType) {
         Box box = MathUtils.createCubeBox(centerPos, range);
         return boxAttack(attacker, box, targetType);
     }

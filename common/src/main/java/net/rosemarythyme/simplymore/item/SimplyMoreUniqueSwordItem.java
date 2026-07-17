@@ -17,6 +17,7 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
+import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
@@ -51,6 +52,10 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
         FootfallParticles footfallParticles = getFootfalls();
         if(footfallParticles.hasParticles()) {
             AudioVisualUtils.handleFootfalls(entity, stack, world, footfallParticles);
+        }
+
+        if(stack.getItem() instanceof StackModifierItem modifierItem) {
+            modifierItem.applyStackModifier(stack);
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);
