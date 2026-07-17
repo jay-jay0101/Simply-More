@@ -95,4 +95,12 @@ public class MathUtils {
     public static Box createCubeBox(Vec3d centre, double offset) {
         return createCuboidBox(centre, offset, offset, offset);
     }
+
+    public static Vec3d normalisedDirectionBetween(Vec3d pointA, Vec3d pointB, boolean includeY) {
+        return new Vec3d(
+                pointB.getX() - pointA.getX(),
+                includeY ? pointB.getY() - pointA.getY() : 0,
+                pointB.getZ() - pointA.getZ()
+        ).normalize();
+    }
 }

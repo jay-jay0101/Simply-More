@@ -18,7 +18,7 @@ import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -45,8 +45,8 @@ public class DarksentItem extends TarnishedIdolItem implements LegendaryItem {
         AttackUtils.cubeAttack(user, user.getPos(), 10, AttackUtils.AttackTarget.ENEMIES)
                 .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE), 100, 0);
 
-        VisualEffectsUtils.playSound(world,user.getPos(), Sound.of(SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON).setPitch(1.5f));
-        VisualEffectsUtils.particleAroundEntity(user, ParticleTypes.WAX_OFF, 50, 0.25d, 0.1f);
+        AudioVisualUtils.playSound(world,user.getPos(), Sound.of(SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON).setPitch(1.5f));
+        AudioVisualUtils.particleAroundEntity(user, ParticleTypes.WAX_OFF, 50, 0.25d, 0.1f);
 
         user.getItemCooldownManager().set(this, UNIQUE_CONFIG.darksent.cooldown);
 

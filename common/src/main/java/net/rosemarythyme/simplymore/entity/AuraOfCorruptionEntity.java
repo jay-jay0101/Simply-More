@@ -12,7 +12,7 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class AuraOfCorruptionEntity extends AbstractAbilityPlacementEntity {
@@ -33,7 +33,7 @@ public class AuraOfCorruptionEntity extends AbstractAbilityPlacementEntity {
 
     public void visual(float range) {
         ServerWorld world = (ServerWorld) getWorld();
-        VisualEffectsUtils.particleRing(world, this.getPos(), ParticleTypes.SQUID_INK, range, 100);
+        AudioVisualUtils.particleRing(world, this.getPos(), ParticleTypes.SQUID_INK, range, 100);
     }
 
     @Override

@@ -125,4 +125,13 @@ public class AttackUtils {
     public static void spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner) {
         owner.getWorld().spawnEntity(ability);
     }
+
+    public static void knockback(LivingEntity attacker, LivingEntity target, float scale) {
+        Vec3d attackerPos = attacker.getPos();
+        Vec3d targetPos = target.getPos();
+
+        Vec3d direction = MathUtils.normalisedDirectionBetween(attackerPos, targetPos, false);
+        target.addVelocity(direction.multiply(scale).add(0, 0.2, 0));
+        target.velocityModified = true;
+    }
 }

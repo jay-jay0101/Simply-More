@@ -13,7 +13,7 @@ import net.rosemarythyme.simplymore.entity.AuraOfCorruptionEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.util.Styles;
@@ -42,8 +42,8 @@ public class TarnishedIdolItem extends SimplyMoreUniqueSwordItem {
         if(attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.darksent.chance)) {
-            VisualEffectsUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_OBSIDIAN_TEAR, 300, 1d, 0f);
-            VisualEffectsUtils.playSound(attacker.getWorld(), attacker.getPos(), Sound.of(SoundEvents.ITEM_BUCKET_FILL).setPitch(0.3f));
+            AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_OBSIDIAN_TEAR, 300, 1d, 0f);
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), Sound.of(SoundEvents.ITEM_BUCKET_FILL).setPitch(0.3f));
 
             AttackUtils.spawnAbility(new AuraOfCorruptionEntity(attacker, attacker.getPos()), attacker);
         }

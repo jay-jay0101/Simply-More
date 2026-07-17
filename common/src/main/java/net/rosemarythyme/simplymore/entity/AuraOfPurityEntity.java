@@ -15,7 +15,7 @@ import net.rosemarythyme.simplymore.registry.ParticleRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.PredicateUtils;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
@@ -36,7 +36,7 @@ public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
 
     public void visual(float range) {
         ServerWorld world = (ServerWorld) getWorld();
-        VisualEffectsUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), range, 100);
+        AudioVisualUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), range, 100);
 
         float pulseRadius = MathUtils.clampedLerp(age % 20, 0, 20, 0, 4f);
 
@@ -44,7 +44,7 @@ public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
             world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.PLAYERS, 1, 1);
         }
 
-        VisualEffectsUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), pulseRadius, 100);
+        AudioVisualUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), pulseRadius, 100);
     }
 
     @Override

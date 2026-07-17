@@ -12,7 +12,7 @@ import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.util.HelperMethods;
 
-public class VisualEffectsUtils {
+public class AudioVisualUtils {
     public static void handleFootfalls(Entity entity, ItemStack stack, World world, FootfallParticles particles) {
         HelperMethods.createFootfalls(entity, stack, world, particles.walkingParticle(), particles.sprintingParticle(), particles.passiveParticle(), true);
     }

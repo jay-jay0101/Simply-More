@@ -18,7 +18,7 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
-import net.rosemarythyme.simplymore.util.VisualEffectsUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
@@ -50,7 +50,7 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         FootfallParticles footfallParticles = getFootfalls();
         if(footfallParticles.hasParticles()) {
-            VisualEffectsUtils.handleFootfalls(entity, stack, world, footfallParticles);
+            AudioVisualUtils.handleFootfalls(entity, stack, world, footfallParticles);
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);

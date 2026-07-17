@@ -7,16 +7,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
@@ -39,37 +40,14 @@ public class ThePanItem extends SimplyMoreSwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient()) {
-            return super.postHit(stack, target, attacker);
+        if (attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
+
+        if (MathUtils.chance(attacker, UNIQUE_EFFECT.the_pan.chance)) {
+            AttackUtils.knockback(attacker, target, UNIQUE_EFFECT.the_pan.knockbackStrength);
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), Sound.of(SoundEvents.BLOCK_ANVIL_PLACE));
         }
 
-        if (!MathUtils.chance(attacker, UNIQUE_EFFECT.the_pan.chance)) {
-            return super.postHit(stack, target, attacker);
-        }
-
-        Vec3d targetPosition = target.getPos();
-        Vec3d attackerPosition = attacker.getPos();
-
-        double deltaX = targetPosition.getX() - attackerPosition.getX();
-        double deltaZ = targetPosition.getZ() - attackerPosition.getZ();
-
-        double distance = Math.hypot(deltaX, deltaZ);
-
-        if (distance == 0) {
-            return super.postHit(stack, target, attacker);
-        }
-
-        float knockbackStrength = UNIQUE_EFFECT.the_pan.knockbackStrength;
-
-        double normalizedDeltaX = deltaX / distance;
-        double normalizedDeltaZ = deltaZ / distance;
-
-        target.setVelocity(normalizedDeltaX * knockbackStrength, 0.2, normalizedDeltaZ * knockbackStrength);
-        target.velocityModified = true;
-
-        attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.PLAYERS, 1, 1);
-
-        return true;
+        return super.postHit(stack, target, attacker);
     }
 
     @Override
