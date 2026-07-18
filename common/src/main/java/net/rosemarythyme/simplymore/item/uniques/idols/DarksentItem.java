@@ -45,7 +45,7 @@ public class DarksentItem extends TarnishedIdolItem implements LegendaryItem {
         AttackUtils.cubeAttack(user, user.getPos(), 10, AttackUtils.AttackTarget.ENEMIES)
                 .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE), 100, 0);
 
-        AudioVisualUtils.playSound(world,user.getPos(), Sound.of(SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON).setPitch(1.5f));
+        AudioVisualUtils.playSound(world,user.getPos(), new Sound(SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON).setPitch(1.5f));
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.WAX_OFF, 50, 0.25d, 0.1f);
 
         user.getItemCooldownManager().set(this, UNIQUE_CONFIG.darksent.cooldown);

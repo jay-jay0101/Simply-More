@@ -51,7 +51,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
 
         user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED), UNIQUE_CONFIG.blade_of_the_grotesque.selfStunTime));
 
-        AudioVisualUtils.playSound(user.getWorld(), user.getPos(), Sound.of(SoundEvents.UI_STONECUTTER_TAKE_RESULT));
+        AudioVisualUtils.playSound(user.getWorld(), user.getPos(), new Sound(SoundEvents.UI_STONECUTTER_TAKE_RESULT));
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.ASH, 500, 0.2, 1);
         user.getItemCooldownManager().set(this, UNIQUE_CONFIG.blade_of_the_grotesque.cooldown);
 

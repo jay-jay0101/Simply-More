@@ -54,20 +54,24 @@ public class MathUtils {
     }
 
     public static CounterComponent getCounterComponent(ItemStack stack) {
-        if((stack.getItem() instanceof SimplyMoreUniqueSwordItem swordItem)) {
-            if(stack.getComponents().contains(ItemComponentRegistry.COUNTER.get())) {
-                return stack.getComponents().get(ItemComponentRegistry.COUNTER.get());
-            } else {
-                return setCounterComponent(stack, swordItem.getDefaultCounterComponent());
-            }
-        }
+        if(!(stack.getItem() instanceof SimplyMoreUniqueSwordItem swordItem))
+            throw new IllegalArgumentException("MathUtils#getCounterComponent should not be called on a non-unique.");
 
-        return null;
+        CounterComponent component = stack.getComponents().get(ItemComponentRegistry.COUNTER.get());
+
+        return component == null
+                ? setCounterComponent(stack, swordItem.getDefaultCounterComponent())
+                : component;
     }
 
     public static CounterComponent setCounterComponent(ItemStack stack, CounterComponent component) {
         stack.set(ItemComponentRegistry.COUNTER.get(), component);
         return component;
+    }
+
+    public static CounterComponent addToCounterComponent(ItemStack stack, int value) {
+        CounterComponent component = getCounterComponent(stack);
+        return setCounterComponent(stack, component.add(value));
     }
 
     public static Box createCuboidBox(Vec3d centre, double xOffset, double yOffset, double zOffset) {

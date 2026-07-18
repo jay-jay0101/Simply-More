@@ -3,8 +3,8 @@ package net.rosemarythyme.simplymore.util.data;
 import net.minecraft.sound.SoundEvent;
 
 public record Sound(SoundEvent event, float volume, float pitch) {
-    public static Sound of(SoundEvent event) {
-        return new Sound(event, 1f, 1f);
+    public Sound(SoundEvent event) {
+        this(event, 1f, 1f);
     }
 
     public Sound setVolume(float volume) {

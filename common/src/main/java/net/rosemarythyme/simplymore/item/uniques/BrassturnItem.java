@@ -2,40 +2,36 @@ package net.rosemarythyme.simplymore.item.uniques;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
-import net.rosemarythyme.simplymore.entity.JetAreaEffectCloudEntity;
+import net.rosemarythyme.simplymore.entity.JetstreamEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -43,7 +39,7 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 
-public class BrassturnItem extends SimplyMoreUniqueSwordItem {
+public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackModifierItem {
     WeaponAttributesConfig attributes = ConfigWrapper.attributes;
 
     public BrassturnItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -51,23 +47,20 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
+    public CounterComponent getDefaultCounterComponent() {
+        return new CounterComponent(0, 16, 16);
+    }
+
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
 
-        int oxidisation = getOxidisation(stack) + 1;
-        saveOxidisation(stack, oxidisation);
+        MathUtils.addToCounterComponent(stack, 1);
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.brassturn.chance)) {
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ENTITY_ZOMBIE_INFECT, 0.5f, 2f));
 
-            attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.ENTITY_ZOMBIE_INFECT, SoundCategory.PLAYERS, 0.5f, 2);
-
-            attacker.getWorld().spawnEntity(new JetAreaEffectCloudEntity(
-                    target.getWorld(),
-                    target.getX(),
-                    target.getY(),
-                    target.getZ(),
-                    attacker
-            ));
+            AttackUtils.spawnAbility(new JetstreamEntity(attacker, attacker.getPos()), attacker);
         }
 
         return super.postHit(stack, target, attacker);
@@ -75,44 +68,37 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        if (getOxidisation(itemStack) <= 0) return TypedActionResult.fail(itemStack);
+        ItemStack stack = user.getStackInHand(hand);
+        if (MathUtils.getCounterComponent(stack).value() <= 0) return TypedActionResult.fail(stack);
 
-        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
-            return TypedActionResult.fail(itemStack);
-        } else {
-            user.setCurrentHand(hand);
-            return TypedActionResult.consume(itemStack);
-        }
+        return AttackUtils.holdToUse(world, user, hand);
     }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (getOxidisation(stack) <= 0) user.stopUsingItem();
+        if (MathUtils.getCounterComponent(stack).value() <= 0) {
+            user.stopUsingItem();
+            return;
+        }
 
-        if (remainingUseTicks % UNIQUE_CONFIG.brassturn.scrapeTime == 0 && user.getWorld() instanceof ServerWorld serverWorld) {
-            int oxidisation = getOxidisation(stack) - 1;
-            saveOxidisation(stack, oxidisation);
+        if (remainingUseTicks % UNIQUE_CONFIG.brassturn.scrapeTime == 0) {
+            MathUtils.addToCounterComponent(stack, -1);
 
             if (MathUtils.chance(user, UNIQUE_CONFIG.brassturn.sparkChance)) {
-                serverWorld.spawnParticles(ParticleTypes.WAX_ON, user.getX(), user.getY(), user.getZ(), 20, 0.5, 1, 0.5, 0.2);
-                serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.PLAYERS, 0.5f, 2);
+                AudioVisualUtils.particleAroundEntity(user, ParticleTypes.WAX_ON, 20, 0.5, 0.2f);
+                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.BLOCK_BEACON_POWER_SELECT, 0.5f, 2f));
 
-                Box box = MathUtils.createCubeBox(user.getPos(), 3);
-                List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
-
-                for (LivingEntity livingEntity : targets) {
-                    livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0));
-                }
+                AttackUtils.cubeAttack(user, user.getPos(), 3, AttackUtils.AttackTarget.ENEMIES)
+                        .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0);
             } else {
-                serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.PLAYERS, 1f, 1);
+                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ITEM_AXE_SCRAPE));
             }
         }
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 999999;
+        return AttackUtils.INFINITE_DURATION;
     }
 
     @Override
@@ -120,72 +106,38 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem {
         return UseAction.BOW;
     }
 
-    public static int getOxidisation(ItemStack stack) {
-        CounterComponent oxidisation = MathUtils.getCounterComponent(stack);
-
-        if(oxidisation == null) {
-            return 16;
-        }
-
-        else return oxidisation.value();
-    }
-
-    public static void saveOxidisation(ItemStack stack, int oxidisation) {
-        MathUtils.setCounterComponent(stack,
-                new CounterComponent(0, 16, 0).set(oxidisation));
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        applyAttackSpeed(stack);
-        super.inventoryTick(stack, world, entity, slot, selected);
-    }
-
     @Override
     public FootfallParticles getFootfalls() {
         return new FootfallParticles(ParticleTypes.ASH);
     }
 
-    public void applyAttackSpeed(ItemStack stack) {
-        // Calculate modifier
-        float oxidisationAmount = getOxidisation(stack) / 16f;
+    @Override
+    public AttributeModifiersComponent getModifier(ItemStack stack, AttributeModifiersComponent base) {
+        float oxidisationAmount = MathUtils.getCounterComponent(stack).value() / 16f;
         double minimumModifier = 4 + attributes.uniqueWeaponsSwingSpeed.brassturn_attack_speed - 0.6;
-        double attackSpeedModifier = minimumModifier * -oxidisationAmount;
 
-        // Apply
-        AttributeModifiersComponent modifiers = stack.get(DataComponentTypes.ATTRIBUTE_MODIFIERS);
-
-        if(modifiers == null) {
-            modifiers = AttributeModifiersComponent.builder().build();
-        }
-
-        stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, modifiers.with(
+        return base.with(
                 EntityAttributes.GENERIC_ATTACK_SPEED,
                 new EntityAttributeModifier(
                         SimplyMore.identifier("oxidisation"),
-                        attackSpeedModifier,
+                        minimumModifier * -oxidisationAmount,
                         EntityAttributeModifier.Operation.ADD_VALUE
                 ),
                 AttributeModifierSlot.MAINHAND
-        ));
+        );
     }
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-        Style rightClickStyle = Styles.RIGHT_CLICK;
-
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip5").setStyle(Styles.TEXT));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
-
 
     public static class EffectSettings extends TooltipSettings {
         public EffectSettings() {

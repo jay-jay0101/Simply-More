@@ -18,6 +18,10 @@ public abstract class AbstractAbilityPlacementEntity extends MarkerEntity implem
         super(entityType, world);
     }
 
+    public ServerWorld getServerWorld() {
+        return (ServerWorld) this.getWorld();
+    }
+
     public AbstractAbilityPlacementEntity(@NotNull LivingEntity owner, Vec3d position, EntityType<?> entityType) {
         this(entityType, owner.getWorld());
         this.ownerUuid = owner.getUuid();

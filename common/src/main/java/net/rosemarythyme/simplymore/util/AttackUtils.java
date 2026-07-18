@@ -8,8 +8,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.util.HelperMethods;
@@ -39,6 +41,17 @@ public class AttackUtils {
             this.canHitEnemies = canHitEnemies;
             this.canHitUser = canHitUser;
             this.canHitPetOrMount = canHitPetOrMount;
+        }
+    }
+
+    public static TypedActionResult<ItemStack> holdToUse(World world, PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
+
+        if (stack.getDamage() >= stack.getMaxDamage() - 1) {
+            return TypedActionResult.fail(stack);
+        } else {
+            user.setCurrentHand(hand);
+            return TypedActionResult.consume(stack);
         }
     }
 

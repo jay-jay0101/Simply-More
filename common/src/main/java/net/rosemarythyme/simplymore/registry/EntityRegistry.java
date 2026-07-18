@@ -37,6 +37,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<AuraOfCorruptionEntity>> AURA_OF_CORRUPTION =
             registerMarkerEntity("aura_of_corruption", AuraOfCorruptionEntity::new);
 
+    public static final RegistrySupplier<EntityType<AuraOfCorruptionEntity>> JETSTREAM =
+            registerMarkerEntity("jetstream", AuraOfCorruptionEntity::new);
+
     public static <T extends Entity> RegistrySupplier<EntityType<T>> registerType(EntityType.Builder<T> builder, String name) {
         Identifier id = SimplyMore.identifier(name);
         return ENTITIES.register(id, () -> builder.build(id.toString()));

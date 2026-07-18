@@ -21,7 +21,11 @@ public class AudioVisualUtils {
         HelperMethods.spawnOrbitParticles(world, center, particleType, radius, particleCount);
     }
 
-    public static void particleAroundEntity(LivingEntity entity, ParticleEffect particleType, int count, double delta, float speed) {
+    public static void particleSquare(ServerWorld world, Vec3d center, ParticleEffect particleType, double horizontalRange, double verticalRange, int count, double speed) {
+        world.spawnParticles(particleType, center.getX(), center.getY(), center.getZ(), count, horizontalRange, verticalRange, horizontalRange, speed);
+    }
+
+    public static void particleAroundEntity(LivingEntity entity, ParticleEffect particleType, int count, double delta, double speed) {
         if (!(entity.getWorld() instanceof ServerWorld world)) return;
 
         world.spawnParticles(particleType, entity.getX(), entity.getY() + 1, entity.getZ(), count, delta, delta, delta, speed);

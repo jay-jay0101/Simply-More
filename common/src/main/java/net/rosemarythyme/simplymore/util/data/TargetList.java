@@ -29,6 +29,13 @@ public record TargetList(List<LivingEntity> targets) {
         );
     }
 
+    public TargetList addVelocity(double x, double y, double z) {
+        return this.forEach((entity) -> {
+            entity.addVelocity(x, y, z);
+            entity.velocityModified = true;
+        });
+    }
+
     public TargetList incrementEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier, int maxAmplifier) {
         return this.forEach((entity) -> EntityUtils.reapplyAndIncrementEffect(
                 entity, effect, duration, amplifier, maxAmplifier)

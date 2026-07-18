@@ -43,7 +43,7 @@ public class TarnishedIdolItem extends SimplyMoreUniqueSwordItem {
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.darksent.chance)) {
             AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_OBSIDIAN_TEAR, 300, 1d, 0f);
-            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), Sound.of(SoundEvents.ITEM_BUCKET_FILL).setPitch(0.3f));
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ITEM_BUCKET_FILL).setPitch(0.3f));
 
             AttackUtils.spawnAbility(new AuraOfCorruptionEntity(attacker, attacker.getPos()), attacker);
         }

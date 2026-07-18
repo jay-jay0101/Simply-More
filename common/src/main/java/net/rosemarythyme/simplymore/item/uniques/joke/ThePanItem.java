@@ -44,7 +44,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
 
         if (MathUtils.chance(attacker, UNIQUE_EFFECT.the_pan.chance)) {
             AttackUtils.knockback(attacker, target, UNIQUE_EFFECT.the_pan.knockbackStrength);
-            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), Sound.of(SoundEvents.BLOCK_ANVIL_PLACE));
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.BLOCK_ANVIL_PLACE));
         }
 
         return super.postHit(stack, target, attacker);
