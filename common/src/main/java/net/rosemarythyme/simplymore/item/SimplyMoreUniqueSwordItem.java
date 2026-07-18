@@ -2,6 +2,7 @@ package net.rosemarythyme.simplymore.item;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -16,12 +17,11 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
-import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
-import net.rosemarythyme.simplymore.item.interfaces.Weapon;
+import net.rosemarythyme.simplymore.item.interfaces.*;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
+import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
 import net.sweenus.simplyswords.util.Styles;
 
@@ -56,6 +56,12 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
 
         if(stack.getItem() instanceof StackModifierItem modifierItem) {
             modifierItem.applyStackModifier(stack);
+        }
+
+        if(!(entity instanceof PlayerEntity player)) return;
+
+        if(stack.getItem() instanceof CooldownOnUnselected unselectableItem) {
+            unselectableItem.detectUnselect(player, stack, selected, unselectableItem instanceof TwoHandedWeapon);
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);

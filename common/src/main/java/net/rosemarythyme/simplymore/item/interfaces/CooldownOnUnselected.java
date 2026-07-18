@@ -1,84 +1,47 @@
 package net.rosemarythyme.simplymore.item.interfaces;
 
-
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.components.UsageComponent;
 import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
 
-// TODO: remove when updating Cindergorge
 public interface CooldownOnUnselected {
+    default void detectUnselect(PlayerEntity player, ItemStack stack, boolean selected, boolean twoHanded) {
+        if(player.getItemCooldownManager().isCoolingDown(stack.getItem())) stopUsing(stack);
+        UsageComponent component = getComponent(stack);
 
-    default void beginCooldown(PlayerEntity user, int time) {
-        user.stopUsingItem();
-        user.getItemCooldownManager().set((Item) this, time);
+        if(!twoHanded) {
+            if(component.offhandPrevious() != component.offhand()) {
+                selected = selected || player.getOffHandStack() == stack;
+            } else {
+                selected = false;
+            }
+        }
+
+        if(!selected && !component.using()) {
+            player.stopUsingItem();
+            player.getItemCooldownManager().set(stack.getItem(), getCooldown());
+            stopUsing(stack);
+        }
     }
 
-    static void updateComponent(ItemStack stack, Boolean using, Boolean offhand, Boolean previousOffhand) {
-        UsageComponent component = getComponent(stack);
-        using = using == null ? component.using() : using;
-        offhand = offhand == null ? component.offhand() : offhand;
-        previousOffhand = previousOffhand == null ? component.offhandPrevious() : previousOffhand;
+    int getCooldown();
 
-        stack.set(ItemComponentRegistry.USAGE.get(), new UsageComponent(using, offhand, previousOffhand));
+    default void startUsing(ItemStack stack, Hand hand) {
+        UsageComponent component = getComponent(stack);
+        setComponent(stack, new UsageComponent(true, hand == Hand.OFF_HAND, component.offhand()));
     }
 
     static UsageComponent getComponent(ItemStack stack) {
         return stack.getOrDefault(ItemComponentRegistry.USAGE.get(), new UsageComponent(false, false, false));
     }
 
-    default void startUsing(ItemStack stack, Hand hand) {
-        updateComponent(stack, true, null, null);
-
-        if(getOffhand(stack) != null) {
-            updateComponent(stack, null, null, getOffhand(stack));
-        }
-
-        updateComponent(stack, null, hand == Hand.OFF_HAND, null);
+    static void setComponent(ItemStack stack, UsageComponent component) {
+        stack.set(ItemComponentRegistry.USAGE.get(), component);
     }
 
-    default Boolean getUsing(ItemStack stack) {
-        return getComponent(stack).using();
-    }
-
-    default Boolean getOffhand(ItemStack stack) {
-        return getComponent(stack).offhand();
-    }
-
-    default Boolean getOffhandPrevious(ItemStack stack) {
-        return getComponent(stack).offhandPrevious();
-    }
-
-    default boolean checkIfHandChanged(ItemStack stack) {
-        return getOffhand(stack) != getOffhandPrevious(stack);
-    }
-
-    default void endUsing(ItemStack stack) {
-        updateComponent(stack, false, false, false);
-    }
-
-    default void detectCooldown(PlayerEntity user, boolean selected, ItemStack stack, int time, boolean twoHanded) {
-
-        if(user.getItemCooldownManager().isCoolingDown((Item)this)) {
-            endUsing(stack);
-            return;
-        }
-
-        if(!twoHanded) {
-            if(!checkIfHandChanged(stack)) {
-                selected = selected || user.getOffHandStack() == stack;
-            } else {
-                selected = false;
-            }
-        }
-
-        if(selected || !Boolean.TRUE.equals(getUsing(stack))) {
-            return;
-        }
-
-        beginCooldown(user, time);
-        endUsing(stack);
+    static void stopUsing(ItemStack stack) {
+        setComponent(stack, new UsageComponent(false, false, false));
     }
 }

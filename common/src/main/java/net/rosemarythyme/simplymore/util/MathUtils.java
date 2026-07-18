@@ -107,4 +107,17 @@ public class MathUtils {
                 pointB.getZ() - pointA.getZ()
         ).normalize();
     }
+
+    public static Vec3d getDirectionalVector(float yaw, float pitch) {
+        double radianYaw = Math.toRadians(yaw);
+        double radianPitch = Math.toRadians(pitch);
+
+        double cosPitch = Math.cos(radianPitch);
+
+        return new Vec3d(
+            -Math.sin(radianYaw) * cosPitch,
+            -Math.sin(radianPitch),
+            Math.cos(radianYaw) * cosPitch
+        );
+    }
 }

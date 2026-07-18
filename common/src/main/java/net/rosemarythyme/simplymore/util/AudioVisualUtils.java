@@ -17,8 +17,24 @@ public class AudioVisualUtils {
         HelperMethods.createFootfalls(entity, stack, world, particles.walkingParticle(), particles.sprintingParticle(), particles.passiveParticle(), true);
     }
 
-    public static void particleRing(ServerWorld world, Vec3d center, ParticleEffect particleType, double radius, int particleCount) {
-        HelperMethods.spawnOrbitParticles(world, center, particleType, radius, particleCount);
+    public static void particleRing(ServerWorld world, Vec3d center, ParticleEffect particleType, double radius, int count) {
+        HelperMethods.spawnOrbitParticles(world, center, particleType, radius, count);
+    }
+
+    public static void particleLine(ServerWorld world, Vec3d startPos, Vec3d endPos, ParticleEffect particleType, double spread, int count, double delta, double speed) {
+        Vec3d directionalDelta = endPos.subtract(startPos);
+        double burstCount = (int) Math.ceil(directionalDelta.length() / spread);
+        Vec3d direction = directionalDelta.normalize();
+
+        for (int i = 0; i <= burstCount; i++) {
+            Vec3d pos = startPos.add(direction.multiply(i * spread));
+            world.spawnParticles(particleType, pos.getX(), pos.getY(), pos.getZ(), count, delta, delta, delta, speed);
+        }
+    }
+
+    public static void particleLine(ServerWorld world, Vec3d startPos, float yaw, float pitch, double length, ParticleEffect particleType, double spread, int count, double delta, double speed) {
+        Vec3d direction = MathUtils.getDirectionalVector(yaw, pitch);
+        particleLine(world, startPos, startPos.add(direction.multiply(length)), particleType, spread, count, delta, speed);
     }
 
     public static void particleSquare(ServerWorld world, Vec3d center, ParticleEffect particleType, double horizontalRange, double verticalRange, int count, double speed) {

@@ -131,6 +131,27 @@ public class AttackUtils {
         );
     }
 
+    public static TargetList lineAttack(LivingEntity attacker, Vec3d startPos, Vec3d endPos, double width, AttackTarget targetType) {
+        Vec3d delta = endPos.subtract(startPos);
+        return lineAttack(attacker, startPos, delta.normalize(), delta.length(), width, targetType);
+    }
+
+    public static TargetList lineAttack(LivingEntity attacker, Vec3d startPos, float yaw, float pitch, double length, double width, AttackTarget targetType) {
+        return lineAttack(attacker, startPos, MathUtils.getDirectionalVector(yaw, pitch), length, width, targetType);
+    }
+
+    private static TargetList lineAttack(LivingEntity attacker, Vec3d startPos, Vec3d direction, double length, double width, AttackTarget targetType) {
+        int count = (int) Math.ceil(length / width);
+
+        TargetList targets = TargetList.empty();
+        for (int i = 0; i <= count; i++) {
+            Vec3d pos = startPos.add(direction.multiply(i * width));
+            targets = targets.include(cubeAttack(attacker, pos, width, targetType));
+        }
+
+        return targets;
+    }
+
     public static void breakShield(LivingEntity target) {
         if(target.isBlocking() && target instanceof PlayerEntity playerEntity) playerEntity.disableShield();
     }
