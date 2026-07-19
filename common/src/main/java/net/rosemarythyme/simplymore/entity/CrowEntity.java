@@ -1,11 +1,7 @@
 package net.rosemarythyme.simplymore.entity;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.command.argument.EntityAnchorArgumentType;
-import net.minecraft.entity.AnimationState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Ownable;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
@@ -18,8 +14,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -31,15 +25,14 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.item.uniques.DeathsEyrieItem;
+import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.data.Sound;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -75,6 +68,11 @@ public class CrowEntity extends TameableEntity implements Ownable {
         this.moveControl = new FlightMoveControl(this, 15, false);
     }
 
+    public CrowEntity(PlayerEntity owner, World world) {
+        this(EntityRegistry.CROW.get(), world);
+        this.setOwner(owner);
+    }
+
     @Override
     protected @Nullable SoundEvent getDeathSound() {
         return null;
@@ -104,80 +102,56 @@ public class CrowEntity extends TameableEntity implements Ownable {
         this.getDataTracker().set(ATTACKING_UUID, Optional.of(value), true);
     }
 
+    public void spawnAndDeathVisuals() {
+        AudioVisualUtils.playSound(getWorld(), this.getPos(), new Sound(SoundEvents.ENTITY_PARROT_IMITATE_PHANTOM).setPitch(0.6f));
+        AudioVisualUtils.particleAroundEntity(this, new DustParticleEffect(new Vector3f(0f, 0f, 0.2f), 3f), 5, 0.2f, 0);
+    }
+
+    public void serverTick() {
+        if(age == 1) {
+            spawnAndDeathVisuals();
+        }
+
+        if(this.getOwner() == null) {
+            kill();
+            return;
+        }
+
+        if(this.getOwner().getItemCooldownManager().isCoolingDown(ItemRegistry.DEATHS_EYRIE.get())) {
+            kill();
+            return;
+        }
+
+        if(this.getOwner().isDead() || this.getOwner().getWorld().getDimension() != this.getWorld().getDimension()) {
+            kill();
+            return;
+        }
+
+        if(this.getAttackingTime() >= -1) {
+            this.setNoGravity(true);
+            this.setNoDrag(true);
+            this.goalSelector.getGoals().clear();
+            this.targetSelector.getGoals().clear();
+
+            int time = this.getAttackingTime();
+            this.setAttackingTime(time - 1);
+
+            Entity entity = ((ServerWorld) getWorld()).getEntity(getAttackingUuid());
+            if(!(entity instanceof LivingEntity target)) {
+                kill();
+                return;
+            }
+        }
+    }
+
     @Override
     public void tick() {
         super.tick();
 
-        // Checking if owner is still wielding the weapon
-        PlayerEntity player = (PlayerEntity) this.getOwner();
-        if (player != null) {
-            if (player.getItemCooldownManager().isCoolingDown(ItemRegistry.DEATHS_EYRIE.get())) {
-                if(this.getAttackingTime() >= -1) {
-                    this.setNoGravity(true);
-                    this.setNoDrag(true);
-                    this.goalSelector.getGoals().clear();
-                    this.targetSelector.getGoals().clear();
-
-                    int time = this.getAttackingTime();
-                    this.setAttackingTime(time - 1);
-
-                    // Attack
-                    LivingEntity target = (LivingEntity) ((ServerWorld) this.getWorld()).getEntity(this.getAttackingUuid());
-
-                    if(target == null || target.isDead()) {
-                        this.kill();
-                        return;
-                    }
-
-                    if (time % 10 == 0) {
-
-                        float dX = this.getRandom().nextBetween(-10,10) / 10f;
-                        float dY = this.getRandom().nextBetween(-10,10) / 10f;
-                        float dZ = this.getRandom().nextBetween(-10,10) / 10f;
-
-                        this.teleportWithParticles(
-                                target.getX() + dX,
-                                target.getEyeY() + 1 + dY,
-                                target.getZ() + dZ
-                        );
-
-                        this.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, target.getEyePos());
-                        this.removeStatusEffect(StatusEffects.INVISIBILITY);
-                        this.setVelocity(new Vec3d(dX * -0.5d, (dY+1.25) * -0.5d, dZ * -0.5d));
-                    } else if(time % 10 == 5) {
-                        double originalResistance = target.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE);
-                        if (target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE) != null) {
-                            target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)
-                                    .setBaseValue(1.0);
-                        }
-
-                        target.damage(this.owner.getDamageSources().playerAttack(this.owner), effect.deaths_eyrie.crowDamage);
-                        this.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, 10,0, true, false));
-                        this.owner.heal(effect.deaths_eyrie.deathsEyrieCrowAttackHeal);
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,effect.deaths_eyrie.crowBlindTime));
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),effect.deaths_eyrie.crowBleedTime));
-
-                        if (target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE) != null) {
-                            target.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)
-                                    .setBaseValue(originalResistance);
-                        }
-                    }
-                } else {
-                    this.kill();
-                }
-            } else {
-                if (player.isDead()
-                        || player.getWorld().getDimension() != this.getWorld().getDimension()
-                        || !(player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof DeathsEyrieItem)
-                ) {
-                    this.kill();
-                }
-            }
-        } else {
-            this.kill();
+        if(!this.getWorld().isClient) {
+            serverTick();
         }
 
-        // Flap Animation whilst flying
         if(this.getWorld().isClient() && !isOnGround()) {
             if(this.age % 3 == 0) {
                 this.flapAnimationState.start(this.age);
@@ -299,7 +273,7 @@ public class CrowEntity extends TameableEntity implements Ownable {
     }
 
     @Override
-    public LivingEntity getOwner() {
+    public PlayerEntity getOwner() {
         return this.owner;
     }
 

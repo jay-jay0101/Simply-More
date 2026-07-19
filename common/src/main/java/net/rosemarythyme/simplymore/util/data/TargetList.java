@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.util.data;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Ownable;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -9,6 +10,7 @@ import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -26,8 +28,28 @@ public record TargetList(List<LivingEntity> targets) {
         return new TargetList(targets.stream().filter(predicate).toList());
     }
 
+    public TargetList filterByType(Class<? extends LivingEntity> clazz) {
+        return this.filter(clazz::isInstance);
+    }
+
+    public TargetList filterByOwnedBy(LivingEntity owner) {
+        return this.filter((entity) -> entity instanceof Ownable ownable && ownable.getOwner() == owner);
+    }
+
+    public TargetList kill() {
+        return this.onEach(LivingEntity::kill);
+    }
+
+    public TargetList discard() {
+        return this.onEach(LivingEntity::discard);
+    }
+
     public boolean isEmpty() {
         return targets.isEmpty();
+    }
+
+    public int size() {
+        return targets.size();
     }
 
     public boolean isPopulated() {
@@ -85,6 +107,14 @@ public record TargetList(List<LivingEntity> targets) {
 
     public TargetList onEach(Consumer<LivingEntity> action) {
         targets.forEach(action);
+        return this;
+    }
+
+    public TargetList onEachEnumerated(BiConsumer<Integer, LivingEntity> action) {
+        for (int i = 0; i < size(); i++) {
+            action.accept(i, targets.get(i));
+        }
+
         return this;
     }
 

@@ -34,7 +34,7 @@ public class AudioVisualUtils {
         }
     }
 
-    public static void hitTarget(LivingEntity target) {
+    public static void targetIndicator(LivingEntity target) {
         target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10));
     }
 

@@ -74,6 +74,11 @@ public class MathUtils {
         return setCounterComponent(stack, component.add(value));
     }
 
+    public static CounterComponent setCounterComponentValue(ItemStack stack, int value) {
+        CounterComponent component = getCounterComponent(stack);
+        return setCounterComponent(stack, component.set(value));
+    }
+
     public static Box createCuboidBox(Vec3d centre, double xOffset, double yOffset, double zOffset) {
         return new Box(
                 centre.getX() - xOffset,

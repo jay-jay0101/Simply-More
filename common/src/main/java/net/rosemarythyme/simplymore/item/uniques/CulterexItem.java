@@ -3,7 +3,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -28,7 +27,6 @@ import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
-import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -43,11 +41,11 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if(user.getWorld().isClient) return super.use(world, user, hand);
 
-        Entity hitEntity = HelperMethods.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range);
-        if(!(hitEntity instanceof LivingEntity target) || !AttackUtils.canTarget(user, target, AttackUtils.AttackTarget.ENEMIES)) return super.use(world, user, hand);
+        LivingEntity target = AttackUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, AttackUtils.AttackTarget.ENEMIES);
+        if(target == null) return super.use(world, user, hand);
 
         user.getItemCooldownManager().set(this, UNIQUE_CONFIG.culterex.cooldown);
-        AudioVisualUtils.hitTarget(target);
+        AudioVisualUtils.targetIndicator(target);
         AudioVisualUtils.particleAroundEntity(target, ParticleTypes.SOUL, 100, 0, 0.25f);
 
         Sound sound = new Sound(SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM).setPitch(0.65f);

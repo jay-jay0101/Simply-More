@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.util;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.TameableEntity;
@@ -106,6 +107,14 @@ public class AttackUtils {
         return cuboidAttack(attacker, centerPos, horizontalRange, verticalRange, targetType).filter(
                 (target) -> target.squaredDistanceTo(new Vec3d(centerPos.x, target.getY(), centerPos.z)) < horizontalDistance
         );
+    }
+
+    public static LivingEntity getTargetedEntity(LivingEntity attacker, float range, AttackTarget targetType) {
+        Entity entity = HelperMethods.getTargetedEntity(attacker, range);
+        if(!(entity instanceof LivingEntity target)) return null;
+        if(canTarget(attacker, target, targetType)) return target;
+
+        return null;
     }
 
     public static TargetList cuboidAttack(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, AttackTarget targetType) {

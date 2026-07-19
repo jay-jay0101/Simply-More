@@ -119,7 +119,6 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHa
             super(new ItemStackTooltipAppender(ItemRegistry.EARTHSHATTER));
         }
 
-
         @ValidatedFloat.Restrict(min = 0f, max = 1f)
         public float chance = 0.15f;
         @ValidatedInt.Restrict(min = 0)
