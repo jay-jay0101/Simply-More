@@ -6,13 +6,16 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.ConfigUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 
-import java.util.List;
+import java.util.function.Predicate;
 
 public class HexEffect extends StatusEffect {
 
@@ -24,214 +27,56 @@ public class HexEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int Amplifier) {
-        StatusEffectInstance effect = entity.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX));
-        if(entity.getWorld().isClient)
-            return super.applyUpdateEffect(entity, Amplifier);
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+        if(entity.getWorld().isClient) return super.applyUpdateEffect(entity, amplifier);
 
+        RegistryEntry<StatusEffect> hex = StatusEffectRegistry.getReference(StatusEffectRegistry.HEX);
+        StatusEffectInstance effect = entity.getStatusEffect(hex);
 
         if(effect.getDuration() % 100 == 5) {
-            entity.addStatusEffect(
-                    new StatusEffectInstance(
-                            StatusEffectRegistry.getReference(StatusEffectRegistry.HEX),
-                            effect.getDuration(),
-                            effect.getAmplifier() + 1
-                    )
-            );
-
-            ((ServerWorld) entity.getWorld()).spawnParticles(ParticleTypes.SOUL, entity.getX(),entity.getY(),entity.getZ(),10,0,0,0,0.1f);
+            EntityUtils.incrementEffect(entity, hex, 1, 20);
+            AudioVisualUtils.particleAroundEntity(entity, ParticleTypes.SOUL, 10, 0, 0.1d);
         }
 
-        // Status Changes
-        switch (effect.getAmplifier()) {
-            case 0:
-                break;
-            case 1:
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.SLOWNESS,
-                                10,
-                                0
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.MINING_FATIGUE,
-                                10,
-                                0
-                        )
-                );
-            case 2:
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.SLOWNESS,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.MINING_FATIGUE,
-                                10,
-                                1
-                        )
-                );
+        TargetList target = new TargetList(entity);
 
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.WEAKNESS,
-                                10,
-                                0
-                        )
-                );
-                break;
-            case 3:
-            case 4:
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.SLOWNESS,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.MINING_FATIGUE,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.WEAKNESS,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.NAUSEA,
-                                80,
-                                0
-                        )
-                );
-                break;
-            case 5:
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.SLOWNESS,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.BLINDNESS,
-                                10,
-                                0
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.MINING_FATIGUE,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.WEAKNESS,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.NAUSEA,
-                                80,
-                                0
-                        )
-                );
-                break;
-            default:
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.SLOWNESS,
-                                10,
-                                2
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.BLINDNESS,
-                                10,
-                                0
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.MINING_FATIGUE,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.WEAKNESS,
-                                10,
-                                1
-                        )
-                );
-                entity.addStatusEffect(
-                        new StatusEffectInstance(
-                                StatusEffects.NAUSEA,
-                                80,
-                                0
-                        )
-                );
-                break;
+        if(amplifier >= 1) {
+            target.applyEffect(StatusEffects.SLOWNESS, 10, 0)
+                    .applyEffect(StatusEffects.MINING_FATIGUE, 10, 0);
         }
 
-        // Other effects
-        if(effect.getAmplifier() >= 4) {
-            List<StatusEffectInstance> negativeEffects = entity.getStatusEffects().stream().filter(
-                    statusEffectInstance -> !statusEffectInstance.getEffectType().value().isBeneficial() &&
-                            statusEffectInstance.getEffectType() != StatusEffectRegistry.getReference(StatusEffectRegistry.HEX)
-            ).filter(
-                    statusEffectInstance ->
-                            !ConfigUtils.isEffectBlacklisted(statusEffectInstance.getEffectType(), UNIQUE_CONFIG.culterex.blacklist, UNIQUE_CONFIG.culterex.includeGlobalBlacklist)
-            ).toList();
-
-            negativeEffects.forEach(
-                    statusEffectInstance -> {
-                        entity.addStatusEffect(
-                                new StatusEffectInstance(
-                                        statusEffectInstance.getEffectType(),
-                                        statusEffectInstance.getDuration() + 1,
-                                        statusEffectInstance.getAmplifier()
-                                )
-                        );
-                    }
-            );
+        if(amplifier >= 2) {
+            target.applyEffect(StatusEffects.SLOWNESS, 10, 1)
+                    .applyEffect(StatusEffects.MINING_FATIGUE, 10, 1);
         }
 
-        if(effect.getAmplifier() >= 5) {
-            List<StatusEffectInstance> positiveEffects = entity.getStatusEffects().stream().filter(
-                    statusEffectInstance -> statusEffectInstance.getEffectType().value().isBeneficial()
-            ).toList();
-
-            positiveEffects.forEach(
-                    statusEffectInstance -> {
-                        entity.removeStatusEffect(statusEffectInstance.getEffectType());
-                    }
-            );
+        if(amplifier >= 3) {
+            target.applyEffect(StatusEffects.WEAKNESS, 10, 0)
+                    .applyEffect(StatusEffects.NAUSEA, 80, 0);
         }
 
-        if(effect.getAmplifier() >= 8) {
-            entity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.HEX));
+        Predicate<StatusEffect> blacklistPredicate = PredicateUtils.createForEffectBlacklist(UNIQUE_CONFIG.culterex.blacklist, UNIQUE_CONFIG.culterex.includeGlobalBlacklist);
+
+        if(amplifier >= 4) {
+            target.addDurationToStatusEffect(
+                    blacklistPredicate.and(PredicateUtils.HARMFUL_EFFECT).and((status) -> status != hex.value()), 1);
         }
 
-        return super.applyUpdateEffect(entity, Amplifier);
+        if(amplifier >= 5) {
+            target.applyEffect(StatusEffects.BLINDNESS, 10, 0)
+                    .applyEffect(StatusEffects.WEAKNESS, 10, 1)
+                    .removeStatusEffects(blacklistPredicate.and(PredicateUtils.BENEFICIAL_EFFECT));
+        }
+
+        if(amplifier >= 6) {
+            target.applyEffect(StatusEffects.SLOWNESS, 10, 2);
+        }
+
+        if(amplifier >= 8) {
+            target.removeStatusEffect(hex);
+        }
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

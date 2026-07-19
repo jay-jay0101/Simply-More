@@ -5,6 +5,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 
 import java.util.List;
@@ -23,6 +24,18 @@ public record TargetList(List<LivingEntity> targets) {
 
     public TargetList filter(Predicate<LivingEntity> predicate) {
         return new TargetList(targets.stream().filter(predicate).toList());
+    }
+
+    public boolean isEmpty() {
+        return targets.isEmpty();
+    }
+
+    public boolean isPopulated() {
+        return !isEmpty();
+    }
+
+    public TargetList filterByTargetType(LivingEntity attacker, AttackUtils.AttackTarget targetType) {
+        return this.filter((entity) -> AttackUtils.canTarget(attacker, entity, targetType));
     }
 
     public static TargetList empty() {
@@ -72,7 +85,6 @@ public record TargetList(List<LivingEntity> targets) {
 
     public TargetList onEach(Consumer<LivingEntity> action) {
         targets.forEach(action);
-
         return this;
     }
 
@@ -83,6 +95,19 @@ public record TargetList(List<LivingEntity> targets) {
                     }
                 }
         ));
+    }
+
+    public TargetList addDurationToStatusEffect(Predicate<StatusEffect> predicate, int duration) {
+        return this.onEach((entity) -> List.copyOf(entity.getStatusEffects()).forEach((effect) -> {
+                    if (predicate.test(effect.getEffectType().value())) {
+                        entity.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), effect.getDuration() + duration, effect.getAmplifier()));
+                    }
+                }
+        ));
+    }
+
+    public TargetList removeStatusEffect(RegistryEntry<StatusEffect> effect) {
+        return this.onEach((entity) -> entity.removeStatusEffect(effect));
     }
 
     public TargetList removeStatusEffects() {

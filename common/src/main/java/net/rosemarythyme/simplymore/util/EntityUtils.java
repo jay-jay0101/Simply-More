@@ -31,6 +31,15 @@ public class EntityUtils {
         entity.addStatusEffect(new StatusEffectInstance(effect, duration, Math.min(amplifier, maxAmplifier)));
     }
 
+    public static void incrementEffect(LivingEntity entity, RegistryEntry<StatusEffect> effect, int additionalAmplifier, int maxAmplifier) {
+        if(!entity.hasStatusEffect(effect)) return;
+
+        StatusEffectInstance effectInstance = entity.getStatusEffect(effect);
+
+        int amplifier = effectInstance.getAmplifier() + additionalAmplifier;
+        entity.addStatusEffect(new StatusEffectInstance(effect, effectInstance.getDuration(), Math.min(amplifier, maxAmplifier)));
+    }
+
     public static boolean isHolding(LivingEntity entity, ItemStack stack) {
         return entity.getStackInHand(Hand.MAIN_HAND).equals(stack);
     }

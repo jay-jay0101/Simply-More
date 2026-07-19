@@ -2,6 +2,8 @@ package net.rosemarythyme.simplymore.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.world.ServerWorld;
@@ -30,6 +32,10 @@ public class AudioVisualUtils {
             Vec3d pos = startPos.add(direction.multiply(i * spread));
             world.spawnParticles(particleType, pos.getX(), pos.getY(), pos.getZ(), count, delta, delta, delta, speed);
         }
+    }
+
+    public static void hitTarget(LivingEntity target) {
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10));
     }
 
     public static void particleLine(ServerWorld world, Vec3d startPos, float yaw, float pitch, double length, ParticleEffect particleType, double spread, int count, double delta, double speed) {

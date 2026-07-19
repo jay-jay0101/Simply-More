@@ -12,6 +12,6 @@ public class PredicateUtils {
     public static final Predicate<StatusEffect> HARMFUL_EFFECT = (effect -> effect.getCategory() == StatusEffectCategory.HARMFUL);
 
     public static Predicate<StatusEffect> createForEffectBlacklist(ValidatedSet<Identifier> set, boolean shouldIncludeGlobal) {
-        return (effect) -> ConfigUtils.isEffectBlacklisted(effect, set, shouldIncludeGlobal);
+        return (effect) -> !ConfigUtils.isEffectBlacklisted(effect, set, shouldIncludeGlobal);
     }
 }
