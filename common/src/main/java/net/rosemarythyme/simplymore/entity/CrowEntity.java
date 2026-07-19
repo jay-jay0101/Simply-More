@@ -63,7 +63,7 @@ public class CrowEntity extends TameableEntity implements Ownable {
     }
 
 
-    public CrowEntity(EntityType<? extends TameableEntity> entityType, World world) {
+    public CrowEntity(EntityType<CrowEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new FlightMoveControl(this, 15, false);
     }

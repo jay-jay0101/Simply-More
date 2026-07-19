@@ -19,7 +19,7 @@ public class EntityRegistry {
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ENTITY_TYPE);
 
     public static final RegistrySupplier<EntityType<CrowEntity>> CROW = registerType(
-            EntityType.Builder.create(CrowEntity::new, SpawnGroup.MISC)
+            EntityType.Builder.<CrowEntity>create(CrowEntity::new, SpawnGroup.MISC)
                     .dimensions(0.25f, 0.25f)
                     .makeFireImmune(),
             "crow"

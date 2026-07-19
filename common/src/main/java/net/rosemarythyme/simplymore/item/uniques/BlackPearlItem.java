@@ -48,7 +48,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.black_pearl.chance)) {
                 List<StatusEffectInstance> possibleEffects = target.getStatusEffects().stream()
                         .filter(effect -> effect.getEffectType().value().getCategory() == StatusEffectCategory.BENEFICIAL)
-                        .filter(effect -> !ConfigUtils.isEffectBlacklisted(effect.getEffectType(), UNIQUE_CONFIG.black_pearl.blacklist, UNIQUE_CONFIG.black_pearl.includeGlobalBlacklist))
+                        .filter(effect -> !ConfigUtils.isEffectBlacklisted(effect.getEffectType().value(), UNIQUE_CONFIG.black_pearl.blacklist, UNIQUE_CONFIG.black_pearl.includeGlobalBlacklist))
                         .toList();
 
                 if (!possibleEffects.isEmpty()) {

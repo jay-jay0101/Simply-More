@@ -20,7 +20,7 @@ public class SoulForesightEffect extends StatusEffect {
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         for (StatusEffectInstance effect : entity.getStatusEffects()) {
             if (effect.getEffectType().value().getCategory() != StatusEffectCategory.BENEFICIAL || effect.getDuration() <= 10) continue;
-            if (ConfigUtils.isEffectBlacklisted(effect.getEffectType(), UNIQUE_CONFIG.soul_foreseer.blacklist, UNIQUE_CONFIG.soul_foreseer.includeGlobalBlacklist)) continue;
+            if (ConfigUtils.isEffectBlacklisted(effect.getEffectType().value(), UNIQUE_CONFIG.soul_foreseer.blacklist, UNIQUE_CONFIG.soul_foreseer.includeGlobalBlacklist)) continue;
             entity.setStatusEffect(new StatusEffectInstance(effect.getEffectType(), effect.getDuration() - 8, effect.getAmplifier()), entity);
         }
 

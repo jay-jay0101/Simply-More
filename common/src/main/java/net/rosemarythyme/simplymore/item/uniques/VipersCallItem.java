@@ -37,7 +37,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem {
         if (world.getTime() % 20 == 0 && entity instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).equals(stack)) {
             for (StatusEffectInstance effect : List.copyOf(player.getStatusEffects())) {
                 if (effect.getDuration()<25) {
-                    if (ConfigUtils.isEffectBlacklisted(effect.getEffectType(), UNIQUE_CONFIG.vipers_call.blacklist, UNIQUE_CONFIG.vipers_call.includeGlobalBlacklist)) continue;
+                    if (ConfigUtils.isEffectBlacklisted(effect.getEffectType().value(), UNIQUE_CONFIG.vipers_call.blacklist, UNIQUE_CONFIG.vipers_call.includeGlobalBlacklist)) continue;
                     player.addStatusEffect(new StatusEffectInstance(effect.getEffectType(),25,0));
                 }
             }
