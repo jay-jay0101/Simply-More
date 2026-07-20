@@ -46,7 +46,7 @@ public class JetstreamEntity extends AbstractAbilityPlacementEntity {
         LivingEntity owner = this.getOwner();
         if(owner == null) return;
 
-        AttackUtils.cuboidAttack(owner, owner.getPos().add(0,2.625,0), 0.5, 3.625, AttackUtils.AttackTarget.OTHERS_AND_USER_POSITIVELY)
+        AttackUtils.cuboidAttack(owner, this.getPos().add(0,2.625,0), 0.5, 3.625, AttackUtils.AttackTarget.OTHERS_AND_USER_POSITIVELY)
                 .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.LIGHTWEIGHT), 35, 0)
                 .addVelocity(0d, 0.1d, 0d)
                 .filter((entity) -> entity.getVelocity().getY() < 0)
