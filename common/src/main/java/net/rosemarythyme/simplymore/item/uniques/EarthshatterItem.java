@@ -54,7 +54,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHa
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return AttackUtils.holdToUse(world, user, hand);
+        return AttackUtils.holdToUse(user, hand);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHa
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.DARK_SWORD_ENCHANT.get()).setPitch(1.2f));
         } else if (remainingUseTicks == 1) {
             BlockStateParticleEffect particle = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.DIRT.getDefaultState());
-            AudioVisualUtils.particleSquare((ServerWorld) world, player.getPos().add(0d, 1d, 0d), particle, 3, 1, 500, 0d);
+            AudioVisualUtils.particleCuboid((ServerWorld) world, player.getPos().add(0d, 1d, 0d), particle, 3, 1, 500, 0d);
 
             AudioVisualUtils.playSound(world, player.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get()).setPitch(0));
             AudioVisualUtils.playSound(world, player.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_02.get()).setPitch(0));

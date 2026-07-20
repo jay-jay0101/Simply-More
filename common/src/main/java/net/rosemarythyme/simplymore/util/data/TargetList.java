@@ -1,31 +1,36 @@
 package net.rosemarythyme.simplymore.util.data;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Ownable;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public record TargetList(List<LivingEntity> targets) {
+public record TargetList(Set<LivingEntity> targets) {
     public TargetList {
-        targets = List.copyOf(targets);
+        targets = Set.copyOf(targets);
     }
 
     public TargetList(LivingEntity target) {
-        this(List.of(target));
+        this(Set.of(target));
     }
 
     public TargetList filter(Predicate<LivingEntity> predicate) {
-        return new TargetList(targets.stream().filter(predicate).toList());
+        return new TargetList(targets.stream().filter(predicate).collect(Collectors.toSet()));
     }
 
     public TargetList filterByType(Class<? extends LivingEntity> clazz) {
@@ -61,28 +66,44 @@ public record TargetList(List<LivingEntity> targets) {
     }
 
     public static TargetList empty() {
-        return new TargetList(List.of());
+        return new TargetList(Set.of());
     }
 
-    public TargetList include(LivingEntity entity) {
-        return include(new TargetList(entity));
+    public TargetList include(LivingEntity target) {
+        return include(new TargetList(target));
+    }
+
+    public TargetList include(Entity target) {
+        if(!(target instanceof LivingEntity livingTarget)) return this;
+        return include(new TargetList(livingTarget));
     }
 
     public TargetList include(TargetList list) {
-        return new TargetList(Stream.concat(targets.stream(), list.targets.stream()).toList());
+        return new TargetList(Stream.concat(targets.stream(), list.targets.stream()).collect(Collectors.toSet()));
     }
 
     public TargetList applyEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier) {
-        return this.onEach((entity) -> entity.addStatusEffect(
+        return this.onEach((target) -> target.addStatusEffect(
                 new StatusEffectInstance(effect, duration, amplifier))
         );
     }
+    public TargetList targetIndicator() {
+        return this.onEach(AudioVisualUtils::targetIndicator);
+    }
 
     public TargetList addVelocity(double x, double y, double z) {
-        return this.onEach((entity) -> {
-            entity.addVelocity(x, y, z);
-            entity.velocityModified = true;
+        return this.onEach((target) -> {
+            target.addVelocity(x, y, z);
+            target.velocityModified = true;
         });
+    }
+
+    public TargetList knockback(LivingEntity attacker, double strength) {
+        return this.onEach((target) -> AttackUtils.knockback(attacker, target, strength));
+    }
+
+    public TargetList knockback(Vec3d pos, double strength) {
+        return this.onEach((target) -> AttackUtils.knockback(pos, target, -strength));
     }
 
     public TargetList incrementEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier, int maxAmplifier) {
@@ -105,14 +126,20 @@ public record TargetList(List<LivingEntity> targets) {
         return this.onEach((entity -> entity.damage(source, amount)));
     }
 
+    public TargetList forceDamage(float amount, DamageSource source) {
+        return this.onEach((entity -> AttackUtils.applyExtraDamage(entity, amount, source)));
+    }
+
     public TargetList onEach(Consumer<LivingEntity> action) {
         targets.forEach(action);
         return this;
     }
 
     public TargetList onEachEnumerated(BiConsumer<Integer, LivingEntity> action) {
+        List<LivingEntity> targetList = List.copyOf(targets);
+
         for (int i = 0; i < size(); i++) {
-            action.accept(i, targets.get(i));
+            action.accept(i, targetList.get(i));
         }
 
         return this;

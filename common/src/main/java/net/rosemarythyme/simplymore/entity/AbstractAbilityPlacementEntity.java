@@ -5,6 +5,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
+import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
 public abstract class AbstractAbilityPlacementEntity extends MarkerEntity implements Ownable {
     protected UUID ownerUuid;
     protected int age = 0;
+    protected static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
 
     protected AbstractAbilityPlacementEntity(EntityType<?> entityType, World world) {
         super(entityType, world);

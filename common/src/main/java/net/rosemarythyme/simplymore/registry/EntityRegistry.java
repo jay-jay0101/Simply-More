@@ -31,14 +31,23 @@ public class EntityRegistry {
             "ghost_falling_block"
     );
 
+    public static final RegistrySupplier<EntityType<GreatSlitherFangEntity>> GREAT_SLITHER_FANG = registerType(
+            EntityType.Builder.<GreatSlitherFangEntity>create(GreatSlitherFangEntity::new, SpawnGroup.MISC)
+                    .dimensions(1f, 1f),
+            "great_slither_fang"
+    );
+
     public static final RegistrySupplier<EntityType<AuraOfPurityEntity>> AURA_OF_PURITY =
             registerMarkerEntity("aura_of_purity", AuraOfPurityEntity::new);
 
     public static final RegistrySupplier<EntityType<AuraOfCorruptionEntity>> AURA_OF_CORRUPTION =
             registerMarkerEntity("aura_of_corruption", AuraOfCorruptionEntity::new);
 
-    public static final RegistrySupplier<EntityType<AuraOfCorruptionEntity>> JETSTREAM =
-            registerMarkerEntity("jetstream", AuraOfCorruptionEntity::new);
+    public static final RegistrySupplier<EntityType<JetstreamEntity>> JETSTREAM =
+            registerMarkerEntity("jetstream", JetstreamEntity::new);
+
+    public static final RegistrySupplier<EntityType<RiftEntity>> RIFT =
+            registerMarkerEntity("rift", RiftEntity::new);
 
     public static <T extends Entity> RegistrySupplier<EntityType<T>> registerType(EntityType.Builder<T> builder, String name) {
         Identifier id = SimplyMore.identifier(name);

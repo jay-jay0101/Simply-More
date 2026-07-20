@@ -41,7 +41,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         startUsing(user.getStackInHand(hand), hand);
-        return AttackUtils.holdToUse(world, user, hand);
+        return AttackUtils.holdToUse(user, hand);
     }
 
     @Override

@@ -12,12 +12,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
+import java.util.Set;
 
 public class AttackUtils {
     public static int INFINITE_DURATION = 9999999;
@@ -45,7 +45,7 @@ public class AttackUtils {
         }
     }
 
-    public static TypedActionResult<ItemStack> holdToUse(World world, PlayerEntity user, Hand hand) {
+    public static TypedActionResult<ItemStack> holdToUse(PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
         if (stack.getDamage() >= stack.getMaxDamage() - 1) {
@@ -135,7 +135,9 @@ public class AttackUtils {
     public static TargetList boxAttack(LivingEntity attacker, Box box, AttackTarget targetType) {
         if (attacker == null) return TargetList.empty();
 
-        return new TargetList(attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box)).filter(
+        List<LivingEntity> targets = attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
+
+        return new TargetList(Set.copyOf(targets)).filter(
                 (target) -> canTarget(attacker, target, targetType)
         );
     }
@@ -169,8 +171,12 @@ public class AttackUtils {
         owner.getWorld().spawnEntity(ability);
     }
 
-    public static void knockback(LivingEntity attacker, LivingEntity target, float scale) {
+    public static void knockback(LivingEntity attacker, LivingEntity target, double scale) {
         Vec3d attackerPos = attacker.getPos();
+        knockback(attackerPos, target, scale);
+    }
+
+    public static void knockback(Vec3d attackerPos, LivingEntity target, double scale) {
         Vec3d targetPos = target.getPos();
 
         Vec3d direction = MathUtils.normalisedDirectionBetween(attackerPos, targetPos, false);

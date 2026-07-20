@@ -8,19 +8,15 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.config.ConfigWrapper;
-import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.ParticleRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.PredicateUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
-    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
-
     public AuraOfPurityEntity(EntityType<AuraOfPurityEntity> entityType,  World world) {
         super(entityType, world);
     }

@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,22 +12,23 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -35,34 +37,23 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = UNIQUE_CONFIG.glimmerstep.cooldown;
-
     public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
     }
 
-
-
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient())
-            return super.postHit(stack, target, attacker);
+        if (attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
 
-        float chance = attacker.getVehicle() instanceof LivingEntity ?
+        float chance = EntityUtils.shouldGrantLanceEffect(attacker) ?
                 UNIQUE_CONFIG.glimmerstep.chanceMounted:
                 UNIQUE_CONFIG.glimmerstep.chance;
-        if (MathUtils.chance(attacker, chance)) {
-            if (attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT))) {
-                int amplifier = attacker.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT)).getAmplifier();
-                amplifier = Math.min(amplifier + 1, UNIQUE_CONFIG.glimmerstep.maxStarlight - 1);
-                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, amplifier), attacker);
-            } else {
-                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, 0), attacker);
-            }
 
+        if (MathUtils.chance(attacker, chance)) {
+            EntityUtils.reapplyAndIncrementEffect(attacker, StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT), UNIQUE_CONFIG.glimmerstep.starlightTime, 1, UNIQUE_CONFIG.glimmerstep.maxStarlight);
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, UNIQUE_CONFIG.glimmerstep.blindTime));
 
-            attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.PLAYERS, 1f,2f);
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE).setPitch(2f));
         }
 
         return super.postHit(stack, target, attacker);
@@ -76,77 +67,40 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             return TypedActionResult.fail(itemStack);
         }
 
-        user.setCurrentHand(hand);
-        return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
-                ? TypedActionResult.fail(itemStack)
-                : TypedActionResult.consume(itemStack);
+        return AttackUtils.holdToUse(user, hand);
     }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (user.getWorld().isClient || !(user instanceof PlayerEntity)) {
-            super.usageTick(world, user, stack, remainingUseTicks);
-            return;
+        super.usageTick(world, user, stack, remainingUseTicks);
+
+        if (user.getWorld().isClient) return;
+        if (!(user instanceof PlayerEntity player)) return;
+
+        if(remainingUseTicks == UNIQUE_CONFIG.glimmerstep.explosionWindup) {
+            AudioVisualUtils.playSound(user.getWorld(), user.getPos(), new Sound(SoundEvents.BLOCK_BEACON_ACTIVATE).setPitch(1.2f));
         }
 
-        int ticksUsed = getMaxUseTime(stack, user) - remainingUseTicks;
-
-        if(ticksUsed == 1) {
-            user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1f,1.2f);
-        }
-
-
-        ((ServerWorld) user.getWorld()).spawnParticles(
-                new DustParticleEffect(new Vector3f(2f,2f,1f), 2f),
-                user.getX(),
-                user.getEyeY(),
-                user.getZ(),
-                Math.min(ticksUsed, Math.min(60, UNIQUE_CONFIG.glimmerstep.explosionWindup)),
-                4f,
-                4f,
-                4f,
-                0f
+        AudioVisualUtils.particleAroundEntity(player,
+                new DustParticleEffect(new Vector3f(2f, 2f, 1f), 2f),
+                Math.min(getMaxUseTime(stack, player) - remainingUseTicks, 60),
+                4f, 0f
         );
 
-        if(ticksUsed == UNIQUE_CONFIG.glimmerstep.explosionWindup) {
+        if(remainingUseTicks == 1) {
             user.stopUsingItem();
 
-            int boxSize = UNIQUE_CONFIG.glimmerstep.explosionRange;
-            Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
-            List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-            float damage;
-            try {
-                damage = UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight * (user.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT)).getAmplifier() + 1);
-            } catch (NullPointerException e) {
-                damage = UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight;
-            }
+            RegistryEntry<StatusEffect> starlight = StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT);
+            if(!player.hasStatusEffect(starlight)) return;
 
-            ((PlayerEntity) user).getItemCooldownManager().set(this, skillCooldown);
-            user.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT));
+            AttackUtils.cuboidAttack(player, player.getPos().add(0d, 3d, 0d), UNIQUE_CONFIG.glimmerstep.explosionRange, 5, AttackUtils.AttackTarget.ENEMIES)
+                    .damage(UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight * player.getStatusEffect(starlight).getAmplifier(), player.getDamageSources().explosion(player, player));
 
-            float finalDamage = damage;
-            // todo: change
-            livingEntities.stream().filter(
-                    livingEntity -> livingEntity != user.getVehicle()
-            ).forEach(
-                    livingEntity -> livingEntity.damage(user.getDamageSources().explosion(user, user),
-                            (!AttackUtils.canTarget(livingEntity, user, AttackUtils.AttackTarget.ENEMIES) || livingEntity == user)?
-                                    finalDamage * (UNIQUE_CONFIG.glimmerstep.glimmerstepAllyDamage) : finalDamage)
-            );
+            player.getItemCooldownManager().set(this, UNIQUE_CONFIG.glimmerstep.cooldown);
+            user.removeStatusEffect(starlight);
 
-            ((ServerWorld) user.getWorld()).spawnParticles(
-                    ParticleTypes.EXPLOSION,
-                    user.getX(),
-                    user.getEyeY(),
-                    user.getZ(),
-                    80,
-                    2f,
-                    2f,
-                    2f,
-                    0f
-            );
-
-            user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 1f,0.8f);
+            AudioVisualUtils.particleAroundEntity(player, ParticleTypes.EXPLOSION, 80, 2d, 0d);
+            AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ENTITY_GENERIC_EXPLODE.value()).setPitch(0.8f));
         }
 
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -154,7 +108,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 9999999;
+        return UNIQUE_CONFIG.glimmerstep.explosionWindup;
     }
 
     @Override
@@ -214,8 +168,6 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
         public int explosionWindup = 60;
         @ValidatedInt.Restrict(min = 0)
         public int cooldown = 800;
-        @ValidatedFloat.Restrict(min = 0f)
-        public float glimmerstepAllyDamage = 0.8f;
         @ValidatedInt.Restrict(min = 0)
         public int starlightTime = 800;
     }

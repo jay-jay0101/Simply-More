@@ -10,10 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.GreatSlitherFangEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
@@ -29,21 +29,19 @@ import java.util.List;
 
 
 public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = UNIQUE_CONFIG.great_slither.cooldown;
-
     public GreatSlitherItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
     }
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, UNIQUE_CONFIG.great_slither.chance)) {
-                if(target.hasStatusEffect(StatusEffects.POISON)) {
-                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM), UNIQUE_CONFIG.great_slither.venomTime, 0), attacker);
-                } else {
-                    target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, UNIQUE_CONFIG.great_slither.poisonTime, 0), attacker);
-                }
+        if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
+
+        if (MathUtils.chance(attacker, UNIQUE_CONFIG.great_slither.chance)) {
+            if(target.hasStatusEffect(StatusEffects.POISON)) {
+                target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM), UNIQUE_CONFIG.great_slither.venomTime, 0), attacker);
+            } else {
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, UNIQUE_CONFIG.great_slither.poisonTime, 0), attacker);
             }
         }
 
@@ -52,28 +50,20 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (user.getWorld().isClient()) {
-            return super.use(world, user, hand);
-        }
+        if (user.getWorld().isClient()) return super.use(world, user, hand);
 
         for(int i = -1; i<2; i++){
-            float yawInternal = user.getYaw() + (i * 15);
-            double yawAngle = Math.toRadians(yawInternal);
-            double cosYaw = Math.cos(yawAngle);
-            double sinYaw = Math.sin(yawAngle);
+            float yaw = user.getYaw() + (i * 15);
+            Vec3d direction = MathUtils.getDirectionalVector(yaw, 0f);
 
-            for (int distanceMultiplier = 1; distanceMultiplier < UNIQUE_CONFIG.great_slither.range; distanceMultiplier++) {
-                double offsetX = -distanceMultiplier * sinYaw;
-                double offsetZ = distanceMultiplier * cosYaw;
+            for (int j = 1; j < UNIQUE_CONFIG.great_slither.range; j++) {
+                Vec3d spawnPos = user.getPos().add(direction.multiply(1.2 * j));
 
-                double spawnX = user.getX() + 1.2 * offsetX;
-                double spawnZ = user.getZ() + 1.2 * offsetZ;
-
-                world.spawnEntity(new GreatSlitherFangEntity(world, spawnX, user.getY(), spawnZ, yawInternal, 0, user));
+                world.spawnEntity(new GreatSlitherFangEntity(world, spawnPos.getX(), user.getY(), spawnPos.getZ(), yaw, 0, user));
             }
         }
 
-        user.getItemCooldownManager().set(this, skillCooldown);
+        user.getItemCooldownManager().set(this, UNIQUE_CONFIG.great_slither.cooldown);
         return super.use(world, user, hand);
     }
 
@@ -84,16 +74,12 @@ public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-        Style rightClickStyle = Styles.RIGHT_CLICK;
-
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.great_slither.tooltip4").setStyle(Styles.TEXT));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

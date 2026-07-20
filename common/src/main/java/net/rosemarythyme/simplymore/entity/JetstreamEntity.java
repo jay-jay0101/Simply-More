@@ -6,8 +6,6 @@ import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.config.ConfigWrapper;
-import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -17,8 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 public class JetstreamEntity extends AbstractAbilityPlacementEntity {
-    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
-
     public JetstreamEntity(EntityType<JetstreamEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -33,7 +29,7 @@ public class JetstreamEntity extends AbstractAbilityPlacementEntity {
     }
 
     public void visual() {
-        AudioVisualUtils.particleSquare(
+        AudioVisualUtils.particleCuboid(
                 this.getServerWorld(), this.getPos().add(0d, 1.5d, 0d),
                 new DustParticleEffect(new Vector3f(1f, 1f, 1f), 2),
                 0.25d, 1.5d, 15, 0.3d

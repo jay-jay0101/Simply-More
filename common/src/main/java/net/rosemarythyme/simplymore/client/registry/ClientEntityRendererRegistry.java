@@ -4,6 +4,7 @@ import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.render.entity.EvokerFangsEntityRenderer;
 import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
 import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
 import net.rosemarythyme.simplymore.client.render.entity.CrowEntityRenderer;
@@ -14,6 +15,8 @@ public class ClientEntityRendererRegistry {
     public static void register() {
         EntityRendererRegistry.register(EntityRegistry.CROW, CrowEntityRenderer::new);
         EntityModelLayerRegistry.register(CrowEntityModel.CROW_LAYER, CrowEntityModel::getTexturedModelData);
+
+        EntityRendererRegistry.register(EntityRegistry.GREAT_SLITHER_FANG, EvokerFangsEntityRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.GHOST_FALLING_BLOCK, FallingBlockEntityRenderer::new);
     }

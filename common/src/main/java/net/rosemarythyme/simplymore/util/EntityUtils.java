@@ -16,7 +16,6 @@ public class EntityUtils {
     }
 
     private static boolean isLanceInMainHand(LivingEntity livingEntity) {
-
         return livingEntity.getMainHandStack().getItem() instanceof Weapon weapon && weapon.getSwordType() == Weapon.SwordType.LANCE;
     }
 

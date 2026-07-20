@@ -43,7 +43,7 @@ public class AudioVisualUtils {
         particleLine(world, startPos, startPos.add(direction.multiply(length)), particleType, spread, count, delta, speed);
     }
 
-    public static void particleSquare(ServerWorld world, Vec3d center, ParticleEffect particleType, double horizontalRange, double verticalRange, int count, double speed) {
+    public static void particleCuboid(ServerWorld world, Vec3d center, ParticleEffect particleType, double horizontalRange, double verticalRange, int count, double speed) {
         world.spawnParticles(particleType, center.getX(), center.getY(), center.getZ(), count, horizontalRange, verticalRange, horizontalRange, speed);
     }
 
@@ -51,6 +51,16 @@ public class AudioVisualUtils {
         if (!(entity.getWorld() instanceof ServerWorld world)) return;
 
         world.spawnParticles(particleType, entity.getX(), entity.getY() + 1, entity.getZ(), count, delta, delta, delta, speed);
+    }
+
+    public static void particleCube(ServerWorld world, Vec3d center, ParticleEffect particleType, int count, double delta, double speed) {
+        particleCuboid(world, center, particleType, delta, delta, count, speed);
+    }
+
+    public static void rainParticlesAboveEntity(LivingEntity entity, ParticleEffect particleType, int count, double delta, double speed) {
+        if (!(entity.getWorld() instanceof ServerWorld world)) return;
+
+        world.spawnParticles(particleType, entity.getX(), entity.getEyeY() + 2, entity.getZ(), count, delta, 0d, delta, speed);
     }
 
     public static void playSound(World world, Vec3d pos, Sound sound) {

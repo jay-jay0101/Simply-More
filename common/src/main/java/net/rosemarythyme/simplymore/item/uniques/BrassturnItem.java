@@ -71,7 +71,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
         ItemStack stack = user.getStackInHand(hand);
         if (MathUtils.getCounterComponent(stack).value() <= 0) return TypedActionResult.fail(stack);
 
-        return AttackUtils.holdToUse(world, user, hand);
+        return AttackUtils.holdToUse(user, hand);
     }
 
     @Override

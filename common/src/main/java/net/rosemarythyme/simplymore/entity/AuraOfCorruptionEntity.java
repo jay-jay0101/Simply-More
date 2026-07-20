@@ -7,17 +7,13 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.config.ConfigWrapper;
-import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class AuraOfCorruptionEntity extends AbstractAbilityPlacementEntity {
-    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
-
     public AuraOfCorruptionEntity(EntityType<AuraOfCorruptionEntity> entityType, World world) {
         super(entityType, world);
     }
