@@ -3,7 +3,6 @@ package net.rosemarythyme.simplymore.registry;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 
 import java.util.Map;
@@ -38,6 +37,7 @@ public class TagRegistry {
     public static TagKey<Item> DEER_HORNS = TagKey.of(RegistryKeys.ITEM, SimplyMore.identifier("weapon_types/deer_horns"));
 
     public static TagKey<Item> ALL = TagKey.of(RegistryKeys.ITEM, SimplyMore.identifier("weapon_types/all"));
+    public static TagKey<Item> UNIQUE = TagKey.of(RegistryKeys.ITEM, SimplyMore.identifier("uniques"));
 
     public static TagKey<Item> LANCE_EFFECT = TagKey.of(RegistryKeys.ITEM, SimplyMore.identifier("lance_effect_override"));
 

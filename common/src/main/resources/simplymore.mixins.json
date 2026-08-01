@@ -7,13 +7,11 @@
   "client": [
   ],
   "mixins": [
-    "BorderRendererMixin",
     "LivingEntityMixin",
     "LootTableModifierMixin",
     "MobEntityMixin",
     "OracleIndexUtilsMixin",
-    "PlayerEntityMixin",
-    "TooltipRendererMixin"
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

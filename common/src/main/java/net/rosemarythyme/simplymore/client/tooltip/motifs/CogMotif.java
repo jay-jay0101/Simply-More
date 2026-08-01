@@ -1,25 +1,34 @@
 package net.rosemarythyme.simplymore.client.tooltip.motifs;
 
 import net.minecraft.client.gui.DrawContext;
-import net.sweenus.simplytooltips.client.render.motif.BackgroundMotif;
+import net.sweenus.simplytooltips.api.BorderPalette;
+import net.sweenus.simplytooltips.api.TooltipTheme;
 
-public class CogMotif implements BackgroundMotif {
+public class CogMotif implements FullMotif {
     public static final int ID = 9312_001;
 
     @Override
-    public void draw(DrawContext context, int x, int y, int width, int height, long timeMs) {
+    public void draw(DrawContext context, int x, int y, int w, int h, long timeMs) {
         float rot = (timeMs % 3600) / 10f;
 
-        drawCog(context, x + width - 60, y + (int) Math.floor(height*0.2f), 20, 7, 7, rot + 45);
-        drawCog(context, x + 40, y + (int) Math.floor(height*0.4f), 15, 5, 5, rot);
-        drawCog(context, x + width - 30, y + (int) Math.floor(height*0.5f), 10, 3, 4, rot + 80);
-        drawCog(context, x + (width/2), y + (int) Math.floor(height*0.6f), 15, 5, 5, rot + 20);
-        drawCog(context, x + 50, y + (int) Math.floor(height*0.8f), 10, 3, 4, rot + 80);
+        drawCog(context, x + w - 60, y + (int) Math.floor(h*0.2f), 20, 7, 7, rot + 45);
+        drawCog(context, x + 40, y + (int) Math.floor(h*0.4f), 15, 5, 5, rot);
+        drawCog(context, x + w - 30, y + (int) Math.floor(h*0.5f), 10, 3, 4, rot + 80);
+        drawCog(context, x + (w/2), y + (int) Math.floor(h*0.6f), 15, 5, 5, rot + 20);
+        drawCog(context, x + 50, y + (int) Math.floor(h*0.8f), 10, 3, 4, rot + 80);
     }
 
-    public void drawBorderPattern(DrawContext context, int x, int y, int width, int height) {
-        int cogColor = 0xC0C15A36, armColor = 0xA04A1300;
-        for (int px = x + 12, i = 0; px < x + width - 10; px += 14, i++) {
+    @Override
+    public BorderPalette getDefaultPalette() {
+        return BorderPalette.accents(0xC0C15A36, 0xA04A1300);
+    }
+
+    @Override
+    public void drawBorderPattern(DrawContext context, int x, int y, int w, int h, TooltipTheme theme, BorderPalette palette) {
+        int cogColor = palette.accentA() == null ? 0x0 : palette.accentA();
+        int armColor = palette.accentB() == null ? 0x0 : palette.accentB();
+
+        for (int px = x + 12, i = 0; px < x + w - 10; px += 14, i++) {
             context.fill(px - 1, y + 1, px, y + 3, cogColor);
             context.fill(px, y + 2, px + 1, y + 3, cogColor);
             context.fill(px + 1, y + 1, px + 2, y + 3, cogColor);
@@ -30,15 +39,15 @@ public class CogMotif implements BackgroundMotif {
             context.fill(px + 2, y + 1, px + 3, y + 2, armColor);
             context.fill(px + 2, y + 3, px + 3, y + 4, armColor);
 
-            context.fill(px + 1, y - 1 + height, px, y - 3 + height, cogColor);
-            context.fill(px, y - 2 + height, px - 1, y - 3 + height, cogColor);
-            context.fill(px - 1, y - 1 + height, px - 2, y - 3 + height, cogColor);
+            context.fill(px + 1, y - 1 + h, px, y - 3 + h, cogColor);
+            context.fill(px, y - 2 + h, px - 1, y - 3 + h, cogColor);
+            context.fill(px - 1, y - 1 + h, px - 2, y - 3 + h, cogColor);
 
-            context.fill(px + 2, y - 1 + height, px + 1, y - 2 + height, armColor);
-            context.fill(px + 2, y - 3 + height, px + 1, y - 4 + height, armColor);
-            context.fill(px, y - 3 + height, px - 1, y - 4 + height, armColor);
-            context.fill(px - 2, y - 1 + height, px - 3, y - 2 + height, armColor);
-            context.fill(px - 2, y - 3 + height, px - 3, y - 4 + height, armColor);
+            context.fill(px + 2, y - 1 + h, px + 1, y - 2 + h, armColor);
+            context.fill(px + 2, y - 3 + h, px + 1, y - 4 + h, armColor);
+            context.fill(px, y - 3 + h, px - 1, y - 4 + h, armColor);
+            context.fill(px - 2, y - 1 + h, px - 3, y - 2 + h, armColor);
+            context.fill(px - 2, y - 3 + h, px - 3, y - 4 + h, armColor);
         }
     }
 

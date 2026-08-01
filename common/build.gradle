@@ -14,7 +14,7 @@ dependencies {
 
 //    modImplementation("curse.maven:simplyswords-659887:${simplyswords_fabric_version}")
 //    modImplementation("curse.maven:simplytooltips-1475755:${simplytooltip_version}")
-    modImplementation files("${rootDir}/fabric/run/mods/SimplyTooltips-fabric-0.1.4.jar")
+    modImplementation files("${rootDir}/fabric/run/mods/SimplyTooltips-fabric-0.1.5.jar")
     modImplementation files("${rootDir}/fabric/run/mods/simplyswords-fabric-1.70.0-1.21.1.jar")
 
 

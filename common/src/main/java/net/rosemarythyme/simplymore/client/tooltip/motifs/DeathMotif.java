@@ -1,19 +1,20 @@
 package net.rosemarythyme.simplymore.client.tooltip.motifs;
 
 import net.minecraft.client.gui.DrawContext;
+import net.sweenus.simplytooltips.api.BorderPalette;
+import net.sweenus.simplytooltips.api.TooltipTheme;
 import net.sweenus.simplytooltips.client.render.BorderRenderer;
-import net.sweenus.simplytooltips.client.render.motif.BackgroundMotif;
 
-public class DeathMotif implements BackgroundMotif {
+public class DeathMotif implements FullMotif {
     public static final int ID = 9312_002;
 
     @Override
-    public void draw(DrawContext context, int x, int y, int width, int height, long timeMs) {
-        if (width >= 40 && height >= 40) {
+    public void draw(DrawContext context, int x, int y, int w, int h, long timeMs) {
+        if (w >= 40 && h >= 40) {
             int minX = x + 6;
-            int maxX = x + width - 6;
+            int maxX = x + w - 6;
             int minY = y + 2;
-            int maxY = y + height - 2;
+            int maxY = y + h - 2;
             int spawnRange = Math.max(10, maxX - minX - 1);
 
             for (int i = 0; i < 50; ++i) {
@@ -36,9 +37,16 @@ public class DeathMotif implements BackgroundMotif {
         }
     }
 
-    public void drawBorderPattern(DrawContext context, int x, int y, int width, int height) {
-        int color = 0xFF000000;
-        for (int px = x + 6, i = 0; px < x + (width/2); px += 14, i++) {
+    @Override
+    public BorderPalette getDefaultPalette() {
+        return BorderPalette.accents(0xFF000000);
+    }
+
+    @Override
+    public void drawBorderPattern(DrawContext context, int x, int y, int w, int h, TooltipTheme theme, BorderPalette palette) {
+        int color = palette.accentA() == null ? 0x0 : palette.accentA();
+
+        for (int px = x + 6, i = 0; px < x + (w/2); px += 14, i++) {
             context.fill(px - 2, y + 2, px + 1, y + 3, color);
             context.fill(px - 2, y + 3, px, y + 5, color);
             context.fill(px - 1, y + 5, px + 1, y + 6, color);
@@ -46,7 +54,7 @@ public class DeathMotif implements BackgroundMotif {
             context.fill(px + 2, y + 5, px + 3, y + 6, color);
             context.fill(px + 3, y + 4, px + 4, y + 5, color);
 
-            int py = y + height;
+            int py = y + h;
             context.fill(px - 2, py - 2, px + 1, py - 3, color);
             context.fill(px - 2, py - 3, px, py - 5, color);
             context.fill(px - 1, py - 5, px + 1, py - 6, color);
@@ -55,7 +63,7 @@ public class DeathMotif implements BackgroundMotif {
             context.fill(px + 3, py - 4, px + 4, py - 5, color);
         }
 
-        for (int px = x + width - 6, i = 0; px > x + (width/2); px -= 14, i++) {
+        for (int px = x + w - 6, i = 0; px > x + (w/2); px -= 14, i++) {
             context.fill(px + 2, y + 2, px - 1, y + 3, color);
             context.fill(px + 2, y + 3, px, y + 5, color);
             context.fill(px + 1, y + 5, px - 1, y + 6, color);
@@ -63,7 +71,7 @@ public class DeathMotif implements BackgroundMotif {
             context.fill(px - 2, y + 5, px - 3, y + 6, color);
             context.fill(px - 3, y + 4, px - 4, y + 5, color);
 
-            int py = y + height;
+            int py = y + h;
             context.fill(px + 2, py - 2, px - 1, py - 3, color);
             context.fill(px + 2, py - 3, px, py - 5, color);
             context.fill(px + 1, py - 5, px - 1, py - 6, color);

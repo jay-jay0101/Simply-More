@@ -1,10 +1,11 @@
 package net.rosemarythyme.simplymore.client.tooltip.motifs;
 
 import net.minecraft.client.gui.DrawContext;
+import net.sweenus.simplytooltips.api.BorderPalette;
+import net.sweenus.simplytooltips.api.TooltipTheme;
 import net.sweenus.simplytooltips.client.render.TooltipPainter;
-import net.sweenus.simplytooltips.client.render.motif.BackgroundMotif;
 
-public class BloodMotif implements BackgroundMotif {
+public class BloodMotif implements FullMotif {
     public static final int ID = 9312_003;
 
     @Override
@@ -26,8 +27,15 @@ public class BloodMotif implements BackgroundMotif {
         }
     }
 
-    public void drawBorderPattern(DrawContext context, int x, int y, int w, int h) {
-        int color = 0xC0220000;
+    @Override
+    public BorderPalette getDefaultPalette() {
+        return BorderPalette.accents(0xC0220000);
+    }
+
+    @Override
+    public void drawBorderPattern(DrawContext context, int x, int y, int w, int h, TooltipTheme theme, BorderPalette palette) {
+        int color = palette.accentA() == null ? 0x0 : palette.accentA();
+
         for (int px = x + 8, i = 0; px < x + w - 8; px += 3, i = ++i % 3) {
             switch(i) {
                 case 0 -> {
