@@ -1,48 +1,47 @@
 package net.rosemarythyme.simplymore.registry;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.util.Identifier;
 import net.sweenus.simplyswords.api.SimplySwordsAPI;
 
 public class TransformationRegistry {
 
     public static void register() {
-        SimplySwordsAPI.registerTransformation(Blocks.SLIME_BLOCK, Identifier.of("simplymore", "great_slither"));
-        SimplySwordsAPI.registerTransformation(Blocks.BASALT, Identifier.of("simplymore", "molten_flare"));
-        SimplySwordsAPI.registerTransformation(Blocks.BLUE_ICE, Identifier.of("simplymore", "grandfrost"));
-        SimplySwordsAPI.registerTransformation(Blocks.GLOW_LICHEN, Identifier.of("simplymore", "mimicry_longsword"));
-        SimplySwordsAPI.registerTransformation(Blocks.GLOWSTONE, Identifier.of("simplymore", "glimmerstep"));
-        SimplySwordsAPI.registerTransformation(Blocks.NETHER_WART_BLOCK, Identifier.of("simplymore", "the_blood_harvester"));
-        SimplySwordsAPI.registerTransformation(Blocks.SMOOTH_SANDSTONE, Identifier.of("simplymore", "myrmedge"));
-        SimplySwordsAPI.registerTransformation(Blocks.GOLD_BLOCK, Identifier.of("simplymore", "black_pearl"));
-        SimplySwordsAPI.registerTransformation(Blocks.NETHER_WART, Identifier.of("simplymore", "the_vessel_breach"));
-        SimplySwordsAPI.registerTransformation(Blocks.WITHER_ROSE, Identifier.of("simplymore", "blade_of_the_grotesque"));
-        SimplySwordsAPI.registerTransformation(Blocks.POTTED_WITHER_ROSE, Identifier.of("simplymore", "blade_of_the_grotesque"));
-        SimplySwordsAPI.registerTransformation(Blocks.SUNFLOWER, Identifier.of("simplymore", "vipers_call"));
-        SimplySwordsAPI.registerTransformation(Blocks.DECORATED_POT, Identifier.of("simplymore", "timekeeper"));
-        SimplySwordsAPI.registerTransformation(Blocks.REDSTONE_BLOCK, Identifier.of("simplymore", "matterbane"));
-        SimplySwordsAPI.registerTransformation(Blocks.ANCIENT_DEBRIS, Identifier.of("simplymore", "smouldering_ruin"));
-        SimplySwordsAPI.registerTransformation(Blocks.LIGHTNING_ROD, Identifier.of("simplymore", "stasis"));
-        SimplySwordsAPI.registerTransformation(Blocks.SEA_LANTERN, Identifier.of("simplymore", "tidebreaker"));
-        SimplySwordsAPI.registerTransformation(Blocks.QUARTZ_PILLAR, Identifier.of("simplymore", "ruyi_jingu_bang"));
-        SimplySwordsAPI.registerTransformation(Blocks.SUSPICIOUS_GRAVEL, Identifier.of("simplymore", "ruptured_idol"));
-        SimplySwordsAPI.registerTransformation(Blocks.POINTED_DRIPSTONE, Identifier.of("simplymore", "boas_fang"));
-        SimplySwordsAPI.registerTransformation(Blocks.CRACKED_DEEPSLATE_BRICKS, Identifier.of("simplymore", "earthshatter"));
-        SimplySwordsAPI.registerTransformation(Blocks.SOUL_TORCH, Identifier.of("simplymore", "soul_foreseer"));
-        SimplySwordsAPI.registerTransformation(Blocks.SOUL_WALL_TORCH, Identifier.of("simplymore", "soul_foreseer"));
-        SimplySwordsAPI.registerTransformation(Blocks.EMERALD_ORE, Identifier.of("simplymore", "serpentine_valour"));
-        SimplySwordsAPI.registerTransformation(Blocks.DEEPSLATE_EMERALD_ORE, Identifier.of("simplymore", "serpentine_valour"));
-        SimplySwordsAPI.registerTransformation(Blocks.OCHRE_FROGLIGHT, Identifier.of("simplymore", "lustrous_moxie"));
-        SimplySwordsAPI.registerTransformation(Blocks.OXIDIZED_COPPER, Identifier.of("simplymore", "brassturn"));
-        SimplySwordsAPI.registerTransformation(Blocks.WAXED_OXIDIZED_COPPER, Identifier.of("simplymore", "brassturn"));
-        SimplySwordsAPI.registerTransformation(Blocks.LANTERN, Identifier.of("simplymore", "cindergorge"));
-        SimplySwordsAPI.registerTransformation(Blocks.BEDROCK, Identifier.of("simplymore", "deaths_eyrie"));
-        SimplySwordsAPI.registerTransformation(Blocks.FLOWERING_AZALEA, Identifier.of("simplymore", "perforiscus"));
-        SimplySwordsAPI.registerTransformation(Blocks.POTTED_FLOWERING_AZALEA_BUSH, Identifier.of("simplymore", "perforiscus"));
-        SimplySwordsAPI.registerTransformation(Blocks.COPPER_BULB, Identifier.of("simplymore", "revvengine"));
-        SimplySwordsAPI.registerTransformation(Blocks.WAXED_COPPER_BULB, Identifier.of("simplymore", "revvengine"));
-        SimplySwordsAPI.registerTransformation(Blocks.COPPER_BLOCK, Identifier.of("simplymore", "exedrill"));
-        SimplySwordsAPI.registerTransformation(Blocks.WAXED_COPPER_BLOCK, Identifier.of("simplymore", "exedrill"));
-        SimplySwordsAPI.registerTransformation(Blocks.LECTERN, Identifier.of("simplymore", "culterex"));
+        SimplySwordsAPI.registerTransformation(Blocks.SLIME_BLOCK, ItemRegistry.GREAT_SLITHER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.BASALT, ItemRegistry.MOLTEN_FLARE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.BLUE_ICE, ItemRegistry.GRANDFROST.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.GLOW_LICHEN, ItemRegistry.MIMICRY_LONGSWORD.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.GLOWSTONE, ItemRegistry.GLIMMERSTEP.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.NETHER_WART_BLOCK, ItemRegistry.THE_BLOOD_HARVESTER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SMOOTH_SANDSTONE, ItemRegistry.MYRMEDGE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.GOLD_BLOCK, ItemRegistry.BLACK_PEARL.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.NETHER_WART, ItemRegistry.THE_VESSEL_BREACH.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.WITHER_ROSE, ItemRegistry.BLADE_OF_THE_GROTESQUE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.POTTED_WITHER_ROSE, ItemRegistry.BLADE_OF_THE_GROTESQUE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SUNFLOWER, ItemRegistry.VIPERS_CALL.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.DECORATED_POT, ItemRegistry.TIMEKEEPER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.REDSTONE_BLOCK, ItemRegistry.MATTERBANE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.ANCIENT_DEBRIS, ItemRegistry.SMOULDERING_RUIN.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.LIGHTNING_ROD, ItemRegistry.STASIS.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SEA_LANTERN, ItemRegistry.TIDEBREAKER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.QUARTZ_PILLAR, ItemRegistry.RUYI_JINGU_BANG.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SUSPICIOUS_GRAVEL, ItemRegistry.RUPTURED_IDOL.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.POINTED_DRIPSTONE, ItemRegistry.BOAS_FANG.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.CRACKED_DEEPSLATE_BRICKS, ItemRegistry.EARTHSHATTER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SOUL_TORCH, ItemRegistry.SOUL_FORESEER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SOUL_WALL_TORCH, ItemRegistry.SOUL_FORESEER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.EMERALD_ORE, ItemRegistry.SERPENTINE_VALOUR.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.DEEPSLATE_EMERALD_ORE, ItemRegistry.SERPENTINE_VALOUR.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.OCHRE_FROGLIGHT, ItemRegistry.LUSTROUS_MOXIE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.OXIDIZED_COPPER, ItemRegistry.BRASSTURN.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.WAXED_OXIDIZED_COPPER, ItemRegistry.BRASSTURN.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.LANTERN, ItemRegistry.CINDERGORGE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.BEDROCK, ItemRegistry.DEATHS_EYRIE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.FLOWERING_AZALEA, ItemRegistry.PERFORISCUS.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.POTTED_FLOWERING_AZALEA_BUSH, ItemRegistry.PERFORISCUS.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.COPPER_BULB, ItemRegistry.REVVENGINE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.WAXED_COPPER_BULB, ItemRegistry.REVVENGINE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.COPPER_BLOCK, ItemRegistry.EXEDRILL.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.WAXED_COPPER_BLOCK, ItemRegistry.EXEDRILL.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.LECTERN, ItemRegistry.CULTEREX.getId());
     }
 }
