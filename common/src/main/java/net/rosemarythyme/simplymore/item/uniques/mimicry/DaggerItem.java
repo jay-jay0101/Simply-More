@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -27,7 +26,7 @@ public class DaggerItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 3) {
             List<LivingEntity> enemies = sweepAttack(player, 1.4f);
-            float damage = mimicryConfig.dagger.damage;
+            float damage = MIMICRY_CONFIG.dagger.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -35,7 +34,7 @@ public class DaggerItem extends MimicryItem {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.INVISIBILITY,
-                                        mimicryConfig.dagger.effectTime
+                                        MIMICRY_CONFIG.dagger.effectTime
                                 )
                         );
                     }
@@ -53,7 +52,7 @@ public class DaggerItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.dagger.disabled;
+        return MIMICRY_CONFIG.dagger.disabled;
     }
 
     @Override

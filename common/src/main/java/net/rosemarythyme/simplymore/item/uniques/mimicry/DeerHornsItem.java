@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -46,7 +45,7 @@ public class DeerHornsItem extends MimicryItem {
             }
 
             List<LivingEntity> enemies = spinAttack(player, 1.2f);
-            float damage = mimicryConfig.deer_horns.damage;
+            float damage = MIMICRY_CONFIG.deer_horns.damage;
 
             enemies.forEach(
                     target -> {
@@ -56,7 +55,7 @@ public class DeerHornsItem extends MimicryItem {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SPEED,
-                                        mimicryConfig.deer_horns.effectTime,
+                                        MIMICRY_CONFIG.deer_horns.effectTime,
                                         1
                                 )
                         );
@@ -71,7 +70,7 @@ public class DeerHornsItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.deer_horns.disabled;
+        return MIMICRY_CONFIG.deer_horns.disabled;
     }
 
     @Override

@@ -7,7 +7,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -25,7 +24,7 @@ public class RapierItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.rapier.disabled;
+        return MIMICRY_CONFIG.rapier.disabled;
     }
 
     @Override
@@ -34,7 +33,7 @@ public class RapierItem extends MimicryItem {
     }
 
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = mimicryConfig.rapier.damage;
+        float damage = MIMICRY_CONFIG.rapier.damage;
 
         if(ticksUsed == 4 || ticksUsed == 16) {
             List<LivingEntity> enemies = stabAttack(player, 3, 0.25f);
@@ -46,7 +45,7 @@ public class RapierItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
-                                        mimicryConfig.rapier.effectTime,
+                                        MIMICRY_CONFIG.rapier.effectTime,
                                         0
                                 )
                         );

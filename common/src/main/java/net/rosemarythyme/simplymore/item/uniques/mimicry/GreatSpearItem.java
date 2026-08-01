@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -29,7 +28,7 @@ public class GreatSpearItem extends MimicryItem implements TwoHandedWeapon {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 6) {
             List<LivingEntity> enemies = slamAttack(player, 4f);
-            float damage = mimicryConfig.great_spear.slamDamage;
+            float damage = MIMICRY_CONFIG.great_spear.slamDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -37,7 +36,7 @@ public class GreatSpearItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.MINING_FATIGUE,
-                                        mimicryConfig.great_spear.effectTime,
+                                        MIMICRY_CONFIG.great_spear.effectTime,
                                         25
                                 )
                         );
@@ -48,12 +47,12 @@ public class GreatSpearItem extends MimicryItem implements TwoHandedWeapon {
 
         if(ticksUsed == 18) {
             List<LivingEntity> enemies = stabAttack(player, 6,0.8f);
-            float damage = mimicryConfig.great_spear.stabDamage;
+            float damage = MIMICRY_CONFIG.great_spear.stabDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player,target, mimicryConfig.great_spear.knockback);
+                        knockback(player,target, MIMICRY_CONFIG.great_spear.knockback);
                     }
             );
         }
@@ -65,7 +64,7 @@ public class GreatSpearItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.great_spear.disabled;
+        return MIMICRY_CONFIG.great_spear.disabled;
     }
 
     @Override

@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -26,7 +25,7 @@ public class PernachItem extends MimicryItem {
 
     @Override
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = mimicryConfig.pernach.damage;
+        float damage = MIMICRY_CONFIG.pernach.damage;
 
         if(ticksUsed == 3 || ticksUsed == 12) {
             List<LivingEntity> enemies = sweepAttack(player, 1.4f);
@@ -48,21 +47,21 @@ public class PernachItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.pernach.effectTime,
+                                        MIMICRY_CONFIG.pernach.effectTime,
                                         1
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WEAKNESS,
-                                        mimicryConfig.pernach.effectTime,
+                                        MIMICRY_CONFIG.pernach.effectTime,
                                         0
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
-                                        mimicryConfig.pernach.effectTime,
+                                        MIMICRY_CONFIG.pernach.effectTime,
                                         0
                                 )
                         );
@@ -77,7 +76,7 @@ public class PernachItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.pernach.disabled;
+        return MIMICRY_CONFIG.pernach.disabled;
     }
 
     @Override

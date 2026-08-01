@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -27,7 +26,7 @@ public class WarglaiveItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicryConfig.warglaive.firstDamage;
+            float damage = MIMICRY_CONFIG.warglaive.firstDamage;
 
             enemies.forEach(
                     target -> {
@@ -36,7 +35,7 @@ public class WarglaiveItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.warglaive.effectTime,
+                                        MIMICRY_CONFIG.warglaive.effectTime,
                                         0
                                 )
                         );
@@ -50,7 +49,7 @@ public class WarglaiveItem extends MimicryItem {
 
         if(ticksUsed == 30) {
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicryConfig.warglaive.secondDamage;
+            float damage = MIMICRY_CONFIG.warglaive.secondDamage;
 
             enemies.forEach(
                     target -> {
@@ -59,7 +58,7 @@ public class WarglaiveItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.warglaive.effectTime,
+                                        MIMICRY_CONFIG.warglaive.effectTime,
                                         0
                                 )
                         );
@@ -74,7 +73,7 @@ public class WarglaiveItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.warglaive.disabled;
+        return MIMICRY_CONFIG.warglaive.disabled;
     }
 
     @Override

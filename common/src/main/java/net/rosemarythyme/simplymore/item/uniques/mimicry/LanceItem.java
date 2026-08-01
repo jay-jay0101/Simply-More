@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -39,7 +38,7 @@ public class LanceItem extends MimicryItem {
 
         if(ticksUsed==19) {
             List<LivingEntity> enemies = stabAttack(player, 4,0.8f);
-            float damage = mimicryConfig.lance.firstDamage;
+            float damage = MIMICRY_CONFIG.lance.firstDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -47,7 +46,7 @@ public class LanceItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.lance.effectTime,
+                                        MIMICRY_CONFIG.lance.effectTime,
                                         2
                                 )
                         );
@@ -57,12 +56,12 @@ public class LanceItem extends MimicryItem {
 
         if(ticksUsed==27) {
             List<LivingEntity> enemies = stabAttack(player, 4,0.8f);
-            float damage = mimicryConfig.lance.secondDamage;
+            float damage = MIMICRY_CONFIG.lance.secondDamage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicryConfig.lance.knockback);
+                        knockback(player, target, MIMICRY_CONFIG.lance.knockback);
                     }
             );
         }
@@ -74,7 +73,7 @@ public class LanceItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.lance.disabled;
+        return MIMICRY_CONFIG.lance.disabled;
     }
 
     @Override

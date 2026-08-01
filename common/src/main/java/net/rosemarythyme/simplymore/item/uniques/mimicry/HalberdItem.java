@@ -7,7 +7,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -28,7 +27,7 @@ public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 5.5f);
-            float damage = mimicryConfig.halberd.damage;
+            float damage = MIMICRY_CONFIG.halberd.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -36,7 +35,7 @@ public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
-                                        mimicryConfig.halberd.effectTime,
+                                        MIMICRY_CONFIG.halberd.effectTime,
                                         1
                                 )
                         );
@@ -50,7 +49,7 @@ public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
             if(ticksUsed % 7 != 0) return;
 
             List<LivingEntity> enemies = sweepAttack(player, 3.2f);
-            float damage = mimicryConfig.halberd.damage;
+            float damage = MIMICRY_CONFIG.halberd.damage;
 
             enemies.forEach(
                     target -> {
@@ -59,7 +58,7 @@ public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
-                                        mimicryConfig.halberd.effectTime,
+                                        MIMICRY_CONFIG.halberd.effectTime,
                                         1
                                 )
                         );
@@ -74,7 +73,7 @@ public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.halberd.disabled;
+        return MIMICRY_CONFIG.halberd.disabled;
     }
 
     @Override

@@ -21,7 +21,6 @@ public class HexEffect extends StatusEffect {
 
     public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
 
-
     public HexEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }

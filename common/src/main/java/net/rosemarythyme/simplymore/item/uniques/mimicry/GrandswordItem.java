@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -40,7 +39,7 @@ public class GrandswordItem extends MimicryItem implements TwoHandedWeapon {
             if(ticksUsed % 10 != 0) return;
 
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicryConfig.grandsword.damage;
+            float damage = MIMICRY_CONFIG.grandsword.damage;
 
             enemies.forEach(
                     target -> {
@@ -49,11 +48,11 @@ public class GrandswordItem extends MimicryItem implements TwoHandedWeapon {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.STRENGTH,
-                                        mimicryConfig.grandsword.effectTime,
+                                        MIMICRY_CONFIG.grandsword.effectTime,
                                         0
                                 )
                         );
-                        knockback(player, target, mimicryConfig.grandsword.knockback);
+                        knockback(player, target, MIMICRY_CONFIG.grandsword.knockback);
                     }
             );
         }
@@ -65,7 +64,7 @@ public class GrandswordItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.grandsword.disabled;
+        return MIMICRY_CONFIG.grandsword.disabled;
     }
 
     @Override

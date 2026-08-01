@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -26,7 +25,7 @@ public class SpearItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.spear.disabled;
+        return MIMICRY_CONFIG.spear.disabled;
     }
 
     @Override
@@ -38,7 +37,7 @@ public class SpearItem extends MimicryItem {
         if(ticksUsed == 6 || ticksUsed == 10) {
             List<LivingEntity> enemies = stabAttack(player, 5, 0.4f);
 
-            float damage = mimicryConfig.spear.damage;
+            float damage = MIMICRY_CONFIG.spear.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -47,7 +46,7 @@ public class SpearItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.spear.effectTime,
+                                        MIMICRY_CONFIG.spear.effectTime,
                                         0
                                 )
                         );
@@ -57,7 +56,7 @@ public class SpearItem extends MimicryItem {
         if(ticksUsed == 20) {
             List<LivingEntity> enemies = stabAttack(player, 5, 0.4f);
 
-            float damage = mimicryConfig.spear.finalDamage;
+            float damage = MIMICRY_CONFIG.spear.finalDamage;
             enemies.forEach(
                     target -> {
                         AttackUtils.breakShield(target);
@@ -66,7 +65,7 @@ public class SpearItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.spear.effectTime,
+                                        MIMICRY_CONFIG.spear.effectTime,
                                         0
                                 )
                         );

@@ -8,6 +8,7 @@ import net.rosemarythyme.simplymore.item.uniques.*;
 import net.rosemarythyme.simplymore.item.uniques.idols.DarksentItem;
 import net.rosemarythyme.simplymore.item.uniques.idols.HolylightItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
+import net.rosemarythyme.simplymore.item.uniques.mimicry.MimicryItem;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
 
 public class UniqueEffectConfig extends Config {

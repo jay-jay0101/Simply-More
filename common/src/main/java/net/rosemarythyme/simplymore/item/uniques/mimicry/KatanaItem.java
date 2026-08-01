@@ -10,7 +10,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -41,7 +40,7 @@ public class KatanaItem extends MimicryItem implements TwoHandedWeapon {
 
         if(ticksUsed == 30) {
             Vec3d currentPos = player.getPos();
-            float damage = mimicryConfig.katana.damage;
+            float damage = MIMICRY_CONFIG.katana.damage;
 
             Vec3d eyePos = player.getEyePos();
             Vec3d playerRotation = player.getRotationVec(1);
@@ -82,7 +81,7 @@ public class KatanaItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.katana.disabled;
+        return MIMICRY_CONFIG.katana.disabled;
     }
 
     @Override

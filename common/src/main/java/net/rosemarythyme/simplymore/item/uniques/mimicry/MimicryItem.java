@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.item.uniques;
+package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
 import dev.architectury.registry.registries.RegistrySupplier;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
@@ -47,7 +47,7 @@ import java.util.Map;
 
 public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
-    protected static MimicryConfig mimicryConfig = UNIQUE_CONFIG.mimicry.config;
+    protected final static MimicryConfig MIMICRY_CONFIG = UNIQUE_CONFIG.mimicry.config;
 
     public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, swordType, settings);
@@ -61,15 +61,9 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+        if(isUsingAbility(user)) return TypedActionResult.fail(itemStack);
 
-        if(isUsingAbility(user)) {
-            return TypedActionResult.fail(itemStack);
-        }
-
-        user.setCurrentHand(hand);
-        return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
-                ? TypedActionResult.fail(itemStack)
-                : TypedActionResult.consume(itemStack);
+        return AttackUtils.holdToUse(user, hand);
     }
 
     @Override

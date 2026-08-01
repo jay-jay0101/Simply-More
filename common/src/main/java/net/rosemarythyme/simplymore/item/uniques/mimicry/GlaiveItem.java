@@ -5,7 +5,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -25,7 +24,7 @@ public class GlaiveItem extends MimicryItem implements TwoHandedWeapon {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 2) {
             List<LivingEntity> enemies = sweepAttack(player, 3f);
-            float damage = mimicryConfig.glaive.damage;
+            float damage = MIMICRY_CONFIG.glaive.damage;
             enemies.forEach(
                     target -> {
                         target.dismountVehicle();
@@ -41,7 +40,7 @@ public class GlaiveItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.glaive.disabled;
+        return MIMICRY_CONFIG.glaive.disabled;
     }
 
     @Override

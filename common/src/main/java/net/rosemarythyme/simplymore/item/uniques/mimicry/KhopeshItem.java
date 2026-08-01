@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -31,7 +30,7 @@ public class KhopeshItem extends MimicryItem {
 
         if(ticksUsed == 14) {
             List<LivingEntity> enemies = sweepAttack(player, 1.2f);
-            float damage = mimicryConfig.khopesh.damage;
+            float damage = MIMICRY_CONFIG.khopesh.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -39,7 +38,7 @@ public class KhopeshItem extends MimicryItem {
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SPEED,
-                                        mimicryConfig.khopesh.effectTime,
+                                        MIMICRY_CONFIG.khopesh.effectTime,
                                         2
                                 )
                         );
@@ -56,7 +55,7 @@ public class KhopeshItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.khopesh.disabled;
+        return MIMICRY_CONFIG.khopesh.disabled;
     }
 
     @Override

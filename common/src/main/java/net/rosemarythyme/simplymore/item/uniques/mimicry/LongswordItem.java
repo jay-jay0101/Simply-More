@@ -5,7 +5,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -24,12 +23,12 @@ public class LongswordItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 3) {
             List<LivingEntity> enemies = sweepAttack(player, 1.6f);
-            float damage = mimicryConfig.longsword.damage + (enemies.size() * mimicryConfig.longsword.extraDamage);
+            float damage = MIMICRY_CONFIG.longsword.damage + (enemies.size() * MIMICRY_CONFIG.longsword.extraDamage);
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicryConfig.longsword.knockback);
+                        knockback(player, target, MIMICRY_CONFIG.longsword.knockback);
                     }
             );
         }
@@ -41,7 +40,7 @@ public class LongswordItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.longsword.disabled;
+        return MIMICRY_CONFIG.longsword.disabled;
     }
 
     @Override

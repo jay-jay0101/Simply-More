@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -28,7 +27,7 @@ public class GreathammerItem extends MimicryItem implements TwoHandedWeapon {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 6 || ticksUsed == 18) {
             List<LivingEntity> enemies = slamAttack(player, 6f);
-            float damage = mimicryConfig.greathammer.damage;
+            float damage = MIMICRY_CONFIG.greathammer.damage;
             enemies.forEach(
                     target -> {
                         AttackUtils.breakShield(target);
@@ -36,14 +35,14 @@ public class GreathammerItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.greathammer.effectTime,
+                                        MIMICRY_CONFIG.greathammer.effectTime,
                                         1
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WEAKNESS,
-                                        mimicryConfig.greathammer.effectTime,
+                                        MIMICRY_CONFIG.greathammer.effectTime,
                                         1
                                 )
                         );
@@ -58,7 +57,7 @@ public class GreathammerItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.greathammer.disabled;
+        return MIMICRY_CONFIG.greathammer.disabled;
     }
 
     @Override

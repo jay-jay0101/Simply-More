@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -28,7 +27,7 @@ public class TwinbladeItem extends MimicryItem implements TwoHandedWeapon {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 4.5f);
-            float damage = mimicryConfig.twinblade.firstDamage;
+            float damage = MIMICRY_CONFIG.twinblade.firstDamage;
 
             enemies.forEach(
                     target -> {
@@ -37,7 +36,7 @@ public class TwinbladeItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryConfig.twinblade.effectTime,
+                                        MIMICRY_CONFIG.twinblade.effectTime,
                                         1
                                 )
                         );
@@ -47,13 +46,13 @@ public class TwinbladeItem extends MimicryItem implements TwoHandedWeapon {
 
         if(ticksUsed == 24) {
             List<LivingEntity> enemies = spinAttack(player, 4.5f);
-            float damage = mimicryConfig.twinblade.secondDamage;
+            float damage = MIMICRY_CONFIG.twinblade.secondDamage;
 
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicryConfig.twinblade.knockback);
+                        knockback(player, target, MIMICRY_CONFIG.twinblade.knockback);
                     }
             );
         }
@@ -65,7 +64,7 @@ public class TwinbladeItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.twinblade.disabled;
+        return MIMICRY_CONFIG.twinblade.disabled;
     }
 
     @Override

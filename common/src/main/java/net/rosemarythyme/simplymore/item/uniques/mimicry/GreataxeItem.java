@@ -5,7 +5,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -25,12 +24,12 @@ public class GreataxeItem extends MimicryItem implements TwoHandedWeapon {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 5f);
-            float damage = mimicryConfig.greataxe.damage;
+            float damage = MIMICRY_CONFIG.greataxe.damage;
             enemies.forEach(
                     target -> {
                         AttackUtils.breakShield(target);
                         AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, mimicryConfig.greataxe.knockback);
+                        knockback(player, target, MIMICRY_CONFIG.greataxe.knockback);
                     }
             );
         }
@@ -42,7 +41,7 @@ public class GreataxeItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.greataxe.disabled;
+        return MIMICRY_CONFIG.greataxe.disabled;
     }
 
     @Override

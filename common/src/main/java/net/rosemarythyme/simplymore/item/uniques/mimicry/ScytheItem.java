@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -32,7 +31,7 @@ public class ScytheItem extends MimicryItem implements TwoHandedWeapon {
 
         if(ticksUsed == 15 || ticksUsed == 30 || ticksUsed == 45) {
             List<LivingEntity> enemies = sweepAttack(player, 2.8f);
-            float damage = mimicryConfig.scythe.damage;
+            float damage = MIMICRY_CONFIG.scythe.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
@@ -40,7 +39,7 @@ public class ScytheItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WITHER,
-                                        mimicryConfig.scythe.effectTime
+                                        MIMICRY_CONFIG.scythe.effectTime
                                 )
                         );
                     }
@@ -54,7 +53,7 @@ public class ScytheItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WITHER,
-                                        mimicryConfig.scythe.effectTime
+                                        MIMICRY_CONFIG.scythe.effectTime
                                 )
                         );
                     }
@@ -68,7 +67,7 @@ public class ScytheItem extends MimicryItem implements TwoHandedWeapon {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.WITHER,
-                                        mimicryConfig.scythe.effectTime
+                                        MIMICRY_CONFIG.scythe.effectTime
                                 )
                         );
                     }
@@ -82,7 +81,7 @@ public class ScytheItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.scythe.disabled;
+        return MIMICRY_CONFIG.scythe.disabled;
     }
 
     @Override

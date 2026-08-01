@@ -7,7 +7,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -37,7 +36,7 @@ public class GreatKatanaItem extends MimicryItem implements TwoHandedWeapon {
 
         if(ticksUsed == 30) {
             List<LivingEntity> enemies = slamAttack(player, 6);
-            float damage = mimicryConfig.great_katana.damage;
+            float damage = MIMICRY_CONFIG.great_katana.damage;
 
             if(!enemies.isEmpty()) {
                 LivingEntity mainTarget = enemies.get(player.getRandom().nextBetween(0, enemies.size() - 1));
@@ -49,7 +48,7 @@ public class GreatKatanaItem extends MimicryItem implements TwoHandedWeapon {
                             player.teleport(target.getX(), target.getY(), target.getZ(), false);
                             sweepAttack(player, 0.1f);
                             if (target == mainTarget) {
-                                AttackUtils.hitWithEnchants(player, target, damage + mimicryConfig.great_katana.extraDamage);
+                                AttackUtils.hitWithEnchants(player, target, damage + MIMICRY_CONFIG.great_katana.extraDamage);
                             } else {
                                 AttackUtils.hitWithEnchants(player, target, damage);
                             }
@@ -67,7 +66,7 @@ public class GreatKatanaItem extends MimicryItem implements TwoHandedWeapon {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.great_katana.disabled;
+        return MIMICRY_CONFIG.great_katana.disabled;
     }
 
     @Override

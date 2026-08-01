@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -26,7 +25,7 @@ public class SaiItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.sai.disabled;
+        return MIMICRY_CONFIG.sai.disabled;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class SaiItem extends MimicryItem {
     }
 
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = mimicryConfig.sai.damage;
+        float damage = MIMICRY_CONFIG.sai.damage;
 
         if(ticksUsed == 4 || ticksUsed == 7 || ticksUsed == 10) {
             List<LivingEntity> enemies = stabAttack(player, 2, 0.25f);
@@ -47,14 +46,14 @@ public class SaiItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
-                                        mimicryConfig.sai.effectTime,
+                                        MIMICRY_CONFIG.sai.effectTime,
                                         0
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.BLINDNESS,
-                                        mimicryConfig.sai.effectTime,
+                                        MIMICRY_CONFIG.sai.effectTime,
                                         0
                                 )
                         );

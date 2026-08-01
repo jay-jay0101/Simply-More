@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -30,7 +29,7 @@ public class BackhandBladeItem extends MimicryItem {
             jump(player,3f,0f);
 
             List<LivingEntity> enemies = sweepAttack(player, 2f);
-            float damage = mimicryConfig.backhand_blade.damage;
+            float damage = MIMICRY_CONFIG.backhand_blade.damage;
 
             enemies.forEach(
                     target -> {
@@ -38,7 +37,7 @@ public class BackhandBladeItem extends MimicryItem {
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.BLINDNESS,
-                                        mimicryConfig.backhand_blade.effectTime,
+                                        MIMICRY_CONFIG.backhand_blade.effectTime,
                                         0
                                 )
                         );
@@ -56,7 +55,7 @@ public class BackhandBladeItem extends MimicryItem {
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryConfig.backhand_blade.disabled;
+        return MIMICRY_CONFIG.backhand_blade.disabled;
     }
 
     @Override
