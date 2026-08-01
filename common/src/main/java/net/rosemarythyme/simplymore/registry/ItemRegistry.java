@@ -1336,7 +1336,7 @@ public class ItemRegistry {
                     () ->
                             CreativeTabRegistry.create(
                                     Text.translatable("item_group.simplymore"),
-                                    () -> new ItemStack(THE_BLOOD_HARVESTER)
+                                    () -> new ItemStack(IRON_DAGGER)
                             )
             );
 

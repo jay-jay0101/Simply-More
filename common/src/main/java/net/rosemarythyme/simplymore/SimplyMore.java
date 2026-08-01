@@ -5,7 +5,7 @@ import dev.architectury.utils.Env;
 import dev.architectury.utils.EnvExecutor;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.client.registry.ClientEntityRendererRegistry;
-import net.rosemarythyme.simplymore.client.registry.ClientTooltipMotifRegistry;
+import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
 import net.rosemarythyme.simplymore.registry.*;
@@ -38,7 +38,7 @@ public class SimplyMore {
 		TagRegistry.register();
 
 		SimplyMore.registerEvents();
-		ClientTooltipMotifRegistry.register();
+		ClientTooltipRegistry.register();
 	}
 
 	public static void registerEvents() {

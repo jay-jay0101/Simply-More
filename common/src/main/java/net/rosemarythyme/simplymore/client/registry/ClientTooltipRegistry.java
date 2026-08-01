@@ -2,14 +2,16 @@ package net.rosemarythyme.simplymore.client.registry;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.rosemarythyme.simplymore.client.tooltip.SimplyMoreTooltipProvider;
 import net.rosemarythyme.simplymore.client.tooltip.motifs.BloodMotif;
 import net.rosemarythyme.simplymore.client.tooltip.motifs.CogMotif;
 import net.rosemarythyme.simplymore.client.tooltip.motifs.DeathMotif;
 import net.rosemarythyme.simplymore.client.tooltip.motifs.FullMotif;
+import net.sweenus.simplytooltips.api.TooltipProviderRegistry;
 import net.sweenus.simplytooltips.client.render.BorderRegistry;
 import net.sweenus.simplytooltips.client.render.MotifRegistry;
 
-public class ClientTooltipMotifRegistry {
+public class ClientTooltipRegistry {
     public static final FullMotif COG = registerMotif(new CogMotif(), "cog");
     public static final FullMotif BLOOD = registerMotif(new BloodMotif(), "blood");
     public static final FullMotif DEATH = registerMotif(new DeathMotif(), "death");
@@ -19,6 +21,9 @@ public class ClientTooltipMotifRegistry {
         MotifRegistry.register("cog", COG);
         MotifRegistry.register("death", DEATH);
         MotifRegistry.register("blood", BLOOD);
+
+        TooltipProviderRegistry.register(
+                new SimplyMoreTooltipProvider(), 101);
     }
 
     public static FullMotif registerMotif(FullMotif motif, String key) {
