@@ -15,7 +15,6 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
-import net.rosemarythyme.simplymore.item.RuneCarverItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreRunicSwordItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.Weapon;
@@ -51,36 +50,17 @@ public class ItemRegistry {
     public static final DeferredRegister<ItemGroup> TABS =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ITEM_GROUP);
 
+    @Deprecated
     public static final RegistrySupplier<Item> RUNEFUSED_CARVER = ITEMS.register(
             "runefused_carver",
-            () -> new RuneCarverItem(
-                    new Item.Settings()
-                            .maxCount(1)
-                            .fireproof()
-                            .rarity(Rarity.EPIC),
-                    RuneCarverItem.Type.RUNEFUSED
-            )
-    );
-    public static final RegistrySupplier<Item> NETHERFUSED_CARVER = ITEMS.register(
-            "netherfused_carver",
-            () -> new RuneCarverItem(
-                    new Item.Settings()
-                            .maxCount(1)
-                            .fireproof()
-                            .rarity(Rarity.EPIC),
-                    RuneCarverItem.Type.NETHERFUSED
-            )
+            () -> new Item(new Item.Settings())
     );
 
-    public static final RegistrySupplier<ItemGroup> ITEM_GROUP =
-            TABS.register(
-                    "simplymore",
-                    () ->
-                            CreativeTabRegistry.create(
-                                    Text.translatable("item_group.simplymore"),
-                                    () -> new ItemStack(RUNEFUSED_CARVER)
-                            )
-            );
+    @Deprecated
+    public static final RegistrySupplier<Item> NETHERFUSED_CARVER = ITEMS.register(
+            "netherfused_carver",
+            () -> new Item(new Item.Settings())
+    );
 
     // Great Katanas
     public static final RegistrySupplier<Item> IRON_GREAT_KATANA = ITEMS.register(
@@ -1350,6 +1330,16 @@ public class ItemRegistry {
         ITEMS.register();
     }
 
+    public static final RegistrySupplier<ItemGroup> ITEM_GROUP =
+            TABS.register(
+                    "simplymore",
+                    () ->
+                            CreativeTabRegistry.create(
+                                    Text.translatable("item_group.simplymore"),
+                                    () -> new ItemStack(THE_BLOOD_HARVESTER)
+                            )
+            );
+
     public static void registerItemGroup() {
         CreativeTabRegistry.append(ITEM_GROUP, itemsInTab().toArray(new RegistrySupplier[0]));
         TABS.register();
@@ -1358,9 +1348,6 @@ public class ItemRegistry {
 
     public static List<RegistrySupplier<? extends Item>> itemsInTab() {
         List<RegistrySupplier<? extends Item>> entries = new ArrayList<>();
-
-        entries.add(RUNEFUSED_CARVER);
-        entries.add(NETHERFUSED_CARVER);
 
         if (Platform.isModLoaded("sticknstone")) {
             StickNStoneCompatRegistry.addToGroup(entries);

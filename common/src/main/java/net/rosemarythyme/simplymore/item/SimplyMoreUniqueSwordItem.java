@@ -17,12 +17,15 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.item.interfaces.*;
+import net.rosemarythyme.simplymore.item.interfaces.CooldownOnUnselected;
+import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
+import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
+import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
-import net.sweenus.simplyswords.item.TwoHandedWeapon;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
+import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;

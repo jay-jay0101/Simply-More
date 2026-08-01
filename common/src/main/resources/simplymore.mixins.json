@@ -13,7 +13,6 @@
     "MobEntityMixin",
     "OracleIndexUtilsMixin",
     "PlayerEntityMixin",
-    "SimplySwordsAPIMixin",
     "TooltipRendererMixin"
   ],
   "injectors": {
