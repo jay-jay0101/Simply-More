@@ -37,8 +37,8 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
-    public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

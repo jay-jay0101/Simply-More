@@ -48,8 +48,8 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     protected final static MimicryConfig MIMICRY_CONFIG = UNIQUE_CONFIG.mimicry.config;
 
-    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

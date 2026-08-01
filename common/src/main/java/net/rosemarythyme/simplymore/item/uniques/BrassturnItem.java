@@ -42,8 +42,8 @@ import java.util.List;
 public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackModifierItem {
     WeaponAttributesConfig attributes = ConfigWrapper.attributes;
 
-    public BrassturnItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public BrassturnItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

@@ -18,8 +18,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class GreatKatanaItem extends MimicryItem implements TwoHandedWeapon {
-    public GreatKatanaItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public GreatKatanaItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 

@@ -32,8 +32,8 @@ import java.util.List;
 public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.the_blood_harvester.cooldown;
 
-    public TheBloodHarvesterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public TheBloodHarvesterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

@@ -15,8 +15,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class ChakramItem extends MimicryItem {
-    public ChakramItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public ChakramItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

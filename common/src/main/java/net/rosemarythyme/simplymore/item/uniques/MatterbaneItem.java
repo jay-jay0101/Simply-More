@@ -33,8 +33,8 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
-    public MatterbaneItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public MatterbaneItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     public Vector3f getColor(ItemStack stack) {

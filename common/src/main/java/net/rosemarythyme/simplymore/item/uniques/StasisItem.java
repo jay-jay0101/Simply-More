@@ -37,8 +37,8 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
     int onHitCooldown = UNIQUE_CONFIG.stasis.stunTime;
 
 
-    public StasisItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public StasisItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

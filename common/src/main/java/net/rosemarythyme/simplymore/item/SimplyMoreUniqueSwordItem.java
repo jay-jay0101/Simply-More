@@ -10,6 +10,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
@@ -26,9 +27,9 @@ import java.util.List;
 public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     protected static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
 
-    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, settings.fireproof().attributeModifiers(
-                SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
+    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, new Item.Settings().fireproof().rarity(Rarity.EPIC)
+                .attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
     }
 
     @Override

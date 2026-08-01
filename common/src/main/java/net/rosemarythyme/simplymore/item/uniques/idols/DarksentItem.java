@@ -29,8 +29,8 @@ import java.util.List;
 
 
 public class DarksentItem extends TarnishedIdolItem implements LegendaryItem {
-    public DarksentItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public DarksentItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

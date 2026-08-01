@@ -19,8 +19,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class ScytheItem extends MimicryItem implements TwoHandedWeapon {
-    public ScytheItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public ScytheItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

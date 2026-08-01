@@ -32,8 +32,8 @@ import java.util.List;
 
 public class CindergorgeItem extends SimplyMoreUniqueSwordItem {
 
-    public CindergorgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public CindergorgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 

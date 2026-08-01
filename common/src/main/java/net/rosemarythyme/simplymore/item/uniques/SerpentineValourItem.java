@@ -35,8 +35,8 @@ import java.util.List;
 public class SerpentineValourItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
     int skillCooldown = UNIQUE_CONFIG.serpentine_valour.cooldown;
 
-    public SerpentineValourItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public SerpentineValourItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 

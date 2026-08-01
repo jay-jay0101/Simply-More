@@ -32,8 +32,8 @@ import java.util.List;
 public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.ruyi_jingu_bang.cooldown;
 
-    public RuyiJinguBangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public RuyiJinguBangItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

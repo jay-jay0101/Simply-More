@@ -8,7 +8,6 @@
   ],
   "mixins": [
     "LivingEntityMixin",
-    "LootTableModifierMixin",
     "MobEntityMixin",
     "OracleIndexUtilsMixin",
     "PlayerEntityMixin"

@@ -16,8 +16,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class QuarterstaffItem extends MimicryItem {
-    public QuarterstaffItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public QuarterstaffItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 

@@ -36,8 +36,8 @@ import java.util.List;
 public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
     int skillCooldown = UNIQUE_CONFIG.lustrous_moxie.cooldown;
 
-    public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

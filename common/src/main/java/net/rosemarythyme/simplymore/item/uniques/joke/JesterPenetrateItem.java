@@ -11,6 +11,7 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.util.EntityUtils;
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class JesterPenetrateItem extends SimplyMoreSwordItem {
 
-    public JesterPenetrateItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public JesterPenetrateItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed, new Item.Settings().fireproof().rarity(Rarity.COMMON));
     }
 
     @Override

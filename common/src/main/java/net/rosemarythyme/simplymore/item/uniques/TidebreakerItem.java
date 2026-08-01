@@ -36,8 +36,8 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     int lastHitTime;
     LivingEntity lastHit;
 
-    public TidebreakerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public TidebreakerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
     
     @Override

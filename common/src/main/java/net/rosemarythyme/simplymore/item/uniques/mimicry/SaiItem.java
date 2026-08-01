@@ -18,8 +18,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class SaiItem extends MimicryItem {
-    public SaiItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public SaiItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 

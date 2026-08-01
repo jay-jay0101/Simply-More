@@ -26,12 +26,12 @@ public class WeaponAttributesConfig extends Config {
     @RequiresAction(action = Action.RESTART)
     public static class WeaponTiersModifiers extends ConfigSection {
         // Stick n' Stone compat
-        public ValidatedCondition<Float> wooden_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "sticknstone");
-        public ValidatedCondition<Float> stone_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "sticknstone");
+        public ValidatedCondition<Integer> wooden_damage_modifier = ConfigWrapper.modLoadedCondition(3, "sticknstone");
+        public ValidatedCondition<Integer> stone_damage_modifier = ConfigWrapper.modLoadedCondition(3, "sticknstone");
         // Mythic Metals compat
-        public ValidatedCondition<Float> hallowed_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "mythicmetals");
-        public ValidatedCondition<Float> legendary_banglum_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "mythicmetals");
-        public ValidatedCondition<Float> tidesinger_damage_modifier = ConfigWrapper.modLoadedCondition(3.0f, "mythicmetals");
+        public ValidatedCondition<Integer> hallowed_damage_modifier = ConfigWrapper.modLoadedCondition(3, "mythicmetals");
+        public ValidatedCondition<Integer> legendary_banglum_damage_modifier = ConfigWrapper.modLoadedCondition(3, "mythicmetals");
+        public ValidatedCondition<Integer> tidesinger_damage_modifier = ConfigWrapper.modLoadedCondition(3, "mythicmetals");
     }
 
     @RequiresAction(action = Action.RESTART)

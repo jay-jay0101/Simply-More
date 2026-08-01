@@ -23,8 +23,8 @@ import java.util.List;
 
 public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
 
-    public AscendedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public AscendedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

@@ -3,12 +3,8 @@ package net.rosemarythyme.simplymore.registry.compat;
 import com.mythicmetals.component.MythicDataComponents;
 import com.mythicmetals.component.PrometheumComponent;
 import com.mythicmetals.item.tools.MythicToolMaterials;
-import com.mythicmetals.item.tools.MythicTools;
-import com.mythicmetals.item.tools.ToolSet;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.item.Item;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.Rarity;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
@@ -19,119 +15,205 @@ import net.rosemarythyme.simplymore.item.compat.mythicmetals.TidesingerSwordItem
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.sweenus.simplyswords.config.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MythicMetalsCompatRegistry {
-    static WeaponAttributesConfig attributes = ConfigWrapper.attributes;
+    private static final WeaponAttributesConfig ATTIRBUTES_CONFIG = ConfigWrapper.attributes;
 
-    static float adamantite_modifier = Config.weaponAttribute.materialDamageModifier.adamantite_damageModifier.get();
-    static float aquarium_modifier = Config.weaponAttribute.materialDamageModifier.aquarium_damageModifier.get();
-    static float banglum_modifier = Config.weaponAttribute.materialDamageModifier.banglum_damageModifier.get();
-    static float bronze_modifier = Config.weaponAttribute.materialDamageModifier.bronze_damageModifier.get();
-    static float carmot_modifier = Config.weaponAttribute.materialDamageModifier.carmot_damageModifier.get();
-    static float celestium_modifier = Config.weaponAttribute.materialDamageModifier.celestium_damageModifier.get();
-    static float copper_modifier = Config.weaponAttribute.materialDamageModifier.copper_damageModifier.get();
-    static float durasteel_modifier = Config.weaponAttribute.materialDamageModifier.durasteel_damageModifier.get();
-    static float kyber_modifier = Config.weaponAttribute.materialDamageModifier.kyber_damageModifier.get();
-    static float metallurgium_modifier = Config.weaponAttribute.materialDamageModifier.metallurgium_damageModifier.get();
-    static float mythril_modifier = Config.weaponAttribute.materialDamageModifier.mythril_damageModifier.get();
-    static float orichalcum_modifier = Config.weaponAttribute.materialDamageModifier.orichalcum_damageModifier.get();
-    static float osmium_modifier = Config.weaponAttribute.materialDamageModifier.osmium_damageModifier.get();
-    static float palladium_modifier = Config.weaponAttribute.materialDamageModifier.palladium_damageModifier.get();
-    static float prometheum_modifier = Config.weaponAttribute.materialDamageModifier.prometheum_damageModifier.get();
-    static float quadrillum_modifier = Config.weaponAttribute.materialDamageModifier.quadrillum_damageModifier.get();
-    static float runite_modifier = Config.weaponAttribute.materialDamageModifier.runite_damageModifier.get();
-    static float star_platinum_modifier = Config.weaponAttribute.materialDamageModifier.starPlatinum_damageModifier.get();
-    static float steel_modifier = Config.weaponAttribute.materialDamageModifier.steel_damageModifier.get();
-    static float stormyx_modifier = Config.weaponAttribute.materialDamageModifier.stormyx_damageModifier.get();
-    static float hallowed_modifier = ConfigWrapper.attributes.typeDamageModifier.hallowed_damage_modifier.get();
-    static float legendary_banglum_modifier = ConfigWrapper.attributes.typeDamageModifier.legendary_banglum_damage_modifier.get();
-    static float tidesinger_modifier = ConfigWrapper.attributes.typeDamageModifier.tidesinger_damage_modifier.get();
+    public static final List<RegistrySupplier<Item>> ADAMANTITE_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "adamantite",
+            Config.weaponAttribute.materialDamageModifier.adamantite_damageModifier.get().intValue(),
+            MythicToolMaterials.ADAMANTITE
+    );
 
-    static List<RegistrySupplier<Item>> itemList = new ArrayList<>();
+    public static final List<RegistrySupplier<Item>> AQUARIUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "aquarium",
+            Config.weaponAttribute.materialDamageModifier.aquarium_damageModifier.get().intValue(),
+            MythicToolMaterials.AQUARIUM
+    );
 
-    private static void registerSet(String name, int damageModifier, Rarity rarity) {
-        ToolSet set = MythicTools.TOOL_MAP.get(name);
-        if(set == null) return;
+    public static final List<RegistrySupplier<Item>> BANGLUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "banglum",
+            Config.weaponAttribute.materialDamageModifier.banglum_damageModifier.get().intValue(),
+            MythicToolMaterials.BANGLUM
+    );
 
-        ToolMaterial material = set.getSword().getMaterial();
-        Item.Settings settings = name.equals("prometheum") ?
-                new Item.Settings().component(MythicDataComponents.PROMETHEUM, PrometheumComponent.DEFAULT) :
-                new Item.Settings().rarity(rarity);
+    public static final List<RegistrySupplier<Item>> BRONZE_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "bronze",
+            Config.weaponAttribute.materialDamageModifier.banglum_damageModifier.get().intValue(),
+            MythicToolMaterials.BRONZE
+    );
 
-        itemList.add(ItemRegistry.ITEMS.register(name + "_great_katana", () -> createSword(material,
-                attributes.weaponTypesDamage.greatkatana_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.greatkatana_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_grandsword", () -> createSword(material,
-                attributes.weaponTypesDamage.grandsword_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.grandsword_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_backhand_blade", () -> createSword(material,
-                attributes.weaponTypesDamage.backhandblade_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.backhandblade_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_lance", () -> createSword(material,
-                attributes.weaponTypesDamage.lance_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.lance_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_khopesh", () -> createSword(material,
-                attributes.weaponTypesDamage.khopesh_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.khopesh_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_dagger", () -> createSword(material,
-                attributes.weaponTypesDamage.dagger_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.dagger_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_pernach", () -> createSword(material,
-                attributes.weaponTypesDamage.pernach_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.pernach_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_quarterstaff", () -> createSword(material,
-                attributes.weaponTypesDamage.quarterstaff_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_great_spear", () -> createSword(material,
-                attributes.weaponTypesDamage.greatspear_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.greatspear_attack_speed, settings)));
-        itemList.add(ItemRegistry.ITEMS.register(name + "_deer_horns", () -> createSword(material,
-                attributes.weaponTypesDamage.deerhorns_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.deerhorns_attack_speed, settings)));
-    }
+    public static final List<RegistrySupplier<Item>> CARMOT_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "carmot",
+            Config.weaponAttribute.materialDamageModifier.carmot_damageModifier.get().intValue(),
+            MythicToolMaterials.CARMOT
+    );
 
-    public static SwordItem createSword(ToolMaterial material, int damage, float attackSpeed, Item.Settings settings) {
-        return switch (material) {
-            case MythicToolMaterials.LEGENDARY_BANGLUM ->
-                    new LegendaryBanglumSwordItem(material, damage, attackSpeed, settings);
-            case MythicToolMaterials.TIDESINGER ->
-                    new TidesingerSwordItem(material, damage, attackSpeed, settings);
-            case MythicToolMaterials.PALLADIUM ->
-                    new PalladiumSwordItem(material, damage, attackSpeed, settings);
-            default ->
-                    new SimplyMoreSwordItem(material, damage, attackSpeed, settings);
-        };
-    }
+    public static final List<RegistrySupplier<Item>> CELESTIUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "celestium",
+            Config.weaponAttribute.materialDamageModifier.carmot_damageModifier.get().intValue(),
+            MythicToolMaterials.CARMOT,
+            new Item.Settings().rarity(Rarity.RARE)
+    );
+
+    public static final List<RegistrySupplier<Item>> COPPER_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "copper",
+            Config.weaponAttribute.materialDamageModifier.copper_damageModifier.get().intValue(),
+            MythicToolMaterials.COPPER
+    );
+
+    public static final List<RegistrySupplier<Item>> DURASTEEL_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "durasteel",
+            Config.weaponAttribute.materialDamageModifier.durasteel_damageModifier.get().intValue(),
+            MythicToolMaterials.DURASTEEL
+    );
+
+    public static final List<RegistrySupplier<Item>> HALLOWED_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "hallowed",
+            ATTIRBUTES_CONFIG.typeDamageModifier.hallowed_damage_modifier.get(),
+            MythicToolMaterials.HALLOWED,
+            new Item.Settings().rarity(Rarity.UNCOMMON)
+    );
+
+    public static final List<RegistrySupplier<Item>> KYBER_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "kyber",
+            Config.weaponAttribute.materialDamageModifier.kyber_damageModifier.get().intValue(),
+            MythicToolMaterials.KYBER
+    );
+
+    public static final List<RegistrySupplier<Item>> LEGENDARY_BANGLUM_WEAPONS = ItemRegistry.registerSet(
+            LegendaryBanglumSwordItem.class,
+            "legendary_banglum",
+            ATTIRBUTES_CONFIG.typeDamageModifier.legendary_banglum_damage_modifier.get(),
+            MythicToolMaterials.LEGENDARY_BANGLUM,
+            new Item.Settings().rarity(Rarity.UNCOMMON)
+    );
+
+    public static final List<RegistrySupplier<Item>> METALLURGIUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "metallurgium",
+            Config.weaponAttribute.materialDamageModifier.metallurgium_damageModifier.get().intValue(),
+            MythicToolMaterials.METALLURGIUM,
+            new Item.Settings().rarity(Rarity.RARE).fireproof()
+    );
+
+
+    public static final List<RegistrySupplier<Item>> MYTHRIL_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "mythril",
+            Config.weaponAttribute.materialDamageModifier.mythril_damageModifier.get().intValue(),
+            MythicToolMaterials.MYTHRIL
+    );
+
+    public static final List<RegistrySupplier<Item>> ORICHALCUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "orichalcum",
+            Config.weaponAttribute.materialDamageModifier.orichalcum_damageModifier.get().intValue(),
+            MythicToolMaterials.ORICHALCUM
+    );
+
+    public static final List<RegistrySupplier<Item>> OSMIUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "osmium",
+            Config.weaponAttribute.materialDamageModifier.osmium_damageModifier.get().intValue(),
+            MythicToolMaterials.OSMIUM
+    );
+
+    public static final List<RegistrySupplier<Item>> PALLADIUM_WEAPONS = ItemRegistry.registerSet(
+            PalladiumSwordItem.class,
+            "palladium",
+            Config.weaponAttribute.materialDamageModifier.palladium_damageModifier.get().intValue(),
+            MythicToolMaterials.PALLADIUM,
+            new Item.Settings().fireproof()
+    );
+
+    public static final List<RegistrySupplier<Item>> PROMETHEUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "prometheum",
+            Config.weaponAttribute.materialDamageModifier.prometheum_damageModifier.get().intValue(),
+            MythicToolMaterials.PROMETHEUM,
+            new Item.Settings().component(MythicDataComponents.PROMETHEUM, PrometheumComponent.DEFAULT)
+    );
+
+    public static final List<RegistrySupplier<Item>> QUADRILLUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "quadrillum",
+            Config.weaponAttribute.materialDamageModifier.quadrillum_damageModifier.get().intValue(),
+            MythicToolMaterials.QUADRILLUM
+    );
+
+    public static final List<RegistrySupplier<Item>> RUNITE_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "runite",
+            Config.weaponAttribute.materialDamageModifier.runite_damageModifier.get().intValue(),
+            MythicToolMaterials.RUNITE
+    );
+
+    public static final List<RegistrySupplier<Item>> STAR_PLATINUM_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "star_platinum",
+            Config.weaponAttribute.materialDamageModifier.starPlatinum_damageModifier.get().intValue(),
+            MythicToolMaterials.STAR_PLATINUM
+    );
+
+    public static final List<RegistrySupplier<Item>> STEEL_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "steel",
+            Config.weaponAttribute.materialDamageModifier.steel_damageModifier.get().intValue(),
+            MythicToolMaterials.STEEL
+    );
+
+    public static final List<RegistrySupplier<Item>> STORMYX_WEAPONS = ItemRegistry.registerSet(
+            SimplyMoreSwordItem.class,
+            "stormyx",
+            Config.weaponAttribute.materialDamageModifier.stormyx_damageModifier.get().intValue(),
+            MythicToolMaterials.STORMYX
+    );
+
+    public static final List<RegistrySupplier<Item>> TIDESINGER_WEAPONS = ItemRegistry.registerSet(
+            TidesingerSwordItem.class,
+            "tidesinger",
+            ATTIRBUTES_CONFIG.typeDamageModifier.tidesinger_damage_modifier.get(),
+            MythicToolMaterials.TIDESINGER
+    );
 
     public static void registerCompatItems() {
-        registerSet("adamantite", (int) adamantite_modifier, Rarity.COMMON);
-        registerSet("aquarium", (int) aquarium_modifier, Rarity.COMMON);
-        registerSet("banglum", (int) banglum_modifier, Rarity.COMMON);
-        registerSet("bronze", (int) bronze_modifier, Rarity.COMMON);
-        registerSet("carmot", (int) carmot_modifier, Rarity.COMMON);
-        registerSet("celestium", (int) celestium_modifier, Rarity.RARE);
-        registerSet("copper", (int) copper_modifier, Rarity.COMMON);
-        registerSet("durasteel", (int) durasteel_modifier, Rarity.COMMON);
-        registerSet("hallowed", (int) hallowed_modifier, Rarity.UNCOMMON);
-        registerSet("kyber", (int) kyber_modifier, Rarity.COMMON);
-        registerSet("legendary_banglum", (int) legendary_banglum_modifier, Rarity.UNCOMMON);
-        registerSet("metallurgium", (int) metallurgium_modifier, Rarity.RARE);
-        registerSet("mythril", (int) mythril_modifier, Rarity.COMMON);
-        registerSet("orichalcum", (int) orichalcum_modifier, Rarity.COMMON);
-        registerSet("osmium", (int) osmium_modifier, Rarity.COMMON);
-        registerSet("palladium", (int) palladium_modifier, Rarity.COMMON);
-        registerSet("prometheum", (int) prometheum_modifier, Rarity.COMMON);
-        registerSet("quadrillum", (int) quadrillum_modifier, Rarity.COMMON);
-        registerSet("runite", (int) runite_modifier, Rarity.COMMON);
-        registerSet("star_platinum", (int) star_platinum_modifier, Rarity.COMMON);
-        registerSet("steel", (int) steel_modifier, Rarity.COMMON);
-        registerSet("stormyx", (int) stormyx_modifier, Rarity.COMMON);
-        registerSet("tidesinger", (int) tidesinger_modifier, Rarity.COMMON);
     }
 
     public static void addToGroup(List<RegistrySupplier<? extends Item>> entries) {
-        entries.addAll(itemList);
+        entries.addAll(ADAMANTITE_WEAPONS);
+        entries.addAll(AQUARIUM_WEAPONS);
+        entries.addAll(BANGLUM_WEAPONS);
+        entries.addAll(BRONZE_WEAPONS);
+        entries.addAll(CARMOT_WEAPONS);
+        entries.addAll(CELESTIUM_WEAPONS);
+        entries.addAll(COPPER_WEAPONS);
+        entries.addAll(DURASTEEL_WEAPONS);
+        entries.addAll(HALLOWED_WEAPONS);
+        entries.addAll(KYBER_WEAPONS);
+        entries.addAll(LEGENDARY_BANGLUM_WEAPONS);
+        entries.addAll(METALLURGIUM_WEAPONS);
+        entries.addAll(MYTHRIL_WEAPONS);
+        entries.addAll(ORICHALCUM_WEAPONS);
+        entries.addAll(OSMIUM_WEAPONS);
+        entries.addAll(PALLADIUM_WEAPONS);
+        entries.addAll(PROMETHEUM_WEAPONS);
+        entries.addAll(QUADRILLUM_WEAPONS);
+        entries.addAll(RUNITE_WEAPONS);
+        entries.addAll(STAR_PLATINUM_WEAPONS);
+        entries.addAll(STEEL_WEAPONS);
+        entries.addAll(STORMYX_WEAPONS);
+        entries.addAll(TIDESINGER_WEAPONS);
     }
 }

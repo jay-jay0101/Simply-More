@@ -31,8 +31,8 @@ import java.util.List;
 
 public class HolylightItem extends AscendedIdolItem implements LegendaryItem {
 
-    public HolylightItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public HolylightItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

@@ -45,8 +45,8 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
     public static final int MAX_CROWS = 5;
 
 
-    public DeathsEyrieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public DeathsEyrieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 

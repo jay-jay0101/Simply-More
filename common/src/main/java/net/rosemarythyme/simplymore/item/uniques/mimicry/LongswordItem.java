@@ -15,8 +15,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 public class LongswordItem extends MimicryItem {
-    public LongswordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public LongswordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

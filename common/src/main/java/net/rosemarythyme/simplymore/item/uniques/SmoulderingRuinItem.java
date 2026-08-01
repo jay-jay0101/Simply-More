@@ -32,8 +32,8 @@ import java.util.List;
 public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.smouldering_ruin.cooldown;
 
-    public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 

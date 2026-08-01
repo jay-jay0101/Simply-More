@@ -33,8 +33,8 @@ import java.util.List;
 
 
 public class CulterexItem extends SimplyMoreUniqueSwordItem {
-    public CulterexItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public CulterexItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override

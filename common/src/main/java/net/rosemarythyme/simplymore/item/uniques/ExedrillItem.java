@@ -47,8 +47,8 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
         return new CounterComponent(minHeat, maxHeat);
     }
 
-    public ExedrillItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public ExedrillItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 
