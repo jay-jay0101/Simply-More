@@ -38,7 +38,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.black_pearl.cooldown;
 
     public BlackPearlItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

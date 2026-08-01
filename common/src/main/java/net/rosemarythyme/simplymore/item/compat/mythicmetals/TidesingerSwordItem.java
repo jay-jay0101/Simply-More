@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 
 public class TidesingerSwordItem extends SimplyMoreSwordItem implements RiptideTool {
-    public TidesingerSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings, String... repairIngredient) {
-        super(toolMaterial, attackDamage, attackSpeed, swordType, settings, repairIngredient);
+    public TidesingerSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

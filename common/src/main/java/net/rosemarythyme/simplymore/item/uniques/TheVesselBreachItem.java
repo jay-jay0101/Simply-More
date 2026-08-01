@@ -34,7 +34,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.the_vessel_breach.cooldown;
 
     public TheVesselBreachItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

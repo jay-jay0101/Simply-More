@@ -43,7 +43,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.myrmedge.cooldown + UNIQUE_CONFIG.myrmedge.grabTime;
 
     public MyrmedgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     public static float getHungerModifiedValue(PlayerEntity entity, float percentage, float value) {

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class GrandswordItem extends MimicryItem implements TwoHandedWeapon {
     public GrandswordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.GRANDSWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

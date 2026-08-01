@@ -26,7 +26,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.timekeeper.cooldown;
 
     public TimekeeperItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

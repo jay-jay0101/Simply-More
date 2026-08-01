@@ -22,7 +22,7 @@ import java.util.List;
 public class JesterPenetrateItem extends SimplyMoreSwordItem {
 
     public JesterPenetrateItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

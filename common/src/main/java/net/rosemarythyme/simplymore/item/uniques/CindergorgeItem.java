@@ -18,7 +18,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.item.interfaces.CooldownOnUnselected;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
@@ -31,16 +30,16 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 
-public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements CooldownOnUnselected {
+public class CindergorgeItem extends SimplyMoreUniqueSwordItem {
 
     public CindergorgeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        startUsing(user.getStackInHand(hand), hand);
+//        startUsing(user.getStackInHand(hand), hand);
         return AttackUtils.holdToUse(user, hand);
     }
 
@@ -65,7 +64,7 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         float relativeTime = 1 - ((float) remainingUseTicks / getMaxUseTime(stack, user));
-        float cooldown = getCooldown() * relativeTime;
+        float cooldown = relativeTime;
 
         cooldown = Math.max(cooldown, 120f);
 
@@ -100,11 +99,6 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Cooldo
         tooltip.add(Text.translatable("item.simplymore.cindergorge.tooltip5").setStyle(Styles.TEXT));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
-    }
-
-    @Override
-    public int getCooldown() {
-        return UNIQUE_CONFIG.cindergorge.cooldown;
     }
 
     public static class EffectSettings extends TooltipSettings {

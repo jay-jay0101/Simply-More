@@ -19,7 +19,7 @@ import java.util.List;
 
 public class KhopeshItem extends MimicryItem {
     public KhopeshItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

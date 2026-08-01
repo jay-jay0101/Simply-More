@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import dev.architectury.registry.registries.RegistrySupplier;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.block.Blocks;
@@ -49,8 +48,8 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     protected final static MimicryConfig MIMICRY_CONFIG = UNIQUE_CONFIG.mimicry.config;
 
-    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, swordType, settings);
+    public MimicryItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override
@@ -94,9 +93,9 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
 
     public static int getAmplifier(Item item) {
-        for (RegistrySupplier<Item> registry : ItemRegistry.MIMICRY_AMPLIFIERS) {
-            if(registry.get() == item) return ItemRegistry.MIMICRY_AMPLIFIERS.indexOf(registry);
-        }
+//        for (RegistrySupplier<Item> registry : ItemRegistry.MIMICRY_AMPLIFIERS) {
+//            if(registry.get() == item) return ItemRegistry.MIMICRY_AMPLIFIERS.indexOf(registry);
+//        }
 
         return -1;
     }
@@ -139,16 +138,17 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         player.getItemCooldownManager().set(stack.getItem(), UNIQUE_CONFIG.mimicry.typeCooldown);
         String currentForm = null;
 
-        for (Map.Entry<String, RegistrySupplier<Item>> itemEntry : ItemRegistry.MIMICRY_ITEMS.entrySet()) {
-            if(itemEntry.getValue().get() == stack.getItem()) {
-                currentForm = itemEntry.getKey();
-            }
-        }
+//        for (Map.Entry<String, RegistrySupplier<Item>> itemEntry : ItemRegistry.MIMICRY_ITEMS.entrySet()) {
+//            if(itemEntry.getValue().get() == stack.getItem()) {
+//                currentForm = itemEntry.getKey();
+//            }
+//        }
 
         String newForm = getWeightedRandomForm(currentForm, player);
         if(newForm == null) return;
 
-        Item newItem = ItemRegistry.MIMICRY_ITEMS.get(newForm).get();
+//        Item newItem = ItemRegistry.MIMICRY_ITEMS.get(newForm).get();
+        Item newItem = ItemRegistry.MATTERBANE.get();
         player.getItemCooldownManager().set(newItem, UNIQUE_CONFIG.mimicry.cooldown);
 
         if(newItem instanceof MimicryItem mimicryItem) {
@@ -182,7 +182,9 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public boolean isFormEnabled(String form, PlayerEntity user) {
-        return isFormEnabled(((MimicryItem) ItemRegistry.MIMICRY_ITEMS.get(form).get()), user);
+//        return isFormEnabled(((MimicryItem) ItemRegistry.MIMICRY_ITEMS.get(form).get()), user);
+
+        return true;
     }
 
     public abstract boolean isFormDisabledInConfig();
@@ -194,7 +196,8 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         if(otherStack.isIn(TagRegistry.ALL) && !isUsingAbility(player)) {
             String clickedItemType = getWeaponType(otherStack.getItem());
-            Item newItem = ItemRegistry.MIMICRY_ITEMS.get(clickedItemType).get();
+//            Item newItem = ItemRegistry.MIMICRY_ITEMS.get(clickedItemType).get();
+            Item newItem = ItemRegistry.MATTERBANE.get();
 
             if(newItem instanceof MimicryItem mimicryItem && isFormEnabled(mimicryItem, player)) {
                 ItemStack newStack = stack.copyComponentsToNewStack(mimicryItem, 1);
@@ -248,13 +251,13 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     public String getRandom(String currentForm, PlayerEntity player) {
         List<String> availableForms = new ArrayList<>();
 
-        for(Map.Entry<String, RegistrySupplier<Item>> weaponType : ItemRegistry.MIMICRY_ITEMS.entrySet()) {
-            String form =  weaponType.getKey();
-
-            if(isFormEnabled(form, player) && !availableForms.contains(form) && !form.equals(currentForm)) {
-                availableForms.add(form);
-            }
-        }
+//        for(Map.Entry<String, RegistrySupplier<Item>> weaponType : ItemRegistry.MIMICRY_ITEMS.entrySet()) {
+//            String form =  weaponType.getKey();
+//
+//            if(isFormEnabled(form, player) && !availableForms.contains(form) && !form.equals(currentForm)) {
+//                availableForms.add(form);
+//            }
+//        }
 
         return availableForms.isEmpty() ?
                 null :

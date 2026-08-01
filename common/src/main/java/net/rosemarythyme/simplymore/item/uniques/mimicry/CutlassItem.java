@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CutlassItem extends MimicryItem {
     public CutlassItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHan
     public static final int maxBloom = 15;
 
     public PerforiscusItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

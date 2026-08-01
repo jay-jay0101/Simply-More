@@ -37,7 +37,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     int skillCooldown = UNIQUE_CONFIG.lustrous_moxie.cooldown;
 
     public LustrousMoxieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
 
 
     public DeathsEyrieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

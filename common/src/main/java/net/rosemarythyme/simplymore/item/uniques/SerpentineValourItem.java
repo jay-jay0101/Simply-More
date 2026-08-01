@@ -36,7 +36,7 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem implements T
     int skillCooldown = UNIQUE_CONFIG.serpentine_valour.cooldown;
 
     public SerpentineValourItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

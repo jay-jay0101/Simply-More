@@ -48,7 +48,7 @@ public class ExedrillItem extends SimplyMoreUniqueSwordItem{
     }
 
     public ExedrillItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

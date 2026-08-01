@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ChakramItem extends MimicryItem {
     public ChakramItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

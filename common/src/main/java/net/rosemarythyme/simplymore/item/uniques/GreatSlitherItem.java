@@ -30,7 +30,7 @@ import java.util.List;
 
 public class GreatSlitherItem extends SimplyMoreUniqueSwordItem {
     public GreatSlitherItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

@@ -38,7 +38,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
 
 
     public StasisItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

@@ -5,7 +5,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +18,7 @@ public abstract class LivingEntityMixin {
 	private boolean simplyMore$disablesShield(boolean originalReturnValue) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		ItemStack mainHandStack = livingEntity.getEquippedStack(EquipmentSlot.MAINHAND);
-		if (mainHandStack.getItem() instanceof Weapon weapon && weapon.getSwordType() == Weapon.SwordType.GRANDSWORD) return true;
+
 		return originalReturnValue;
 	}
 

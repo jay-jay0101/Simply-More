@@ -36,7 +36,7 @@ public class MoltenFlareItem extends SimplyMoreUniqueSwordItem implements TwoHan
     int skillCooldown = UNIQUE_CONFIG.molten_flare.cooldown;
 
     public MoltenFlareItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.GRANDSWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

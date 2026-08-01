@@ -16,7 +16,6 @@ import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.item.compat.mythicmetals.LegendaryBanglumSwordItem;
 import net.rosemarythyme.simplymore.item.compat.mythicmetals.PalladiumSwordItem;
 import net.rosemarythyme.simplymore.item.compat.mythicmetals.TidesingerSwordItem;
-import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.sweenus.simplyswords.config.Config;
 
@@ -63,56 +62,46 @@ public class MythicMetalsCompatRegistry {
 
         itemList.add(ItemRegistry.ITEMS.register(name + "_great_katana", () -> createSword(material,
                 attributes.weaponTypesDamage.greatkatana_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.greatkatana_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.greatkatana_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_grandsword", () -> createSword(material,
                 attributes.weaponTypesDamage.grandsword_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.grandsword_attack_speed,
-                Weapon.SwordType.GRANDSWORD, settings)));
+                attributes.weaponTypesSwingSpeed.grandsword_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_backhand_blade", () -> createSword(material,
                 attributes.weaponTypesDamage.backhandblade_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.backhandblade_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.backhandblade_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_lance", () -> createSword(material,
                 attributes.weaponTypesDamage.lance_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.lance_attack_speed,
-                Weapon.SwordType.LANCE, settings)));
+                attributes.weaponTypesSwingSpeed.lance_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_khopesh", () -> createSword(material,
                 attributes.weaponTypesDamage.khopesh_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.khopesh_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.khopesh_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_dagger", () -> createSword(material,
                 attributes.weaponTypesDamage.dagger_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.dagger_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.dagger_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_pernach", () -> createSword(material,
                 attributes.weaponTypesDamage.pernach_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.pernach_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.pernach_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_quarterstaff", () -> createSword(material,
                 attributes.weaponTypesDamage.quarterstaff_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.quarterstaff_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_great_spear", () -> createSword(material,
                 attributes.weaponTypesDamage.greatspear_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.greatspear_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.greatspear_attack_speed, settings)));
         itemList.add(ItemRegistry.ITEMS.register(name + "_deer_horns", () -> createSword(material,
                 attributes.weaponTypesDamage.deerhorns_damage_modifier + damageModifier,
-                attributes.weaponTypesSwingSpeed.deerhorns_attack_speed,
-                Weapon.SwordType.SWORD, settings)));
+                attributes.weaponTypesSwingSpeed.deerhorns_attack_speed, settings)));
     }
 
-    public static SwordItem createSword(ToolMaterial material, int damage, float attackSpeed, Weapon.SwordType type, Item.Settings settings) {
+    public static SwordItem createSword(ToolMaterial material, int damage, float attackSpeed, Item.Settings settings) {
         return switch (material) {
             case MythicToolMaterials.LEGENDARY_BANGLUM ->
-                    new LegendaryBanglumSwordItem(material, damage, attackSpeed, type, settings);
+                    new LegendaryBanglumSwordItem(material, damage, attackSpeed, settings);
             case MythicToolMaterials.TIDESINGER ->
-                    new TidesingerSwordItem(material, damage, attackSpeed, type, settings);
+                    new TidesingerSwordItem(material, damage, attackSpeed, settings);
             case MythicToolMaterials.PALLADIUM ->
-                    new PalladiumSwordItem(material, damage, attackSpeed, type, settings);
+                    new PalladiumSwordItem(material, damage, attackSpeed, settings);
             default ->
-                    new SimplyMoreSwordItem(material, damage, attackSpeed, type, settings);
+                    new SimplyMoreSwordItem(material, damage, attackSpeed, settings);
         };
     }
 

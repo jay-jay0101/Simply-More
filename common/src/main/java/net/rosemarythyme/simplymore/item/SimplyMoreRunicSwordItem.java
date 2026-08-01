@@ -1,39 +1,19 @@
 package net.rosemarythyme.simplymore.item;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.RunicSwordItem;
 
 import java.util.List;
 
-public class SimplyMoreRunicSwordItem extends RunicSwordItem implements Weapon {
-    private final SwordType swordType;
-
-    public SimplyMoreRunicSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings, String... repairIngredient) {
+public class SimplyMoreRunicSwordItem extends RunicSwordItem {
+    public SimplyMoreRunicSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, settings.attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
-
-        this.swordType = swordType;
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(swordType == SwordType.LANCE) {
-            Weapon.tryGrantLanceEffect(attacker, target);
-        }
-
-        return super.postHit(stack, target, attacker);
-    }
-
-    @Override
-    public SwordType getSwordType() {
-        return swordType;
     }
 
     @Override

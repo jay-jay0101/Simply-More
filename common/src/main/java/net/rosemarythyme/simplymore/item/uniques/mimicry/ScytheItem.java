@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ScytheItem extends MimicryItem implements TwoHandedWeapon {
     public ScytheItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

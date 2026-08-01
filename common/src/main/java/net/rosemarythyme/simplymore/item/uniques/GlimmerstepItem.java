@@ -38,14 +38,14 @@ import java.util.List;
 
 public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     public GlimmerstepItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.LANCE, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
 
-        float chance = EntityUtils.shouldGrantLanceEffect(attacker) ?
+        float chance = EntityUtils.isRidingLivingEntity(attacker) ?
                 UNIQUE_CONFIG.glimmerstep.chanceMounted:
                 UNIQUE_CONFIG.glimmerstep.chance;
 

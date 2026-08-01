@@ -18,7 +18,7 @@ import java.util.List;
 
 public class RapierItem extends MimicryItem {
     public RapierItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

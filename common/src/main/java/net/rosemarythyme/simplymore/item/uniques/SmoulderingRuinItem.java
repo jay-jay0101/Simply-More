@@ -33,7 +33,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
     int skillCooldown = UNIQUE_CONFIG.smouldering_ruin.cooldown;
 
     public SmoulderingRuinItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

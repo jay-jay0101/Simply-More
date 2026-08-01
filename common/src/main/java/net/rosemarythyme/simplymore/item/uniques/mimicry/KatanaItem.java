@@ -24,7 +24,7 @@ import java.util.List;
 
 public class KatanaItem extends MimicryItem implements TwoHandedWeapon {
     public KatanaItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 

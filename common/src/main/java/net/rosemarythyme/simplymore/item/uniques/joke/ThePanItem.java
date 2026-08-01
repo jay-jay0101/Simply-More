@@ -30,7 +30,7 @@ public class ThePanItem extends SimplyMoreSwordItem {
     protected static final UniqueEffectConfig UNIQUE_EFFECT = ConfigWrapper.unique;
 
     public ThePanItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

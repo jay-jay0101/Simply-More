@@ -36,7 +36,7 @@ import java.util.List;
 
 public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
     public EarthshatterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.GRANDSWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override

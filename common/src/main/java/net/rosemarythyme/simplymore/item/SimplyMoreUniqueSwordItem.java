@@ -1,8 +1,6 @@
 package net.rosemarythyme.simplymore.item;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -17,37 +15,20 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.item.interfaces.CooldownOnUnselected;
-import net.rosemarythyme.simplymore.item.interfaces.LegendaryItem;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
-import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
-import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
-import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implements Weapon {
+public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     protected static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
-    private final SwordType swordType;
 
-    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings) {
+    public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, settings.fireproof().attributeModifiers(
                 SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
-
-        this.swordType = swordType;
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(swordType == SwordType.LANCE) {
-            Weapon.tryGrantLanceEffect(attacker, target);
-        }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override
@@ -61,31 +42,11 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem implemen
             modifierItem.applyStackModifier(stack);
         }
 
-        if(!(entity instanceof PlayerEntity player)) return;
-
-        if(stack.getItem() instanceof CooldownOnUnselected unselectableItem) {
-            unselectableItem.detectUnselect(player, stack, selected, unselectableItem instanceof TwoHandedWeapon);
-        }
-
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     public CounterComponent getDefaultCounterComponent() {
         return new CounterComponent(0, 0);
-    }
-
-    @Override
-    public SwordType getSwordType() {
-        return swordType;
-    }
-
-    @Override
-    public Text getName(ItemStack stack) {
-        if (stack.getItem() instanceof LegendaryItem) {
-            return Text.translatable(stack.getTranslationKey()).setStyle(Styles.LEGENDARY);
-        }
-
-        return Text.translatable(stack.getTranslationKey()).setStyle(Styles.UNIQUE);
     }
 
     @Override

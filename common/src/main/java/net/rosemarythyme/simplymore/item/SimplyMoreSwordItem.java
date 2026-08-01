@@ -8,33 +8,15 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.rosemarythyme.simplymore.item.interfaces.Weapon;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.SimplySwordsSwordItem;
 
 import java.util.List;
 
-public class SimplyMoreSwordItem extends SimplySwordsSwordItem implements Weapon {
-    private final SwordType swordType;
+public class SimplyMoreSwordItem extends SimplySwordsSwordItem {
 
-    public SimplyMoreSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, SwordType swordType, Settings settings, String... repairIngredient) {
+    public SimplyMoreSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, settings.attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
-
-        this.swordType = swordType;
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(swordType == SwordType.LANCE) {
-            Weapon.tryGrantLanceEffect(attacker, target);
-        }
-
-        return super.postHit(stack, target, attacker);
-    }
-
-    @Override
-    public SwordType getSwordType() {
-        return swordType;
     }
 
     @Override

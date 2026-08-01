@@ -6,8 +6,6 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.rosemarythyme.simplymore.item.uniques.mimicry.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 
@@ -39,9 +37,9 @@ public class MimicryEffect extends StatusEffect {
             int duration = livingEntity.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING)).getDuration();
             int ticksUsed = AttackUtils.getUseTicksFromInfiniteDuration(duration);
 
-            MimicryItem item = (MimicryItem) ItemRegistry.MIMICRY_AMPLIFIERS.get(amplifier).get();
-
-            item.usageTimeline(player, ticksUsed);
+//            MimicryItem item = (MimicryItem) ItemRegistry.MIMICRY_AMPLIFIERS.get(amplifier).get();
+//
+//            item.usageTimeline(player, ticksUsed);
         }
 
         return super.applyUpdateEffect(livingEntity, amplifier);

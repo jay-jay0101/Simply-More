@@ -43,7 +43,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     WeaponAttributesConfig attributes = ConfigWrapper.attributes;
 
     public BrassturnItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, SwordType.SWORD, settings);
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override
