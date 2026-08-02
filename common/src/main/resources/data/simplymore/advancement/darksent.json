@@ -28,8 +28,12 @@
         "items": [
           {
             "items": [
-              "simplymore:darksent"
-            ]
+              "simplymore:ruptured_idol"
+            ],
+            "components": {
+              "simplyswords:awakening": 8,
+              "simplyswords:awakening_route": "simplymore:darksent"
+            }
           }
         ]
       }

@@ -3,26 +3,18 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.Box;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
 
 public class SimplyMoreHelperMethods {
 
@@ -63,22 +55,6 @@ public class SimplyMoreHelperMethods {
         }
     }
 
-    public static void simplyMore$IdolUseEffects(Item item, PlayerEntity user, RegistryEntry<StatusEffect> statusEffect, int duration, SoundEvent soundEvent, float soundVolume, float soundPitch, ParticleEffect particleEffect, int particleCount, double deltaX, double deltaY, double deltaZ, double particleSpeed, int skillCooldown) {
-        if (!user.getWorld().isClient()) {
-            boolean isPositive = statusEffect.value().isBeneficial();
-
-            Box box = MathUtils.createCubeBox(user.getPos(), 10);
-            List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
-
-            for (LivingEntity livingEntity : targets) {
-                livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, duration));
-            }
-
-            user.getWorld().playSound(null, user.getBlockPos(), soundEvent, user.getSoundCategory(), soundVolume, soundPitch);
-            ((ServerWorld) user.getWorld()).spawnParticles(particleEffect, user.getX(), user.getY() + 1, user.getZ(), particleCount, deltaX, deltaY, deltaZ, particleSpeed);
-            user.getItemCooldownManager().set(item, skillCooldown);
-        }
-    }
 
     public static void simplyMore$onDamageEffects(float amount, DamageSource source, CallbackInfo info, LivingEntity livingEntity) {
         if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED))) {

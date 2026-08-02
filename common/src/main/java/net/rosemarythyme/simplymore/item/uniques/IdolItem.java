@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.item.uniques.idols;
+package net.rosemarythyme.simplymore.item.uniques;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -13,9 +13,9 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 
 
-public class RupturedIdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility {
+public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility {
 
-    public RupturedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+    public IdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed);
     }
 

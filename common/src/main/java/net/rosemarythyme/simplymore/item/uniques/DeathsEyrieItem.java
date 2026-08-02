@@ -62,7 +62,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
             effectTime += UNIQUE_CONFIG.deaths_eyrie.additionalBleedTime * crows;
             int amplifier = (int) Math.floor(0.75f * (crows - 1));
 
-            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED), effectTime, amplifier));
+            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), effectTime, amplifier));
 
             MathUtils.addToCounterComponent(stack, 1);
 

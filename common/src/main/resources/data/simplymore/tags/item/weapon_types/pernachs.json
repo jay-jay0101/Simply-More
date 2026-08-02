@@ -13,22 +13,6 @@
 			"required": false
 		},
 		{
-			"id": "simplymore:ascended_idol",
-			"required": false
-		},
-		{
-			"id": "simplymore:tarnished_idol",
-			"required": false
-		},
-		{
-			"id": "simplymore:holylight",
-			"required": false
-		},
-		{
-			"id": "simplymore:darksent",
-			"required": false
-		},
-		{
 			"id": "simplymore:wooden_pernach",
 			"required": false
 		},

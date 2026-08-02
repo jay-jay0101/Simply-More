@@ -45,7 +45,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_vessel_breach.rageLifesteal);
                     } else {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_vessel_breach.lifesteal);
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED), UNIQUE_CONFIG.the_vessel_breach.bleedTime,0));
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.the_vessel_breach.bleedTime,0));
                     }
                 }
             }

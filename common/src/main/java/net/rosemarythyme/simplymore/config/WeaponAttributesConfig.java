@@ -40,7 +40,6 @@ public class WeaponAttributesConfig extends Config {
         public int grandsword_damage_modifier = 6;
         public int backhandblade_damage_modifier = -2;
         public int lance_damage_modifier = 0;
-        public int lancefriendship_damage_modifier = 6;
         public int khopesh_damage_modifier = -1;
         public int dagger_damage_modifier = -2;
         public int quarterstaff_damage_modifier = -2;
@@ -85,10 +84,6 @@ public class WeaponAttributesConfig extends Config {
         public int tidebreaker_damage_modifier = 3;
         public int ruyijingubang_damage_modifier = 3;
         public int rupturedidol_damage_modifier = 4;
-        public int ascendedidol_damage_modifier = 4;
-        public int tarnishedidol_damage_modifier = 4;
-        public int holylight_damage_modifier = 4;
-        public int darksent_damage_modifier = 4;
         public int boasfang_damage_modifier = 1;
         public int earthshatter_damage_modifier = 6;
         public int soulforeseer_damage_modifier = 3;
@@ -124,10 +119,6 @@ public class WeaponAttributesConfig extends Config {
         public float tidebreaker_attack_speed = -1.9f;
         public float ruyijingubang_attack_speed = -2.0f;
         public float rupturedidol_attack_speed = -2.7f;
-        public float ascendedidol_attack_speed = -2.7f;
-        public float tarnishedidol_attack_speed = -2.7f;
-        public float holylight_attack_speed = -2.7f;
-        public float darksent_attack_speed = -2.7f;
         public float boasfang_attack_speed = -2.2f;
         public float earthshatter_attack_speed = -3.4f;
         public float soulforeseer_attack_speed = -2.6f;

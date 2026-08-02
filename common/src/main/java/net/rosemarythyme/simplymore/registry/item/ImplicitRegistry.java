@@ -37,7 +37,7 @@ public class ImplicitRegistry {
             SimplyMore.identifier("friendship"),
             SimplyMore.identifier("lance"),
             40, 80, "friendship",
-            null,
+            ImplicitRegistry::friendship,
             null,
             null
     );
@@ -88,8 +88,8 @@ public class ImplicitRegistry {
         }
     }
 
-    //TODO: DOES NOT WORK - WAIT FOR SWEENEY
-    private static float friendship(ItemStack stack, WeaponImplicitComponent data, LivingEntity target, LivingEntity attacker, DamageSource source, float amount) {
+    private static float friendship(ItemStack stack, WeaponImplicitComponent data, LivingEntity target, DamageSource source, float amount) {
+        if(!(source.getAttacker() instanceof LivingEntity attacker)) return amount;
         if(!EntityUtils.isRidingLivingEntity(attacker)) return amount;
 
         AudioVisualUtils.particleAroundEntity(target, ParticleTypes.CRIT, 8, 0.28f, 0.05f);

@@ -60,7 +60,7 @@ public class PernachItem extends MimicryItem {
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
                                         MIMICRY_CONFIG.pernach.effectTime,
                                         0
                                 )

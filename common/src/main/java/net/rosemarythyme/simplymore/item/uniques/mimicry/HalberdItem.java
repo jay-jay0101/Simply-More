@@ -34,7 +34,7 @@ public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
                         AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
                                         MIMICRY_CONFIG.halberd.effectTime,
                                         1
                                 )
@@ -57,7 +57,7 @@ public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
                         AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
                                         MIMICRY_CONFIG.halberd.effectTime,
                                         1
                                 )

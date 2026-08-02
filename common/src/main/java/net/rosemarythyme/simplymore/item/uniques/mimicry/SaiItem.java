@@ -45,7 +45,7 @@ public class SaiItem extends MimicryItem {
                         AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
                                         MIMICRY_CONFIG.sai.effectTime,
                                         0
                                 )

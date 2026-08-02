@@ -44,7 +44,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.harvestLifesteal);
                     } else {
                         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.lifesteal);
-                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED), UNIQUE_CONFIG.the_blood_harvester.bleedTime,0));
+                        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.the_blood_harvester.bleedTime,0));
                     }
                 }
             }

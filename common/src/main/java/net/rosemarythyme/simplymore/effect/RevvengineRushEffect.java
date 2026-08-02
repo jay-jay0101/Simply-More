@@ -183,7 +183,7 @@ public class RevvengineRushEffect extends StatusEffect {
 
             target.addStatusEffect(
                     new StatusEffectInstance(
-                            StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
                             effectTime,
                             0
                     )

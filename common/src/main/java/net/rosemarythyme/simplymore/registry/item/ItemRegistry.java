@@ -11,10 +11,10 @@ import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
+import net.rosemarythyme.simplymore.item.RemovedItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreRunicSwordItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.item.uniques.*;
-import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
@@ -25,6 +25,7 @@ import net.sweenus.simplyswords.config.Config;
 import net.sweenus.simplyswords.item.component.AwakeningComponent;
 import net.sweenus.simplyswords.item.component.AwakeningRouteComponent;
 import net.sweenus.simplyswords.registry.ComponentTypeRegistry;
+import net.sweenus.simplyswords.registry.ItemsRegistry;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
@@ -99,13 +100,13 @@ public class ItemRegistry {
     @Deprecated
     public static final RegistrySupplier<Item> RUNEFUSED_CARVER = ITEMS.register(
             "runefused_carver",
-            () -> new Item(new Item.Settings())
+            () -> new RemovedItem(() -> new ItemStack(ItemsRegistry.EMPOWERED_REMNANT.get()))
     );
 
     @Deprecated
     public static final RegistrySupplier<Item> NETHERFUSED_CARVER = ITEMS.register(
             "netherfused_carver",
-            () -> new Item(new Item.Settings())
+            () -> new RemovedItem(() -> new ItemStack(ItemsRegistry.EMPOWERED_REMNANT.get()))
     );
 
     public static final RegistrySupplier<Item> GREAT_SLITHER = ITEMS.register(
@@ -262,7 +263,7 @@ public class ItemRegistry {
 
     public static final RegistrySupplier<Item> RUPTURED_IDOL = ITEMS.register(
             "ruptured_idol",
-            () -> new RupturedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+            () -> new IdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
                     ATTRIBUTES_CONFIG.uniqueWeaponsDamage.rupturedidol_damage_modifier,
                     ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.rupturedidol_attack_speed
             )
@@ -271,37 +272,25 @@ public class ItemRegistry {
     @Deprecated
     public static final RegistrySupplier<Item> ASCENDED_IDOL = ITEMS.register(
             "ascended_idol",
-            () -> new AscendedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.ascendedidol_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.ascendedidol_attack_speed
-            )
+            () -> new RemovedItem(() -> getAwakenedStack(RUPTURED_IDOL, 4, AwakeningProfileRegistry.HOLYLIGHT))
     );
 
     @Deprecated
     public static final RegistrySupplier<Item> TARNISHED_IDOL = ITEMS.register(
             "tarnished_idol",
-            () -> new TarnishedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.tarnishedidol_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.tarnishedidol_attack_speed
-            )
+            () -> new RemovedItem(() -> getAwakenedStack(RUPTURED_IDOL, 4, AwakeningProfileRegistry.DARKSENT))
     );
 
     @Deprecated
     public static final RegistrySupplier<Item> HOLYLIGHT = ITEMS.register(
             "holylight",
-            () -> new HolylightItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.holylight_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.holylight_attack_speed
-            )
+            () -> new RemovedItem(() -> getAwakenedStack(RUPTURED_IDOL, 8, AwakeningProfileRegistry.HOLYLIGHT))
     );
 
     @Deprecated
     public static final RegistrySupplier<Item> DARKSENT = ITEMS.register(
             "darksent",
-            () -> new DarksentItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.darksent_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.darksent_attack_speed
-            )
+            () -> new RemovedItem(() -> getAwakenedStack(RUPTURED_IDOL, 8, AwakeningProfileRegistry.DARKSENT))
     );
 
     public static final RegistrySupplier<Item> BOAS_FANG = ITEMS.register(
@@ -678,7 +667,7 @@ public class ItemRegistry {
                     () ->
                             CreativeTabRegistry.create(
                                     Text.translatable("item_group.simplymore"),
-                                    () -> new ItemStack(REVVENGINE)
+                                    () -> new ItemStack(IRON_WEAPONS.get(5))
                             )
             );
 
@@ -715,11 +704,11 @@ public class ItemRegistry {
         addToItemGroup(TIDEBREAKER);
         addToItemGroup(RUYI_JINGU_BANG);
 
-        addUpgradableStageToItemGroup(RUPTURED_IDOL, 0, null);
-        addUpgradableStageToItemGroup(RUPTURED_IDOL, 4, AwakeningProfileRegistry.HOLYLIGHT);
-        addUpgradableStageToItemGroup(RUPTURED_IDOL, 4, AwakeningProfileRegistry.DARKSENT);
-        addUpgradableStageToItemGroup(RUPTURED_IDOL, 8, AwakeningProfileRegistry.HOLYLIGHT);
-        addUpgradableStageToItemGroup(RUPTURED_IDOL, 8, AwakeningProfileRegistry.DARKSENT);
+        addToItemGroup(getAwakenedStack(RUPTURED_IDOL, 0, null));
+        addToItemGroup(getAwakenedStack(RUPTURED_IDOL, 4, AwakeningProfileRegistry.HOLYLIGHT));
+        addToItemGroup(getAwakenedStack(RUPTURED_IDOL, 4, AwakeningProfileRegistry.DARKSENT));
+        addToItemGroup(getAwakenedStack(RUPTURED_IDOL, 8, AwakeningProfileRegistry.HOLYLIGHT));
+        addToItemGroup(getAwakenedStack(RUPTURED_IDOL, 8, AwakeningProfileRegistry.DARKSENT));
 
         addToItemGroup(BOAS_FANG);
         addToItemGroup(EARTHSHATTER);
@@ -755,7 +744,7 @@ public class ItemRegistry {
         CreativeTabRegistry.append(ITEM_GROUP, item);
     }
 
-    public static void addUpgradableStageToItemGroup(RegistrySupplier<Item> item, int level, @Nullable Identifier path) {
+    public static ItemStack getAwakenedStack(RegistrySupplier<Item> item, int level, @Nullable Identifier path) {
         ItemStack stack = new ItemStack(item);
         stack.set(ComponentTypeRegistry.AWAKENING.get(), new AwakeningComponent(level));
 
@@ -763,6 +752,6 @@ public class ItemRegistry {
             stack.set(ComponentTypeRegistry.AWAKENING_ROUTE.get(), new AwakeningRouteComponent(path));
         }
 
-        addToItemGroup(stack);
+        return stack;
     }
 }

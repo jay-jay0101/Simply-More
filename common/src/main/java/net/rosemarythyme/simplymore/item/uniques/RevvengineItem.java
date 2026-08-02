@@ -52,7 +52,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
             return super.postHit(stack, target, attacker);
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.revvengine.chance)) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED), UNIQUE_CONFIG.revvengine.bleedTime, 0), attacker);
+            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.revvengine.bleedTime, 0), attacker);
         }
 
 
@@ -213,7 +213,7 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
 
             target.addStatusEffect(
                     new StatusEffectInstance(
-                            StatusEffectRegistry.getReference(StatusEffectRegistry.BLEED),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
                             UNIQUE_CONFIG.revvengine.bleedTime,
                             0
                     )
