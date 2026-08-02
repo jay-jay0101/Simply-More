@@ -1,10 +1,6 @@
 {
 	"values": [
 		{
-			"id": "simplyswords:mjolnir",
-			"required": false
-		},
-		{
 			"id": "simplyswords:tempest",
 			"required": false
 		},
