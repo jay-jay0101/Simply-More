@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public abstract class OracleIndexUtilsMixin {
 
 	@ModifyVariable(at = @At(value = "HEAD"), method = "openOracleIndex", argsOnly = true, ordinal = 0)
-	private static Identifier simplyMore$override(Identifier value) {
+	private static Identifier simplymore$override(Identifier value) {
 		if (value.getPath().contains("mimicry_")) {
 			return Identifier.of("oracle_index:books/simplymore/unique_weapons/mimicry.mdx");
 		}

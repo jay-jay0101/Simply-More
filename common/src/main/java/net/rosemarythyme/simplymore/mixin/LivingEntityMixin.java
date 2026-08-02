@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "applyDamage", cancellable = true)
-	private void simplyMore$applyDamage(DamageSource source, float amount, CallbackInfo info) {
+	private void simplymore$applyDamage(DamageSource source, float amount, CallbackInfo info) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		SimplyMoreHelperMethods.simplyMore$onDamageEffects(amount, source, info, livingEntity);
 	}
 
 	@Inject(at = @At("HEAD"), method = "heal", cancellable = true)
-	private void simplyMore$heal(float amount, CallbackInfo info) {
+	private void simplymore$heal(float amount, CallbackInfo info) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		if(livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED))) {
 			float f = livingEntity.getHealth();

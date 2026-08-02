@@ -12,6 +12,7 @@ import net.rosemarythyme.simplymore.client.registry.ClientItemPropertyRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
+import net.rosemarythyme.simplymore.item.LootRegistry;
 import net.rosemarythyme.simplymore.registry.*;
 import net.rosemarythyme.simplymore.registry.item.*;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public class SimplyMore {
 			TagRegistry.register();
 
 			ItemRegistry.registerItemGroup();
+			LootRegistry.register();
 
 			SimplyMore.registerEvents();
 

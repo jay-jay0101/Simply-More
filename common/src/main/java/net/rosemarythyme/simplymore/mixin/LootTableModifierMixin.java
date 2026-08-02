@@ -1,74 +1,51 @@
-//package net.rosemarythyme.simplymore.mixin;
-//
-//import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-//import com.llamalad7.mixinextras.sugar.Local;
-//import dev.architectury.event.events.common.LootEvent;
-//import dev.architectury.registry.registries.RegistrySupplier;
-//import net.minecraft.item.Item;
-//import net.minecraft.loot.LootPool;
-//import net.minecraft.loot.entry.ItemEntry;
-//import net.minecraft.registry.RegistryKey;
-//import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-//import net.sweenus.simplyswords.util.ModLootTableModifiers;
-//import org.spongepowered.asm.mixin.Mixin;
-//import org.spongepowered.asm.mixin.Unique;
-//import org.spongepowered.asm.mixin.injection.At;
-//import org.spongepowered.asm.mixin.injection.Inject;
-//import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-//
-//import java.util.Set;
-//import java.util.stream.Collectors;
-//
-//@Mixin(ModLootTableModifiers.class)
-//public class LootTableModifierMixin {
-//
-//    @Inject(method = "lambda$init$2",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;addPool(Lnet/minecraft/loot/LootPool$Builder;)V"
-//            ))
-//    private static void simplyMore$addCommonWeapons(RegistryKey<?> key, LootEvent.LootTableModificationContext context, boolean builtin, CallbackInfo ci, @Local LootPool.Builder pool) {
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_BACKHAND_BLADE.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_DAGGER.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_DEER_HORNS.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_GRANDSWORD.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_KHOPESH.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_GREAT_KATANA.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_GREAT_SPEAR.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_LANCE.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_QUARTERSTAFF.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.IRON_PERNACH.get()));
-//
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_BACKHAND_BLADE.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_DAGGER.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_DEER_HORNS.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_GRANDSWORD.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_KHOPESH.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_GREAT_KATANA.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_GREAT_SPEAR.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_LANCE.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_QUARTERSTAFF.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.GOLD_PERNACH.get()));
-//    }
-//
-//    @Inject(method = "lambda$init$3",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;addPool(Lnet/minecraft/loot/LootPool$Builder;)V"
-//            ))
-//    private static void simplyMore$addRareWeapons(RegistryKey<?> key, LootEvent.LootTableModificationContext context, boolean builtin, CallbackInfo ci, @Local LootPool.Builder pool) {
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_BACKHAND_BLADE.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_DAGGER.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_DEER_HORNS.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_GRANDSWORD.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_KHOPESH.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_GREAT_KATANA.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_GREAT_SPEAR.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_LANCE.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_QUARTERSTAFF.get()));
-//        pool.with(ItemEntry.builder(ItemRegistry.DIAMOND_PERNACH.get()));
-//    }
-//
+package net.rosemarythyme.simplymore.mixin;
+
+import com.llamalad7.mixinextras.sugar.Local;
+import dev.architectury.event.events.common.LootEvent;
+import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.item.Item;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.registry.RegistryKey;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.sweenus.simplyswords.util.ModLootTableModifiers;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
+
+@Mixin(ModLootTableModifiers.class)
+public class LootTableModifierMixin {
+
+    @Inject(method = "lambda$init$2",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;addPool(Lnet/minecraft/loot/LootPool$Builder;)V"
+            ))
+    private static void simplymore$addCommonWeapons(RegistryKey<?> key, LootEvent.LootTableModificationContext context, boolean builtin, CallbackInfo ci, @Local LootPool.Builder pool) {
+        simplyMore$addAllToPool(ItemRegistry.IRON_WEAPONS, pool);
+        simplyMore$addAllToPool(ItemRegistry.GOLD_WEAPONS, pool);
+    }
+
+    @Inject(method = "lambda$init$3",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;addPool(Lnet/minecraft/loot/LootPool$Builder;)V"
+            ))
+    private static void simplymore$addRareWeapons(RegistryKey<?> key, LootEvent.LootTableModificationContext context, boolean builtin, CallbackInfo ci, @Local LootPool.Builder pool) {
+        simplyMore$addAllToPool(ItemRegistry.DIAMOND_WEAPONS, pool);
+    }
+
+    @Unique
+    private static void simplyMore$addAllToPool(List<RegistrySupplier<Item>> items, LootPool.Builder pool) {
+        for (RegistrySupplier<Item> item : items) {
+            pool.with(ItemEntry.builder(item.get()));
+        }
+    }
+
 //    @Unique
 //    private static final Set<RegistrySupplier<? extends Item>> simplyMore$lootableSuppliers = Set.of(
 //            ItemRegistry.GREAT_SLITHER,
@@ -113,4 +90,4 @@
 //
 //        return original || simplyMore$lootableItems.contains(item.asItem());
 //    }
-//}
+}

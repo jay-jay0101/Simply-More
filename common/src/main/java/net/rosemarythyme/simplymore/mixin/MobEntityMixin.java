@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class MobEntityMixin {
 
 	@ModifyReturnValue(at = @At("RETURN"), method = "tryAttack")
-	private boolean simplyMore$tryAttack(boolean originalReturnValue, Entity target) {
+	private boolean simplymore$tryAttack(boolean originalReturnValue, Entity target) {
 		MobEntity mobEntity = (MobEntity) (Object) this;
 		if (mobEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED)))
 			return false;
