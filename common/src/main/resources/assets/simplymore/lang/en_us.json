@@ -30,7 +30,8 @@
   "effect.simplymore.starlight": "Starlight",
   "effect.simplymore.hex": "Hex",
   "effect.simplymore.soul_health": "Soul Health",
-  "effect.simplymore.mimicry_happening": "Martial",
+  "effect.simplymore.implicit_stun": "Implicit Stun",
+  "effect.simplymore.implicit_mining_fatigue": "Implicit Fatigue",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -1219,6 +1220,11 @@
   "simplymore.unique_effect.mimicry.config.great_katana.disabled": "Disable Adaptation",
   "simplymore.unique_effect.mimicry.config.great_katana.damage": "Ability damage",
   "simplymore.unique_effect.mimicry.config.great_katana.extraDamage": "Ability damage bonus to main target",
+
+  "tooltip.simplymore.implicit.grandsword": "Sunders %s%% armor per hit, and breaks shields",
+  "tooltip.simplymore.implicit.friendship": "+%s%% damage while mounted",
+  "tooltip.simplymore.implicit.disarm": "%s%% chance to reduce opponent attack speed on hit",
+  "tooltip.simplymore.implicit.stun": "%s%% chance to stun",
 
   "": ""
 }

@@ -35,6 +35,32 @@ public class StatusEffectRegistry {
             new BleedPoisonEffect(StatusEffectCategory.HARMFUL,7865862)
     );
 
+    public static final RegistrySupplier<StatusEffect> IMPLICIT_MINING_FATIGUE = registerEffect(
+            "implicit_mining_fatigue",
+            new StatusEffect(StatusEffectCategory.HARMFUL,0x4A4187).addAttributeModifier(
+                    EntityAttributes.GENERIC_ATTACK_SPEED,
+                    SimplyMore.identifier("implicit_attack_speed"),
+                    -0.1F,
+                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+            )
+    );
+
+    public static final RegistrySupplier<StatusEffect> IMPLICIT_STUN = registerEffect(
+            "implicit_stun",
+            new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
+                    .addAttributeModifier(
+                            EntityAttributes.GENERIC_ATTACK_SPEED,
+                            SimplyMore.identifier("implicit_stun_attack_speed"),
+                            -99,
+                            EntityAttributeModifier.Operation.ADD_VALUE
+                    ).addAttributeModifier(
+                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                            SimplyMore.identifier("implicit_stun_damage"),
+                            -9999,
+                            EntityAttributeModifier.Operation.ADD_VALUE
+                    )
+    );
+
     public static final RegistrySupplier<StatusEffect> MIMICRY_HAPPENING = registerEffect(
             "mimicry_happening",
             new MimicryEffect(StatusEffectCategory.BENEFICIAL,0)

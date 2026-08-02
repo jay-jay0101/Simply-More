@@ -10,7 +10,8 @@
     "LivingEntityMixin",
     "MobEntityMixin",
     "OracleIndexUtilsMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "WeaponImplicitRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

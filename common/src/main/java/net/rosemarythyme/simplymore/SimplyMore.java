@@ -13,10 +13,7 @@ import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
 import net.rosemarythyme.simplymore.registry.*;
-import net.rosemarythyme.simplymore.registry.item.AwakeningProfileRegistry;
-import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.registry.item.TransformationRegistry;
+import net.rosemarythyme.simplymore.registry.item.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class SimplyMore {
@@ -37,6 +34,7 @@ public class SimplyMore {
 
 			ItemRegistry.register();
 			RecipeTypeRegistry.register();
+			ImplicitRegistry.register();
 			TransformationRegistry.register();
 			AwakeningProfileRegistry.register();
 
