@@ -38,8 +38,6 @@ public class SimplyMore {
 			TransformationRegistry.register();
 			AwakeningProfileRegistry.register();
 
-			ParticleRegistry.register();
-
 			ItemComponentRegistry.register();
 			TagRegistry.register();
 

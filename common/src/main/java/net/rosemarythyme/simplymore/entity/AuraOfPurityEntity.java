@@ -9,9 +9,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.registry.ParticleRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.PredicateUtils;
 import org.jetbrains.annotations.NotNull;
@@ -32,15 +30,12 @@ public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
 
     public void visual(float range) {
         ServerWorld world = (ServerWorld) getWorld();
-        AudioVisualUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), range, 100);
 
         float pulseRadius = MathUtils.clampedLerp(age % 20, 0, 20, 0, 4f);
 
         if(pulseRadius == 0) {
             world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.PLAYERS, 1, 1);
         }
-
-        AudioVisualUtils.particleRing(world, this.getPos(), ParticleRegistry.HOLY_WATER.get(), pulseRadius, 100);
     }
 
     @Override

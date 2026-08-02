@@ -12,15 +12,11 @@ import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.effect.*;
-
-import java.util.HexFormat;
 
 
 public class StatusEffectRegistry {
-    static WeaponAttributesConfig attributes = ConfigWrapper.attributes;
-    static UniqueEffectConfig effects = ConfigWrapper.unique;
+    private static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
 
     public static final DeferredRegister<StatusEffect> EFFECTS =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.STATUS_EFFECT);
@@ -30,9 +26,9 @@ public class StatusEffectRegistry {
         return EFFECTS.getRegistrar().getHolder(input.getId());
     }
 
-    public static final RegistrySupplier<StatusEffect> BLEED = registerEffect(
-            "bleed",
-            new BleedPoisonEffect(StatusEffectCategory.HARMFUL,7865862)
+    public static final RegistrySupplier<StatusEffect> WOUNDED = registerEffect(
+            "wounded",
+            new StatusEffect(StatusEffectCategory.HARMFUL,7865862)
     );
 
     public static final RegistrySupplier<StatusEffect> IMPLICIT_MINING_FATIGUE = registerEffect(
@@ -114,7 +110,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> LIGHTWEIGHT = registerEffect(
             "lightweight",
-            new FallDamageImmunityEffect(StatusEffectCategory.BENEFICIAL, (int) HexFormat.fromHexDigitsToLong("BFBFBF"))
+            new FallDamageImmunityEffect(StatusEffectCategory.BENEFICIAL, (int) 0xBFBFBF)
     );
 
     public static final RegistrySupplier<StatusEffect> VENOM = registerEffect(
@@ -127,7 +123,7 @@ public class StatusEffectRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             SimplyMore.identifier("molten_flare"),
-                            effects.molten_flare.activeAttackSpeedBonus,
+                            UNIQUE_CONFIG.molten_flare.activeAttackSpeedBonus,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
     );
@@ -190,7 +186,7 @@ public class StatusEffectRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             SimplyMore.identifier("solid_armor"),
-                            effects.blade_of_the_grotesque.selfStunnedArmorBuff,
+                            UNIQUE_CONFIG.blade_of_the_grotesque.selfStunnedArmorBuff,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
@@ -210,7 +206,7 @@ public class StatusEffectRegistry {
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             SimplyMore.identifier("stunned_armor"),
-                            effects.blade_of_the_grotesque.attackerStunnedArmorBuff,
+                            UNIQUE_CONFIG.blade_of_the_grotesque.attackerStunnedArmorBuff,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
@@ -309,7 +305,6 @@ public class StatusEffectRegistry {
     }
 
     public static RegistrySupplier<StatusEffect> registerEffect(String name, StatusEffect effect) {
-
         return EFFECTS.register(
                 Identifier.of(SimplyMore.ID, name),
                 () -> effect
