@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.registry;
+package net.rosemarythyme.simplymore.registry.item;
 
 import net.minecraft.block.Blocks;
 import net.sweenus.simplyswords.api.SimplySwordsAPI;

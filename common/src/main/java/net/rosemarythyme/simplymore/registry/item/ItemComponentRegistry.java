@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.registry;
+package net.rosemarythyme.simplymore.registry.item;
 
 import com.mojang.serialization.Codec;
 import dev.architectury.registry.registries.DeferredRegister;

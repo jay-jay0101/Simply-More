@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.registry.compat;
+package net.rosemarythyme.simplymore.registry.item.compat;
 
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.item.Item;
@@ -6,7 +6,7 @@ import net.minecraft.item.ToolMaterials;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
-import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 
 import java.util.List;
 
@@ -29,9 +29,9 @@ public class StickNStoneCompatRegistry {
             new Item.Settings()
     );
 
-    public static void addToGroup(List<RegistrySupplier<? extends Item>> entries) {
-        entries.addAll(WOODEN_WEAPONS);
-        entries.addAll(STONE_WEAPONS);
+    public static void addToGroup() {
+        ItemRegistry.addToItemGroup(WOODEN_WEAPONS);
+        ItemRegistry.addToItemGroup(STONE_WEAPONS);
     }
 
     public static void registerCompatItems() {

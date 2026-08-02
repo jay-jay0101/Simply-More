@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.registry.compat;
+package net.rosemarythyme.simplymore.registry.item.compat;
 
 import com.mythicmetals.component.MythicDataComponents;
 import com.mythicmetals.component.PrometheumComponent;
@@ -12,7 +12,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
 import net.rosemarythyme.simplymore.item.compat.mythicmetals.LegendaryBanglumSwordItem;
 import net.rosemarythyme.simplymore.item.compat.mythicmetals.PalladiumSwordItem;
 import net.rosemarythyme.simplymore.item.compat.mythicmetals.TidesingerSwordItem;
-import net.rosemarythyme.simplymore.registry.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.sweenus.simplyswords.config.Config;
 
 import java.util.List;
@@ -191,29 +191,29 @@ public class MythicMetalsCompatRegistry {
     public static void registerCompatItems() {
     }
 
-    public static void addToGroup(List<RegistrySupplier<? extends Item>> entries) {
-        entries.addAll(ADAMANTITE_WEAPONS);
-        entries.addAll(AQUARIUM_WEAPONS);
-        entries.addAll(BANGLUM_WEAPONS);
-        entries.addAll(BRONZE_WEAPONS);
-        entries.addAll(CARMOT_WEAPONS);
-        entries.addAll(CELESTIUM_WEAPONS);
-        entries.addAll(COPPER_WEAPONS);
-        entries.addAll(DURASTEEL_WEAPONS);
-        entries.addAll(HALLOWED_WEAPONS);
-        entries.addAll(KYBER_WEAPONS);
-        entries.addAll(LEGENDARY_BANGLUM_WEAPONS);
-        entries.addAll(METALLURGIUM_WEAPONS);
-        entries.addAll(MYTHRIL_WEAPONS);
-        entries.addAll(ORICHALCUM_WEAPONS);
-        entries.addAll(OSMIUM_WEAPONS);
-        entries.addAll(PALLADIUM_WEAPONS);
-        entries.addAll(PROMETHEUM_WEAPONS);
-        entries.addAll(QUADRILLUM_WEAPONS);
-        entries.addAll(RUNITE_WEAPONS);
-        entries.addAll(STAR_PLATINUM_WEAPONS);
-        entries.addAll(STEEL_WEAPONS);
-        entries.addAll(STORMYX_WEAPONS);
-        entries.addAll(TIDESINGER_WEAPONS);
+    public static void addToGroup() {
+        ItemRegistry.addToItemGroup(ADAMANTITE_WEAPONS);
+        ItemRegistry.addToItemGroup(AQUARIUM_WEAPONS);
+        ItemRegistry.addToItemGroup(BANGLUM_WEAPONS);
+        ItemRegistry.addToItemGroup(BRONZE_WEAPONS);
+        ItemRegistry.addToItemGroup(CARMOT_WEAPONS);
+        ItemRegistry.addToItemGroup(CELESTIUM_WEAPONS);
+        ItemRegistry.addToItemGroup(COPPER_WEAPONS);
+        ItemRegistry.addToItemGroup(DURASTEEL_WEAPONS);
+        ItemRegistry.addToItemGroup(HALLOWED_WEAPONS);
+        ItemRegistry.addToItemGroup(KYBER_WEAPONS);
+        ItemRegistry.addToItemGroup(LEGENDARY_BANGLUM_WEAPONS);
+        ItemRegistry.addToItemGroup(METALLURGIUM_WEAPONS);
+        ItemRegistry.addToItemGroup(MYTHRIL_WEAPONS);
+        ItemRegistry.addToItemGroup(ORICHALCUM_WEAPONS);
+        ItemRegistry.addToItemGroup(OSMIUM_WEAPONS);
+        ItemRegistry.addToItemGroup(PALLADIUM_WEAPONS);
+        ItemRegistry.addToItemGroup(PROMETHEUM_WEAPONS);
+        ItemRegistry.addToItemGroup(QUADRILLUM_WEAPONS);
+        ItemRegistry.addToItemGroup(RUNITE_WEAPONS);
+        ItemRegistry.addToItemGroup(STAR_PLATINUM_WEAPONS);
+        ItemRegistry.addToItemGroup(STEEL_WEAPONS);
+        ItemRegistry.addToItemGroup(STORMYX_WEAPONS);
+        ItemRegistry.addToItemGroup(TIDESINGER_WEAPONS);
     }
 }

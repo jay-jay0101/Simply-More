@@ -7,12 +7,13 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
-public class RupturedIdolItem extends SimplyMoreUniqueSwordItem {
+public class RupturedIdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility {
 
     public RupturedIdolItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed);

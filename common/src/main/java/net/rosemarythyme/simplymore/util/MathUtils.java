@@ -7,7 +7,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.ItemComponentRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import org.joml.Vector3d;
 
 import java.text.DecimalFormat;

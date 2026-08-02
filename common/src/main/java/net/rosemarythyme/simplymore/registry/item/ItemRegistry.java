@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.registry;
+package net.rosemarythyme.simplymore.registry.item;
 
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
@@ -7,6 +7,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.item.*;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
@@ -17,10 +18,14 @@ import net.rosemarythyme.simplymore.item.uniques.idols.*;
 import net.rosemarythyme.simplymore.item.uniques.joke.JesterPenetrateItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
-import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompatRegistry;
-import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
+import net.rosemarythyme.simplymore.registry.item.compat.MythicMetalsCompatRegistry;
+import net.rosemarythyme.simplymore.registry.item.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.config.Config;
+import net.sweenus.simplyswords.item.component.AwakeningComponent;
+import net.sweenus.simplyswords.item.component.AwakeningRouteComponent;
+import net.sweenus.simplyswords.registry.ComponentTypeRegistry;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -263,6 +268,7 @@ public class ItemRegistry {
             )
     );
 
+    @Deprecated
     public static final RegistrySupplier<Item> ASCENDED_IDOL = ITEMS.register(
             "ascended_idol",
             () -> new AscendedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
@@ -271,6 +277,7 @@ public class ItemRegistry {
             )
     );
 
+    @Deprecated
     public static final RegistrySupplier<Item> TARNISHED_IDOL = ITEMS.register(
             "tarnished_idol",
             () -> new TarnishedIdolItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
@@ -279,6 +286,7 @@ public class ItemRegistry {
             )
     );
 
+    @Deprecated
     public static final RegistrySupplier<Item> HOLYLIGHT = ITEMS.register(
             "holylight",
             () -> new HolylightItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
@@ -287,6 +295,7 @@ public class ItemRegistry {
             )
     );
 
+    @Deprecated
     public static final RegistrySupplier<Item> DARKSENT = ITEMS.register(
             "darksent",
             () -> new DarksentItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
@@ -674,66 +683,86 @@ public class ItemRegistry {
             );
 
     public static void registerItemGroup() {
-        //noinspection UnstableApiUsage, unchecked
-        CreativeTabRegistry.append(ITEM_GROUP, itemsInTab().toArray(new RegistrySupplier[0]));
+        if (Platform.isModLoaded("sticknstone")) {
+            StickNStoneCompatRegistry.addToGroup();
+        }
+
+        addToItemGroup(IRON_WEAPONS);
+        addToItemGroup(GOLD_WEAPONS);
+        addToItemGroup(DIAMOND_WEAPONS);
+        addToItemGroup(NETHERITE_WEAPONS);
+        addToItemGroup(RUNIC_WEAPONS);
+
+        if (Platform.isModLoaded("mythicmetals")) {
+            MythicMetalsCompatRegistry.addToGroup();
+        }
+        
+        addToItemGroup(GREAT_SLITHER);
+        addToItemGroup(MOLTEN_FLARE);
+        addToItemGroup(GRANDFROST);
+        addToItemGroup(MIMICRY_LONGSWORD);
+        addToItemGroup(GLIMMERSTEP);
+        addToItemGroup(THE_BLOOD_HARVESTER);
+        addToItemGroup(MYRMEDGE);
+        addToItemGroup(BLACK_PEARL);
+        addToItemGroup(THE_VESSEL_BREACH);
+        addToItemGroup(BLADE_OF_THE_GROTESQUE);
+        addToItemGroup(VIPERS_CALL);
+        addToItemGroup(TIMEKEEPER);
+        addToItemGroup(MATTERBANE);
+        addToItemGroup(SMOULDERING_RUIN);
+        addToItemGroup(STASIS);
+        addToItemGroup(TIDEBREAKER);
+        addToItemGroup(RUYI_JINGU_BANG);
+
+        addUpgradableStageToItemGroup(RUPTURED_IDOL, 0, null);
+        addUpgradableStageToItemGroup(RUPTURED_IDOL, 4, AwakeningProfileRegistry.HOLYLIGHT);
+        addUpgradableStageToItemGroup(RUPTURED_IDOL, 4, AwakeningProfileRegistry.DARKSENT);
+        addUpgradableStageToItemGroup(RUPTURED_IDOL, 8, AwakeningProfileRegistry.HOLYLIGHT);
+        addUpgradableStageToItemGroup(RUPTURED_IDOL, 8, AwakeningProfileRegistry.DARKSENT);
+
+        addToItemGroup(BOAS_FANG);
+        addToItemGroup(EARTHSHATTER);
+        addToItemGroup(SOUL_FORESEER);
+        addToItemGroup(SERPENTINE_VALOUR);
+        addToItemGroup(LUSTROUS_MOXIE);
+        addToItemGroup(BRASSTURN);
+        addToItemGroup(CINDERGORGE);
+        addToItemGroup(DEATHS_EYRIE);
+        addToItemGroup(PERFORISCUS);
+        addToItemGroup(REVVENGINE);
+        addToItemGroup(EXEDRILL);
+        addToItemGroup(CULTEREX);
+        addToItemGroup(JESTER_PENETRATE);
+        addToItemGroup(THE_PAN);
+
         TABS.register();
     }
 
 
-    public static List<RegistrySupplier<? extends Item>> itemsInTab() {
-        List<RegistrySupplier<? extends Item>> entries = new ArrayList<>();
+    public static void addToItemGroup(ItemStack stack) {
+        //noinspection UnstableApiUsage
+        CreativeTabRegistry.appendStack(ITEM_GROUP, stack);
+    }
 
-        if (Platform.isModLoaded("sticknstone")) {
-            StickNStoneCompatRegistry.addToGroup(entries);
+    public static void addToItemGroup(List<RegistrySupplier<Item>> items) {
+        //noinspection UnstableApiUsage, unchecked
+        CreativeTabRegistry.append(ITEM_GROUP, items.toArray(new RegistrySupplier[0]));
+    }
+
+    public static void addToItemGroup(RegistrySupplier<Item> item) {
+        //noinspection UnstableApiUsage, unchecked
+        CreativeTabRegistry.append(ITEM_GROUP, item);
+    }
+
+    public static void addUpgradableStageToItemGroup(RegistrySupplier<Item> item, int level, @Nullable Identifier path) {
+        ItemStack stack = new ItemStack(item);
+        stack.set(ComponentTypeRegistry.AWAKENING.get(), new AwakeningComponent(level));
+
+        if(path != null) {
+            stack.set(ComponentTypeRegistry.AWAKENING_ROUTE.get(), new AwakeningRouteComponent(path));
         }
 
-        entries.addAll(IRON_WEAPONS);
-        entries.addAll(GOLD_WEAPONS);
-        entries.addAll(DIAMOND_WEAPONS);
-        entries.addAll(NETHERITE_WEAPONS);
-        entries.addAll(RUNIC_WEAPONS);
-
-        if (Platform.isModLoaded("mythicmetals")) {
-            MythicMetalsCompatRegistry.addToGroup(entries);
-        }
-
-        entries.add(GREAT_SLITHER);
-        entries.add(MOLTEN_FLARE);
-        entries.add(GRANDFROST);
-        entries.add(MIMICRY_LONGSWORD);
-        entries.add(GLIMMERSTEP);
-        entries.add(THE_BLOOD_HARVESTER);
-        entries.add(MYRMEDGE);
-        entries.add(BLACK_PEARL);
-        entries.add(THE_VESSEL_BREACH);
-        entries.add(BLADE_OF_THE_GROTESQUE);
-        entries.add(VIPERS_CALL);
-        entries.add(TIMEKEEPER);
-        entries.add(MATTERBANE);
-        entries.add(SMOULDERING_RUIN);
-        entries.add(STASIS);
-        entries.add(TIDEBREAKER);
-        entries.add(RUYI_JINGU_BANG);
-        entries.add(RUPTURED_IDOL);
-        entries.add(ASCENDED_IDOL);
-        entries.add(TARNISHED_IDOL);
-        entries.add(HOLYLIGHT);
-        entries.add(DARKSENT);
-        entries.add(BOAS_FANG);
-        entries.add(EARTHSHATTER);
-        entries.add(SOUL_FORESEER);
-        entries.add(SERPENTINE_VALOUR);
-        entries.add(LUSTROUS_MOXIE);
-        entries.add(BRASSTURN);
-        entries.add(CINDERGORGE);
-        entries.add(DEATHS_EYRIE);
-        entries.add(PERFORISCUS);
-        entries.add(REVVENGINE);
-        entries.add(EXEDRILL);
-        entries.add(CULTEREX);
-        entries.add(JESTER_PENETRATE);
-        entries.add(THE_PAN);
-
-        return entries;
+        addToItemGroup(stack);
     }
 }

@@ -28,10 +28,6 @@
     "simplymore:tidebreaker": {"theme": "deep_sea", "badges": ["UNIQUE", "DEER HORNS"]},
     "simplymore:ruyi_jingu_bang": {"theme": "fancy_gold", "badges": ["UNIQUE", "QUARTERSTAFF"]},
     "simplymore:ruptured_idol": {"theme": "earth", "badges": ["UNIQUE", "PERNACH"]},
-    "simplymore:ascended_idol": {"theme": "readable_rustic", "badges": ["UNIQUE", "PERNACH"]},
-    "simplymore:holylight": {"theme": "readable_rustic", "badges": ["UNIQUE", "PERNACH"]},
-    "simplymore:tarnished_idol": {"theme": "ember", "badges": ["UNIQUE", "PERNACH"]},
-    "simplymore:darksent": {"theme": "ember", "badges": ["UNIQUE", "PERNACH"]},
     "simplymore:boas_fang": {"theme": "poison", "badges": ["UNIQUE", "BACKHAND BLADE"]},
     "simplymore:earthshatter": {"theme": "earth", "badges": ["UNIQUE", "GREATAXE"]},
     "simplymore:soul_foreseer": {"theme": "soul", "badges": ["UNIQUE", "GLAIVE"]},
@@ -79,5 +75,9 @@
     { "tag": "simplymore:tooltip/diamond", "theme": "diamond", "badges": ["DIAMOND"]},
     { "tag": "simplymore:tooltip/netherite", "theme": "netherite", "badges": ["NETHERITE"]},
     { "tag": "simplymore:tooltip/runic", "theme": "runic", "badges": ["RUNIC"]}
+  ],
+  "components": [
+    { "component": "simplyswords:awakening_route=simplymore:darksent", "theme": "ember" },
+    { "component": "simplyswords:awakening_route=simplymore:holylight", "theme": "readable_rustic" }
   ]
 }

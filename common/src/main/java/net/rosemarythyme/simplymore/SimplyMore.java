@@ -1,14 +1,22 @@
 package net.rosemarythyme.simplymore;
 
+import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.utils.Env;
 import dev.architectury.utils.EnvExecutor;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.client.registry.ClientEntityRendererRegistry;
+import net.rosemarythyme.simplymore.client.registry.ClientItemPropertyRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
 import net.rosemarythyme.simplymore.registry.*;
+import net.rosemarythyme.simplymore.registry.item.AwakeningProfileRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.item.TransformationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class SimplyMore {
@@ -20,25 +28,36 @@ public class SimplyMore {
 	}
 
 	public static void init() {
-		ConfigWrapper.register();
+		LifecycleEvent.SETUP.register(() -> {
+			ConfigWrapper.register();
 
-		StatusEffectRegistry.register();
+			StatusEffectRegistry.register();
 
-		EntityRegistry.register();
-		EnvExecutor.runInEnv(Env.CLIENT, () -> ClientEntityRendererRegistry::register);
+			EntityRegistry.register();
 
-		ItemRegistry.register();
-		ItemRegistry.registerItemGroup();
-		RecipeTypeRegistry.register();
-		TransformationRegistry.register();
+			ItemRegistry.register();
+			RecipeTypeRegistry.register();
+			TransformationRegistry.register();
+			AwakeningProfileRegistry.register();
 
-		ParticleRegistry.register();
+			ParticleRegistry.register();
 
-		ItemComponentRegistry.register();
-		TagRegistry.register();
+			ItemComponentRegistry.register();
+			TagRegistry.register();
 
-		SimplyMore.registerEvents();
+			ItemRegistry.registerItemGroup();
+
+			SimplyMore.registerEvents();
+
+			EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::initClient);
+		});
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static void initClient() {
 		ClientTooltipRegistry.register();
+		ClientEntityRendererRegistry.register();
+		ClientItemPropertyRegistry.register();
 	}
 
 	public static void registerEvents() {

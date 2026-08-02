@@ -8,7 +8,7 @@
 //import net.minecraft.loot.LootPool;
 //import net.minecraft.loot.entry.ItemEntry;
 //import net.minecraft.registry.RegistryKey;
-//import net.rosemarythyme.simplymore.registry.ItemRegistry;
+//import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 //import net.sweenus.simplyswords.util.ModLootTableModifiers;
 //import org.spongepowered.asm.mixin.Mixin;
 //import org.spongepowered.asm.mixin.Unique;
