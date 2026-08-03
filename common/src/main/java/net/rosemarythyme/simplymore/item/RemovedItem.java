@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
 import java.util.function.Supplier;
@@ -20,5 +21,10 @@ public class RemovedItem extends Item {
         if(entity instanceof PlayerEntity playerEntity) {
             playerEntity.getInventory().setStack(slot, newStack.get());
         }
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        return newStack.get().getName();
     }
 }
