@@ -7,8 +7,9 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.text.Text;
 
 public class ConfigWrapper {
-    public static final WeaponAttributesConfig attributes = ConfigApiJava.registerAndLoadConfig(WeaponAttributesConfig::new);
-    public static final UniqueEffectConfig unique = ConfigApiJava.registerAndLoadConfig(UniqueEffectConfig::new);
+    public static final WeaponAttributesConfig ATTRIBUTES = ConfigApiJava.registerAndLoadConfig(WeaponAttributesConfig::new);
+    public static final UniqueEffectConfig UNIQUE = ConfigApiJava.registerAndLoadConfig(UniqueEffectConfig::new);
+    public static final ClientConfig CLIENT = ConfigApiJava.registerAndLoadConfig(ClientConfig::new);
 
     /// Edited from SimplySwords <code>WeaponAttributesConfig#createCondition</code>
     public static ValidatedCondition<Integer> modLoadedCondition(int defaultValue, String mod) {

@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -46,7 +46,7 @@ public class CrowEntity extends TameableEntity implements Ownable {
     private PlayerEntity owner;
     public final AnimationState flapAnimationState = new AnimationState();
 
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static UniqueEffectConfig effect = ConfigWrapper.UNIQUE;
 
     @Override
     protected void initGoals() {

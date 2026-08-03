@@ -6,7 +6,7 @@ import net.sweenus.simplyswords.api.SimplySwordsAPI;
 public class LootRegistry {
     public static void register() {
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.GREAT_SLITHER.get(), 1);
-        SimplySwordsAPI.registerUniqueLoot(ItemRegistry.MOLTEN_FLARE.get(), 1);
+        SimplySwordsAPI.registerUniqueLoot(ItemRegistry.MAGMASEEP.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.GRANDFROST.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.MIMICRY_LONGSWORD.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.GLIMMERSTEP.get(), 1);

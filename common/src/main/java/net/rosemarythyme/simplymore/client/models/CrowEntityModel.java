@@ -7,10 +7,10 @@ import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.animations.CrowEntityAnimations;
-import net.rosemarythyme.simplymore.entity.CrowEntity;
+import net.rosemarythyme.simplymore.entity.legacy.CrowEntity;
 
 public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
-	public static final EntityModelLayer CROW_LAYER = new EntityModelLayer(SimplyMore.identifier("crow"), "bone");
+	public static final EntityModelLayer LAYER = new EntityModelLayer(SimplyMore.identifier("crow"), "bone");
 
 	private final ModelPart main;
 	private final ModelPart head;

@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static UniqueEffectConfig effect = ConfigWrapper.UNIQUE;
 
     public KickbackAreaEffectCloudEntity(World world, double x, double y, double z, int radius, LivingEntity owner) {
         super(world, x, y, z);

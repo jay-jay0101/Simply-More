@@ -14,6 +14,13 @@ loom {
     mixin {
         defaultRefmapName = "simplymore-refmap.json"
     }
+
+    runs {
+        client2 {
+            client()
+            runDir = "run2"
+        }
+    }
 }
 
 configurations {

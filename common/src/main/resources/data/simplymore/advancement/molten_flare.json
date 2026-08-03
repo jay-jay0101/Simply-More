@@ -1,17 +1,17 @@
 {
   "display": {
     "icon": {
-      "id": "simplymore:molten_flare"
+      "id": "simplymore:magmaseep"
     },
     "title": {
-      "translate": "advancements.simplymore.molten_flare.title",
+      "translate": "advancements.simplymore.magmaseep.title",
       "with": []
     },
     "description": {
       "translate": "advancements.simplyswords.find_unique.description",
       "with": [
         {
-          "translate": "item.simplymore.molten_flare"
+          "translate": "item.simplymore.magmaseep"
         }
       ]
     },
@@ -28,7 +28,7 @@
         "items": [
           {
             "items": [
-              "simplymore:molten_flare"
+              "simplymore:magmaseep"
             ]
           }
         ]

@@ -20,7 +20,7 @@ public class SimplyMoreHelperMethods {
 
     // TODO: remove this class
 
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static UniqueEffectConfig effect = ConfigWrapper.UNIQUE;
 
     // TODO: remove
     public static void simplyMore$setAreaEffectCloudParameters(AreaEffectCloudEntity areaEffectCloudEntity, ParticleEffect particleEffect, int radius, float radiusGrowth, int radiusOnUse, LivingEntity owner, int duration) {

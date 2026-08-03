@@ -11,7 +11,7 @@ import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import java.util.List;
 
 public class StickNStoneCompatRegistry {
-    static final WeaponAttributesConfig ATTRIBUTES_CONFIG = ConfigWrapper.attributes;
+    static final WeaponAttributesConfig ATTRIBUTES_CONFIG = ConfigWrapper.ATTRIBUTES;
 
     public static final List<RegistrySupplier<Item>> WOODEN_WEAPONS = ItemRegistry.registerSet(
             SimplyMoreSwordItem.class,

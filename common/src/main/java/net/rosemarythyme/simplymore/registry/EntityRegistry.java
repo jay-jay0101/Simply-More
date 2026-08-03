@@ -5,13 +5,19 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.*;
+import net.rosemarythyme.simplymore.entity.legacy.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityRegistry {
+    private static final List<RegistrySupplier<? extends EntityType<? extends AbstractAbilityPlacementEntity>>> MARKERS = new ArrayList<>();
 
     public static final DeferredRegister<EntityType<?>> ENTITIES =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.ENTITY_TYPE);
@@ -35,11 +41,20 @@ public class EntityRegistry {
             "great_slither_fang"
     );
 
+    public static final RegistrySupplier<EntityType<VolcanicVentEntity>> VOLCANIC_VENT =
+            registerMarkerEntity("volcanic_vent", VolcanicVentEntity::new, 10/16f, 5/16f);
+
+    public static final RegistrySupplier<EntityType<LavaLiquidEntity>> LAVA =
+            registerMarkerEntity("lava", LavaLiquidEntity::new, 1f, 1f);
+
     public static final RegistrySupplier<EntityType<AuraOfPurityEntity>> AURA_OF_PURITY =
             registerMarkerEntity("aura_of_purity", AuraOfPurityEntity::new);
 
     public static final RegistrySupplier<EntityType<AuraOfCorruptionEntity>> AURA_OF_CORRUPTION =
             registerMarkerEntity("aura_of_corruption", AuraOfCorruptionEntity::new);
+
+    public static final RegistrySupplier<EntityType<EruptionEntity>> ERUPTION =
+            registerMarkerEntity("eruption", EruptionEntity::new);
 
     public static final RegistrySupplier<EntityType<JetstreamEntity>> JETSTREAM =
             registerMarkerEntity("jetstream", JetstreamEntity::new);
@@ -53,14 +68,26 @@ public class EntityRegistry {
     }
 
     public static <T extends AbstractAbilityPlacementEntity> RegistrySupplier<EntityType<T>> registerMarkerEntity(String name, EntityType.EntityFactory<T> entity) {
-        return registerType(EntityType.Builder.create(entity, SpawnGroup.MISC)
-                .dimensions(0f, 0f)
-                .maxTrackingRange(0)
-                .disableSummon(), name);
+        return registerMarkerEntity(name, entity, 0, 0);
+    }
+
+    public static <T extends AbstractAbilityPlacementEntity> RegistrySupplier<EntityType<T>> registerMarkerEntity(String name, EntityType.EntityFactory<T> entity, float width, float height) {
+        EntityType.Builder<T> type = EntityType.Builder.create(entity, SpawnGroup.MISC)
+                .dimensions(width, height);
+//                .disableSummon();
+
+        RegistrySupplier<EntityType<T>> supplier = registerType(width == 0 || height  == 0 ? type.maxTrackingRange(0) : type, name);
+
+        MARKERS.add(supplier);
+        return supplier;
     }
 
     public static void register() {
         ENTITIES.register();
         EntityAttributeRegistry.register(CROW, CrowEntity::createMobAttributes);
+
+        for(var marker : MARKERS) {
+            EntityAttributeRegistry.register(marker, LivingEntity::createLivingAttributes);
+        }
     }
 }

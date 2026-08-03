@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -8,6 +8,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
@@ -24,7 +25,17 @@ public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
     }
 
     @Override
-    int getLifespan() {
+    public int getOutroTicks() {
+        return 0;
+    }
+
+    @Override
+    public int getIntroTicks() {
+        return 0;
+    }
+
+    @Override
+    public int getLifespan() {
         return 200;
     }
 

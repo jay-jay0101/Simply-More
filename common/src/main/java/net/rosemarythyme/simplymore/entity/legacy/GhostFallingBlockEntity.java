@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
@@ -14,7 +14,7 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 
 public class GhostFallingBlockEntity extends FallingBlockEntity {
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static UniqueEffectConfig effect = ConfigWrapper.UNIQUE;
 
 
     public GhostFallingBlockEntity(EntityType<? extends GhostFallingBlockEntity> entityType, World world) {

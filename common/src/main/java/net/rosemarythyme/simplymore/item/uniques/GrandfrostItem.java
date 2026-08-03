@@ -58,7 +58,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHand
 
         if(targets.isPopulated()) {
             user.getItemCooldownManager().set(this, UNIQUE_CONFIG.grandfrost.cooldown);
-            AudioVisualUtils.rainParticlesAboveEntity(user, ParticleTypes.SNOWFLAKE, 1000, 3d, 0.25d);
+            AudioVisualUtils.rainParticlesAboveEntity(user, ParticleTypes.SNOWFLAKE, 1000, 3f, 2, 0.25f);
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get()).setPitch(0.3f));
         }
 

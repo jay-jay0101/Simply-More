@@ -9,7 +9,7 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 
 public class StarlightEffect extends StatusEffect {
-    protected static UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+    protected static UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
 
     public StarlightEffect(StatusEffectCategory category, int color) {
         super(category, color);

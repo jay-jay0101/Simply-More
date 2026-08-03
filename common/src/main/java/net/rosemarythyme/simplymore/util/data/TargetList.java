@@ -103,6 +103,10 @@ public record TargetList(Set<LivingEntity> targets) {
     }
 
     public TargetList knockback(Vec3d pos, double strength) {
+        return this.onEach((target) -> AttackUtils.knockback(pos, target, strength));
+    }
+
+    public TargetList pull(Vec3d pos, double strength) {
         return this.onEach((target) -> AttackUtils.knockback(pos, target, -strength));
     }
 

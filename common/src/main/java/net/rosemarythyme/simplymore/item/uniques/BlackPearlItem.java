@@ -20,7 +20,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.entity.BlackPearlFireballEntity;
+import net.rosemarythyme.simplymore.entity.legacy.BlackPearlFireballEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.ConfigUtils;

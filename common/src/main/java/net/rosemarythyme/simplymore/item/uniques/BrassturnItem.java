@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
-import net.rosemarythyme.simplymore.entity.JetstreamEntity;
+import net.rosemarythyme.simplymore.entity.legacy.JetstreamEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
@@ -40,7 +40,7 @@ import java.util.List;
 
 
 public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackModifierItem {
-    WeaponAttributesConfig attributes = ConfigWrapper.attributes;
+    WeaponAttributesConfig attributes = ConfigWrapper.ATTRIBUTES;
 
     public BrassturnItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed);

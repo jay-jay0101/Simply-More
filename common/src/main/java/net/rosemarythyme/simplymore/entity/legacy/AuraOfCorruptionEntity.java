@@ -1,12 +1,14 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Arm;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
@@ -23,7 +25,7 @@ public class AuraOfCorruptionEntity extends AbstractAbilityPlacementEntity {
     }
 
     @Override
-    int getLifespan() {
+    public int getLifespan() {
         return 200;
     }
 
@@ -43,5 +45,20 @@ public class AuraOfCorruptionEntity extends AbstractAbilityPlacementEntity {
         AttackUtils.cylinderAttack(owner, this.getPos(), range, 2, AttackUtils.AttackTarget.ALLIES_AND_USER)
             .applyDurationDependantEffect(StatusEffects.WITHER, 20, 1)
             .applyEffect(StatusEffects.WEAKNESS, 40, 0);
+    }
+
+    @Override
+    public int getOutroTicks() {
+        return 0;
+    }
+
+    @Override
+    public int getIntroTicks() {
+        return 0;
+    }
+
+    @Override
+    public Arm getMainArm() {
+        return null;
     }
 }

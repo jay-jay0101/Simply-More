@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
@@ -27,7 +28,7 @@ public class RiftEntity extends AbstractAbilityPlacementEntity {
     }
 
     @Override
-    protected void writeCustomDataToNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
 
         NbtCompound colorNbt = new NbtCompound();
@@ -39,7 +40,7 @@ public class RiftEntity extends AbstractAbilityPlacementEntity {
     }
 
     @Override
-    protected void readCustomDataFromNbt(NbtCompound nbt) {
+    public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
 
         if(nbt.contains("Color")) {
@@ -55,7 +56,17 @@ public class RiftEntity extends AbstractAbilityPlacementEntity {
     }
 
     @Override
-    int getLifespan() {
+    public int getOutroTicks() {
+        return 0;
+    }
+
+    @Override
+    public int getIntroTicks() {
+        return 0;
+    }
+
+    @Override
+    public int getLifespan() {
         return 300;
     }
 

@@ -36,7 +36,7 @@ public class UniqueEffectConfig extends Config {
     public LustrousMoxieItem.EffectSettings lustrous_moxie = new LustrousMoxieItem.EffectSettings();
     public MatterbaneItem.EffectSettings matterbane = new MatterbaneItem.EffectSettings();
     public MimicryItem.EffectSettings mimicry = new MimicryItem.EffectSettings();
-    public MoltenFlareItem.EffectSettings molten_flare = new MoltenFlareItem.EffectSettings();
+    public MagmaseepItem.EffectSettings magmaseep = new MagmaseepItem.EffectSettings();
     public RuyiJinguBangItem.EffectSettings ruyi_jingu_bang = new RuyiJinguBangItem.EffectSettings();
     public MyrmedgeItem.EffectSettings myrmedge = new MyrmedgeItem.EffectSettings();
     public SerpentineValourItem.EffectSettings serpentine_valour = new SerpentineValourItem.EffectSettings();

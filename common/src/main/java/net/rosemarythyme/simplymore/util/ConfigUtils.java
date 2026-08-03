@@ -18,7 +18,7 @@ public class ConfigUtils {
         Identifier effectId = Registries.STATUS_EFFECT.getId(effect);
 
         if (shouldIncludeGlobal) {
-            if(ConfigWrapper.unique.globalBlacklist.contains(effectId)) return true;
+            if(ConfigWrapper.UNIQUE.globalBlacklist.contains(effectId)) return true;
         }
 
         return set.contains(effectId);

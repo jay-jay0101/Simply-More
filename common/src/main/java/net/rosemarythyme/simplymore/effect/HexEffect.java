@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 
 public class HexEffect extends StatusEffect {
 
-    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
 
     public HexEffect(StatusEffectCategory category, int color) {
         super(category, color);

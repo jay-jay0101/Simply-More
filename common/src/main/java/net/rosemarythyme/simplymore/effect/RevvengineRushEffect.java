@@ -15,7 +15,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.entity.KickbackAreaEffectCloudEntity;
+import net.rosemarythyme.simplymore.entity.legacy.KickbackAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.uniques.RevvengineItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -32,7 +32,7 @@ public class RevvengineRushEffect extends StatusEffect {
         super(category, color);
     }
 
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static UniqueEffectConfig effect = ConfigWrapper.UNIQUE;
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {

@@ -24,11 +24,11 @@ public abstract class PlayerEntityMixin {
 
 		if(player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof CindergorgeItem || player.getStackInHand(Hand.OFF_HAND).getItem() instanceof CindergorgeItem ) {
 			Entity attacker = source.getAttacker();
-			if(attacker != null && MathUtils.chance(player, ConfigWrapper.unique.cindergorge.chance)) {
+			if(attacker != null && MathUtils.chance(player, ConfigWrapper.UNIQUE.cindergorge.chance)) {
 				if(attacker.isOnFire()) {
-					attacker.damage(player.getDamageSources().onFire(), ConfigWrapper.unique.cindergorge.fireThornsDamage);
+					attacker.damage(player.getDamageSources().onFire(), ConfigWrapper.UNIQUE.cindergorge.fireThornsDamage);
 				} else {
-					attacker.damage(player.getDamageSources().thorns(attacker), ConfigWrapper.unique.cindergorge.thornsDamage);
+					attacker.damage(player.getDamageSources().thorns(attacker), ConfigWrapper.UNIQUE.cindergorge.thornsDamage);
 				}
 			}
 		}

@@ -9,7 +9,7 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
 
 public class SoulForesightEffect extends StatusEffect {
-    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+    public static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
 
     public SoulForesightEffect(StatusEffectCategory category, int color) {
         super(category, color);

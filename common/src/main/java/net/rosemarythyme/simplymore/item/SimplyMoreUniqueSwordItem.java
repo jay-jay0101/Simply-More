@@ -25,7 +25,7 @@ import net.sweenus.simplyswords.item.UniqueSwordItem;
 import java.util.List;
 
 public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
-    protected static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+    protected static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
 
     public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, new Item.Settings().fireproof().rarity(Rarity.EPIC)

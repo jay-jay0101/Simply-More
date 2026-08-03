@@ -10,8 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.util.HelperMethods;
@@ -43,6 +47,14 @@ public class AttackUtils {
             this.canHitUser = canHitUser;
             this.canHitPetOrMount = canHitPetOrMount;
         }
+    }
+
+    public static float scaleDamage(String spellSchool, LivingEntity actor, ItemStack stack, float attackScaling, float spellScaling) {
+        return Math.max(Math.max(attackScaling, spellScaling), HelperMethods.abilityScaledDamage(spellSchool, actor, stack, attackScaling, spellScaling));
+    }
+
+    public static float scaleDamage(String spellSchool, LivingEntity actor, float attackScaling, float spellScaling) {
+        return Math.max(Math.max(attackScaling, spellScaling), HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling));
     }
 
     public static TypedActionResult<ItemStack> holdToUse(PlayerEntity user, Hand hand) {
@@ -91,6 +103,7 @@ public class AttackUtils {
 
     public static boolean canTarget(LivingEntity attacker, LivingEntity target, AttackTarget targetType) {
         if(attacker == null || target == null) return false;
+        if(!target.canHit()) return false;
 
         if(!targetType.canHitUser && attacker == target) return false;
 
@@ -167,9 +180,26 @@ public class AttackUtils {
         if(target.isBlocking() && target instanceof PlayerEntity playerEntity) playerEntity.disableShield();
     }
 
-    public static void spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner) {
-        owner.getWorld().spawnEntity(ability);
+    public static boolean spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner) {
+        return spawnAbility(ability, owner, false);
     }
+
+    public static boolean spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner, boolean onGround) {
+        if(onGround) {
+            Vec3d position = ability.getPos();
+
+            BlockHitResult block = owner.getWorld().raycast(new RaycastContext(position, position.offset(Direction.DOWN, 10), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ability));
+            if(block.getType() == HitResult.Type.MISS) {
+                return false;
+            }
+
+            ability.setPos(block.getPos().getX(), block.getPos().getY(), block.getPos().getZ());
+        }
+
+        owner.getWorld().spawnEntity(ability);
+        return true;
+    }
+
 
     public static void knockback(LivingEntity attacker, LivingEntity target, double scale) {
         Vec3d attackerPos = attacker.getPos();
@@ -180,7 +210,7 @@ public class AttackUtils {
         Vec3d targetPos = target.getPos();
 
         Vec3d direction = MathUtils.normalisedDirectionBetween(attackerPos, targetPos, false);
-        target.addVelocity(direction.multiply(scale).add(0, 0.2, 0));
+        target.setVelocity(direction.multiply(scale).add(0, 0.2, 0));
         target.velocityModified = true;
     }
 }

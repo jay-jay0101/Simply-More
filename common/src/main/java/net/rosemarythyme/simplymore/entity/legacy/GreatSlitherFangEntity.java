@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -14,7 +14,7 @@ import net.rosemarythyme.simplymore.util.data.TargetList;
 
 public class GreatSlitherFangEntity extends EvokerFangsEntity {
     LivingEntity owner;
-    protected static UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+    protected static UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
 
 
     public GreatSlitherFangEntity(World world, double x, double y, double z, float yaw, int warmup, LivingEntity owner) {

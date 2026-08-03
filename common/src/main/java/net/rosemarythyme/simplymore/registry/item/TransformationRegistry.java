@@ -7,7 +7,7 @@ public class TransformationRegistry {
 
     public static void register() {
         SimplySwordsAPI.registerTransformation(Blocks.SLIME_BLOCK, ItemRegistry.GREAT_SLITHER.getId());
-        SimplySwordsAPI.registerTransformation(Blocks.BASALT, ItemRegistry.MOLTEN_FLARE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.BASALT, ItemRegistry.MAGMASEEP.getId());
         SimplySwordsAPI.registerTransformation(Blocks.BLUE_ICE, ItemRegistry.GRANDFROST.getId());
         SimplySwordsAPI.registerTransformation(Blocks.GLOW_LICHEN, ItemRegistry.MIMICRY_LONGSWORD.getId());
         SimplySwordsAPI.registerTransformation(Blocks.GLOWSTONE, ItemRegistry.GLIMMERSTEP.getId());

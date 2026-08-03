@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ThePanItem extends SimplyMoreSwordItem {
 
-    protected static final UniqueEffectConfig UNIQUE_EFFECT = ConfigWrapper.unique;
+    protected static final UniqueEffectConfig UNIQUE_EFFECT = ConfigWrapper.UNIQUE;
 
     public ThePanItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed, new Item.Settings().fireproof().rarity(Rarity.COMMON));

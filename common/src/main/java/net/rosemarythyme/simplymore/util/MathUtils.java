@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
@@ -124,5 +125,16 @@ public class MathUtils {
             -Math.sin(radianPitch),
             Math.cos(radianYaw) * cosPitch
         );
+    }
+
+    public static double getRiseFall(AbstractAbilityPlacementEntity entity) {
+        if(entity.isActive()) return 0;
+        int age = entity.getAge();
+
+        if(age < 0) {
+            return clampedLerp(age, -entity.getIntroTicks(), 0, -1f, 0f);
+        }
+
+        return -clampedLerp(age, entity.getLifespan(), entity.getLifespan() + entity.getOutroTicks(), 0f, 1f);
     }
 }

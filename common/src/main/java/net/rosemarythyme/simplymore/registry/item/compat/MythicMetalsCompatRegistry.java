@@ -18,7 +18,7 @@ import net.sweenus.simplyswords.config.Config;
 import java.util.List;
 
 public class MythicMetalsCompatRegistry {
-    private static final WeaponAttributesConfig ATTIRBUTES_CONFIG = ConfigWrapper.attributes;
+    private static final WeaponAttributesConfig ATTIRBUTES_CONFIG = ConfigWrapper.ATTRIBUTES;
 
     public static final List<RegistrySupplier<Item>> ADAMANTITE_WEAPONS = ItemRegistry.registerSet(
             SimplyMoreSwordItem.class,

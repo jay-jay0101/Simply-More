@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.legacy;
 
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.AreaEffectCloudEntity;
@@ -25,7 +25,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
     int version;
     int time = 0;
-    protected static UniqueEffectConfig effect = ConfigWrapper.unique;
+    protected static UniqueEffectConfig effect = ConfigWrapper.UNIQUE;
     final DustParticleEffect particleEffect = new DustParticleEffect(new Vector3f(0f, 0.6f, 0.2f), 1);
     LivingEntity target;
     double distance;

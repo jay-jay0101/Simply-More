@@ -5,12 +5,12 @@ import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
-import net.rosemarythyme.simplymore.entity.CrowEntity;
+import net.rosemarythyme.simplymore.entity.legacy.CrowEntity;
 
 public class CrowEntityRenderer extends MobEntityRenderer<CrowEntity, CrowEntityModel> {
 
     public CrowEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new CrowEntityModel(context.getPart(CrowEntityModel.CROW_LAYER)), 0.1f);
+        super(context, new CrowEntityModel(context.getPart(CrowEntityModel.LAYER)), 0.1f);
     }
 
     @Override

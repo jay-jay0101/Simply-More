@@ -16,7 +16,7 @@ import net.rosemarythyme.simplymore.effect.*;
 
 
 public class StatusEffectRegistry {
-    private static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.unique;
+    private static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
 
     public static final DeferredRegister<StatusEffect> EFFECTS =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.STATUS_EFFECT);
@@ -117,16 +117,7 @@ public class StatusEffectRegistry {
             "venom",
             new VenomPoisonEffect(StatusEffectCategory.HARMFUL,7350627)
     );
-    public static final RegistrySupplier<StatusEffect> MOLTEN_FLARE = registerEffect(
-            "molten_flare",
-            new MoltenFlareEffect(StatusEffectCategory.BENEFICIAL,13570080)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            SimplyMore.identifier("molten_flare"),
-                            UNIQUE_CONFIG.molten_flare.activeAttackSpeedBonus,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
-    );
+
     public static final RegistrySupplier<StatusEffect> CHILL = registerEffect(
             "chill",
             new ChillEffect(StatusEffectCategory.HARMFUL,10875635)

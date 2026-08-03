@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemRegistry {
-    static final WeaponAttributesConfig ATTRIBUTES_CONFIG = ConfigWrapper.attributes;
+    static final WeaponAttributesConfig ATTRIBUTES_CONFIG = ConfigWrapper.ATTRIBUTES;
     static final WeaponAttributesConfig.WeaponTypesDamage TYPE_DAMAGE_CONFIG = ATTRIBUTES_CONFIG.weaponTypesDamage;
     static final WeaponAttributesConfig.WeaponTypesSwingSpeed TYPE_SPEED_CONFIG = ATTRIBUTES_CONFIG.weaponTypesSwingSpeed;
 
@@ -118,13 +118,19 @@ public class ItemRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> MOLTEN_FLARE = ITEMS.register(
-            "molten_flare",
-            () -> new MoltenFlareItem(
+    public static final RegistrySupplier<Item> MAGMASEEP = ITEMS.register(
+            "magmaseep",
+            () -> new MagmaseepItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
                     ATTRIBUTES_CONFIG.uniqueWeaponsDamage.moltenflare_damage_modifier,
                     ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.moltenflare_attack_speed
             )
+    );
+
+    @Deprecated
+    public static final RegistrySupplier<Item> MOLTEN_FLARE = ITEMS.register(
+            "molten_flare",
+            () -> new RemovedItem(() -> new ItemStack(MAGMASEEP.get()))
     );
 
     public static final RegistrySupplier<Item> GRANDFROST = ITEMS.register(
@@ -687,7 +693,7 @@ public class ItemRegistry {
         }
         
         addToItemGroup(GREAT_SLITHER);
-        addToItemGroup(MOLTEN_FLARE);
+        addToItemGroup(MAGMASEEP);
         addToItemGroup(GRANDFROST);
         addToItemGroup(MIMICRY_LONGSWORD);
         addToItemGroup(GLIMMERSTEP);

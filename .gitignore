@@ -29,6 +29,7 @@ bin/
 *.DS_Store
 
 run/
+run2/
 
 # java
 
