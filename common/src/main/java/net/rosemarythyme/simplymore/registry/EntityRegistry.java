@@ -73,8 +73,8 @@ public class EntityRegistry {
 
     public static <T extends AbstractAbilityPlacementEntity> RegistrySupplier<EntityType<T>> registerMarkerEntity(String name, EntityType.EntityFactory<T> entity, float width, float height) {
         EntityType.Builder<T> type = EntityType.Builder.create(entity, SpawnGroup.MISC)
-                .dimensions(width, height);
-//                .disableSummon();
+                .dimensions(width, height)
+                .disableSummon();
 
         RegistrySupplier<EntityType<T>> supplier = registerType(width == 0 || height  == 0 ? type.maxTrackingRange(0) : type, name);
 

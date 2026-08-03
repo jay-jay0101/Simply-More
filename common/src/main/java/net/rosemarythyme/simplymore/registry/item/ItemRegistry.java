@@ -299,6 +299,13 @@ public class ItemRegistry {
             () -> new RemovedItem(() -> getAwakenedStack(RUPTURED_IDOL, 8, AwakeningProfileRegistry.DARKSENT))
     );
 
+    @Deprecated
+    public static final RegistrySupplier<Item> SCARAB_ROLLER = ITEMS.register(
+            "scarab_roller",
+            () -> new RemovedItem(() -> new ItemStack(MYRMEDGE.get()))
+    );
+
+
     public static final RegistrySupplier<Item> BOAS_FANG = ITEMS.register(
             "boas_fang",
             () -> new BoasFangItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
@@ -618,6 +625,12 @@ public class ItemRegistry {
                     ATTRIBUTES_CONFIG.weaponTypesDamage.deerhorns_damage_modifier + ATTRIBUTES_CONFIG.uniqueWeaponsDamage.mimicry_damage_modifier,
                     ATTRIBUTES_CONFIG.weaponTypesSwingSpeed.deerhorns_attack_speed
             )
+    );
+
+    @Deprecated
+    public static final RegistrySupplier<Item> MIMICRY = ITEMS.register(
+            "mimicry",
+            () -> new RemovedItem(() -> new ItemStack(MIMICRY_LONGSWORD.get()))
     );
 
     public static void register() {
