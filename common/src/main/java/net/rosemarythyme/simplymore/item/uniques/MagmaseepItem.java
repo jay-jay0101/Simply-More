@@ -25,6 +25,7 @@ import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
+import net.sweenus.simplyswords.client.util.TooltipUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
@@ -54,7 +55,7 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
 
             AttackUtils.lineAttack(attacker, attacker.getPos(), attacker.getYaw(), attacker.getPitch(), attacker.distanceTo(target),1, AttackUtils.AttackTarget.ENEMIES)
                     .knockback(attacker, SETTINGS.knockback)
-                    .forceDamage(AttackUtils.scaleDamage("fire", attacker, stack, 0, SETTINGS.eruptionDamage), attacker.getDamageSources().inFire());
+                    .forceDamage(AttackUtils.scaleDamage("fire", attacker, stack, 0, 1, SETTINGS.eruptionDamage), attacker.getDamageSources().inFire());
 
             AttackUtils.spawnAbility(new EruptionEntity(attacker, attacker.getPos()), attacker);
             AttackUtils.spawnAbility(new EruptionEntity(attacker, target.getPos()), attacker);
@@ -72,13 +73,11 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
 
     @Override
     public boolean canActivate(WeaponAbilityContext context) {
-        return true;
+        return context.actor().isAlive();
     }
 
     @Override
     public boolean activate(WeaponAbilityContext context) {
-        if(!context.actor().isAlive()) return false;
-
         if(AttackUtils.spawnAbility(new VolcanicVentEntity(context.actor(), context.origin()), context.actor(), true)) {
             AudioVisualUtils.applyScreenshake(context.world(), context.origin(), context.actor(), 12, 1, 10);
             AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.7f));
@@ -108,8 +107,10 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
         tooltip.add(Text.translatable("item.simplymore.magmaseep.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.magmaseep.tooltip3").setStyle(Styles.TEXT));
+        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+        TooltipUtils.appendSpellScaleTooltip(tooltip, "fire");
     }
 
     public static class EffectSettings extends TooltipSettings {

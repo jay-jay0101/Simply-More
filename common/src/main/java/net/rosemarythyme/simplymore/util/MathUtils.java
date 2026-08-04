@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
@@ -125,6 +126,15 @@ public class MathUtils {
             -Math.sin(radianPitch),
             Math.cos(radianYaw) * cosPitch
         );
+    }
+
+    public static Pair<Float, Float> getYawAndPitch(Vec3d velocity) {
+        Vec3d dir = velocity.normalize();
+
+        float yaw = (float) Math.toDegrees(Math.atan2(-dir.x, dir.z));
+        float pitch = (float) Math.toDegrees(Math.asin(-dir.y));
+
+        return new Pair<>(yaw, pitch);
     }
 
     public static double getRiseFall(AbstractAbilityPlacementEntity entity) {

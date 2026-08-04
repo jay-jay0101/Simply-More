@@ -48,6 +48,7 @@ public class SimplyMore {
 			LootRegistry.register();
 
 			SimplyMore.registerEvents();
+			SoundEventRegistry.register();
 
 			EnvExecutor.runInEnv(Env.SERVER, () -> SimplyMore::initServer);
 			EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::initClient);

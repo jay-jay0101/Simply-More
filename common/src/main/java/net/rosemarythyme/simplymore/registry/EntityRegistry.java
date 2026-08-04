@@ -29,6 +29,16 @@ public class EntityRegistry {
             "crow"
     );
 
+    public static final RegistrySupplier<EntityType<CannonballEntity>> CANNONBALL = registerType(
+            EntityType.Builder.<CannonballEntity>create(CannonballEntity::new, SpawnGroup.MISC)
+                    .dimensions(10/16f, 10/16f)
+                    .makeFireImmune()
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1),
+            "cannonball"
+    );
+
     public static final RegistrySupplier<EntityType<GhostFallingBlockEntity>> GHOST_FALLING_BLOCK = registerType(
             EntityType.Builder.<GhostFallingBlockEntity>create(GhostFallingBlockEntity::new, SpawnGroup.MISC)
                     .dimensions(1f, 1f),

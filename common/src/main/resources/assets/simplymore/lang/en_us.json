@@ -241,7 +241,7 @@
   "item.simplymore.black_pearl": "Black Pearl",
   "item.simplymore.black_pearl.tooltip1": "Unique Effect: Plunder",
   "item.simplymore.black_pearl.tooltip2": "Chance on hit to steal a positive status effect.",
-  "item.simplymore.black_pearl.tooltip4": "Blast forward an explosive cannonball. This can damage you.",
+  "item.simplymore.black_pearl.tooltip3": "Fire forwards an explosive cannonball with heavy recoil.",
 
   "item.simplymore.the_pan": "The Pan",
   "item.simplymore.the_pan.tooltip1": "Unique Effect: Kitchen Magic",
@@ -827,6 +827,11 @@
   "simplymore.unique_effect.black_pearl": "§6[Black Pearl]§7",
   "simplymore.unique_effect.black_pearl.chance": "Plunder Chance",
   "simplymore.unique_effect.black_pearl.cooldown": "Fireball Cooldown",
+  "simplymore.unique_effect.black_pearl.maxLevel": "Plunder max Effect Level",
+  "simplymore.unique_effect.black_pearl.maxDuration": "Plunder max Effect Duration",
+  "simplymore.unique_effect.black_pearl.cannonballDamage": "Cannonball Damage",
+  "simplymore.unique_effect.black_pearl.cannonballKnockback": "Cannonball Enemy Knockback",
+  "simplymore.unique_effect.black_pearl.cannonballRecoil": "Cannonball Recoil",
   "simplymore.unique_effect.black_pearl.includeGlobalBlacklist": "Plunder includes Global Effect Blacklist",
   "simplymore.unique_effect.black_pearl.blacklist": "Plunder Effect Blacklist",
 

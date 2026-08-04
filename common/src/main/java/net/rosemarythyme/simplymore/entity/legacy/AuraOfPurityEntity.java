@@ -59,7 +59,7 @@ public class AuraOfPurityEntity extends AbstractAbilityPlacementEntity {
         LivingEntity owner = this.getOwner();
         AttackUtils.cylinderAttack(owner, this.getPos(), range, 2, AttackUtils.AttackTarget.ALLIES_AND_USER)
             .applyEffect(StatusEffects.STRENGTH, 15, 1)
-            .removeStatusEffects(PredicateUtils.createForEffectBlacklist(UNIQUE_CONFIG.holylight.blacklist, UNIQUE_CONFIG.holylight.includeGlobalBlacklist)
+            .removeStatusEffects(PredicateUtils.createForEffectBlacklist(null, false)
                     .and(PredicateUtils.HARMFUL_EFFECT)
         );
     }

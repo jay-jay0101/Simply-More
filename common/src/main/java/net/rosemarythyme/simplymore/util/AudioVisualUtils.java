@@ -22,11 +22,11 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import java.util.List;
 
 public class AudioVisualUtils {
-    public static void applyScreenshake(ServerWorld world, Vec3d pos, LivingEntity attacker, double range, float intensity, int duration) {;
+    public static void applyScreenshake(ServerWorld world, Vec3d pos, LivingEntity attacker, double range, float intensity, int duration) {
         List<ServerPlayerEntity> players = world.getPlayers().stream().filter((player) -> player.squaredDistanceTo(pos) < range * range && player != attacker).toList();
         NetworkManager.sendToPlayers(players, new S2CScreenShakePacket(intensity, duration, false));
 
-        if(attacker instanceof ServerPlayerEntity player) {
+        if(attacker instanceof ServerPlayerEntity player && player.squaredDistanceTo(pos) < range * range) {
             NetworkManager.sendToPlayer(player, new S2CScreenShakePacket(intensity, duration, true));
         }
     }
@@ -63,7 +63,7 @@ public class AudioVisualUtils {
         world.spawnParticles(particleType, center.getX(), center.getY(), center.getZ(), count, horizontalRange, verticalRange, horizontalRange, speed);
     }
 
-    public static void particleAroundEntity(LivingEntity entity, ParticleEffect particleType, int count, double delta, double speed) {
+    public static void particleAroundEntity(Entity entity, ParticleEffect particleType, int count, double delta, double speed) {
         if (!(entity.getWorld() instanceof ServerWorld world)) return;
 
         world.spawnParticles(particleType, entity.getX(), entity.getEyeY(), entity.getZ(), count, delta, delta, delta, speed);

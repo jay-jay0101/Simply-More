@@ -94,7 +94,7 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
 
     private void lavaRain(LivingEntity owner, float range) {
         AttackUtils.cylinderAttack(owner, this.getPos(), range, 5, AttackUtils.AttackTarget.ENEMIES)
-                .damage(AttackUtils.scaleDamage("fire", owner, 0, MagmaseepItem.SETTINGS.lavaRainDamage), this.getDamageSources().inFire())
+                .damage(AttackUtils.scaleDamage("fire", owner, 0, 1, MagmaseepItem.SETTINGS.lavaRainDamage), this.getDamageSources().inFire())
                 .setOnFireFor(2);
 
         timeSteppedOn = 0;
@@ -113,7 +113,7 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
 
         timeSteppedOn = 0;
         AttackUtils.cylinderAttack(owner, getPos(), MagmaseepItem.SETTINGS.lavaRainRange, 5, AttackUtils.AttackTarget.ENEMIES)
-                .forceDamage(AttackUtils.scaleDamage("fire", owner, 0, MagmaseepItem.SETTINGS.ventExplosionDamage), this.getDamageSources().inFire())
+                .forceDamage(AttackUtils.scaleDamage("fire", owner, 0, 1, MagmaseepItem.SETTINGS.ventExplosionDamage), this.getDamageSources().inFire())
                 .knockback(getPos(), MagmaseepItem.SETTINGS.ventExplosionKnockback);
 
         standingOn.addVelocity(0, 1.2f, 0);

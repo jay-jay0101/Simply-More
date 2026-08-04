@@ -13,8 +13,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.config.ConfigWrapper;
-import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,11 +22,6 @@ import java.util.UUID;
 public abstract class AbstractAbilityPlacementEntity extends LivingEntity implements Ownable {
     protected UUID ownerUuid;
     protected int age = -getIntroTicks();
-    protected static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
-
-    public void removeAge(int extraTicks) {
-        age -= extraTicks;
-    }
 
     public int getAge() {
         return age;
@@ -37,7 +30,7 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
     public abstract int getOutroTicks();
     public abstract int getIntroTicks();
 
-    protected void serverTick(LivingEntity owner) {};
+    protected void serverTick(LivingEntity owner) {}
 
     @Override
     protected void pushAway(Entity entity) {}

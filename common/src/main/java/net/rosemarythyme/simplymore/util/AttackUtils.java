@@ -17,6 +17,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
+import net.rosemarythyme.simplymore.entity.AbstractAbilityProjectileEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.util.HelperMethods;
 
@@ -49,12 +50,12 @@ public class AttackUtils {
         }
     }
 
-    public static float scaleDamage(String spellSchool, LivingEntity actor, ItemStack stack, float attackScaling, float spellScaling) {
-        return Math.max(Math.max(attackScaling, spellScaling), HelperMethods.abilityScaledDamage(spellSchool, actor, stack, attackScaling, spellScaling));
+    public static float scaleDamage(String spellSchool, LivingEntity actor, ItemStack stack, float attackScaling, float spellScaling, float baseDamage) {
+        return HelperMethods.abilityScaledDamage(spellSchool, actor, stack, attackScaling, spellScaling) * baseDamage;
     }
 
-    public static float scaleDamage(String spellSchool, LivingEntity actor, float attackScaling, float spellScaling) {
-        return Math.max(Math.max(attackScaling, spellScaling), HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling));
+    public static float scaleDamage(String spellSchool, LivingEntity actor, float attackScaling, float spellScaling, float baseDamage) {
+        return HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling) * baseDamage;
     }
 
     public static TypedActionResult<ItemStack> holdToUse(PlayerEntity user, Hand hand) {
@@ -182,6 +183,11 @@ public class AttackUtils {
 
     public static boolean spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner) {
         return spawnAbility(ability, owner, false);
+    }
+
+    public static boolean spawnProjectile(AbstractAbilityProjectileEntity ability, LivingEntity owner) {
+        owner.getWorld().spawnEntity(ability);
+        return true;
     }
 
     public static boolean spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner, boolean onGround) {

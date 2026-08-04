@@ -6,8 +6,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EvokerFangsEntityRenderer;
 import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
+import net.rosemarythyme.simplymore.client.models.CannonballModel;
 import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
 import net.rosemarythyme.simplymore.client.models.VolcanicVentModel;
+import net.rosemarythyme.simplymore.client.render.entity.CannonballRenderer;
 import net.rosemarythyme.simplymore.client.render.entity.CrowEntityRenderer;
 import net.rosemarythyme.simplymore.client.render.entity.LavaRenderer;
 import net.rosemarythyme.simplymore.client.render.entity.VolcanicVentRenderer;
@@ -26,5 +28,8 @@ public class ClientEntityRendererRegistry {
         EntityRendererRegistry.register(EntityRegistry.GHOST_FALLING_BLOCK, FallingBlockEntityRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.LAVA, LavaRenderer::new);
+
+        EntityModelLayerRegistry.register(CannonballModel.LAYER, CannonballModel::getTexturedModelData);
+        EntityRendererRegistry.register(EntityRegistry.CANNONBALL, CannonballRenderer::new);
     }
 }

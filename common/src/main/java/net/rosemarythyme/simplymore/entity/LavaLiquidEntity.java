@@ -39,7 +39,7 @@ public class LavaLiquidEntity extends AbstractLiquidEntity {
     @Override
     public void hit(LivingEntity owner, TargetList hitList) {
         hitList.filterByTargetType(owner, AttackUtils.AttackTarget.ENEMIES)
-                .damage(AttackUtils.scaleDamage("fire", owner, 0, MagmaseepItem.SETTINGS.lavaDamage), owner.getDamageSources().inFire())
+                .damage(AttackUtils.scaleDamage("fire", owner, 0, 1, MagmaseepItem.SETTINGS.lavaDamage), owner.getDamageSources().inFire())
                 .setOnFireFor(5)
                 .applyEffect(StatusEffects.SLOWNESS, 10, 2);
     }
