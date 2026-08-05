@@ -80,7 +80,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
             user.addStatusEffect(
                     new StatusEffectInstance(
                             StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING),
-                            AttackUtils.INFINITE_DURATION,
+                            AttackUtils.PSEUDOINFINITE_DURATION,
                             getAmplifier(stack.getItem())
                     )
             );

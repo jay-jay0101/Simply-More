@@ -1,13 +1,19 @@
 package net.rosemarythyme.simplymore.util;
 
+import net.minecraft.block.ShapeContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 
 public class EntityUtils {
     public static boolean isRidingLivingEntity(LivingEntity entity) {
@@ -36,6 +42,11 @@ public class EntityUtils {
         return entity.getStackInHand(Hand.MAIN_HAND).equals(stack);
     }
 
+    public static boolean isHolding(LivingEntity entity, Item item) {
+        if(entity.getStackInHand(Hand.MAIN_HAND).getItem() == item) return true;
+        return !(item instanceof TwoHandedWeapon) && entity.getStackInHand(Hand.OFF_HAND).getItem() == item;
+    }
+
     public static void spawnAround(World world, LivingEntity entity, Vec3d pos, double horizontalRange, double verticalRange) {
         double deltaX = (world.getRandom().nextDouble() * horizontalRange * 2) - horizontalRange;
         double deltaY = (world.getRandom().nextDouble() * verticalRange * 2) - verticalRange;
@@ -43,5 +54,12 @@ public class EntityUtils {
 
         entity.setPos(pos.getX() + deltaX, pos.getY() + deltaY, pos.getZ() + deltaZ);
         world.spawnEntity(entity);
+    }
+
+    public static Vec3d rangeAroundPoint(Vec3d pos, Entity entity, float yaw, float idealRange) {
+        Vec3d targetPos = pos.add(MathUtils.getDirectionalVector(yaw, 0).multiply(idealRange));
+        BlockHitResult hit = entity.getWorld().raycast(new RaycastContext(pos, targetPos, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ShapeContext.of(entity)));
+
+        return hit.getPos();
     }
 }

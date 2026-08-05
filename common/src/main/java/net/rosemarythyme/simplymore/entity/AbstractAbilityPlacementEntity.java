@@ -2,6 +2,9 @@ package net.rosemarythyme.simplymore.entity;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -17,14 +20,21 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public abstract class AbstractAbilityPlacementEntity extends LivingEntity implements Ownable {
-    protected UUID ownerUuid;
+    protected static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(AbstractAbilityPlacementEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     protected int age = -getIntroTicks();
 
     public int getAge() {
         return age;
+    }
+
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(OWNER, Optional.empty());
     }
 
     public abstract int getOutroTicks();
@@ -117,7 +127,7 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
 
     public AbstractAbilityPlacementEntity(@NotNull LivingEntity owner, Vec3d position, EntityType<? extends LivingEntity> entityType) {
         this(entityType, owner.getWorld());
-        this.ownerUuid = owner.getUuid();
+        this.dataTracker.set(OWNER, Optional.of(owner.getUuid()));
         this.refreshPositionAfterTeleport(position);
     }
 
@@ -151,13 +161,16 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
         serverTick(owner);
     }
 
+    public Optional<UUID> getOwnerUUID() {
+        return this.dataTracker.get(OWNER);
+    }
+
+
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
 
-        if(ownerUuid != null) {
-            nbt.putUuid("Owner", ownerUuid);
-        }
+        this.getOwnerUUID().ifPresent(uuid -> nbt.putUuid("owner", uuid));
 
         nbt.putInt("Age", age);
     }
@@ -166,23 +179,19 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
 
-        if(nbt.containsUuid("Owner")) {
-            this.ownerUuid = nbt.getUuid("Owner");
+        if (nbt.containsUuid("owner")) {
+            this.dataTracker.set(OWNER, Optional.of(nbt.getUuid("owner")));
         } else {
-            this.ownerUuid = null;
-        }
-
-        if(nbt.contains("Age")) {
-            this.age = nbt.getInt("Age");
-        } else {
-            this.age = 0;
+            this.dataTracker.set(OWNER, Optional.empty());
         }
     }
 
     @Override
     public @Nullable LivingEntity getOwner() {
-        if(ownerUuid == null) return null;
-        Entity owner = getServerWorld().getEntity(ownerUuid);
+        Optional<UUID> uuid = getOwnerUUID();
+
+        if(uuid.isEmpty()) return null;
+        Entity owner = getServerWorld().getEntity(uuid.get());
         return owner instanceof LivingEntity livingOwner ? livingOwner : null;
     }
 

@@ -57,6 +57,22 @@ public class StatusEffectRegistry {
                     )
     );
 
+    public static final RegistrySupplier<StatusEffect> STUN = registerEffect(
+            "stun",
+            new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
+                    .addAttributeModifier(
+                            EntityAttributes.GENERIC_ATTACK_SPEED,
+                            SimplyMore.identifier("implicit_stun_attack_speed"),
+                            -99,
+                            EntityAttributeModifier.Operation.ADD_VALUE
+                    ).addAttributeModifier(
+                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                            SimplyMore.identifier("implicit_stun_damage"),
+                            -9999,
+                            EntityAttributeModifier.Operation.ADD_VALUE
+                    )
+    );
+
     public static final RegistrySupplier<StatusEffect> MIMICRY_HAPPENING = registerEffect(
             "mimicry_happening",
             new MimicryEffect(StatusEffectCategory.BENEFICIAL,0)
@@ -110,7 +126,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> LIGHTWEIGHT = registerEffect(
             "lightweight",
-            new FallDamageImmunityEffect(StatusEffectCategory.BENEFICIAL, (int) 0xBFBFBF)
+            new FallDamageImmunityEffect(StatusEffectCategory.BENEFICIAL, 0xBFBFBF)
     );
 
     public static final RegistrySupplier<StatusEffect> VENOM = registerEffect(
@@ -191,6 +207,7 @@ public class StatusEffectRegistry {
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
     );
+
     public static final RegistrySupplier<StatusEffect> STUNNED = registerEffect(
             "stunned",
             new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
@@ -210,6 +227,7 @@ public class StatusEffectRegistry {
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
     );
+
     public static final RegistrySupplier<StatusEffect> STUNNED_MOXIE = registerEffect(
             "stunned_moxie",
             new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
@@ -276,10 +294,7 @@ public class StatusEffectRegistry {
             "radiant_mark",
             new RadiantEffect(StatusEffectCategory.HARMFUL,0)
     );
-    public static final RegistrySupplier<StatusEffect> FORESEEN = registerEffect(
-            "soul_lock",
-            new SoulForesightEffect(StatusEffectCategory.HARMFUL,0)
-    );
+
     public static final RegistrySupplier<StatusEffect> ARMOUR_CRUNCH = registerEffect(
             "armor_crunch",
             new StatusEffect(StatusEffectCategory.HARMFUL,9849600)

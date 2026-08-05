@@ -1,17 +1,17 @@
 {
   "display": {
     "icon": {
-      "id": "simplymore:soul_foreseer"
+      "id": "simplymore:soulfracture"
     },
     "title": {
-      "translate": "advancements.simplymore.soul_foreseer.title",
+      "translate": "advancements.simplymore.soulfracture.title",
       "with": []
     },
     "description": {
       "translate": "advancements.simplyswords.find_unique.description",
       "with": [
         {
-          "translate": "item.simplymore.soul_foreseer"
+          "translate": "item.simplymore.soulfracture"
         }
       ]
     },
@@ -28,7 +28,7 @@
         "items": [
           {
             "items": [
-              "simplymore:soul_foreseer"
+              "simplymore:soulfracture"
             ]
           }
         ]

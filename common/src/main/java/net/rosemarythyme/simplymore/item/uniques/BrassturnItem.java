@@ -98,7 +98,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return AttackUtils.INFINITE_DURATION;
+        return AttackUtils.PSEUDOINFINITE_DURATION;
     }
 
     @Override

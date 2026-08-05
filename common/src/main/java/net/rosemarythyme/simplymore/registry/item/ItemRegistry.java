@@ -322,12 +322,17 @@ public class ItemRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> SOUL_FORESEER = ITEMS.register(
-            "soul_foreseer",
-            () -> new SoulForeseerItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.soulforeseer_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.soulforeseer_attack_speed
+    public static final RegistrySupplier<Item> SOULFRACTURE = ITEMS.register(
+            "soulfracture",
+            () -> new SoulfractureItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.soulfracture_damage_modifier,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.soulfracture_attack_speed
             )
+    );
+
+    @Deprecated
+    public static final RegistrySupplier<Item> SOUL_FORESEER = ITEMS.register(
+            "soul_foreseer", () -> new RemovedItem(() -> new ItemStack(SOULFRACTURE.get()))
     );
 
     public static final RegistrySupplier<Item> SERPENTINE_VALOUR = ITEMS.register(
@@ -731,7 +736,7 @@ public class ItemRegistry {
 
         addToItemGroup(BOAS_FANG);
         addToItemGroup(EARTHSHATTER);
-        addToItemGroup(SOUL_FORESEER);
+        addToItemGroup(SOULFRACTURE);
         addToItemGroup(SERPENTINE_VALOUR);
         addToItemGroup(LUSTROUS_MOXIE);
         addToItemGroup(BRASSTURN);

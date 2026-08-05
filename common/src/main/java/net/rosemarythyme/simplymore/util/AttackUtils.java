@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 public class AttackUtils {
-    public static int INFINITE_DURATION = 9999999;
+    public static int PSEUDOINFINITE_DURATION = 9999999;
 
     public enum AttackTarget {
         OTHERS_AND_USER_NEGATIVELY(true, true, true, false),
@@ -70,7 +70,7 @@ public class AttackUtils {
     }
 
     public static int getUseTicksFromInfiniteDuration(int duration) {
-        return INFINITE_DURATION - duration;
+        return PSEUDOINFINITE_DURATION - duration;
     }
 
     public static void applyExtraDamage(LivingEntity target, float damageBonus, DamageSource source) {
@@ -104,6 +104,8 @@ public class AttackUtils {
 
     public static boolean canTarget(LivingEntity attacker, LivingEntity target, AttackTarget targetType) {
         if(attacker == null || target == null) return false;
+        if(target instanceof AbstractAbilityPlacementEntity) return false;
+
         if(!target.canHit()) return false;
 
         if(!targetType.canHitUser && attacker == target) return false;

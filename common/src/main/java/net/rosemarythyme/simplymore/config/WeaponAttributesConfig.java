@@ -86,7 +86,7 @@ public class WeaponAttributesConfig extends Config {
         public int rupturedidol_damage_modifier = 4;
         public int boasfang_damage_modifier = 1;
         public int earthshatter_damage_modifier = 6;
-        public int soulforeseer_damage_modifier = 3;
+        public int soulfracture_damage_modifier = 3;
         public int serpentinevalour_damage_modifier = 5;
         public int lustrousmoxie_damage_modifier = 4;
         public int brassturn_damage_modifier = 2;
@@ -121,7 +121,7 @@ public class WeaponAttributesConfig extends Config {
         public float rupturedidol_attack_speed = -2.7f;
         public float boasfang_attack_speed = -2.2f;
         public float earthshatter_attack_speed = -3.4f;
-        public float soulforeseer_attack_speed = -2.6f;
+        public float soulfracture_attack_speed = -2.6f;
         public float serpentinevalour_attack_speed = -3.3f;
         public float lustrousmoxie_attack_speed = -2.6f;
         public float brassturn_attack_speed = -0.2f;

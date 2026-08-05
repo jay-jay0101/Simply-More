@@ -44,7 +44,7 @@ public class UniqueEffectConfig extends Config {
     public HolylightItem.EffectSettings holylight = new HolylightItem.EffectSettings();
     public DarksentItem.EffectSettings darksent = new DarksentItem.EffectSettings();
     public SmoulderingRuinItem.EffectSettings smouldering_ruin = new SmoulderingRuinItem.EffectSettings();
-    public SoulForeseerItem.EffectSettings soul_foreseer = new SoulForeseerItem.EffectSettings();
+    public SoulfractureItem.EffectSettings soulfracture = new SoulfractureItem.EffectSettings();
     public StasisItem.EffectSettings stasis = new StasisItem.EffectSettings();
     public TheBloodHarvesterItem.EffectSettings the_blood_harvester = new TheBloodHarvesterItem.EffectSettings();
     public TheVesselBreachItem.EffectSettings the_vessel_breach = new TheVesselBreachItem.EffectSettings();

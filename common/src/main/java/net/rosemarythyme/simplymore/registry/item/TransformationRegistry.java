@@ -27,8 +27,8 @@ public class TransformationRegistry {
         SimplySwordsAPI.registerTransformation(Blocks.SUSPICIOUS_GRAVEL, ItemRegistry.RUPTURED_IDOL.getId());
         SimplySwordsAPI.registerTransformation(Blocks.POINTED_DRIPSTONE, ItemRegistry.BOAS_FANG.getId());
         SimplySwordsAPI.registerTransformation(Blocks.CRACKED_DEEPSLATE_BRICKS, ItemRegistry.EARTHSHATTER.getId());
-        SimplySwordsAPI.registerTransformation(Blocks.SOUL_TORCH, ItemRegistry.SOUL_FORESEER.getId());
-        SimplySwordsAPI.registerTransformation(Blocks.SOUL_WALL_TORCH, ItemRegistry.SOUL_FORESEER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SOUL_TORCH, ItemRegistry.SOULFRACTURE.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.SOUL_WALL_TORCH, ItemRegistry.SOULFRACTURE.getId());
         SimplySwordsAPI.registerTransformation(Blocks.EMERALD_ORE, ItemRegistry.SERPENTINE_VALOUR.getId());
         SimplySwordsAPI.registerTransformation(Blocks.DEEPSLATE_EMERALD_ORE, ItemRegistry.SERPENTINE_VALOUR.getId());
         SimplySwordsAPI.registerTransformation(Blocks.OCHRE_FROGLIGHT, ItemRegistry.LUSTROUS_MOXIE.getId());

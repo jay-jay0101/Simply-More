@@ -25,7 +25,7 @@ public class LootRegistry {
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.RUPTURED_IDOL.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.BOAS_FANG.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.EARTHSHATTER.get(), 1);
-        SimplySwordsAPI.registerUniqueLoot(ItemRegistry.SOUL_FORESEER.get(), 1);
+        SimplySwordsAPI.registerUniqueLoot(ItemRegistry.SOULFRACTURE.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.SERPENTINE_VALOUR.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.LUSTROUS_MOXIE.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.BRASSTURN.get(), 1);

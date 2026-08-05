@@ -13,6 +13,7 @@ import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -71,6 +72,14 @@ public record TargetList(Set<LivingEntity> targets) {
 
     public TargetList include(LivingEntity target) {
         return include(new TargetList(target));
+    }
+
+    public TargetList exclude(TargetList target) {
+        return this.filter((entity) -> !target.targets.contains(entity));
+    }
+
+    public TargetList exclude(LivingEntity target) {
+        return exclude(new TargetList(target));
     }
 
     public TargetList include(Entity target) {
@@ -136,6 +145,15 @@ public record TargetList(Set<LivingEntity> targets) {
 
     public TargetList onEach(Consumer<LivingEntity> action) {
         targets.forEach(action);
+        return this;
+    }
+
+    public TargetList onFirst(Consumer<LivingEntity> action) {
+        Optional<LivingEntity> entity = targets.stream().findFirst();
+        if(entity.isEmpty()) return this;
+
+        action.accept(entity.get());
+
         return this;
     }
 

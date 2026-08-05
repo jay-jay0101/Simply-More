@@ -9,10 +9,7 @@ import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
 import net.rosemarythyme.simplymore.client.models.CannonballModel;
 import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
 import net.rosemarythyme.simplymore.client.models.VolcanicVentModel;
-import net.rosemarythyme.simplymore.client.render.entity.CannonballRenderer;
-import net.rosemarythyme.simplymore.client.render.entity.CrowEntityRenderer;
-import net.rosemarythyme.simplymore.client.render.entity.LavaRenderer;
-import net.rosemarythyme.simplymore.client.render.entity.VolcanicVentRenderer;
+import net.rosemarythyme.simplymore.client.render.entity.*;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 
 public class ClientEntityRendererRegistry {
@@ -31,5 +28,7 @@ public class ClientEntityRendererRegistry {
 
         EntityModelLayerRegistry.register(CannonballModel.LAYER, CannonballModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.CANNONBALL, CannonballRenderer::new);
+
+        EntityRendererRegistry.register(EntityRegistry.SOUL_FRAGMENT, SoulFragmentEntityRenderer::new);
     }
 }
