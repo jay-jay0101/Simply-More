@@ -8,11 +8,11 @@ import net.fabricmc.api.Environment;
 public class SimplyMoreFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-//        registerParticles();
+//        LifecycleEvent.SETUP.register(this::registerParticles);
     }
-
+//
 //    public void registerParticles() {
-//        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.HOLY_WATER.get(), StaticWaterParticle.HolyWaterFactory::new);
-//        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.UNHOLY_WATER.get(), StaticWaterParticle.UnholyWaterFactory::new);
+//        ParticleProviderRegistry.register(ParticleRegistry.BLOOD_RAIN.get(), BloodRainParticle.Factory::new);
+//        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.BLOOD_RAIN.get(),BloodRainParticle.Factory::new);
 //    }
 }

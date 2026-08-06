@@ -139,22 +139,6 @@ public class StatusEffectRegistry {
             new ChillEffect(StatusEffectCategory.HARMFUL,10875635)
     );
 
-    public static final RegistrySupplier<StatusEffect> HARVEST = registerEffect(
-            "harvest",
-            new HarvestEffect(StatusEffectCategory.BENEFICIAL,7865862)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            SimplyMore.identifier("harvest_attack_speed"),
-                            0.8,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            SimplyMore.identifier("harvest_speed"),
-                            0.04,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
-    );
-
     public static final RegistrySupplier<StatusEffect> RAGE = registerEffect(
             "rage",
             new RageEffect(StatusEffectCategory.NEUTRAL,7865862)

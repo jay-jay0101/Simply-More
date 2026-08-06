@@ -1,11 +1,7 @@
 package net.rosemarythyme.simplymore.forge;
 
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 @EventBusSubscriber(
         modid = "simplymore",
@@ -13,22 +9,16 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
         value = Dist.CLIENT
 )
 public class SimplyMoreForgeClient {
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {
-//        event.enqueueWork(ClientItemPropertyRegistry::register);
-    }
-
-    @SubscribeEvent
-    public static void onRegisterParticleFactories(RegisterParticleProvidersEvent event) {
-//        ParticleRegistry.HOLY_WATER.ifPresent(particle -> event.registerSpriteSet(
-//                particle,
-//                StaticWaterParticle.HolyWaterFactory::new
-//        ));
+//    @OnlyIn(Dist.CLIENT)
+//    @SubscribeEvent
+//    public static void onClientSetup(FMLClientSetupEvent event) {
+//    }
 //
-//        ParticleRegistry.UNHOLY_WATER.ifPresent(particle -> event.registerSpriteSet(
+//    @SubscribeEvent
+//    public static void onRegisterParticleFactories(RegisterParticleProvidersEvent event) {
+//        ParticleRegistry.BLOOD_RAIN.ifPresent(particle -> event.registerSpriteSet(
 //                particle,
-//                StaticWaterParticle.UnholyWaterFactory::new
+//                BloodRainParticle.Factory::new
 //        ));
-    }
+//    }
 }

@@ -5,8 +5,9 @@
   "refmap": "simplymore-refmap.json",
   "minVersion": "0.8",
   "client": [
+    "ClientBackgroundRendererMixin",
     "ClientCameraMixin",
-    "WorldRendererMixin"
+    "ClientWorldRendererMixin"
   ],
   "mixins": [
     "LivingEntityMixin",

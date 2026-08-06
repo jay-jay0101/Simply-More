@@ -5,7 +5,6 @@
 
   "effect.simplymore.chill": "Chill",
   "effect.simplymore.venom": "Venom",
-  "effect.simplymore.harvest": "Sanguine Harvest",
   "effect.simplymore.rage": "Adrenaline Rage",
   "effect.simplymore.grotesque_ward": "Warded Evil",
   "effect.simplymore.solidified": "Solidified",
@@ -223,8 +222,8 @@
 
   "item.simplymore.the_blood_harvester": "The Blood Harvester",
   "item.simplymore.the_blood_harvester.tooltip1": "Unique Effect: Blood Sense",
-  "item.simplymore.the_blood_harvester.tooltip2": "This weapon has %s lifesteal.",
-  "item.simplymore.the_blood_harvester.tooltip3": "Enter a harvest for %s seconds. While inside of a harvest, this weapon gains %s lifesteal, you gain speed and haste, you begin to inflict bleed, and you can sniff out other entities nearby.",
+  "item.simplymore.the_blood_harvester.tooltip2": "This weapon has %s lifesteal. This is increased to %s lifesteal while in a harvest.",
+  "item.simplymore.the_blood_harvester.tooltip3": "Enter a harvest for %s seconds. While inside of a harvest, you gain speed and haste, begin to inflict wounded, and can sniff out enemies nearby.",
 
   "item.simplymore.jester_penetrate": "Jester Penetrate",
   "item.simplymore.jester_penetrate.tooltip1": "Unique Effect: Deadliest Minecraft Player",
@@ -983,11 +982,11 @@
   "simplymore.unique_effect.stasis.range": "Heaven's Call range",
 
   "simplymore.unique_effect.the_blood_harvester": "§6[The Blood Harvester]§7",
-  "simplymore.unique_effect.the_blood_harvester.cooldown": "Sanguine Harvest cooldown",
-  "simplymore.unique_effect.the_blood_harvester.harvestTime": "Sanguine Harvest duration",
-  "simplymore.unique_effect.the_blood_harvester.bleedTime": "Sanguine Harvest bleed duration",
-  "simplymore.unique_effect.the_blood_harvester.lifesteal": "Blood Sense lifesteal",
-  "simplymore.unique_effect.the_blood_harvester.harvestLifesteal": "Sanguine Harvest lifesteal",
+  "simplymore.unique_effect.the_blood_harvester.cooldown": "Harvest cooldown",
+  "simplymore.unique_effect.the_blood_harvester.harvestTime": "Harvest duration",
+  "simplymore.unique_effect.the_blood_harvester.bleedTime": "Harvest Wounded duration",
+  "simplymore.unique_effect.the_blood_harvester.lifesteal": "Lifesteal",
+  "simplymore.unique_effect.the_blood_harvester.harvestLifesteal": "Harvest lifesteal",
 
   "simplymore.unique_effect.the_vessel_breach": "§6[The Vessel Breach]§7",
   "simplymore.unique_effect.the_vessel_breach.cooldown": "Adrenaline Rage cooldown",
