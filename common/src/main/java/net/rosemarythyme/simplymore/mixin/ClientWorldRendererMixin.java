@@ -106,14 +106,12 @@ public class ClientWorldRendererMixin {
         return original || strength > 0;
     }
 
-    @ModifyExpressionValue(method = "renderClouds", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getCloudsColor(F)Lnet/minecraft/util/math/Vec3d;"))
-    private Vec3d simplymore$tintClouds(Vec3d original) {
+    @Inject(method = "renderClouds", at = @At(value = "HEAD"), cancellable = true)
+    private void simplymore$removeClouds(MatrixStack matrices, Matrix4f matrix4f, Matrix4f matrix4f2, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
         float strength = ClientActiveAbilityManager.CLIENT.getAbilityStrength(ActiveAbilityManager.Type.HARVEST);
         if(strength > 0) {
-            return original.lerp(new Vec3d(1f, 0f, 0f), strength);
+            ci.cancel();
         }
-
-        return original;
     }
 
     @ModifyExpressionValue(method = "renderWeather", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/Biome;getPrecipitation(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/biome/Biome$Precipitation;"))
