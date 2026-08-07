@@ -69,6 +69,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<SoulFragmentEntity>> SOUL_FRAGMENT =
             registerMarkerEntity("soul_fragment", SoulFragmentEntity::new, 0.25f, 0.25f);
 
+    public static final RegistrySupplier<EntityType<LightningPointEntity>> LIGHTNING_POINT =
+            registerMarkerEntity("lightning_point", LightningPointEntity::new, 0.25f, 0.25f);
+
     public static final RegistrySupplier<EntityType<JetstreamEntity>> JETSTREAM =
             registerMarkerEntity("jetstream", JetstreamEntity::new);
 

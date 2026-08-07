@@ -30,5 +30,6 @@ public class ClientEntityRendererRegistry {
         EntityRendererRegistry.register(EntityRegistry.CANNONBALL, CannonballRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.SOUL_FRAGMENT, SoulFragmentEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.LIGHTNING_POINT, LightningPointEntityRenderer::new);
     }
 }

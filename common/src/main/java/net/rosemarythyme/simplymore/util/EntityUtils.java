@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
@@ -18,6 +19,10 @@ import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 public class EntityUtils {
     public static boolean isRidingLivingEntity(LivingEntity entity) {
         return entity.getVehicle() instanceof LivingEntity;
+    }
+
+    public static BlockHitResult raycastDown(LivingEntity entity, Vec3d pos, World world, double maxRange) {
+        return world.raycast(new RaycastContext(pos, pos.offset(Direction.DOWN, maxRange), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
     }
 
     public static void reapplyAndIncrementEffect(LivingEntity entity, RegistryEntry<StatusEffect> effect, int duration, int additionalAmplifier, int maxAmplifier) {

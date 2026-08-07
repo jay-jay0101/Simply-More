@@ -13,9 +13,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.RaycastContext;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityProjectileEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
@@ -51,11 +49,11 @@ public class AttackUtils {
     }
 
     public static float scaleDamage(String spellSchool, LivingEntity actor, ItemStack stack, float attackScaling, float spellScaling, float baseDamage) {
-        return HelperMethods.abilityScaledDamage(spellSchool, actor, stack, attackScaling, spellScaling) * baseDamage;
+        return  Math.max(baseDamage, HelperMethods.abilityScaledDamage(spellSchool, actor, stack, attackScaling, spellScaling) * baseDamage);
     }
 
     public static float scaleDamage(String spellSchool, LivingEntity actor, float attackScaling, float spellScaling, float baseDamage) {
-        return HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling) * baseDamage;
+        return Math.max(baseDamage, HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling) * baseDamage);
     }
 
     public static TypedActionResult<ItemStack> holdToUse(PlayerEntity user, Hand hand) {
@@ -194,9 +192,7 @@ public class AttackUtils {
 
     public static boolean spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner, boolean onGround) {
         if(onGround) {
-            Vec3d position = ability.getPos();
-
-            BlockHitResult block = owner.getWorld().raycast(new RaycastContext(position, position.offset(Direction.DOWN, 10), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ability));
+            BlockHitResult block = EntityUtils.raycastDown(ability, owner.getPos(), owner.getWorld(), 10);
             if(block.getType() == HitResult.Type.MISS) {
                 return false;
             }
