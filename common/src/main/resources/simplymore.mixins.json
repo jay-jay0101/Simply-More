@@ -17,7 +17,7 @@
     "OracleIndexUtilsMixin",
     "PlayerEntityMixin",
     "PlayerWeaponAbilityChannelManagerMixin",
-    "PlayerWeaponAbilityChannelManagerMixin$PlayerWeaponAbilityChannelManagerDuck",
+    "PlayerWeaponAbilityChannelManagerMixin$ActiveChannelDuck",
     "WeaponImplicitRegistryMixin"
   ],
   "injectors": {

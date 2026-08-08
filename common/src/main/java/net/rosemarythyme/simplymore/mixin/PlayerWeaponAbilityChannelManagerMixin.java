@@ -14,11 +14,11 @@ import org.spongepowered.asm.mixin.injection.Coerce;
 @Mixin(PlayerWeaponAbilityChannelManager.class)
 public class PlayerWeaponAbilityChannelManagerMixin {
     @WrapOperation(method = "tickPlayer", at = @At(value = "INVOKE", target = "Lnet/sweenus/simplyswords/world/PlayerWeaponAbilityChannelManager;isValid(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/sweenus/simplyswords/world/PlayerWeaponAbilityChannelManager$ActiveChannel;)Z"))
-    private static boolean simplymore$stop(ServerPlayerEntity player, @Coerce Object channel, Operation<Boolean> original) {
+    private static boolean simplymore$stop(ServerPlayerEntity player, @Coerce ActiveChannelDuck channel, Operation<Boolean> original) {
         boolean o = original.call(player, channel);
         if(o) return true;
 
-        ItemStack stack = ((PlayerWeaponAbilityChannelManagerDuck) channel).simplymore$getStack();
+        ItemStack stack = channel.simplymore$getStack();
         if(stack.getItem() instanceof StoppableAbilityItem item) {
             item.stop(stack, player.getServerWorld(), player);
         }
@@ -27,7 +27,7 @@ public class PlayerWeaponAbilityChannelManagerMixin {
     }
 
     @Mixin(targets = "net.sweenus.simplyswords.world.PlayerWeaponAbilityChannelManager$ActiveChannel")
-    private interface PlayerWeaponAbilityChannelManagerDuck {
+    private interface ActiveChannelDuck {
         @Accessor("stack")
         ItemStack simplymore$getStack();
     }
