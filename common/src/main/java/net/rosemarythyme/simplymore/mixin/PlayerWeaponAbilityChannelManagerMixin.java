@@ -7,6 +7,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.sweenus.simplyswords.world.PlayerWeaponAbilityChannelManager;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
 
@@ -24,4 +25,13 @@ public class PlayerWeaponAbilityChannelManagerMixin {
 
         return false;
     }
+
+    @Mixin(targets = "net.sweenus.simplyswords.world.PlayerWeaponAbilityChannelManager$ActiveChannel")
+    private interface PlayerWeaponAbilityChannelManagerDuck {
+        @Accessor("stack")
+        ItemStack simplymore$getStack();
+    }
 }
+
+
+
