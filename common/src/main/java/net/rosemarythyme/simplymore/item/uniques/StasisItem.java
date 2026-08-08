@@ -16,7 +16,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.LightningPointEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
@@ -117,7 +116,6 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if(world.isClient) return;
-        SimplyMore.LOGGER.info("{}", remainingUseTicks);
 
         if(remainingUseTicks > 1) {
             new TargetList(new HashSet<>(user.getWorld().getNonSpectatingEntities(LightningPointEntity.class, MathUtils.createCubeBox(user.getPos(), 50))))
