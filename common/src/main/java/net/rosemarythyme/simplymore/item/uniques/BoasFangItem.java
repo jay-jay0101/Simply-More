@@ -42,13 +42,12 @@ public class BoasFangItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (!attacker.getWorld().isClient()) {
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.boas_fang.chance)) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.SUFFOCATION), UNIQUE_CONFIG.boas_fang.suffocationTime));
             }
         }
-        return super.postHit(stack, target, attacker);
     }
 
 

@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore;
 
+import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
@@ -14,11 +15,13 @@ import net.rosemarythyme.simplymore.client.registry.ClientItemPropertyRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
-import net.rosemarythyme.simplymore.event.TickActiveAbilityManager;
 import net.rosemarythyme.simplymore.event.TickClientEffects;
+import net.rosemarythyme.simplymore.event.TickServerEffects;
 import net.rosemarythyme.simplymore.item.LootRegistry;
 import net.rosemarythyme.simplymore.registry.*;
 import net.rosemarythyme.simplymore.registry.item.*;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class SimplyMore {
@@ -73,7 +76,9 @@ public class SimplyMore {
 
 	public static void registerEvents() {
 		PlayerEvent.PLAYER_JOIN.register(new RemoveStatusOnJoin());
-		TickEvent.SERVER_PRE.register(new TickActiveAbilityManager());
+		LifecycleEvent.SERVER_STARTED.register((ignored) -> ActiveAbilityManager.SERVER.clear());
+		ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register((ignored) -> ClientActiveAbilityManager.CLIENT.clear());
+		TickEvent.SERVER_PRE.register(new TickServerEffects());
 		ClientTickEvent.CLIENT_POST.register(new TickClientEffects());
 	}
 }

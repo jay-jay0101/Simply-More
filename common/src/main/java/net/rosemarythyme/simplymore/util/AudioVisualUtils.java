@@ -6,10 +6,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -48,6 +51,12 @@ public class AudioVisualUtils {
             Vec3d pos = startPos.add(direction.multiply(i * spread));
             world.spawnParticles(particleType, pos.getX(), pos.getY(), pos.getZ(), count, delta, delta, delta, speed);
         }
+    }
+
+    public static void dustPillar(ServerWorld world, BlockPos pos) {
+        BlockStateParticleEffect particle = new BlockStateParticleEffect(ParticleTypes.DUST_PILLAR, world.getBlockState(pos));
+        Vec3d particlePos = pos.toBottomCenterPos().offset(Direction.UP, 1);
+        world.spawnParticles(particle, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 40, 0.2f, 0, 0.2f, 0);
     }
 
     public static void targetIndicator(LivingEntity target) {

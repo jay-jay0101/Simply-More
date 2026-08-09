@@ -13,6 +13,7 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -42,8 +43,8 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient) return;
 
         float chance = EntityUtils.isRidingLivingEntity(attacker) ?
                 UNIQUE_CONFIG.glimmerstep.chanceMounted:
@@ -55,8 +56,6 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
 
             AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE).setPitch(2f));
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override
@@ -67,7 +66,8 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             return TypedActionResult.fail(itemStack);
         }
 
-        return AttackUtils.holdToUse(user, hand);
+        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+
     }
 
     @Override

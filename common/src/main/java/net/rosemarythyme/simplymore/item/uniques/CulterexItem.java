@@ -12,6 +12,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -81,11 +82,11 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient()) return;
 
         RegistryEntry<StatusEffect> hex = StatusEffectRegistry.getReference(StatusEffectRegistry.HEX);
-        if(!target.hasStatusEffect(hex)) return super.postHit(stack, target, attacker);
+        if(!target.hasStatusEffect(hex)) return;
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.culterex.chance)) {
             int duration = target.getStatusEffect(hex).getDuration() + UNIQUE_CONFIG.culterex.extraDuration;
@@ -95,8 +96,6 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
 
             AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ENTITY_ALLAY_HURT).setPitch(0.65f));
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

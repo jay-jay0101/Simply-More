@@ -37,7 +37,7 @@
     "simplymore:deaths_eyrie": {"theme": "death", "badges": ["UNIQUE", "CLAYMORE"]},
     "simplymore:perforiscus": {"theme": "blossom", "badges": ["UNIQUE", "GREAT SPEAR"]},
     "simplymore:revvengine": {"theme": "cogs", "badges": ["UNIQUE", "KATANA"]},
-    "simplymore:exedrill": {"theme": "cogs", "badges": ["UNIQUE", "LANCE"]},
+    "simplymore:moundshifter": {"theme": "cogs", "badges": ["UNIQUE", "LANCE"]},
     "simplymore:culterex": {"theme": "enchanted", "badges": ["UNIQUE", "DAGGER"]},
     "simplymore:jester_penetrate": {"theme": "clown", "badges": ["GOATED", "LANCE"]},
     "simplymore:the_pan": {"theme": "weak_iron", "badges": ["KITCHENWARE", "PERNACH"]},

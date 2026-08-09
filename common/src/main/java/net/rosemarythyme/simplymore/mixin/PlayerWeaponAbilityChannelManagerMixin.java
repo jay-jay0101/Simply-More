@@ -20,7 +20,8 @@ public class PlayerWeaponAbilityChannelManagerMixin {
 
         ItemStack stack = channel.simplymore$getStack();
         if(stack.getItem() instanceof StoppableAbilityItem item) {
-            item.stop(stack, player.getServerWorld(), player);
+            int remainingTicks = (int) (channel.simplymore$maxUseTime() - (player.getWorld().getTime() - channel.simplymore$startedAt()));
+            item.stop(stack, player.getServerWorld(), player, remainingTicks);
         }
 
         return false;
@@ -30,6 +31,12 @@ public class PlayerWeaponAbilityChannelManagerMixin {
     private interface ActiveChannelDuck {
         @Accessor("stack")
         ItemStack simplymore$getStack();
+
+        @Accessor("startedAt")
+        long simplymore$startedAt();
+
+        @Accessor("maxUseTime")
+        int simplymore$maxUseTime();
     }
 }
 

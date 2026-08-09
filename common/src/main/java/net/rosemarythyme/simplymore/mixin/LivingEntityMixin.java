@@ -6,6 +6,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ImplicitRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.sweenus.simplyswords.item.component.WeaponImplicitComponent;
 import net.sweenus.simplyswords.registry.ComponentTypeRegistry;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,4 +41,14 @@ public abstract class LivingEntityMixin {
 		}
 	}
 
+	@ModifyReturnValue(at = @At("RETURN"), method = "isInvulnerableTo")
+	private boolean simplymore$isInvulnerable(boolean original, DamageSource damageSource) {
+		LivingEntity entity = (LivingEntity) (Object) this;
+
+		if(damageSource.getAttacker() != null && (ActiveAbilityManager.SERVER.isDrilling(entity))) {
+			return true;
+		}
+
+		return original;
+	}
 }

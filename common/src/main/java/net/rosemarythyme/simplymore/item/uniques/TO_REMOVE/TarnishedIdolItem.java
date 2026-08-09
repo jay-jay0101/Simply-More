@@ -1,21 +1,13 @@
 package net.rosemarythyme.simplymore.item.uniques.TO_REMOVE;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.rosemarythyme.simplymore.entity.legacy.AuraOfCorruptionEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
-import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -37,19 +29,19 @@ public class TarnishedIdolItem extends SimplyMoreUniqueSwordItem {
         return Identifier.of("simplymore.unique_effect.darksent");
     }
 
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
-
-        if (MathUtils.chance(attacker, UNIQUE_CONFIG.darksent.chance)) {
-            AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_OBSIDIAN_TEAR, 300, 1d, 0f);
-            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ITEM_BUCKET_FILL).setPitch(0.3f));
-
-            AttackUtils.spawnAbility(new AuraOfCorruptionEntity(attacker, attacker.getPos()), attacker);
-        }
-
-        return super.postHit(stack, target, attacker);
-    }
+//    @Override
+//    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+//        if(attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
+//
+//        if (MathUtils.chance(attacker, UNIQUE_CONFIG.darksent.chance)) {
+//            AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_OBSIDIAN_TEAR, 300, 1d, 0f);
+//            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ITEM_BUCKET_FILL).setPitch(0.3f));
+//
+//            AttackUtils.spawnAbility(new AuraOfCorruptionEntity(attacker, attacker.getPos()), attacker);
+//        }
+//
+//        return super.postHit(stack, target, attacker);
+//    }
 
 
     @Override

@@ -23,7 +23,6 @@ import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
-import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.client.util.TooltipUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -44,14 +43,13 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!(attacker.getWorld() instanceof ServerWorld serverWorld)) return super.postHit(stack, target, attacker);
-        if(!AwakeningApi.isAbilityUnlocked(stack)) return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if(!isFirstInTick) return;
 
         if (MathUtils.chance(attacker, SETTINGS.chance)) {
-            AudioVisualUtils.particleLine(serverWorld, attacker.getPos(), target.getPos(), ParticleTypes.LAVA, 0.4, 3, 0.2f, 0f);
-            AudioVisualUtils.particleLine(serverWorld, attacker.getPos(), target.getPos(), ParticleTypes.SMOKE, 0.4, 15, 0.2f, 1f);
-            AudioVisualUtils.playSound(serverWorld, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.3f));
+            AudioVisualUtils.particleLine(world, attacker.getPos(), target.getPos(), ParticleTypes.LAVA, 0.4, 3, 0.2f, 0f);
+            AudioVisualUtils.particleLine(world, attacker.getPos(), target.getPos(), ParticleTypes.SMOKE, 0.4, 15, 0.2f, 1f);
+            AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.3f));
 
             AttackUtils.lineAttack(attacker, attacker.getPos(), attacker.getYaw(), attacker.getPitch(), attacker.distanceTo(target),1, AttackUtils.AttackTarget.ENEMIES)
                     .knockback(attacker, SETTINGS.knockback)
@@ -60,10 +58,8 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
             AttackUtils.spawnAbility(new EruptionEntity(attacker, attacker.getPos()), attacker);
             AttackUtils.spawnAbility(new EruptionEntity(attacker, target.getPos()), attacker);
 
-            AudioVisualUtils.applyScreenshake(serverWorld, attacker.getPos(), attacker, 12, 2.5f, 20);
+            AudioVisualUtils.applyScreenshake(world, attacker.getPos(), attacker, 12, 2.5f, 20);
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

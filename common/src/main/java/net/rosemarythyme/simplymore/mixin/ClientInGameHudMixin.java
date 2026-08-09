@@ -9,6 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
+import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.config.Config;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 import org.spongepowered.asm.mixin.Final;
@@ -26,14 +27,16 @@ public class ClientInGameHudMixin {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void simplymore$hudOverlays(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+        if(!AwakeningApi.isAwakeningSystemEnabled()) return;
+
         ClientPlayerEntity player = client.player;
         if(player == null) return;
 
         ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
-        if(stack.isEmpty()) {
+        if(stack.isEmpty() || !AwakeningApi.isAbilityUnlocked(stack)) {
             stack = player.getStackInHand(Hand.OFF_HAND);
 
-            if(stack.isEmpty()) return;
+            if(stack.isEmpty() || !AwakeningApi.isAbilityUnlocked(stack)) return;
             if(stack.getItem() instanceof TwoHandedWeapon) return;
         }
 
@@ -50,7 +53,7 @@ public class ClientInGameHudMixin {
             float scale = Math.clamp(Config.gui.scale, 0.25F, 4.0F);
             matrices.scale(scale, scale, scale);
 
-            hudOverlayItem.renderHudOverlay(context, stack, player);
+            hudOverlayItem.renderHudOverlay(context, stack, player, client.getRenderTickCounter());
             matrices.pop();
         }
     }

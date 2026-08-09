@@ -94,7 +94,7 @@ public class WeaponAttributesConfig extends Config {
         public int deathseyrie_damage_modifier = 6;
         public int perforiscus_damage_modifier = 4;
         public int revvengine_damage_modifier = 2;
-        public int exedrill_damage_modifier = 3;
+        public int moundshifter_damage_modifier = 3;
         public int culterex_damage_modifier = 2;
     }
 
@@ -129,7 +129,7 @@ public class WeaponAttributesConfig extends Config {
         public float deathseyrie_attack_speed = -3.2f;
         public float perforiscus_attack_speed = -3.3f;
         public float revvengine_attack_speed = -2.0f;
-        public float exedrill_attack_speed = -3.0f;
+        public float moundshifter_attack_speed = -3.0f;
         public float culterex_attack_speed = -1.8f;
     }
 }

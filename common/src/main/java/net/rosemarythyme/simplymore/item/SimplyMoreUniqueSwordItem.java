@@ -1,6 +1,8 @@
 package net.rosemarythyme.simplymore.item;
 
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -8,6 +10,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -15,10 +18,13 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
+import net.rosemarythyme.simplymore.item.components.ConsecutiveHitsComponent;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
+import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
 
@@ -43,8 +49,51 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
             modifierItem.applyStackModifier(stack);
         }
 
+        ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();
+        ConsecutiveHitsComponent component = stack.get(hits);
+        if(component != null) {
+            if(!selected) {
+                stack.remove(hits);
+            }
+
+            if(component.lastHitTime() != component.lastSwingTime()) {
+                stack.remove(hits);
+            }
+        }
+
         super.inventoryTick(stack, world, entity, slot, selected);
     }
+
+    public void onSwing(ItemStack stack, ServerWorld world, LivingEntity user) {
+        ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();
+        ConsecutiveHitsComponent component = stack.get(hits);
+        if(component == null) component = ConsecutiveHitsComponent.DEFAULT;
+
+        stack.set(hits, new ConsecutiveHitsComponent(component.num(), component.lastHitTime(), world.getTime()));
+    }
+
+    @Override
+    public final boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if(!(attacker.getWorld() instanceof ServerWorld world)) return super.postHit(stack, target, attacker);
+        if(AwakeningApi.isAwakeningSystemEnabled() && !AwakeningApi.isAbilityUnlocked(stack)) return super.postHit(stack, target, attacker);
+
+        ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();
+        ConsecutiveHitsComponent component = stack.get(hits);
+        if(component == null) component = ConsecutiveHitsComponent.DEFAULT;
+
+        if(component.lastHitTime() != component.lastSwingTime()) {
+            int newNum = component.num() + 1;
+            stack.set(hits, new ConsecutiveHitsComponent(newNum, world.getTime(), component.lastSwingTime()));
+
+            onHit(stack, target, attacker, world, newNum, true);
+        } else {
+            onHit(stack, target, attacker, world, component.num(), false);
+        }
+
+        return super.postHit(stack, target, attacker);
+    }
+
+    protected void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {}
 
     public CounterComponent getDefaultCounterComponent() {
         return new CounterComponent(0, 0);

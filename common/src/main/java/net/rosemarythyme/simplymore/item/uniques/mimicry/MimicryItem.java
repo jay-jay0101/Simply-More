@@ -62,7 +62,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         ItemStack itemStack = user.getStackInHand(hand);
         if(isUsingAbility(user)) return TypedActionResult.fail(itemStack);
 
-        return AttackUtils.holdToUse(user, hand);
+        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
     }
 
     @Override

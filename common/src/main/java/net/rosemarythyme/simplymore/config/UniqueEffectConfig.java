@@ -56,6 +56,6 @@ public class UniqueEffectConfig extends Config {
     public DeathsEyrieItem.EffectSettings deaths_eyrie = new DeathsEyrieItem.EffectSettings();
     public PerforiscusItem.EffectSettings perforiscus = new PerforiscusItem.EffectSettings();
     public RevvengineItem.EffectSettings revvengine = new RevvengineItem.EffectSettings();
-    public ExedrillItem.EffectSettings exedrill = new ExedrillItem.EffectSettings();
+    public MoundshifterItem.EffectSettings moundshifter = new MoundshifterItem.EffectSettings();
     public CulterexItem.EffectSettings culterex = new CulterexItem.EffectSettings();
 }

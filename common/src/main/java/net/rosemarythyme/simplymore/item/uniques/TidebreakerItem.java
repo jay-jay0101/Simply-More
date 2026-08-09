@@ -39,9 +39,9 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     public TidebreakerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed);
     }
-    
+
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (!attacker.getWorld().isClient()) {
             if (MathUtils.chance(attacker, UNIQUE_CONFIG.tidebreaker.chance)) {
                 if (!attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.TIDEBREAKER))) {
@@ -53,7 +53,6 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
             lastHit = target;
 
         }
-        return super.postHit(stack, target, attacker);
     }
 
 

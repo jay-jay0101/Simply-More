@@ -65,12 +65,11 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if(attacker.getWorld().isClient) return;
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.matterbane.chance)) {
             Vector3f color = this.getColor(stack);
-            ServerWorld world = (ServerWorld) attacker.getWorld();
 
 
             AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CONVERTED).setPitch(2f));
@@ -79,8 +78,6 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             AttackUtils.lineAttack(attacker, attacker.getEyePos(), attacker.getYaw(), attacker.getPitch(), UNIQUE_CONFIG.matterbane.range, 0.25f, AttackUtils.AttackTarget.ENEMIES)
                     .forceDamage(UNIQUE_CONFIG.matterbane.damage, attacker.getDamageSources().indirectMagic(attacker, attacker));
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

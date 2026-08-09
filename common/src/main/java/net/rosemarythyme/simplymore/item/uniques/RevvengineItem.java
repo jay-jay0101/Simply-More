@@ -47,9 +47,8 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
 
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient())
-            return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient()) return;
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.revvengine.chance)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.revvengine.bleedTime, 0), attacker);
@@ -64,8 +63,6 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
             target.timeUntilRegen = 0;
             target.damage(target.getDamageSources().playerAttack(playerAttacker), extraDamage);
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     public static float getHealthModifiedValue(LivingEntity entity, float percentage, float value) {

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -50,9 +51,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem implements UniqueW
 
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient) return postHit(stack, target, attacker);
-
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (MathUtils.chance(attacker, SETTINGS.chance)) {
             List<StatusEffectInstance> possibleEffects = target.getStatusEffects().stream()
                     .filter(effect -> effect.getEffectType().value().getCategory() == StatusEffectCategory.BENEFICIAL)
@@ -75,12 +74,10 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem implements UniqueW
                 attacker.addStatusEffect(newEffect);
                 target.removeStatusEffect(plunderedEffect.getEffectType());
 
-                AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEventRegistry.COINS.get()));
+                AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundEventRegistry.COINS.get()));
                 AudioVisualUtils.particleAroundEntity(target, ParticleTypes.LANDING_HONEY, 30, 0.3, 0);
             }
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

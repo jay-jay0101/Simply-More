@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -38,7 +39,7 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
 
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.smouldering_ruin.chance)) {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, UNIQUE_CONFIG.smouldering_ruin.witherTime, 0), attacker);
             StatusEffectInstance targetWitheringFateStatus = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WITHERING_FATE));
@@ -51,8 +52,6 @@ public class SmoulderingRuinItem extends SimplyMoreUniqueSwordItem {
                         ), attacker);
             }
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
 

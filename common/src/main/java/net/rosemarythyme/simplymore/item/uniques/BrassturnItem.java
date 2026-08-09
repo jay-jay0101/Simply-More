@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -52,8 +53,8 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient()) return;
 
         MathUtils.addToCounterComponent(stack, 1);
 
@@ -62,8 +63,6 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
 
             AttackUtils.spawnAbility(new JetstreamEntity(attacker, attacker.getPos()), attacker);
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
         ItemStack stack = user.getStackInHand(hand);
         if (MathUtils.getCounterComponent(stack).value() <= 0) return TypedActionResult.fail(stack);
 
-        return AttackUtils.holdToUse(user, hand);
+        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
     }
 
     @Override

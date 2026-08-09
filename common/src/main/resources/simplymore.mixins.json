@@ -8,6 +8,7 @@
     "ClientBackgroundRendererMixin",
     "ClientCameraMixin",
     "ClientInGameHudMixin",
+    "ClientLivingEntityRendererMixin",
     "ClientWorldRendererMixin"
   ],
   "mixins": [
@@ -18,6 +19,7 @@
     "PlayerEntityMixin",
     "PlayerWeaponAbilityChannelManagerMixin",
     "PlayerWeaponAbilityChannelManagerMixin$ActiveChannelDuck",
+    "SimplySwordsAPIMixin",
     "WeaponImplicitRegistryMixin"
   ],
   "injectors": {

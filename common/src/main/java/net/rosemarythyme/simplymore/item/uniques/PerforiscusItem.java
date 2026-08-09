@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -37,9 +38,8 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHan
 
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient())
-            return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient()) return;
 
         int amplifier = attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)) ?
                 attacker.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)).getAmplifier() +1 : 0;
@@ -53,8 +53,6 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHan
                         amplifier
                 )
         );
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

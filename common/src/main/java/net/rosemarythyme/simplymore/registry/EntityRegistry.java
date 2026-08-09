@@ -72,6 +72,23 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<LightningPointEntity>> LIGHTNING_POINT =
             registerMarkerEntity("lightning_point", LightningPointEntity::new, 0.25f, 0.25f);
 
+    public static final RegistrySupplier<EntityType<EarthquakeVisualEntity>> EARTHQUAKE =
+            registerMarkerEntity("earthquake", EarthquakeVisualEntity::new, 0.25f, 0.25f);
+
+    public static final RegistrySupplier<EntityType<DugBlockEntity>> DUG_BLOCK = registerType(
+            EntityType.Builder.<DugBlockEntity>create(DugBlockEntity::new, SpawnGroup.MISC)
+                    .dimensions(1f, 1f)
+                    .makeFireImmune()
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "dug_block"
+    );
+
+
+
+
     public static final RegistrySupplier<EntityType<JetstreamEntity>> JETSTREAM =
             registerMarkerEntity("jetstream", JetstreamEntity::new);
 

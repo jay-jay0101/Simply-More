@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -51,16 +53,12 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
-
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if(AttackUtils.canTarget(attacker, target, AttackUtils.AttackTarget.ENEMIES) && fragmentsFor(attacker, target).size() < 4) {
             if(MathUtils.chance(attacker, SETTINGS.chance)) {
                 fragmentSoul(attacker, target);
             }
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     private void fragmentSoul(LivingEntity attacker, LivingEntity target) {
@@ -197,7 +195,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
     }
 
     @Override
-    public void renderHudOverlay(DrawContext context, ItemStack stack, ClientPlayerEntity player) {
+    public void renderHudOverlay(DrawContext context, ItemStack stack, ClientPlayerEntity player, RenderTickCounter tickCounter) {
         final int DELTA_Y = 10;
 
         Map<LivingEntity, Integer> data = HudUtils.getCache(this, stack, player);

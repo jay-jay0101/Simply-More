@@ -7,10 +7,7 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryKeys;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.item.components.DayTimeComponent;
-import net.rosemarythyme.simplymore.item.components.GrabbedComponent;
-import net.rosemarythyme.simplymore.item.components.UsageComponent;
+import net.rosemarythyme.simplymore.item.components.*;
 
 public class ItemComponentRegistry {
     public static final DeferredRegister<ComponentType<?>> COMPONENT_TYPES = DeferredRegister.create(SimplyMore.ID, RegistryKeys.DATA_COMPONENT_TYPE);
@@ -19,6 +16,11 @@ public class ItemComponentRegistry {
             () -> ComponentType.<CounterComponent>builder()
                     .codec(CounterComponent.CODEC)
                     .packetCodec(CounterComponent.PACKET_CODEC).build());
+
+    public static final RegistrySupplier<ComponentType<ConsecutiveHitsComponent>> CONSECUTIVE_HITS = COMPONENT_TYPES.register("consecutive_hits",
+            () -> ComponentType.<ConsecutiveHitsComponent>builder()
+                    .codec(ConsecutiveHitsComponent.CODEC)
+                    .packetCodec(ConsecutiveHitsComponent.PACKET_CODEC).build());
 
     public static final RegistrySupplier<ComponentType<UsageComponent>> USAGE = COMPONENT_TYPES.register("usage",
             () -> ComponentType.<UsageComponent>builder()

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -51,9 +52,9 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
 
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
-        if(!(attacker instanceof  PlayerEntity player) || player.getItemCooldownManager().isCoolingDown(this)) return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if(attacker.getWorld().isClient) return;
+        if(!(attacker instanceof  PlayerEntity player) || player.getItemCooldownManager().isCoolingDown(this)) return;
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.deaths_eyrie.chance)) {
             int crows = MathUtils.getCounterComponent(stack).value();
@@ -68,8 +69,6 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
 
             AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundRegistry.DARK_SWORD_ENCHANT.get()));
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

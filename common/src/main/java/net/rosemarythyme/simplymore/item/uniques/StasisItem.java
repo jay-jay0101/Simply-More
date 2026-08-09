@@ -45,9 +45,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(attacker.getWorld().isClient) return postHit(stack, target, attacker);
-
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.stasis.chance)) {
             AudioVisualUtils.playSound(target.getWorld(), target.getPos(), new Sound(SoundEvents.ITEM_TRIDENT_THUNDER.value(), 0.5f, 2f));
             AudioVisualUtils.particleAroundEntity(target, ParticleTypes.ELECTRIC_SPARK, 50, 0.25f, 0.1f);
@@ -63,8 +61,6 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
                 WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, target.getStackInHand(Hand.OFF_HAND), SETTINGS.stunTime);
             }
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override
@@ -109,7 +105,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
     }
 
     @Override
-    public void stop(ItemStack stack, World world, LivingEntity user) {
+    public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
         onStoppedUsing(stack, world, user, AttackUtils.PSEUDOINFINITE_DURATION);
     }
 
@@ -133,7 +129,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
 
     @Override
     public TypedActionResult<ItemStack> startPlayerAbility(World world, PlayerEntity user, Hand hand) {
-        return AttackUtils.holdToUse(user, hand);
+        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
     }
 
     @Override

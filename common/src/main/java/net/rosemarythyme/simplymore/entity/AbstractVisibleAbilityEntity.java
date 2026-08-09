@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractVisibleAbilityEntity extends AbstractAbilityPlacementEntity {
-    protected AbstractVisibleAbilityEntity(EntityType<? extends LivingEntity> entityType, World world) {
+    public AbstractVisibleAbilityEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 

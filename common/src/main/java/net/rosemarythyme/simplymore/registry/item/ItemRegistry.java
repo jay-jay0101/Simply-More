@@ -391,12 +391,17 @@ public class ItemRegistry {
             )
     );
 
-    public static final RegistrySupplier<Item> EXEDRILL = ITEMS.register(
-            "exedrill",
-            () -> new ExedrillItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.exedrill_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.exedrill_attack_speed
+    public static final RegistrySupplier<Item> MOUNDSHIFTER = ITEMS.register(
+            "moundshifter",
+            () -> new MoundshifterItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.moundshifter_damage_modifier,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.moundshifter_attack_speed
             )
+    );
+
+    @Deprecated
+    public static final RegistrySupplier<Item> EXEDRILL = ITEMS.register(
+            "exedrill", () -> new RemovedItem(() -> new ItemStack(MOUNDSHIFTER.get()))
     );
 
     public static final RegistrySupplier<Item> CULTEREX = ITEMS.register(
@@ -744,7 +749,7 @@ public class ItemRegistry {
         addToItemGroup(DEATHS_EYRIE);
         addToItemGroup(PERFORISCUS);
         addToItemGroup(REVVENGINE);
-        addToItemGroup(EXEDRILL);
+        addToItemGroup(MOUNDSHIFTER);
         addToItemGroup(CULTEREX);
         addToItemGroup(JESTER_PENETRATE);
         addToItemGroup(THE_PAN);

@@ -1,17 +1,17 @@
 {
   "display": {
     "icon": {
-      "id": "simplymore:exedrill"
+      "id": "simplymore:moundshifter"
     },
     "title": {
-      "translate": "advancements.simplymore.exedrill.title",
+      "translate": "advancements.simplymore.moundshifter.title",
       "with": []
     },
     "description": {
       "translate": "advancements.simplyswords.find_unique.description",
       "with": [
         {
-          "translate": "item.simplymore.exedrill"
+          "translate": "item.simplymore.moundshifter"
         }
       ]
     },
@@ -28,7 +28,7 @@
         "items": [
           {
             "items": [
-              "simplymore:exedrill"
+              "simplymore:moundshifter"
             ]
           }
         ]

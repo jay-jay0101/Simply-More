@@ -81,9 +81,8 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient())
-            return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient()) return;
 
 
         if (attacker instanceof PlayerEntity playerAttacker) {
@@ -94,9 +93,6 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem {
             target.timeUntilRegen = 0;
             target.damage(target.getDamageSources().playerAttack(playerAttacker), extraDamage);
         }
-
-
-        return super.postHit(stack, target, attacker);
     }
 
 

@@ -41,7 +41,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (!attacker.getWorld().isClient()) {
             StatusEffectInstance radiantMarkEffect = target.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK));
             if (target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RADIANT_MARK)) && radiantMarkEffect != null) {
@@ -57,7 +57,6 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
                 }
             }
         }
-        return super.postHit(stack, target, attacker);
     }
 
     public void attack(PlayerEntity user) {

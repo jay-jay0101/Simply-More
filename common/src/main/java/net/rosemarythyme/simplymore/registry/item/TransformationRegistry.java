@@ -40,8 +40,8 @@ public class TransformationRegistry {
         SimplySwordsAPI.registerTransformation(Blocks.POTTED_FLOWERING_AZALEA_BUSH, ItemRegistry.PERFORISCUS.getId());
         SimplySwordsAPI.registerTransformation(Blocks.COPPER_BULB, ItemRegistry.REVVENGINE.getId());
         SimplySwordsAPI.registerTransformation(Blocks.WAXED_COPPER_BULB, ItemRegistry.REVVENGINE.getId());
-        SimplySwordsAPI.registerTransformation(Blocks.COPPER_BLOCK, ItemRegistry.EXEDRILL.getId());
-        SimplySwordsAPI.registerTransformation(Blocks.WAXED_COPPER_BLOCK, ItemRegistry.EXEDRILL.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.COPPER_BLOCK, ItemRegistry.MOUNDSHIFTER.getId());
+        SimplySwordsAPI.registerTransformation(Blocks.WAXED_COPPER_BLOCK, ItemRegistry.MOUNDSHIFTER.getId());
         SimplySwordsAPI.registerTransformation(Blocks.LECTERN, ItemRegistry.CULTEREX.getId());
     }
 }

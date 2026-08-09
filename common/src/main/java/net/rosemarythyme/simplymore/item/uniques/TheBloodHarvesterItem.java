@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -40,9 +41,9 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem implements 
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
-        if(target instanceof ArmorStandEntity) return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if(!isFirstInTick) return;
+        if(target instanceof ArmorStandEntity) return;
 
         if(ActiveAbilityManager.SERVER.isInAbility(attacker, ActiveAbilityManager.Type.HARVEST)) {
             attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.harvestLifesteal);
@@ -51,8 +52,6 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem implements 
         } else {
             attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.lifesteal);
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

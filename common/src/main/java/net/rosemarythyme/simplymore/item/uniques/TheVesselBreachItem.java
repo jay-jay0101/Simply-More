@@ -38,7 +38,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
             if (!attacker.getWorld().isClient()) {
                 if (!(target instanceof ArmorStandEntity)) {
                     if (!attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAGE))) {
@@ -49,7 +49,6 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem {
                     }
                 }
             }
-        return super.postHit(stack, target, attacker);
     }
 
 

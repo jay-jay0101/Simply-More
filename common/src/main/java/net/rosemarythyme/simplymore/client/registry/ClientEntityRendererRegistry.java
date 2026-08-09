@@ -31,5 +31,7 @@ public class ClientEntityRendererRegistry {
 
         EntityRendererRegistry.register(EntityRegistry.SOUL_FRAGMENT, SoulFragmentEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.LIGHTNING_POINT, LightningPointEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.EARTHQUAKE, EarthquakeEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.DUG_BLOCK, DugBlockEntityRenderer::new);
     }
 }

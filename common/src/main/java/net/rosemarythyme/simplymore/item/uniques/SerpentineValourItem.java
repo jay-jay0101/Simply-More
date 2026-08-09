@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -41,16 +42,13 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem implements T
 
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker.getWorld().isClient())
-            return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient()) return;
 
         if (target.hasStatusEffect(StatusEffects.POISON) || target.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.VENOM))) {
             target.timeUntilRegen = 0;
             target.damage(target.getDamageSources().generic(), UNIQUE_CONFIG.serpentine_valour.damageBonus);
         }
-
-        return super.postHit(stack, target, attacker);
     }
 
     @Override

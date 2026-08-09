@@ -3,9 +3,12 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
@@ -13,6 +16,8 @@ import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import org.joml.Vector3d;
 
 import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MathUtils {
     public static boolean chance(LivingEntity player, float chance) {
@@ -50,7 +55,7 @@ public class MathUtils {
     }
 
     public static String toPercentage(float decimal) {
-        float output =  decimal * 100;
+        float output = decimal * 100;
         return String.valueOf((int) Math.floor(output))
                 .concat("%");
     }
@@ -64,6 +69,11 @@ public class MathUtils {
         return component == null
                 ? setCounterComponent(stack, swordItem.getDefaultCounterComponent())
                 : component;
+    }
+
+    public static float getCounterComponentProgress(ItemStack stack) {
+        CounterComponent component = getCounterComponent(stack);
+        return component.value() / (float) component.max();
     }
 
     public static CounterComponent setCounterComponent(ItemStack stack, CounterComponent component) {
@@ -146,5 +156,31 @@ public class MathUtils {
         }
 
         return -clampedLerp(age, entity.getLifespan(), entity.getLifespan() + entity.getOutroTicks(), 0f, 1f);
+    }
+
+    public static Set<BlockPos> getPositionsOnFloor(ServerWorld world, BlockPos center, int horizontalRange, int aboveRange, int belowRange, int num) {
+        int attempts = num * 5;
+        Set<BlockPos> positions = new HashSet<>();
+
+        Random random = world.getRandom();
+
+        for(int i = 0; i < attempts; i++) {
+            int x = random.nextBetween(-horizontalRange, horizontalRange);
+            int z = random.nextBetween(-horizontalRange, horizontalRange);
+
+            BlockPos pos = new BlockPos(x + center.getX(), aboveRange + center.getY(), z + center.getZ());
+            for(int y = 0; y <= aboveRange + belowRange; y++) {
+                if (world.getBlockState(pos).isFullCube(world, pos)) {
+                    positions.add(pos);
+                    break;
+                }
+
+                pos = pos.down();
+            }
+
+            if(positions.size() >= num) break;
+        }
+
+        return positions;
     }
 }

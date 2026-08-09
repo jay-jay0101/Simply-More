@@ -17,6 +17,10 @@ import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityProjectileEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.sweenus.simplyswords.api.AwakeningApi;
+import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
+import net.sweenus.simplyswords.api.WeaponAbilityContext;
+import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
@@ -56,8 +60,12 @@ public class AttackUtils {
         return Math.max(baseDamage, HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling) * baseDamage);
     }
 
-    public static TypedActionResult<ItemStack> holdToUse(PlayerEntity user, Hand hand) {
+    public static TypedActionResult<ItemStack> holdToUse(ServerWorld world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
+        if(!(stack.getItem() instanceof UniqueWeaponActiveAbility weapon)) return TypedActionResult.fail(stack);
+        if(AwakeningApi.isAwakeningSystemEnabled() && !AwakeningApi.isAbilityUnlocked(stack)) return TypedActionResult.fail(stack);
+
+        if(!weapon.canActivate(WeaponAbilityContext.of(world, stack, user, null, null, hand, WeaponAbilityActivationSource.PLAYER))) return TypedActionResult.fail(stack);
 
         if (stack.getDamage() >= stack.getMaxDamage() - 1) {
             return TypedActionResult.fail(stack);

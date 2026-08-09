@@ -40,7 +40,8 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 //        startUsing(user.getStackInHand(hand), hand);
-        return AttackUtils.holdToUse(user, hand);
+        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+
     }
 
     @Override

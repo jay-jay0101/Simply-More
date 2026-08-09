@@ -8,6 +8,8 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.Pair;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -35,6 +37,7 @@ public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
 
     protected void onHit(HitResult result) {}
 
+    protected void serverTick(LivingEntity owner) {}
 
     private void serverTick() {
         Entity owner = getOwner();
@@ -46,9 +49,21 @@ public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
 
         HitResult hitresult = ProjectileUtil.getCollision(this, PredicateUtils.createForTargetType(livingOwner, AttackUtils.AttackTarget.ENEMIES));
         if(hitresult.getType() != HitResult.Type.MISS) {
-            onHit(hitresult);
-            this.discard();
+            if(canCollide(hitresult)) {
+                onHit(hitresult);
+
+                if(hitresult instanceof EntityHitResult entityHitResult) onEntityHit(entityHitResult);
+                if(hitresult instanceof BlockHitResult blockHitResult) onBlockHit(blockHitResult);
+
+                this.discard();
+            }
         }
+
+        serverTick(livingOwner);
+    }
+
+    protected boolean canCollide(HitResult result) {
+        return true;
     }
 
     @Override
