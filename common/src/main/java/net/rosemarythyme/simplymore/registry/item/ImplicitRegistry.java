@@ -140,6 +140,7 @@ public class ImplicitRegistry {
         SimplySwordsAPI.registerWeaponType(ItemRegistry.VIPERS_CALL.get(), Identifier.of(SimplySwords.MOD_ID, "chakram"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MATTERBANE.get(), Identifier.of(SimplySwords.MOD_ID, "longsword"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.EARTHSHATTER.get(), Identifier.of(SimplySwords.MOD_ID, "greataxe"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.SOULFRACTURE.get(), Identifier.of(SimplySwords.MOD_ID, "glaive"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.DEATHS_EYRIE.get(), Identifier.of(SimplySwords.MOD_ID, "claymore"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.REVVENGINE.get(), Identifier.of(SimplySwords.MOD_ID, "katana"));
 
