@@ -2,6 +2,9 @@
     "luminance": 8,
     "water_sensitive": false,
     "match": {
-        "items": "simplymore:darksent"
+        "items": "simplymore:ruptured_idol",
+        "components": {
+            "simplyswords:awakening_route": "simplymore:holylight"
+        }
     }
 }
