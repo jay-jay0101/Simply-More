@@ -26,6 +26,7 @@ import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.rosemarythyme.simplymore.world.PlayerItemUseManager;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -99,21 +100,14 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
             AudioVisualUtils.playSound(serverWorld, user.getPos(), new Sound(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER).setVolume(0.5f));
         }
 
-        if (remainingTicks < 5) {
-            this.onStoppedUsing(stack, world, user, 1);
+        if (remainingTicks < 1 && user instanceof PlayerEntity player) {
+            PlayerItemUseManager.stop(player, stack, true);
         }
     }
 
     @Override
     public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
-        onStoppedUsing(stack, world, user, AttackUtils.PSEUDOINFINITE_DURATION);
-    }
-
-    @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if(world.isClient) return;
-
-        if(remainingUseTicks > 1) {
+        if(remainingDuration > 1) {
             new TargetList(new HashSet<>(user.getWorld().getNonSpectatingEntities(LightningPointEntity.class, MathUtils.createCubeBox(user.getPos(), 50))))
                     .filterByOwnedBy(user)
                     .discard();
@@ -129,7 +123,8 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
 
     @Override
     public TypedActionResult<ItemStack> startPlayerAbility(World world, PlayerEntity user, Hand hand) {
-        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+        if(!(world instanceof ServerWorld serverWorld)) return TypedActionResult.pass(user.getStackInHand(hand));
+        return AttackUtils.holdToUse(serverWorld, user, hand);
     }
 
     @Override

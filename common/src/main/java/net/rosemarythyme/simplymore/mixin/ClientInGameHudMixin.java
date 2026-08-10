@@ -27,16 +27,14 @@ public class ClientInGameHudMixin {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void simplymore$hudOverlays(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if(!AwakeningApi.isAwakeningSystemEnabled()) return;
-
         ClientPlayerEntity player = client.player;
         if(player == null) return;
 
         ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
-        if(stack.isEmpty() || !AwakeningApi.isAbilityUnlocked(stack)) {
+        if(simplymore$isStackInvalid(stack)) {
             stack = player.getStackInHand(Hand.OFF_HAND);
 
-            if(stack.isEmpty() || !AwakeningApi.isAbilityUnlocked(stack)) return;
+            if(simplymore$isStackInvalid(stack)) return;
             if(stack.getItem() instanceof TwoHandedWeapon) return;
         }
 
@@ -56,5 +54,10 @@ public class ClientInGameHudMixin {
             hudOverlayItem.renderHudOverlay(context, stack, player, client.getRenderTickCounter());
             matrices.pop();
         }
+    }
+
+    @Unique
+    private static boolean simplymore$isStackInvalid(ItemStack stack) {
+        return stack.isEmpty() || !(stack.getItem() instanceof HudOverlayItem<?>) || (AwakeningApi.isAwakeningSystemEnabled() && !AwakeningApi.isAbilityUnlocked(stack));
     }
 }

@@ -153,7 +153,7 @@ public class DugBlockEntity extends AbstractAbilityProjectileEntity {
         if(!(entityHitResult.getEntity() instanceof LivingEntity target)) return;
 
         new TargetList(target)
-                .applyEffect(StatusEffectRegistry.STUN, MoundshifterItem.SETTINGS.blockStunTime, 0)
+                .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN), MoundshifterItem.SETTINGS.blockStunTime, 0)
                 .damage(MoundshifterItem.SETTINGS.blockDamage, owner.getDamageSources().explosion(this, owner));
     }
 

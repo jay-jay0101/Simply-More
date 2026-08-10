@@ -17,8 +17,6 @@
     "MobEntityMixin",
     "OracleIndexUtilsMixin",
     "PlayerEntityMixin",
-    "PlayerWeaponAbilityChannelManagerMixin",
-    "PlayerWeaponAbilityChannelManagerMixin$ActiveChannelDuck",
     "SimplySwordsAPIMixin",
     "WeaponImplicitRegistryMixin"
   ],

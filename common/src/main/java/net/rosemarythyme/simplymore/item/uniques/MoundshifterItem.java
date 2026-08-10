@@ -37,6 +37,7 @@ import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.PlayerItemUseManager;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -128,8 +129,8 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
             ActiveAbilityManager.SERVER.start(user, ActiveAbilityManager.Type.DRILL, SETTINGS.maxDrillTime);
         }
 
-        if(remainingTicks == 1) {
-            this.onStoppedUsing(stack, world, user, 1);
+        if (remainingTicks < 1 && user instanceof PlayerEntity player) {
+            PlayerItemUseManager.stop(player, stack, true);
         }
     }
 
@@ -144,22 +145,16 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
 
     @Override
     public TypedActionResult<ItemStack> startPlayerAbility(World world, PlayerEntity user, Hand hand) {
-        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+        if(!(world instanceof ServerWorld serverWorld)) return TypedActionResult.pass(user.getStackInHand(hand));
+        return AttackUtils.holdToUse(serverWorld, user, hand);
     }
 
     @Override
     public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
-        onStoppedUsing(stack, world, user, remainingDuration);
-    }
-
-    @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if(world.isClient) return;
         ActiveAbilityManager.SERVER.stop(user, ActiveAbilityManager.Type.DRILL);
 
-        if(remainingUseTicks > getMaxUseTime(stack, user) - 10) return;
-
-        emerge((ServerWorld) world, user.getVehicle() instanceof LivingEntity vehicle ? vehicle : user, remainingUseTicks < getMaxUseTime(stack, user) - 30);
+        if(remainingDuration > getMaxUseTime(stack, user) - 10) return;
+        emerge((ServerWorld) world, user.getVehicle() instanceof LivingEntity vehicle ? vehicle : user, remainingDuration < getMaxUseTime(stack, user) - 30);
     }
 
     public static void emerge(ServerWorld world, LivingEntity user, boolean includeEarthquake) {

@@ -199,6 +199,10 @@ public class ActiveAbilityManager {
         if(!ability.owner.isOnGround() || (ability.owner.getVehicle() instanceof LivingEntity vehicle && vehicle.isOnGround())) {
             BlockHitResult hit = EntityUtils.raycastDown(ability.owner, ability.owner.getPos(), ability.owner.getWorld(), 2);
             if(hit.getType() == HitResult.Type.MISS) {
+                if(ability.owner instanceof PlayerEntity player) {
+                    PlayerItemUseManager.stop(player, ability.owner.getActiveItem(), false);
+                }
+
                 MoundshifterItem.emerge(world, ability.owner, false);
                 return 0;
             }
