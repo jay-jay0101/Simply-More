@@ -54,6 +54,12 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<VolcanicVentEntity>> VOLCANIC_VENT =
             registerMarkerEntity("volcanic_vent", VolcanicVentEntity::new, 10/16f, 5/16f);
 
+    public static final RegistrySupplier<EntityType<IcewallEntity>> ICEWALL =
+            registerMarkerEntity("icewall", IcewallEntity::new, 2f, (42/16f) * 2);
+
+    public static final RegistrySupplier<EntityType<BlizzardEntity>> BLIZZARD =
+            registerMarkerEntity("blizzard", BlizzardEntity::new);
+
     public static final RegistrySupplier<EntityType<LavaLiquidEntity>> LAVA =
             registerMarkerEntity("lava", LavaLiquidEntity::new, 1f, 1f);
 

@@ -200,7 +200,7 @@ public class AttackUtils {
 
     public static boolean spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner, boolean onGround) {
         if(onGround) {
-            BlockHitResult block = EntityUtils.raycastDown(ability, owner.getPos(), owner.getWorld(), 10);
+            BlockHitResult block = EntityUtils.raycastDown(ability, ability.getPos(), owner.getWorld(), 10);
             if(block.getType() == HitResult.Type.MISS) {
                 return false;
             }

@@ -4,9 +4,9 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.entity.AbstractLiquidEntity;
 
-public class LavaRenderer extends AbstractLiquidEntityRenderer {
+public class LavaEntityRenderer extends AbstractLiquidEntityRenderer {
 
-    public LavaRenderer(EntityRendererFactory.Context context) {
+    public LavaEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 

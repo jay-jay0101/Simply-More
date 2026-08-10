@@ -10,9 +10,9 @@ import net.rosemarythyme.simplymore.client.models.VolcanicVentModel;
 import net.rosemarythyme.simplymore.entity.VolcanicVentEntity;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
-public class VolcanicVentRenderer extends LivingEntityRenderer<VolcanicVentEntity, VolcanicVentModel> {
+public class VolcanicVentEntityRenderer extends LivingEntityRenderer<VolcanicVentEntity, VolcanicVentModel> {
 
-    public VolcanicVentRenderer(EntityRendererFactory.Context context) {
+    public VolcanicVentEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new VolcanicVentModel(context.getPart(VolcanicVentModel.LAYER)), 0f);
     }
 
