@@ -4,7 +4,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
-import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 
 import java.util.HashMap;
@@ -37,7 +36,6 @@ public class PlayerItemUseManager {
 
         CACHE.remove(player);
 
-        SimplyMore.LOGGER.info("hii2");
         player.stopUsingItem();
     }
 
@@ -71,7 +69,6 @@ public class PlayerItemUseManager {
     }
 
     private static void stop(PlayerEntity player, Usage usage) {
-        SimplyMore.LOGGER.info("hii");
         player.clearActiveItem();
         if(usage.item.getItem() instanceof StoppableAbilityItem abilityItem) {
             int maxUseTime = usage.item.getItem().getMaxUseTime(usage.item, player);
