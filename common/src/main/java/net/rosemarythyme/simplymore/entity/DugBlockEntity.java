@@ -158,7 +158,7 @@ public class DugBlockEntity extends AbstractAbilityProjectileEntity {
     }
 
     public void tryFire() {
-        if(offset == 0) {
+        if(offset == 0 && (movementOverride == null || movementOverride.type != MovementOverride.Type.SHOOT)) {
             movementOverride = new MovementOverride(this.getPos(), AttackUtils.PSEUDOINFINITE_DURATION, MovementOverride.Type.SHOOT);
 
             Entity owner = getOwner();
