@@ -16,7 +16,7 @@ import net.rosemarythyme.simplymore.util.MathUtils;
 public record S2CParticleCylinderPacket(ParticleEffect particle, boolean longDistance, double x, double y, double z, float offsetXZ, float offsetY, float speed, int count) implements CustomPayload {
     public static final Identifier PACKET_ID = SimplyMore.identifier("particle_cylinder");
     public static final Id<S2CParticleCylinderPacket> PAYLOAD_ID = new Id<>(PACKET_ID);
-    public static final PacketCodec<RegistryByteBuf, S2CParticleCylinderPacket> CODEC =         PacketCodec.of(
+    public static final PacketCodec<RegistryByteBuf, S2CParticleCylinderPacket> CODEC = PacketCodec.of(
             (value, buf) -> {
                 ParticleTypes.PACKET_CODEC.encode(buf, value.particle());
                 PacketCodecs.BOOL.encode(buf, value.longDistance());

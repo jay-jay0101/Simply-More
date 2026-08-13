@@ -31,6 +31,10 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
         return age;
     }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);

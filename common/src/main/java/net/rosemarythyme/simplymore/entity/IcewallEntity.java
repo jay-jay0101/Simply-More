@@ -1,24 +1,25 @@
 package net.rosemarythyme.simplymore.entity;
 
-import net.minecraft.block.Blocks;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.GrandfrostItem;
+import net.rosemarythyme.simplymore.networking.s2c.S2CChangeAbilityAgePacket;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.data.Sound;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class IcewallEntity extends AbstractCollidableAbilityEntity {
     public IcewallEntity(EntityType<IcewallEntity> entityType, World world) {
@@ -30,9 +31,9 @@ public class IcewallEntity extends AbstractCollidableAbilityEntity {
     }
 
     public void lower() {
-        AudioVisualUtils.playSound(getServerWorld(), getPos(), new Sound(SoundEvents.BLOCK_GLASS_BREAK));
-        AudioVisualUtils.particleAroundEntity(this, new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.ICE.getDefaultState()), 100, 0.8f, 0.4f);
-        discard();
+        setAge(this.getLifespan());
+        List<ServerPlayerEntity> players = getServerWorld().getPlayers().stream().filter((player) -> player.squaredDistanceTo(getPos()) < 60 * 60).toList();
+        NetworkManager.sendToPlayers(players, new S2CChangeAbilityAgePacket(this.getId(), this.getLifespan()));
     }
 
     @Override
@@ -63,7 +64,7 @@ public class IcewallEntity extends AbstractCollidableAbilityEntity {
 
     @Override
     public int getOutroTicks() {
-        return 20;
+        return 10;
     }
 
     @Override
