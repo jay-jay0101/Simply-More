@@ -6,8 +6,6 @@ import net.sweenus.simplytooltips.api.TooltipTheme;
 import net.sweenus.simplytooltips.client.render.BorderRenderer;
 
 public class DeathMotif implements FullMotif {
-    public static final int ID = 9312_002;
-
     @Override
     public void draw(DrawContext context, int x, int y, int w, int h, long timeMs) {
         if (w >= 40 && h >= 40) {

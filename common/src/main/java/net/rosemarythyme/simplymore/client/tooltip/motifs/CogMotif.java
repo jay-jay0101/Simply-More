@@ -5,8 +5,6 @@ import net.sweenus.simplytooltips.api.BorderPalette;
 import net.sweenus.simplytooltips.api.TooltipTheme;
 
 public class CogMotif implements FullMotif {
-    public static final int ID = 9312_001;
-
     @Override
     public void draw(DrawContext context, int x, int y, int w, int h, long timeMs) {
         float rot = (timeMs % 3600) / 10f;
