@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
+import net.rosemarythyme.simplymore.item.ReformingRemnantItem;
 import net.rosemarythyme.simplymore.item.RemovedItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreRunicSwordItem;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
@@ -59,6 +60,10 @@ public class ItemRegistry {
 
     public record WeaponType(String name, int damage, float swingSpeed) {}
 
+
+    public static final RegistrySupplier<Item> REFORMING_REMNANT = ITEMS.register(
+            "reforming_remnant", ReformingRemnantItem::new
+    );
 
     public static final List<RegistrySupplier<Item>> IRON_WEAPONS = registerSet(
             SimplyMoreSwordItem.class,
@@ -696,7 +701,7 @@ public class ItemRegistry {
                     () ->
                             CreativeTabRegistry.create(
                                     Text.translatable("item_group.simplymore"),
-                                    () -> new ItemStack(IRON_WEAPONS.get(5))
+                                    () -> new ItemStack(REFORMING_REMNANT)
                             )
             );
 

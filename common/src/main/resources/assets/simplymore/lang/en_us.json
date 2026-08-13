@@ -45,6 +45,11 @@
   "item.simplymore.netherite_great_katana": "Netherite Great Katana",
   "item.simplymore.runic_great_katana": "Runic Great Katana",
 
+  "item.simplymore.reforming_remnant": "Reforming Remnant",
+  "item.simplymore.reforming_remnant.tooltip1": "The remnant is attempting to reform into a permanent shape. It is indecisive.",
+  "item.simplymore.reforming_remnant.tooltip2": "Using this item may yield further results.",
+  "screen.simplymore.reforming_remnant.accept": "Form",
+
   "item.simplymore.wooden_lance": "Wooden Lance",
   "item.simplymore.stone_lance": "Stone Lance",
   "item.simplymore.iron_lance": "Iron Lance",

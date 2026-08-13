@@ -54,9 +54,11 @@ public class SimplyMore {
 
 			SimplyMore.registerEvents();
 			SoundEventRegistry.register();
+			ScreenHandlerRegistry.register();
 
 			EnvExecutor.runInEnv(Env.SERVER, () -> SimplyMore::initServer);
 			EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::initClient);
+			PacketRegistry.registerC2S();
 		});
 	}
 

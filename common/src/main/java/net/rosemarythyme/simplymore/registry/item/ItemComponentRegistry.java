@@ -22,10 +22,10 @@ public class ItemComponentRegistry {
                     .codec(ConsecutiveHitsComponent.CODEC)
                     .packetCodec(ConsecutiveHitsComponent.PACKET_CODEC).build());
 
-    public static final RegistrySupplier<ComponentType<UsageComponent>> USAGE = COMPONENT_TYPES.register("usage",
-            () -> ComponentType.<UsageComponent>builder()
-                    .codec(UsageComponent.CODEC)
-                    .packetCodec(UsageComponent.PACKET_CODEC).build());
+    public static final RegistrySupplier<ComponentType<ReformTypeComponent>> REFORM = COMPONENT_TYPES.register("reform_block",
+            () -> ComponentType.<ReformTypeComponent>builder()
+                    .codec(ReformTypeComponent.CODEC)
+                    .packetCodec(ReformTypeComponent.PACKET_CODEC).build());
 
     public static final RegistrySupplier<ComponentType<DayTimeComponent>> DAYTIME = COMPONENT_TYPES.register("daytime",
             () -> ComponentType.<DayTimeComponent>builder()

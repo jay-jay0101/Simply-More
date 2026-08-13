@@ -1,7 +1,11 @@
 package net.rosemarythyme.simplymore.forge;
 
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.rosemarythyme.simplymore.client.screen.ReformingScreen;
+import net.rosemarythyme.simplymore.registry.ScreenHandlerRegistry;
 
 @EventBusSubscriber(
         modid = "simplymore",
@@ -21,4 +25,9 @@ public class SimplyMoreForgeClient {
 //                BloodRainParticle.Factory::new
 //        ));
 //    }
+
+    @SubscribeEvent
+    public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(ScreenHandlerRegistry.REFORM.get(), ReformingScreen::new);
+    }
 }

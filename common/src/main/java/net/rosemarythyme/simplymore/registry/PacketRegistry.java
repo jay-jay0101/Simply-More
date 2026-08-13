@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.registry;
 import dev.architectury.networking.NetworkManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.rosemarythyme.simplymore.networking.c2s.C2STransformRemnantPacket;
 import net.rosemarythyme.simplymore.networking.s2c.S2CAbilityManagerPacket;
 import net.rosemarythyme.simplymore.networking.s2c.S2CChangeAbilityAgePacket;
 import net.rosemarythyme.simplymore.networking.s2c.S2CParticleCylinderPacket;
@@ -15,6 +16,10 @@ public class PacketRegistry {
         NetworkManager.registerS2CPayloadType(S2CParticleCylinderPacket.PAYLOAD_ID, S2CParticleCylinderPacket.CODEC);
         NetworkManager.registerS2CPayloadType(S2CAbilityManagerPacket.PAYLOAD_ID, S2CAbilityManagerPacket.CODEC);
         NetworkManager.registerS2CPayloadType(S2CChangeAbilityAgePacket.PAYLOAD_ID, S2CChangeAbilityAgePacket.CODEC);
+    }
+
+    public static void registerC2S() {
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, C2STransformRemnantPacket.PAYLOAD_ID, C2STransformRemnantPacket.CODEC, C2STransformRemnantPacket::handle);
     }
 
     @Environment(EnvType.CLIENT)

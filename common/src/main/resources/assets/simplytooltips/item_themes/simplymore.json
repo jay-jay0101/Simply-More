@@ -7,8 +7,7 @@
     "simplyswords:waxweaver": {"badges": ["UNIQUE", "CLAYMORE"]},
     "simplyswords:wraithfang": {"badges": ["UNIQUE", "CUTLASS"]},
 
-    "simplymore:runefused_carver": {"theme": "runic", "badges": ["UPGRADE"]},
-    "simplymore:netherfused_carver": {"theme": "ember", "badges": ["UPGRADE"]},
+    "simplymore:reforming_remnant": {"theme": "autumn", "badges": ["UPGRADE"]},
 
     "simplymore:great_slither": {"theme": "poison", "badges": ["UNIQUE", "GREAT KATANA"]},
     "simplymore:magmaseep": {"theme": "ember", "badges": ["UNIQUE", "GRANDSWORD"]},

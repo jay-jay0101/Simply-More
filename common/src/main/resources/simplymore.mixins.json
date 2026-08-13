@@ -12,6 +12,7 @@
     "ClientWorldRendererMixin"
   ],
   "mixins": [
+    "ContainedRemnantItemMixin",
     "LivingEntityMixin",
     "LootTableModifierMixin",
     "MobEntityMixin",
