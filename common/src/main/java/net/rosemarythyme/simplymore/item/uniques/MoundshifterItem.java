@@ -102,7 +102,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
 
     @Override
     public void onSwing(ItemStack stack, ServerWorld world, LivingEntity user) {
-        world.getNonSpectatingEntities(DugBlockEntity.class, MathUtils.createCubeBox(user.getPos(), 50))
+        AttackUtils.getOwnedProjectiles(user, DugBlockEntity.class)
                 .forEach(DugBlockEntity::tryFire);
 
         super.onSwing(stack, world, user);

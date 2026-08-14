@@ -75,7 +75,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
     }
 
     private static TargetList allFragments(LivingEntity attacker) {
-        List<SoulFragmentEntity> targets = attacker.getWorld().getNonSpectatingEntities(SoulFragmentEntity.class, MathUtils.createCubeBox(attacker.getPos(), 50));
+        List<SoulFragmentEntity> targets = AttackUtils.getOwnedAbilities(attacker, SoulFragmentEntity.class);
         return new TargetList(new HashSet<>(targets)).filterByOwnedBy(attacker);
     }
 
@@ -222,11 +222,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
             entity -> entity
         ));
 
-        List<SoulFragmentEntity> fragments = player.getWorld().getNonSpectatingEntities(SoulFragmentEntity.class, MathUtils.createCubeBox(player.getPos(), 50))
-                .stream().filter((fragment) -> {
-                    Optional<UUID> owner = fragment.getOwnerUUID();
-                    return owner.isPresent() && owner.get().equals(player.getUuid());
-                }).toList();
+        List<SoulFragmentEntity> fragments = AttackUtils.getOwnedAbilities(player, SoulFragmentEntity.class);
 
         return fragments.stream()
         .collect(Collectors.groupingBy(SoulFragmentEntity::getPerson))

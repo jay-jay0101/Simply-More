@@ -344,10 +344,9 @@
   "item.simplymore.boas_fang.tooltip5": "Dash backwards and launch a blast of poison. Gain speed when dashing back.",
 
   "item.simplymore.lustrous_moxie": "Lustrous Moxie",
-  "item.simplymore.lustrous_moxie.tooltip1": "Unique Effect: Radiant Mark",
-  "item.simplymore.lustrous_moxie.tooltip2": "Chance on hit to apply Radiant Mark. You deal true damage equal to the level of Radiant Mark on the target on each hit.",
-  "item.simplymore.lustrous_moxie.tooltip5": "Radiant Mark is stackable, but has a lower duration the more it is applied.",
-  "item.simplymore.lustrous_moxie.tooltip7": "After a short windup, teleport to the to the closest foe inflicted with Radiant Mark. Cause an eruption of light that damages and pushes enemies away. You are stunned after teleporting.",
+  "item.simplymore.lustrous_moxie.tooltip1": "Unique Effect: ???",
+  "item.simplymore.lustrous_moxie.tooltip2": "Chance on hit to spawn a small orb of light that rotates around the target, up to 3 per target. Applying a fourth orb to a target causes them to all explode.",
+  "item.simplymore.lustrous_moxie.tooltip3": "Charge the blade to release a beam of light forwards. This light pierces armor and detonates all orbs. Activate again to teleport and consume the beam.",
 
   "item.simplymore.soulfracture": "Soulfracture",
   "item.simplymore.soulfracture.tooltip1": "Unique Effect: Soul Splitting",

@@ -225,4 +225,14 @@ public class AttackUtils {
         target.setVelocity(direction.multiply(scale).add(0, 0.2, 0));
         target.velocityModified = true;
     }
+
+    public static <T extends AbstractAbilityPlacementEntity> List<T> getOwnedAbilities(LivingEntity owner, Class<T> clazz) {
+        return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 50))
+                .stream().filter((e) -> e.getOwner() instanceof LivingEntity o && owner.getUuid().equals(o.getUuid())).toList();
+    }
+
+    public static <T extends AbstractAbilityProjectileEntity> List<T> getOwnedProjectiles(LivingEntity owner, Class<T> clazz) {
+        return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 50))
+                .stream().filter((e) -> e.getOwner() instanceof LivingEntity o && owner.getUuid().equals(o.getUuid())).toList();
+    }
 }

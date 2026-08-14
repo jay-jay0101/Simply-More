@@ -108,7 +108,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
     @Override
     public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
         if(remainingDuration > 1) {
-            new TargetList(new HashSet<>(user.getWorld().getNonSpectatingEntities(LightningPointEntity.class, MathUtils.createCubeBox(user.getPos(), 50))))
+            new TargetList(new HashSet<>(AttackUtils.getOwnedAbilities(user, LightningPointEntity.class)))
                     .filterByOwnedBy(user)
                     .discard();
             return;

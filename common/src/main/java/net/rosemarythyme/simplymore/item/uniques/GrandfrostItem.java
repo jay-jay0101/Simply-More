@@ -71,8 +71,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHand
 
     @Override
     public boolean activate(WeaponAbilityContext context) {
-        List<BlizzardEntity> blizzards = context.world().getNonSpectatingEntities(BlizzardEntity.class, MathUtils.createCubeBox(context.origin(), 50))
-                .stream().filter((e) -> e.getOwner() instanceof LivingEntity owner && owner.getUuid() == context.actor().getUuid()).toList();
+        List<BlizzardEntity> blizzards = AttackUtils.getOwnedAbilities(context.actor(), BlizzardEntity.class);
 
         if(blizzards.isEmpty()) {
             if(!AttackUtils.spawnAbility(new BlizzardEntity(context.actor(), context.actor().getPos()), context.actor(), true)) return false;
@@ -91,8 +90,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHand
             return context.activationSource() != WeaponAbilityActivationSource.PLAYER;
         }
 
-        List<IcewallEntity> walls = context.world().getNonSpectatingEntities(IcewallEntity.class, MathUtils.createCubeBox(context.origin(), 50))
-                .stream().filter((e) -> e.getOwner() instanceof LivingEntity owner && owner.getUuid() == context.actor().getUuid()).toList();
+        List<IcewallEntity> walls = AttackUtils.getOwnedAbilities(context.actor(), IcewallEntity.class);
 
         blizzards.forEach(Entity::discard);
         walls.forEach(IcewallEntity::lower);

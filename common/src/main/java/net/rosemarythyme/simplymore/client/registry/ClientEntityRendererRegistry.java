@@ -6,10 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EvokerFangsEntityRenderer;
 import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
-import net.rosemarythyme.simplymore.client.models.CannonballModel;
-import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
-import net.rosemarythyme.simplymore.client.models.IcewallModel;
-import net.rosemarythyme.simplymore.client.models.VolcanicVentModel;
+import net.rosemarythyme.simplymore.client.models.*;
 import net.rosemarythyme.simplymore.client.render.entity.*;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 
@@ -32,6 +29,9 @@ public class ClientEntityRendererRegistry {
 
         EntityModelLayerRegistry.register(CannonballModel.LAYER, CannonballModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.CANNONBALL, CannonballRenderer::new);
+
+        EntityModelLayerRegistry.register(LightOrbModel.LAYER, LightOrbModel::getTexturedModelData);
+        EntityRendererRegistry.register(EntityRegistry.LIGHT_ORB, LightOrbEntityRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.SOUL_FRAGMENT, SoulFragmentEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.LIGHTNING_POINT, LightningPointEntityRenderer::new);

@@ -81,6 +81,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<EarthquakeVisualEntity>> EARTHQUAKE =
             registerMarkerEntity("earthquake", EarthquakeVisualEntity::new, 0.25f, 0.25f);
 
+    public static final RegistrySupplier<EntityType<LightOrbEntity>> LIGHT_ORB =
+            registerMarkerEntity("light_orb", LightOrbEntity::new, 0.25f, 0.25f);
+
     public static final RegistrySupplier<EntityType<DugBlockEntity>> DUG_BLOCK = registerType(
             EntityType.Builder.<DugBlockEntity>create(DugBlockEntity::new, SpawnGroup.MISC)
                     .dimensions(1f, 1f)
