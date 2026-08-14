@@ -7,12 +7,14 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.Biome;
 import net.rosemarythyme.simplymore.client.render.features.BloodHarvesterSenseRenderer;
 import net.rosemarythyme.simplymore.client.render.features.SoulfractureAuraRenderer;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
@@ -130,5 +132,15 @@ public class ClientWorldRendererMixin {
         }
 
         return original;
+    }
+
+    @Inject(method = "renderEntity", at = @At("HEAD"), cancellable = true)
+    private void simplymore$preventEntityRender(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+        if(player == null) return;
+
+        if(player.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED))) {
+            ci.cancel();
+        }
     }
 }

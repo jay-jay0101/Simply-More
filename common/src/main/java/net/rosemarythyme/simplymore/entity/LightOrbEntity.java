@@ -14,17 +14,21 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.LustrousMoxieItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public class LightOrbEntity extends AbstractVisibleAbilityEntity {
     protected static final TrackedData<Optional<UUID>> PERSON = DataTracker.registerData(LightOrbEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+    private static final Logger log = LoggerFactory.getLogger(LightOrbEntity.class);
     private final int offset;
 
     public LightOrbEntity(EntityType<LightOrbEntity> entityType, World world) {
@@ -75,13 +79,14 @@ public class LightOrbEntity extends AbstractVisibleAbilityEntity {
         AudioVisualUtils.particleAroundEntity(this, ParticleTypes.EXPLOSION, 1, 0, 0);
         AudioVisualUtils.particleAroundEntity(this, ParticleTypes.FLASH, 1, 0, 0);
 
-        LivingEntity owner = getOwner();
-        if(owner != null) {
-            AttackUtils.cubeAttack(owner, getPos(), 3, AttackUtils.AttackTarget.ENEMIES)
-                    .forceDamage(LustrousMoxieItem.SETTINGS.explosionDamage, owner.getDamageSources().explosion(this, owner));
-        }
-
         this.discard();
+        LivingEntity owner = getOwner();
+
+        if(owner == null) return;
+
+        AttackUtils.cubeAttack(owner, getPos(), 3, AttackUtils.AttackTarget.ENEMIES)
+                .forceDamage(LustrousMoxieItem.SETTINGS.explosionDamage, owner.getDamageSources().explosion(this, owner))
+                .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED), LustrousMoxieItem.SETTINGS.dazzleDuration, 0);
     }
 
     @Override

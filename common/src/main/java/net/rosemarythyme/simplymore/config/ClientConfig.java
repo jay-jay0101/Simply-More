@@ -16,6 +16,11 @@ public class ClientConfig extends Config {
             ValidatedEnum.WidgetType.CYCLING
     );
 
+    public ValidatedEnum<Flashbang> flashbang = new ValidatedEnum<>(
+            Flashbang.LIGHT,
+            ValidatedEnum.WidgetType.CYCLING
+    );
+
     public enum Screenshake implements EnumTranslatable {
         ALL,
         SELF,
@@ -25,6 +30,16 @@ public class ClientConfig extends Config {
         @Override
         public @NotNull String prefix() {
             return "simplymore.client.screenshake";
+        }
+    }
+
+    public enum Flashbang implements EnumTranslatable {
+        LIGHT,
+        DARK;
+
+        @Override
+        public @NotNull String prefix() {
+            return "simplymore.client.flashbang";
         }
     }
 }

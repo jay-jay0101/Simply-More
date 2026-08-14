@@ -11,7 +11,6 @@
   "effect.simplymore.wounded": "Wounded",
   "effect.simplymore.stun": "Stunned",
   "effect.simplymore.stunned": "Stunned",
-  "effect.simplymore.stunned_moxie": "Stunned",
   "effect.simplymore.mistified": "Misty Step",
   "effect.simplymore.withering_fate": "Withering Fate",
   "effect.simplymore.insanity": "Insanity",
@@ -31,6 +30,7 @@
   "effect.simplymore.soul_health": "Soul Health",
   "effect.simplymore.implicit_stun": "Implicit Stun",
   "effect.simplymore.implicit_mining_fatigue": "Implicit Fatigue",
+  "effect.simplymore.dazzled": "Dazzled",
 
   "item.simplymore.runefused_carver": "Runefused Carver",
   "item.simplymore.netherfused_carver": "Netherfused Carver",
@@ -346,7 +346,8 @@
   "item.simplymore.lustrous_moxie": "Lustrous Moxie",
   "item.simplymore.lustrous_moxie.tooltip1": "Unique Effect: ???",
   "item.simplymore.lustrous_moxie.tooltip2": "Chance on hit to spawn a small orb of light that rotates around the target, up to 3 per target. Applying a fourth orb to a target causes them to all explode.",
-  "item.simplymore.lustrous_moxie.tooltip3": "Charge the blade to release a beam of light forwards. This light pierces armor and detonates all orbs. Activate again to teleport and consume the beam.",
+  "item.simplymore.lustrous_moxie.tooltip3": "Enemies hit by the explosion are dazzled. Dazzled enemies lose sight of other entities.",
+  "item.simplymore.lustrous_moxie.tooltip4": "Charge the blade to release a beam of light forwards. This light pierces armor and detonates all orbs. Activate again to teleport and consume the beam.",
 
   "item.simplymore.soulfracture": "Soulfracture",
   "item.simplymore.soulfracture.tooltip1": "Unique Effect: Soul Splitting",
@@ -1249,6 +1250,9 @@
   "simplymore.client.screenshake.SELF": "Disabled from other players",
   "simplymore.client.screenshake.OTHERS": "Disabled from self",
   "simplymore.client.screenshake.NONE": "Disabled",
+  "simplymore.client.flashbang": "Lustrous Moxie Flashbang",
+  "simplymore.client.flashbang.LIGHT": "Light Mode",
+  "simplymore.client.flashbang.DARK": "Dark Mode",
 
   "tooltip.simplymore.implicit.grandsword": "Sunders %s%% armor per hit, and breaks shields",
   "tooltip.simplymore.implicit.friendship": "+%s%% damage while mounted",

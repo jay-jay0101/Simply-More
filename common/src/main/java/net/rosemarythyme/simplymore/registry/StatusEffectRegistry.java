@@ -212,21 +212,6 @@ public class StatusEffectRegistry {
                     )
     );
 
-    public static final RegistrySupplier<StatusEffect> STUNNED_MOXIE = registerEffect(
-            "stunned_moxie",
-            new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            SimplyMore.identifier("moxie_stun_attack_speed"),
-                            -99,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            SimplyMore.identifier("moxie_stun_damage"),
-                            -9999,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
-    );
     public static final RegistrySupplier<StatusEffect> WITHERING_FATE = registerEffect(
             "withering_fate",
             new StatusEffect(StatusEffectCategory.HARMFUL,2818819)
@@ -235,10 +220,12 @@ public class StatusEffectRegistry {
                             SimplyMore.identifier("withering_fate"),
                             -1, EntityAttributeModifier.Operation.ADD_VALUE)
     );
+
     public static final RegistrySupplier<StatusEffect> MISTIFIED = registerEffect(
             "mistified",
             new MistyEffect(StatusEffectCategory.BENEFICIAL,0)
     );
+
     public static final RegistrySupplier<StatusEffect> INSANITY = registerEffect(
             "insanity",
             new InsanityEffect(StatusEffectCategory.HARMFUL,700)
@@ -252,18 +239,22 @@ public class StatusEffectRegistry {
                             -0.03,
                             EntityAttributeModifier.Operation.ADD_VALUE)
     );
+
     public static final RegistrySupplier<StatusEffect> TIDEBREAKER = registerEffect(
             "tidebreaker_rain",
             new TidebreakerEffect(StatusEffectCategory.BENEFICIAL,700)
     );
+
     public static final RegistrySupplier<StatusEffect> BLESSING = registerEffect(
             "blessing",
             new StatusEffect(StatusEffectCategory.BENEFICIAL,16709211)
     );
+
     public static final RegistrySupplier<StatusEffect> CURSE = registerEffect(
             "curse",
             new StatusEffect(StatusEffectCategory.HARMFUL,3152180)
     );
+
     public static final RegistrySupplier<StatusEffect> SUFFOCATION = registerEffect(
             "constricted",
             new SuffocatingEffect(StatusEffectCategory.HARMFUL,0)
@@ -274,10 +265,6 @@ public class StatusEffectRegistry {
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
     );
-    public static final RegistrySupplier<StatusEffect> RADIANT_MARK = registerEffect(
-            "radiant_mark",
-            new RadiantEffect(StatusEffectCategory.HARMFUL,0)
-    );
 
     public static final RegistrySupplier<StatusEffect> ARMOUR_CRUNCH = registerEffect(
             "armor_crunch",
@@ -287,7 +274,12 @@ public class StatusEffectRegistry {
                             SimplyMore.identifier("armor_crunch"),
                             -2,
                             EntityAttributeModifier.Operation.ADD_VALUE
-            )
+                    )
+    );
+
+    public static final RegistrySupplier<StatusEffect> DAZZLED = registerEffect(
+            "dazzled",
+            new StatusEffect(StatusEffectCategory.HARMFUL,0xEEDC82)
     );
     
     public static void register() {

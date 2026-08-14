@@ -72,8 +72,10 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
         tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip1").setStyle(Styles.ABILITY));
         tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
         tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip3").setStyle(Styles.TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.lustrous_moxie.tooltip4").setStyle(Styles.TEXT));
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
@@ -93,6 +95,8 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
         public float maxOrbs = 3;
         @ValidatedFloat.Restrict(min = 0)
         public float explosionDamage = 8;
+        @ValidatedInt.Restrict(min = 0)
+        public int dazzleDuration = 120;
 
     }
 }
