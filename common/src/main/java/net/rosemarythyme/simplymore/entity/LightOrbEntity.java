@@ -28,7 +28,6 @@ import java.util.UUID;
 
 public class LightOrbEntity extends AbstractVisibleAbilityEntity {
     protected static final TrackedData<Optional<UUID>> PERSON = DataTracker.registerData(LightOrbEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
-    private static final Logger log = LoggerFactory.getLogger(LightOrbEntity.class);
     private final int offset;
 
     public LightOrbEntity(EntityType<LightOrbEntity> entityType, World world) {
