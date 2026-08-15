@@ -57,6 +57,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<IcewallEntity>> ICEWALL =
             registerMarkerEntity("icewall", IcewallEntity::new, 2f, (42/16f) * 2);
 
+    public static final RegistrySupplier<EntityType<LightbeamEntity>> LIGHTBEAM =
+            registerMarkerEntity("lightbeam", LightbeamEntity::new, 1f, 60f);
+
     public static final RegistrySupplier<EntityType<BlizzardEntity>> BLIZZARD =
             registerMarkerEntity("blizzard", BlizzardEntity::new);
 

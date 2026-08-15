@@ -27,7 +27,7 @@ public record S2CChangeAbilityAgePacket(int id, int age) implements CustomPayloa
     public static void handle(S2CChangeAbilityAgePacket packet, NetworkManager.PacketContext context) {
         Entity entity = context.getPlayer().getWorld().getEntityById(packet.id);
         if(entity instanceof AbstractAbilityPlacementEntity ability) {
-            ability.setAge(packet.age);
+            ability.setAge(packet.age, false);
         }
     }
 }

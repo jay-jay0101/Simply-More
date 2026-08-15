@@ -21,7 +21,9 @@ import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import org.joml.Matrix4f;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -32,6 +34,8 @@ import java.util.List;
 
 @Mixin(WorldRenderer.class)
 public class ClientWorldRendererMixin {
+    @Shadow @Final private MinecraftClient client;
+
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;draw()V"))
     private void simplymore$auras(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci, @Local VertexConsumerProvider.Immediate vertexConsumers) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;

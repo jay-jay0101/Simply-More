@@ -18,6 +18,7 @@ import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityProjectileEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.api.AwakeningApi;
+import net.sweenus.simplyswords.api.SpellScalingProfile;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
@@ -52,11 +53,11 @@ public class AttackUtils {
         }
     }
 
-    public static float scaleDamage(String spellSchool, LivingEntity actor, ItemStack stack, float attackScaling, float spellScaling, float baseDamage) {
+    public static float scaleDamage(SpellScalingProfile spellSchool, LivingEntity actor, ItemStack stack, float attackScaling, float spellScaling, float baseDamage) {
         return  Math.max(baseDamage, HelperMethods.abilityScaledDamage(spellSchool, actor, stack, attackScaling, spellScaling) * baseDamage);
     }
 
-    public static float scaleDamage(String spellSchool, LivingEntity actor, float attackScaling, float spellScaling, float baseDamage) {
+    public static float scaleDamage(SpellScalingProfile spellSchool, LivingEntity actor, float attackScaling, float spellScaling, float baseDamage) {
         return Math.max(baseDamage, HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling) * baseDamage);
     }
 
@@ -227,12 +228,12 @@ public class AttackUtils {
     }
 
     public static <T extends AbstractAbilityPlacementEntity> List<T> getOwnedAbilities(LivingEntity owner, Class<T> clazz) {
-        return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 50))
+        return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 120))
                 .stream().filter((e) -> e.getOwner() instanceof LivingEntity o && owner.getUuid().equals(o.getUuid())).toList();
     }
 
     public static <T extends AbstractAbilityProjectileEntity> List<T> getOwnedProjectiles(LivingEntity owner, Class<T> clazz) {
-        return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 50))
+        return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 120))
                 .stream().filter((e) -> e.getOwner() instanceof LivingEntity o && owner.getUuid().equals(o.getUuid())).toList();
     }
 }

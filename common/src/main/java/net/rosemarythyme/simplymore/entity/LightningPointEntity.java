@@ -14,6 +14,7 @@ import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.sweenus.simplyswords.api.SpellScalingProfile;
 import org.jetbrains.annotations.NotNull;
 
 public class LightningPointEntity extends AbstractVisibleAbilityEntity {
@@ -53,7 +54,7 @@ public class LightningPointEntity extends AbstractVisibleAbilityEntity {
             AudioVisualUtils.applyScreenshake(world, getPos(), owner, 40, 2.4f, 10);
 
             AttackUtils.cylinderAttack(getOwner(), getPos().offset(Direction.UP, 50), StasisItem.SETTINGS.radius, 50, AttackUtils.AttackTarget.ENEMIES)
-                    .forceDamage(AttackUtils.scaleDamage("lightning", owner, 0, 1, StasisItem.SETTINGS.strikeDamage), DamageTypeRegistry.damageSourceOf(world, DamageTypeRegistry.LIGHTNING))
+                    .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.LIGHTNING, owner, 0, 1, StasisItem.SETTINGS.strikeDamage), DamageTypeRegistry.damageSourceOf(world, DamageTypeRegistry.LIGHTNING))
                     .onEach((target) -> spawnLightning(world, target.getPos(), target));
             discard();
         }

@@ -33,6 +33,9 @@ public class ClientEntityRendererRegistry {
         EntityModelLayerRegistry.register(LightOrbModel.LAYER, LightOrbModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.LIGHT_ORB, LightOrbEntityRenderer::new);
 
+        EntityModelLayerRegistry.register(LightbeamModel.LAYER, LightbeamModel::getTexturedModelData);
+        EntityRendererRegistry.register(EntityRegistry.LIGHTBEAM, LightbeamEntityRenderer::new);
+
         EntityRendererRegistry.register(EntityRegistry.SOUL_FRAGMENT, SoulFragmentEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.LIGHTNING_POINT, LightningPointEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.EARTHQUAKE, EarthquakeEntityRenderer::new);

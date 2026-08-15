@@ -23,6 +23,7 @@ import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
+import net.sweenus.simplyswords.api.SpellScalingProfile;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.client.util.TooltipUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -53,7 +54,7 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
 
             AttackUtils.lineAttack(attacker, attacker.getPos(), attacker.getYaw(), attacker.getPitch(), attacker.distanceTo(target),1, AttackUtils.AttackTarget.ENEMIES)
                     .knockback(attacker, SETTINGS.knockback)
-                    .forceDamage(AttackUtils.scaleDamage("fire", attacker, stack, 0, 1, SETTINGS.eruptionDamage), attacker.getDamageSources().inFire());
+                    .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, attacker, stack, 0, 1, SETTINGS.eruptionDamage), attacker.getDamageSources().inFire());
 
             AttackUtils.spawnAbility(new EruptionEntity(attacker, attacker.getPos()), attacker);
             AttackUtils.spawnAbility(new EruptionEntity(attacker, target.getPos()), attacker);

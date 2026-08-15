@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,7 +26,6 @@ import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
-import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.PlayerItemUseManager;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
@@ -35,7 +35,6 @@ import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.util.Styles;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility, StoppableAbilityItem {
@@ -108,9 +107,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
     @Override
     public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
         if(remainingDuration > 1) {
-            new TargetList(new HashSet<>(AttackUtils.getOwnedAbilities(user, LightningPointEntity.class)))
-                    .filterByOwnedBy(user)
-                    .discard();
+            AttackUtils.getOwnedAbilities(user, LightningPointEntity.class).forEach(Entity::discard);
             return;
         }
 
@@ -134,7 +131,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return UNIQUE_CONFIG.stasis.strikeWindup;
+        return SETTINGS.strikeWindup;
     }
 
     @Override

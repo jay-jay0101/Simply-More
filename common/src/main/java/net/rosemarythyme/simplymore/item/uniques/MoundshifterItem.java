@@ -38,6 +38,7 @@ import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.PlayerItemUseManager;
+import net.sweenus.simplyswords.api.SpellScalingProfile;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -84,7 +85,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
         AudioVisualUtils.playSound(world, pos, new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0));
 
         AttackUtils.cuboidAttack(attacker, pos.offset(Direction.UP, 3), 8, 5, AttackUtils.AttackTarget.ENEMIES)
-                .damage(AttackUtils.scaleDamage("earth", attacker, 1/9f, 1f, SETTINGS.earthquakeDamage), attacker.getDamageSources().explosion(attacker, attacker))
+                .damage(AttackUtils.scaleDamage(SpellScalingProfile.NATURE, attacker, 1/9f, 1f, SETTINGS.earthquakeDamage), attacker.getDamageSources().explosion(attacker, attacker))
                 .knockback(pos, SETTINGS.earthquakeStrength);
 
         AttackUtils.spawnAbility(new EarthquakeVisualEntity(attacker, pos), attacker);

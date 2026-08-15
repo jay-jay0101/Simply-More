@@ -34,7 +34,7 @@ public abstract class MobEntityMixin {
 	}
 
 	@ModifyReturnValue(method = "getTarget", at=@At("RETURN"))
-	private LivingEntity simplymore$preventMewTarget(LivingEntity original) {
+	private LivingEntity simplymore$preventNewTarget(LivingEntity original) {
 		MobEntity entity = (MobEntity) (Object) this;
 
 		if(entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED))) {

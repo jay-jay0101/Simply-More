@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.entity;
 
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -11,11 +12,13 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.EntityTrackerEntry;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.networking.s2c.S2CChangeAbilityAgePacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +35,16 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
     }
 
     public void setAge(int age) {
+        setAge(age, true);
+    }
+
+    public void setAge(int age, boolean sync) {
         this.age = age;
+
+        if(!sync) return;
+
+        List<ServerPlayerEntity> players = getServerWorld().getPlayers().stream().filter((player) -> player.squaredDistanceTo(getPos()) < 60 * 60).toList();
+        NetworkManager.sendToPlayers(players, new S2CChangeAbilityAgePacket(this.getId(), this.getLifespan()));
     }
 
     @Override

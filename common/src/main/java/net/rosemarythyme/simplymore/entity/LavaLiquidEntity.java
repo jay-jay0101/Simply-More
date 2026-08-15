@@ -9,6 +9,7 @@ import net.rosemarythyme.simplymore.item.uniques.MagmaseepItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.sweenus.simplyswords.api.SpellScalingProfile;
 import org.jetbrains.annotations.NotNull;
 
 public class LavaLiquidEntity extends AbstractLiquidEntity {
@@ -39,7 +40,7 @@ public class LavaLiquidEntity extends AbstractLiquidEntity {
     @Override
     public void hit(LivingEntity owner, TargetList hitList) {
         hitList.filterByTargetType(owner, AttackUtils.AttackTarget.ENEMIES)
-                .damage(AttackUtils.scaleDamage("fire", owner, 0, 1, MagmaseepItem.SETTINGS.lavaDamage), owner.getDamageSources().inFire())
+                .damage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, owner, 0, 1, MagmaseepItem.SETTINGS.lavaDamage), owner.getDamageSources().inFire())
                 .setOnFireFor(5)
                 .applyEffect(StatusEffects.SLOWNESS, 10, 2);
     }

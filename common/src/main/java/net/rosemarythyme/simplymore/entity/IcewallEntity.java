@@ -32,8 +32,6 @@ public class IcewallEntity extends AbstractCollidableAbilityEntity {
 
     public void lower() {
         setAge(this.getLifespan());
-        List<ServerPlayerEntity> players = getServerWorld().getPlayers().stream().filter((player) -> player.squaredDistanceTo(getPos()) < 60 * 60).toList();
-        NetworkManager.sendToPlayers(players, new S2CChangeAbilityAgePacket(this.getId(), this.getLifespan()));
     }
 
     @Override
