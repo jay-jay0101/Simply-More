@@ -13,6 +13,7 @@
   ],
   "mixins": [
     "ContainedRemnantItemMixin",
+    "HelperMethodsMixin",
     "LivingEntityMixin",
     "LootTableModifierMixin",
     "MobEntityMixin",
