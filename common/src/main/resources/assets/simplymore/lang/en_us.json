@@ -845,10 +845,8 @@
   "simplymore.unique_effect.blade_of_the_grotesque.selfStunTime": "False Appearance duration",
   "simplymore.unique_effect.blade_of_the_grotesque.auraStunTime": "False Appearance enemy stun duration",
   "simplymore.unique_effect.blade_of_the_grotesque.auraRange": "Warding Aura range",
-  "simplymore.unique_effect.blade_of_the_grotesque.selfStunnedArmorBuff": "False Appearance armor bonus",
-  "simplymore.unique_effect.blade_of_the_grotesque.attackerStunnedArmorBuff": "False Appearance enemy stun armor bonus",
-  "simplymore.unique_effect.blade_of_the_grotesque.cooldown": "False Appearance cooldown",
-  "simplymore.unique_effect.blade_of_the_grotesque.selfSlow": "Carry Load slowness",
+  "simplymore.unique_effect.blade_of_the_grotesque.cooldown": "Cooldown",
+  "simplymore.unique_effect.blade_of_the_grotesque.selfSlow": "Held slowdown",
   "simplymore.unique_effect.blade_of_the_grotesque.maxAuraWard": "Warding Aura max stacks",
 
   "simplymore.unique_effect.boas_fang": "§6[Boa's Fang]§7",
