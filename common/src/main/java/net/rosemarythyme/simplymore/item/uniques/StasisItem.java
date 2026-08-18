@@ -23,6 +23,7 @@ import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
@@ -50,16 +51,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
             AudioVisualUtils.playSound(target.getWorld(), target.getPos(), new Sound(SoundEvents.ITEM_TRIDENT_THUNDER.value(), 0.5f, 2f));
             AudioVisualUtils.particleAroundEntity(target, ParticleTypes.ELECTRIC_SPARK, 50, 0.25f, 0.1f);
 
-            if (target instanceof PlayerEntity playerTarget) {
-                for (ItemStack item : playerTarget.getInventory().main) {
-                    if (!playerTarget.getItemCooldownManager().isCoolingDown(item.getItem())) {
-                        playerTarget.getItemCooldownManager().set(item.getItem(), SETTINGS.stunTime);
-                    }
-                }
-            } else {
-                WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, target.getStackInHand(Hand.MAIN_HAND), SETTINGS.stunTime);
-                WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, target.getStackInHand(Hand.OFF_HAND), SETTINGS.stunTime);
-            }
+            EntityUtils.putAllItemsOnCooldown(target, SETTINGS.stunTime);
         }
     }
 

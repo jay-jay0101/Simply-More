@@ -19,6 +19,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.SimplyMore;
+import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
 import net.rosemarythyme.simplymore.networking.s2c.S2CAbilityManagerPacket;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
@@ -51,7 +52,9 @@ public class ActiveAbilityManager {
 
     public enum Type {
         HARVEST(ActiveAbilityManager::harvestTick, (player) -> HashMultimap.create(), 32),
-        DRILL(ActiveAbilityManager::drillTick, ActiveAbilityManager::drillModifiers,100);
+        DRILL(ActiveAbilityManager::drillTick, ActiveAbilityManager::drillModifiers,100),
+        STATUE(ActiveAbilityManager::statueTick, ActiveAbilityManager::statueModifiers, 100),
+        PETRIFIED(ActiveAbilityManager::petrifiedTick, ActiveAbilityManager::statueModifiers, 100);
 
         final Function<ActiveAbility, Integer> run;
         final Function<LivingEntity, Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier>> modifiers;
@@ -229,7 +232,43 @@ public class ActiveAbilityManager {
         return map;
     }
 
+    private static int statueTick(ActiveAbility ability) {
+        if(ability.remainingDuration <= 1) {
+            EntityUtils.cooldown(ability.owner, ItemRegistry.BLADE_OF_THE_GROTESQUE.get(), BladeOfTheGrotesqueItem.SETTINGS.cooldown, true);
+        }
+
+        return petrifiedTick(ability);
+    }
+
+    private static int petrifiedTick(ActiveAbility ability) {
+        AudioVisualUtils.particleAroundEntity(ability.owner, ParticleTypes.ASH, 5, 0.2, 1);
+        EntityUtils.putAllItemsOnCooldown(ability.owner, ability.remainingDuration - 1);
+
+        if(ability.remainingDuration <= 1) {
+            BladeOfTheGrotesqueItem.breakOutVisuals(ability.owner);
+            return 0;
+        }
+
+        return ability.remainingDuration - 1;
+    }
+
+    private static Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> statueModifiers(LivingEntity entity) {
+        Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> map = HashMultimap.create();
+        map.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(SimplyMore.identifier("statue_attack_speed"), -1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(SimplyMore.identifier("statue_attack_damage"), -1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
+        return map;
+    }
+
     public boolean isDrilling(LivingEntity entity) {
         return isInAbility(entity, Type.DRILL) || (entity.getFirstPassenger() instanceof LivingEntity rider && isInAbility(rider, Type.DRILL));
+    }
+
+    public boolean isStatue(LivingEntity entity) {
+        return isInAbility(entity, Type.STATUE) || isInAbility(entity, Type.PETRIFIED);
+    }
+
+    public static boolean isStatueOnEither(LivingEntity entity) {
+        return SERVER.isStatue(entity) || ClientActiveAbilityManager.CLIENT.isStatue(entity);
     }
 }

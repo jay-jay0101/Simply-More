@@ -27,7 +27,6 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
@@ -87,8 +86,8 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
                 AudioVisualUtils.particleAroundEntity(user, ParticleTypes.WAX_ON, 20, 0.5, 0.2f);
                 AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.BLOCK_BEACON_POWER_SELECT, 0.5f, 2f));
 
-                AttackUtils.cubeAttack(user, user.getPos(), 3, AttackUtils.AttackTarget.ENEMIES)
-                        .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0);
+//                AttackUtils.cubeAttack(user, user.getPos(), 3, AttackUtils.AttackTarget.ENEMIES)
+//                        .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0);
             } else {
                 AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ITEM_AXE_SCRAPE));
             }

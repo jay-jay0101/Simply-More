@@ -5,9 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
@@ -15,11 +17,35 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
 import java.util.*;
 
 public class EntityUtils {
     private static final Map<LivingEntity, Long> SWING_CACHE = new HashMap<>();
+
+    public static void putAllItemsOnCooldown(LivingEntity target, int time) {
+        if (target instanceof PlayerEntity playerTarget) {
+            for (ItemStack item : playerTarget.getInventory().main) {
+                if (!playerTarget.getItemCooldownManager().isCoolingDown(item.getItem())) {
+                    playerTarget.getItemCooldownManager().set(item.getItem(), time);
+                }
+            }
+        } else {
+            WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, target.getStackInHand(Hand.MAIN_HAND), time);
+            WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, target.getStackInHand(Hand.OFF_HAND), time);
+        }
+    }
+
+    public static void cooldown(LivingEntity target, Item item, int time, boolean force) {
+        if (target instanceof PlayerEntity playerTarget) {
+            if (!playerTarget.getItemCooldownManager().isCoolingDown(item) || force) {
+                playerTarget.getItemCooldownManager().set(item, time);
+            }
+        } else {
+            WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, item.getDefaultStack(), time);
+        }
+    }
 
     public static void putInCache(LivingEntity entity, long time) {
         SWING_CACHE.put(entity, time);

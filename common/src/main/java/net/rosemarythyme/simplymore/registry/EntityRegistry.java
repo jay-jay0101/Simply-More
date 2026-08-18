@@ -87,6 +87,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<LightOrbEntity>> LIGHT_ORB =
             registerMarkerEntity("light_orb", LightOrbEntity::new, 0.25f, 0.25f);
 
+    public static final RegistrySupplier<EntityType<StatueEntity>> STATUE =
+            registerMarkerEntity("statue", StatueEntity::new, 1f, 2f);
+
     public static final RegistrySupplier<EntityType<DugBlockEntity>> DUG_BLOCK = registerType(
             EntityType.Builder.<DugBlockEntity>create(DugBlockEntity::new, SpawnGroup.MISC)
                     .dimensions(1f, 1f)

@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.Biome;
+import net.rosemarythyme.simplymore.client.render.features.BladeOfTheGrotesqueAuraRenderer;
 import net.rosemarythyme.simplymore.client.render.features.BloodHarvesterSenseRenderer;
 import net.rosemarythyme.simplymore.client.render.features.SoulfractureAuraRenderer;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
@@ -21,9 +22,7 @@ import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import org.joml.Matrix4f;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -33,9 +32,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import java.util.List;
 
 @Mixin(WorldRenderer.class)
-public class ClientWorldRendererMixin {
-    @Shadow @Final private MinecraftClient client;
-
+public abstract class ClientWorldRendererMixin {
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;draw()V"))
     private void simplymore$auras(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci, @Local VertexConsumerProvider.Immediate vertexConsumers) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -58,6 +55,10 @@ public class ClientWorldRendererMixin {
 
             if(EntityUtils.isHolding(entity, ItemRegistry.SOULFRACTURE.get())) {
                 SoulfractureAuraRenderer.render(entity, stack, vertexConsumers);
+            }
+
+            if(EntityUtils.isHolding(entity, ItemRegistry.BLADE_OF_THE_GROTESQUE.get())) {
+                BladeOfTheGrotesqueAuraRenderer.render(entity, stack, vertexConsumers, WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getBlockPos()));
             }
 
             if(ClientActiveAbilityManager.CLIENT.isInAbility(player, ActiveAbilityManager.Type.HARVEST)) {

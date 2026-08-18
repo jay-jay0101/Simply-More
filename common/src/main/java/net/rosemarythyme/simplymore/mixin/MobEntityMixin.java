@@ -19,6 +19,7 @@ public abstract class MobEntityMixin {
 		MobEntity mobEntity = (MobEntity) (Object) this;
 		if (mobEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN))) return false;
 		if (ActiveAbilityManager.SERVER.isDrilling(mobEntity)) return false;
+		if (ActiveAbilityManager.SERVER.isStatue(mobEntity)) return false;
 
         return originalReturnValue;
     }

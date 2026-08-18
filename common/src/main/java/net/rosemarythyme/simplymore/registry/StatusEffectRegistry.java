@@ -62,12 +62,12 @@ public class StatusEffectRegistry {
             new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
-                            SimplyMore.identifier("implicit_stun_attack_speed"),
+                            SimplyMore.identifier("stun_attack_speed"),
                             -99,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     ).addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            SimplyMore.identifier("implicit_stun_damage"),
+                            SimplyMore.identifier("stun_damage"),
                             -9999,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
@@ -167,47 +167,6 @@ public class StatusEffectRegistry {
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
                             SimplyMore.identifier("grotesque_ward_speed"),
                             -0.01,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
-    );
-
-    public static final RegistrySupplier<StatusEffect> SOLIDIFIED = registerEffect(
-            "solidified",
-            new SolidifyEffect(StatusEffectCategory.BENEFICIAL,8948877)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ARMOR,
-                            SimplyMore.identifier("solid_armor"),
-                            UNIQUE_CONFIG.blade_of_the_grotesque.selfStunnedArmorBuff,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            SimplyMore.identifier("solid_attack_speed"),
-                            -99,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            SimplyMore.identifier("solid_damage"),
-                            -9999,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
-    );
-
-    public static final RegistrySupplier<StatusEffect> STUNNED = registerEffect(
-            "stunned",
-            new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ARMOR,
-                            SimplyMore.identifier("stunned_armor"),
-                            UNIQUE_CONFIG.blade_of_the_grotesque.attackerStunnedArmorBuff,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            SimplyMore.identifier("stunned_attack_speed"),
-                            -99, EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            SimplyMore.identifier("stunned_damage"),
-                            -9999,
                             EntityAttributeModifier.Operation.ADD_VALUE
                     )
     );

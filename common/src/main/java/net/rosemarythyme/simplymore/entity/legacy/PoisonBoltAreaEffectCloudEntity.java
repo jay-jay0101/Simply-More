@@ -52,7 +52,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
     }
 
     public void judder() {
-        // Get the owner of the entity
+        // Get the owner of the owner
         LivingEntity owner = this.getOwner();
         if (owner == null) {
             return;
@@ -65,7 +65,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
         List<LivingEntity> targets = AttackUtils.cuboidAttack(getOwner(), box);
 
-        // Find the closest entity in the box
+        // Find the closest owner in the box
         for (LivingEntity livingEntity : targets) {
             double entityDistance = livingEntity.distanceTo(this);
             if (entityDistance > distance) {
@@ -83,7 +83,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
         // Check if a target was found
         if (target == null) {
-            // Create a new entity to replace this one
+            // Create a new owner to replace this one
             PoisonBoltAreaEffectCloudEntity replacement = new PoisonBoltAreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), owner, this.version + 1);
             this.getWorld().spawnEntity(replacement);
             this.discard();
@@ -100,7 +100,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
             // Look at the target
             this.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, target.getPos());
 
-            // Calculate the velocity of the entity
+            // Calculate the velocity of the owner
             float VelocityPower = 3;
             float yaw = (float) Math.toRadians(this.getYaw() + 90);
             float pitch = (float) Math.toRadians(this.getPitch());
@@ -114,7 +114,7 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
                 ((ServerWorld) this.getWorld()).spawnParticles(particleEffect, this.getX() + (horizontalVelocity / i), this.getY() + (verticalVelocity / i), this.getZ() + (depthVelocity / i), 1, 0, 0, 0, 0);
             }
 
-            // Create a new entity to replace this one
+            // Create a new owner to replace this one
             PoisonBoltAreaEffectCloudEntity replacement = new PoisonBoltAreaEffectCloudEntity(this.getWorld(), this.getX() + horizontalVelocity, this.getY() + verticalVelocity, this.getZ() + depthVelocity, owner, this.version + 1);
 
             this.getWorld().spawnEntity(replacement);

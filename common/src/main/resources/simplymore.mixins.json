@@ -9,6 +9,7 @@
     "ClientCameraMixin",
     "ClientInGameHudMixin",
     "ClientLivingEntityRendererMixin",
+    "ClientPlayerEntityRendererMixin",
     "ClientWorldRendererMixin"
   ],
   "mixins": [

@@ -12,7 +12,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -57,15 +56,15 @@ public class SimplyMoreHelperMethods {
 
 
     public static void simplyMore$onDamageEffects(float amount, DamageSource source, CallbackInfo info, LivingEntity livingEntity) {
-        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED))) {
-            if (source.getAttacker() != livingEntity) {
-                livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED));
-                BladeOfTheGrotesqueItem.causeStun(livingEntity);
-
-                info.cancel();
-                return;
-            }
-        }
+//        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED))) {
+//            if (source.getAttacker() != livingEntity) {
+//                livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.SOLIDIFIED));
+//                BladeOfTheGrotesqueItem.causeStun(livingEntity);
+//
+//                info.cancel();
+//                return;
+//            }
+//        }
 
         if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING))) {
 

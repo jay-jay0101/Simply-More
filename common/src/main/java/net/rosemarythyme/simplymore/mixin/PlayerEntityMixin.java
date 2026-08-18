@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,7 +8,6 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.uniques.CindergorgeItem;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,16 +31,5 @@ public abstract class PlayerEntityMixin {
 				}
 			}
 		}
-	}
-
-	@ModifyReturnValue(at = @At("RETURN"), method = "isInvulnerableTo")
-	private boolean simplymore$isInvulnerable(boolean original, DamageSource damageSource) {
-		PlayerEntity player = (PlayerEntity) (Object) this;
-
-		if(damageSource.getAttacker() != null && ActiveAbilityManager.SERVER.isDrilling(player)) {
-			return true;
-		}
-
-		return original;
 	}
 }
