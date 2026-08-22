@@ -15,7 +15,9 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.entity.legacy.GhostFallingBlockEntity;
 import net.rosemarythyme.simplymore.networking.s2c.S2CParticleCylinderPacket;
 import net.rosemarythyme.simplymore.networking.s2c.S2CScreenShakePacket;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
@@ -99,5 +101,40 @@ public class AudioVisualUtils {
 
     public static void playSound(World world, Vec3d pos, Sound sound) {
         world.playSound(null, pos.x, pos.y, pos.z, sound.event(), SoundCategory.PLAYERS, sound.volume(), sound.pitch());
+    }
+
+    public static void explosionBlocksInLine(ServerWorld world, Vec3d startPos, float yaw, float pitch, double length, int num, int horizontalRange, int aboveRange, int belowRange, float speed, Random random) {
+        Vec3d endPos = startPos.add(MathUtils.getDirectionalVector(yaw, pitch).multiply(length));
+        explosionBlocksInLine(world, startPos, endPos, num, horizontalRange, aboveRange, belowRange, speed, random);
+    }
+
+    public static void explosionBlocksInLine(ServerWorld world, Vec3d startPos, Vec3d endPos, int num, int horizontalRange, int aboveRange, int belowRange, float speed, Random random) {
+        Vec3d direction = endPos.subtract(startPos).normalize();
+        Vec3d tangent = new Vec3d(0, 1, 0).crossProduct(direction).normalize();
+
+        double size = Math.abs(startPos.distanceTo(endPos));
+        for (double i = 0; i < size; i += horizontalRange) {
+            Vec3d center = direction.multiply(i).add(startPos);
+            BlockPos pos = BlockPos.ofFloored(center);
+
+            MathUtils.getPositionsOnFloor(world, pos, 0, aboveRange, belowRange, num).forEach(block -> {
+                Vec3d tangentSide = tangent.multiply(random.nextBoolean() ? 1 : -1);
+
+                Vec3d tangentPos = block.toCenterPos().add(tangentSide);
+
+                Vec3d velocity = tangentSide.add(0, 0.2f, 0).multiply(speed);
+
+                world.spawnEntity(new GhostFallingBlockEntity(world, tangentPos, velocity));
+            });
+        }
+    }
+
+    public static void explosionBlocks(ServerWorld world, BlockPos center, int num, int horizontalRange, int aboveRange, int belowRange, float speed) {
+        MathUtils.getPositionsOnFloor(world, center, horizontalRange, aboveRange, belowRange, num).forEach(block -> {
+            Vec3d velocity = block.toCenterPos().subtract(center.toCenterPos()).multiply(1, 0, 1).normalize()
+                    .add(0, 0.5f, 0).multiply(speed);
+
+            world.spawnEntity(new GhostFallingBlockEntity(world, block.toCenterPos(), velocity));
+        });
     }
 }

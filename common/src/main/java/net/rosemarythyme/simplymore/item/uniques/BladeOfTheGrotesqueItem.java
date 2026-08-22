@@ -17,7 +17,6 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -105,7 +104,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
                 EntityAttributes.GENERIC_MOVEMENT_SPEED,
                 new EntityAttributeModifier(
                         SimplyMore.identifier("grotesque_slowdown"),
-                        UNIQUE_CONFIG.blade_of_the_grotesque.selfSlow,
+                        SETTINGS.selfSlow,
                         EntityAttributeModifier.Operation.ADD_VALUE
                 ),
                 AttributeModifierSlot.MAINHAND

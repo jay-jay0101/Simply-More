@@ -152,7 +152,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     }
 
     @Override
-    public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
+    public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
         int chargeTime = getMaxUseTime(stack, user) - remainingDuration;
 
         List<LightbeamEntity> beams = AttackUtils.getOwnedAbilities(user, LightbeamEntity.class);

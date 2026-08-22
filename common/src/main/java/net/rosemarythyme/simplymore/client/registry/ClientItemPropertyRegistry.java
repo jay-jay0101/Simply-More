@@ -71,6 +71,7 @@ public class ClientItemPropertyRegistry {
         registerCounterItemProperty(ItemRegistry.BRASSTURN.get(), SimplyMore.identifier("oxidisation"));
         registerCounterItemProperty(ItemRegistry.DEATHS_EYRIE.get(), SimplyMore.identifier("crows"));
         registerCounterItemProperty(ItemRegistry.MOUNDSHIFTER.get(), SimplyMore.identifier("pressure"));
+        registerCounterItemProperty(ItemRegistry.RUYI_JINGU_BANG.get(), SimplyMore.identifier("size"));
 
         SimplySwordsClientAPI.registerAwakeningFormModelProperty(ItemRegistry.RUPTURED_IDOL.get(), SimplyMore.identifier("idol_path"));
     }

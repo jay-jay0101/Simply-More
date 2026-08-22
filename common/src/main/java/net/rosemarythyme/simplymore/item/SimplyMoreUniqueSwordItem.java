@@ -46,7 +46,7 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
         }
 
         if(stack.getItem() instanceof StackModifierItem modifierItem) {
-            modifierItem.applyStackModifier(stack);
+            StackModifierItem.applyStackModifier(stack, modifierItem);
         }
 
         ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();

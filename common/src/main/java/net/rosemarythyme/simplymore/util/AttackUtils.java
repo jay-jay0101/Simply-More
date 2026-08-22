@@ -61,6 +61,12 @@ public class AttackUtils {
         return Math.max(baseDamage, HelperMethods.abilityScaledDamage(spellSchool, actor, attackScaling, spellScaling) * baseDamage);
     }
 
+    public static DamageSource getHitSource(LivingEntity attacker) {
+        return attacker instanceof PlayerEntity player ?
+                attacker.getDamageSources().playerAttack(player) :
+                attacker.getDamageSources().mobAttack(attacker);
+    }
+
     public static TypedActionResult<ItemStack> holdToUse(ServerWorld world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if(!(stack.getItem() instanceof UniqueWeaponActiveAbility weapon)) return TypedActionResult.fail(stack);

@@ -7,10 +7,10 @@ import net.minecraft.item.ItemStack;
 public interface StackModifierItem {
     AttributeModifiersComponent getModifier(ItemStack stack, AttributeModifiersComponent base);
 
-    default void applyStackModifier(ItemStack stack) {
+    static void applyStackModifier(ItemStack stack, StackModifierItem item) {
         AttributeModifiersComponent modifiers = stack.getOrDefault(
                 DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
 
-        stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, getModifier(stack, modifiers));
+        stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, item.getModifier(stack, modifiers));
     }
 }

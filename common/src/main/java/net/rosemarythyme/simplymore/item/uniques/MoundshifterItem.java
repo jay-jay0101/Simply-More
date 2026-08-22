@@ -151,7 +151,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
     }
 
     @Override
-    public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
+    public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
         ActiveAbilityManager.SERVER.stop(user, ActiveAbilityManager.Type.DRILL);
 
         if(remainingDuration > getMaxUseTime(stack, user) - 10) return;

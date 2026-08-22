@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.entity.legacy;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.MovementType;
@@ -7,6 +8,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
@@ -23,8 +26,10 @@ public class GhostFallingBlockEntity extends FallingBlockEntity {
 
     public GhostFallingBlockEntity(World world, Vec3d pos, Vec3d velocity) {
         this(EntityRegistry.GHOST_FALLING_BLOCK.get(), world);
-        this.refreshPositionAfterTeleport(pos);
+        this.refreshPositionAfterTeleport(pos.offset(Direction.UP, 1));
         this.setVelocity(velocity);
+        this.setFallingBlockPos(BlockPos.ofFloored(pos));
+        this.setDestroyedOnLanding();
     }
 
 
@@ -51,6 +56,11 @@ public class GhostFallingBlockEntity extends FallingBlockEntity {
                 15, 0.25f, 0.25f, 0.25f, 0.5f
         );
         this.discard();
+    }
+
+    @Override
+    public BlockState getBlockState() {
+        return this.getWorld().getBlockState(getFallingBlockPos());
     }
 
     @Override

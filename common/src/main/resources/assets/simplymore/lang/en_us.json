@@ -310,7 +310,10 @@
 
   "item.simplymore.ruyi_jingu_bang": "Ruyi Jingu Bang",
   "item.simplymore.ruyi_jingu_bang.tooltip1": "Unique Effect: The Monkey King",
-  "item.simplymore.ruyi_jingu_bang.tooltip2": "Charge up the weapon before dealing a devastating slam. The longer it charges, the larger the weapon becomes, increasing the damage and range of the blow.",
+  "item.simplymore.ruyi_jingu_bang.tooltip2": "Chance on hit to grow in size, increasing attack range.",
+  "item.simplymore.ruyi_jingu_bang.tooltip3": "Constantly grow the weapon.",
+  "item.simplymore.ruyi_jingu_bang.tooltip4": "Release above half size to strike down, sundering armor, with increased range and damage depending on how large it has become.",
+  "item.simplymore.ruyi_jingu_bang.overlay": "Size %s",
 
   "item.simplymore.ruptured_idol": "Ruptured Idol",
   "item.simplymore.ruptured_idol.tooltip1": "A remnant energy resonates within.",

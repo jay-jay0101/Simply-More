@@ -34,7 +34,6 @@ import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.util.Styles;
-import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
 import java.util.List;
 
@@ -97,17 +96,13 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
     }
 
     @Override
-    public void stop(ItemStack stack, World world, LivingEntity user, int remainingDuration) {
+    public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
         if(remainingDuration > 1) {
             AttackUtils.getOwnedAbilities(user, LightningPointEntity.class).forEach(Entity::discard);
             return;
         }
 
-        if(user instanceof PlayerEntity player) {
-            player.getItemCooldownManager().set(this, SETTINGS.cooldown);
-        } else {
-            WeaponAbilityCooldownManager.setCooldown((ServerWorld) world, user, stack, SETTINGS.cooldown);
-        }
+        EntityUtils.cooldown(user, this, SETTINGS.cooldown, true);
     }
 
     @Override

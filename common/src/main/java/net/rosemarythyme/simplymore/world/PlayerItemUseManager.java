@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.world;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 
@@ -70,12 +71,14 @@ public class PlayerItemUseManager {
 
     private static void stop(PlayerEntity player, Usage usage) {
         player.clearActiveItem();
+        if (!(player.getWorld() instanceof ServerWorld serverWorld)) return;
+
         if(usage.item.getItem() instanceof StoppableAbilityItem abilityItem) {
             int maxUseTime = usage.item.getItem().getMaxUseTime(usage.item, player);
             int used = (int) (player.getWorld().getTime() - usage.time);
             int remaining = maxUseTime - used;
 
-            abilityItem.stop(usage.item, player.getWorld(), player, remaining);
+            abilityItem.stop(usage.item, serverWorld, player, remaining);
         }
     }
 }
