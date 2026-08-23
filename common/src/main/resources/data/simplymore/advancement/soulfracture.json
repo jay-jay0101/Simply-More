@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "id": "simplymore:soulfracture"
+    },
+    "title": {
+      "translate": "advancements.simplymore.soulfracture.title",
+      "with": []
+    },
+    "description": {
+      "translate": "advancements.simplyswords.find_unique.description",
+      "with": [
+        {
+          "translate": "item.simplymore.soulfracture"
+        }
+      ]
+    },
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:soulfracture"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

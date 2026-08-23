@@ -1,0 +1,13 @@
+{
+  "type": "simplymore:matterbane_clean",
+  "ingredients": [
+    {
+      "item": "simplymore:matterbane"
+    }
+  ],
+  "result": {
+    "id": "simplymore:matterbane",
+    "count": 1
+  }
+}
+}

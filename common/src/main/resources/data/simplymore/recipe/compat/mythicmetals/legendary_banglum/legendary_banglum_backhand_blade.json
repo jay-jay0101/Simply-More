@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mythicmetals"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "simplymore:banglum_backhand_blade"
+  },
+  "addition": {
+    "item": "mythicmetals:banglum_chunk"
+  },
+  "result": {
+    "id": "simplymore:legendary_banglum_backhand_blade",
+    "count": 1
+  },
+  "template": {
+    "item": "mythicmetals:legendary_banglum_smithing_template"
+  }
+}

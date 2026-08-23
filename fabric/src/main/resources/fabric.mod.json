@@ -14,8 +14,9 @@
     "sources": "https://github.com/jay-jay0101/Simply-More/tree/main"
   },
   "license": "All Rights Reserved",
-  "icon": "assets/simplymore/icon.png",
+  "icon": "assets/icon.png",
   "environment": "*",
+  "accessWidener": "simplymore.accesswidener",
   "entrypoints": {
     "main": [
       "net.rosemarythyme.simplymore.fabric.SimplyMoreFabric"
@@ -28,12 +29,12 @@
     "simplymore.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.10",
-    "minecraft": "~1.20.1",
-    "java": ">=17",
-    "architectury": ">=9.2.14",
-    "fabric-api": "*",
-    "simplyswords": ">=1.55.0-1.20.1"
+    "fabric": "*",
+    "minecraft": ">=1.21.1 <=1.21.1",
+    "architectury": ">=7.1.0",
+    "fzzy_config": ">=0.6.6",
+    "simplyswords": ">=1.70.0-1.21.1",
+    "simplytooltips": ">=0.1.5"
   },
   "suggests": {
   }

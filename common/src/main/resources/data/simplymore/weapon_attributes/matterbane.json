@@ -1,32 +1,32 @@
 {
-  "parent": "bettercombat:sword",
-  "attributes": {
-    "attack_range": 2.9,
-    "two_handed": false,
-    "category": "sword",
-    "attacks": [
-      {
-        "hitbox": "HORIZONTAL_PLANE",
-        "damage_multiplier": 1,
-        "angle": 120,
-        "upswing": 0.5,
-        "animation": "bettercombat:one_handed_slash_horizontal_right",
-        "swing_sound": {
-          "id": "simplyswords:elemental_sword_holy_attack_02",
-          "volume": 0.4
-        }
-      },
-      {
-        "hitbox": "HORIZONTAL_PLANE",
-        "damage_multiplier": 1,
-        "angle": 120,
-        "upswing": 0.5,
-        "animation": "bettercombat:one_handed_slash_horizontal_left",
-        "swing_sound": {
-          "id": "simplyswords:elemental_sword_holy_attack_02",
-          "volume": 0.4
-        }
-      }
-    ]
-  }
+    "parent": "bettercombat:sword",
+    "attributes": {
+        "two_handed": false,
+        "category": "sword",
+        "attacks": [
+            {
+                "hitbox": "HORIZONTAL_PLANE",
+                "damage_multiplier": 1,
+                "angle": 120,
+                "upswing": 0.5,
+                "animation": "bettercombat:one_handed_slash_horizontal_right",
+                "swing_sound": {
+                    "id": "simplyswords:elemental_sword_holy_attack_02",
+                    "volume": 0.4
+                }
+            },
+            {
+                "hitbox": "HORIZONTAL_PLANE",
+                "damage_multiplier": 1,
+                "angle": 120,
+                "upswing": 0.5,
+                "animation": "bettercombat:one_handed_slash_horizontal_left",
+                "swing_sound": {
+                    "id": "simplyswords:elemental_sword_holy_attack_02",
+                    "volume": 0.4
+                }
+            }
+        ],
+        "range_bonus": 0.1
+    }
 }

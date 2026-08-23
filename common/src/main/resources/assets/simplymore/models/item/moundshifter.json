@@ -1,0 +1,9 @@
+{
+  "parent": "simplyswords:item/template_claymore",
+  "textures": {
+    "layer0": "simplymore:item/uniques/moundshifter/moundshifter"
+  },
+  "overrides": [
+    {"predicate": {"simplymore:pressure": 0.5}, "model": "simplymore:item/moundshifter_hot"}
+  ]
+}

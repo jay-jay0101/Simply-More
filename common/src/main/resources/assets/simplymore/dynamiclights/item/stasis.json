@@ -1,5 +1,7 @@
 {
-  "item": "simplymore:stasis",
-  "luminance": 10,
-  "water_sensitive": false
+    "luminance": 10,
+    "water_sensitive": false,
+    "match": {
+        "items": "simplymore:stasis"
+    }
 }

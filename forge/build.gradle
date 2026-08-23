@@ -2,20 +2,10 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
-loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-
-    forge {
-        convertAccessWideners = true
-        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-
-        mixinConfig "simplymore.mixins.json"
-    }
-}
 
 architectury {
     platformSetupLoomIde()
-    forge()
+    neoForge()
 }
 
 configurations {
@@ -36,23 +26,21 @@ configurations {
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:$rootProject.forge_version"
+    neoForge "net.neoforged:neoforge:$project.neoforge_version"
 
     // Architectury API. This is optional, and you can comment it out if you don't need it.
-    modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
-    modImplementation("curse.maven:simplyswords-659887:5255968")
+    modImplementation "dev.architectury:architectury-neoforge:$project.architectury_api_version"
 
-    modApi("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}") {
-    }
-
+    modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}+neoforge"
+    modImplementation("curse.maven:simplyswords-659887:${simplyswords_neoforge_version}")
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
-    shadowBundle project(path: ':common', configuration: 'transformProductionForge')
+    shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 }
 
 processResources {
     inputs.property 'version', project.version
 
-    filesMatching('META-INF/mods.toml') {
+    filesMatching('META-INF/neoforge.mods.toml') {
         expand version: project.version
     }
 }
@@ -64,13 +52,30 @@ shadowJar {
 
 remapJar {
     inputFile.set shadowJar.archiveFile
+    atAccessWideners.add(project(":common").loom.accessWidenerPath.get().asFile.name)
 }
 
 repositories {
     maven {
+        name = 'NeoForged'
+        url = 'https://maven.neoforged.net/releases'
+    }
+    maven {
+        name = "FzzyMaven"
+        url = "https://maven.fzzyhmstrs.me/"
+    }
+    maven {
+        url = "https://thedarkcolour.github.io/KotlinForForge/"
+    }
+    maven {
         url "https://cursemaven.com"
     }
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
     maven { url = "https://jitpack.io" }
+    maven { url = "https://maven.blamejared.com" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
 }

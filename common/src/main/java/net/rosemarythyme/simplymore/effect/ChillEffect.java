@@ -11,10 +11,11 @@ public class ChillEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int Amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         int entityFrozenTicks = entity.getFrozenTicks();
         entity.inPowderSnow = true;
-        entity.setFrozenTicks(Math.min(entity.getMinFreezeDamageTicks(), entityFrozenTicks + 1));
+        entity.setFrozenTicks(Math.min(entity.getMinFreezeDamageTicks(), entityFrozenTicks + amplifier));
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

@@ -1,6 +1,0 @@
-{
-  "parent": "simplyswords:item/big_handheld",
-  "textures": {
-    "layer0": "simplymore:item/uniques/soul_foreseer"
-  }
-}

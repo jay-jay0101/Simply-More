@@ -1,0 +1,144 @@
+{
+	"values": [
+		{
+			"id": "simplymore:tidebreaker",
+			"required": false
+		},
+		{
+			"id": "simplymore:brassturn",
+			"required": false
+		},
+		{
+			"id": "simplymore:wooden_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:stone_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:iron_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:diamond_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:gold_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:netherite_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:runic_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_nether_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_end_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:adamantite_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:aquarium_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:banglum_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:carmot_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:kyber_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:mythril_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:orichalcum_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:osmium_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:prometheum_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:quadrillum_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:runite_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:star_platinum_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:bronze_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:steel_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:stormyx_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:palladium_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:metallurgium_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:celestium_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:copper_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:durasteel_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:hallowed_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:legendary_banglum_deer_horns",
+			"required": false
+		},
+		{
+			"id": "simplymore:tidesinger_deer_horns",
+			"required": false
+		}
+	]
+}

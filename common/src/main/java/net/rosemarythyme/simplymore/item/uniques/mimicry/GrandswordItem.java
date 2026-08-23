@@ -1,22 +1,26 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class GrandswordItem extends MimicryItem {
-    public GrandswordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+public class GrandswordItem extends MimicryItem implements TwoHandedWeapon {
+    public GrandswordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 
@@ -35,42 +39,50 @@ public class GrandswordItem extends MimicryItem {
             if(ticksUsed % 10 != 0) return;
 
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicryAttributes.getGrandswordDamage();
+            float damage = MIMICRY_CONFIG.grandsword.damage;
 
             enemies.forEach(
                     target -> {
-                        breakShield(target);
-                        target.damage(player.getDamageSources().playerAttack(player), damage);
+                        AttackUtils.breakShield(target);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         player.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.STRENGTH,
-                                        mimicryAttributes.getGrandswordEffectTime(),
+                                        MIMICRY_CONFIG.grandsword.effectTime,
                                         0
                                 )
                         );
-                        knockback(player, target, mimicryAttributes.getGrandswordKnockback());
+                        knockback(player, target, MIMICRY_CONFIG.grandsword.knockback);
                     }
             );
         }
 
         if(ticksUsed >= 60) {
-            player.removeStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get());
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
     }
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryAttributes.isDisableGrandswordVariant();
+        return MIMICRY_CONFIG.grandsword.disabled;
     }
 
     @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.grandsword");
+    public void appendSpecificTooltip(List<Text> tooltip) {
+        tooltip.add(Text.translatable("item.simplymore.mimicry.grandsword.tooltip1").setStyle(Styles.TEXT));
     }
 
-    @Override
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.grandsword.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.grandsword.tooltip2").setStyle(textStyle));
+    public static class MimicryEffectSettings extends TooltipSettings {
+        public MimicryEffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_GRANDSWORD));
+        }
+
+        public boolean disabled = false;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float damage = 15f;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 120;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float knockback = 2.5f;
     }
 }

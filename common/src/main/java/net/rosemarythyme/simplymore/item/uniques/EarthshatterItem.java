@@ -1,126 +1,89 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getEarthshatterSlamCooldown();
-
-    public EarthshatterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
+    public EarthshatterItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getEarthshatterArmorCrunchChance()) {
-                StatusEffectInstance armourCrunchEffect = target.getStatusEffect(ModEffectsRegistry.ARMOUR_CRUNCH.get());
-                if (armourCrunchEffect != null) {
-                    int amplifier = armourCrunchEffect.getAmplifier() + 1;
-                    target.addStatusEffect(
-                            new StatusEffectInstance(
-                                    ModEffectsRegistry.ARMOUR_CRUNCH.get(),
-                                    200,
-                                    amplifier
-                            ), attacker);
-                } else {
-                    target.addStatusEffect(
-                            new StatusEffectInstance(
-                                    ModEffectsRegistry.ARMOUR_CRUNCH.get(),
-                                    200,
-                                    0
-                            ), attacker);
-                }
-            }
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (attacker.getWorld().isClient()) return;
+
+        if (MathUtils.chance(attacker, UNIQUE_CONFIG.earthshatter.chance)) {
+            EntityUtils.reapplyAndIncrementEffect(target, StatusEffectRegistry.getReference(StatusEffectRegistry.ARMOUR_CRUNCH), 200, 1, 20);
         }
-        return super.postHit(stack, target, attacker);
     }
 
 
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        user.setCurrentHand(hand);
-        return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
-                ? TypedActionResult.fail(itemStack)
-                : TypedActionResult.consume(itemStack);
-    }
+//    @Override
+//    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+//        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+//
+//    }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (!user.getWorld().isClient && user instanceof PlayerEntity player) {
-            if (remainingUseTicks == this.getMaxUseTime(null) - 1)
-                user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.DARK_SWORD_ENCHANT.get(), user.getSoundCategory(), 1.0f, 1.2f);
-            if (remainingUseTicks == 1)
-                attack(world, player);
+        if (world.isClient) return;
+        if (!(user instanceof PlayerEntity player)) return;
+
+        if (remainingUseTicks == this.getMaxUseTime(stack, user) - 1) {
+            AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.DARK_SWORD_ENCHANT.get()).setPitch(1.2f));
+        } else if (remainingUseTicks == 1) {
+            BlockStateParticleEffect particle = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.DIRT.getDefaultState());
+            AudioVisualUtils.particleCuboid((ServerWorld) world, player.getPos().add(0d, 1d, 0d), particle, 3, 1, 500, 0d);
+
+            AudioVisualUtils.playSound(world, player.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get()).setPitch(0));
+            AudioVisualUtils.playSound(world, player.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_02.get()).setPitch(0));
+            AudioVisualUtils.playSound(world, player.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_03.get()).setPitch(0));
+
+            player.getItemCooldownManager().set(this, UNIQUE_CONFIG.earthshatter.cooldown);
+
+            AttackUtils.cuboidAttack(player, player.getPos().add(0d, 1.5d, 0d), 3.5d, 4d, AttackUtils.AttackTarget.ENEMIES)
+                    .damage(15, player.getDamageSources().playerAttack(player))
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.ARMOUR_CRUNCH), UNIQUE_CONFIG.earthshatter.slamEffectTime, 2)
+                    .applyEffect(StatusEffects.WEAKNESS, UNIQUE_CONFIG.earthshatter.slamEffectTime, 1)
+                    .applyEffect(StatusEffects.SLOWNESS, UNIQUE_CONFIG.earthshatter.slamEffectTime, 1)
+                    .addVelocity(0d, 1.2d, 0d);
         }
+
         super.usageTick(world, user, stack, remainingUseTicks);
     }
 
-    private void attack(World world, PlayerEntity player) {
-        // Store frequently used values
-        double playerX = player.getX();
-        double playerY = player.getY();
-        double playerZ = player.getZ();
-        ServerWorld serverWorld = (ServerWorld) player.getWorld();
-
-        // Spawn particles
-        BlockStateParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.DIRT.getDefaultState());
-        serverWorld.spawnParticles(particleEffect, playerX, playerY + 1, playerZ, 500, 3, 1, 3, 0);
-
-        // Play sounds
-        SoundCategory soundCategory = player.getSoundCategory();
-        serverWorld.playSound(null, player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get(), soundCategory, 1, 0);
-        serverWorld.playSound(null, player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_02.get(), soundCategory, 1, 0);
-        serverWorld.playSound(null, player.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_03.get(), soundCategory, 1, 0);
-
-        // Set cooldown
-        player.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
-
-        // Damage entities in range
-        Box box = new Box(playerX - 4, playerY - 2, playerZ - 4, playerX + 4, playerY + 5, playerZ + 4);
-        DamageSource damageSource = player.getDamageSources().playerAttack(player);
-        for (LivingEntity livingEntity : serverWorld.getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity == player || livingEntity.isTeammate(player)) continue;
-            livingEntity.damage(damageSource, 15);
-            int effectTime = effect.getEarthshatterSlamEffectTime();
-            livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.ARMOUR_CRUNCH.get(), effectTime, 2));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, effectTime, 1));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effectTime, 1));
-            livingEntity.setVelocity(0, 1.2, 0);
-            livingEntity.velocityModified = true;
-        }
-    }
-
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 40;
     }
 
@@ -129,33 +92,35 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem {
         return UseAction.SPEAR;
     }
 
-    int stepMod = 0;
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.ASH);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip3").setStyle(Styles.TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip2").setStyle(Styles.TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip6").setStyle(Styles.TEXT));
 
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip7").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.earthshatter.tooltip8").setStyle(textStyle));
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.EARTHSHATTER));
+        }
+
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.15f;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 600;
+        @ValidatedInt.Restrict(min = 0)
+        public int slamEffectTime = 160;
     }
 }

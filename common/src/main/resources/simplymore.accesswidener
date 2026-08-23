@@ -1,1 +1,5 @@
-accessWidener   v2  named
+accessWidener v2 named
+accessible method net/minecraft/entity/effect/StatusEffect <init> (Lnet/minecraft/entity/effect/StatusEffectCategory;I)V
+extendable method net/minecraft/entity/mob/EvokerFangsEntity damage (Lnet/minecraft/entity/LivingEntity;)V
+accessible field net/minecraft/entity/mob/EvokerFangsEntity warmup I
+accessible field net/minecraft/client/model/ModelPart children Ljava/util/Map;

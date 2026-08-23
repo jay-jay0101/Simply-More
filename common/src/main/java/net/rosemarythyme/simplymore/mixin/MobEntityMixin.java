@@ -2,31 +2,48 @@ package net.rosemarythyme.simplymore.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.rosemarythyme.simplymore.config.ModConfigs;
-import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
-import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin {
 
-	private static final WrapperConfig config = ModConfigs.safeGetConfig();
-	private static final UniqueEffectConfig effect = config.uniqueEffects;
-
-	private final int stunTime = effect.getGrotesqueSolidifyAuraStunTime();
-
 	@ModifyReturnValue(at = @At("RETURN"), method = "tryAttack")
-	private boolean simplyMore$tryAttack(boolean originalReturnValue, Entity target) {
+	private boolean simplymore$tryAttack(boolean originalReturnValue, Entity target) {
 		MobEntity mobEntity = (MobEntity) (Object) this;
-		if (mobEntity.hasStatusEffect(ModEffectsRegistry.STUNNED.get()))
-			return false;
+		if (mobEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN))) return false;
+		if (ActiveAbilityManager.SERVER.isDrilling(mobEntity)) return false;
+		if (ActiveAbilityManager.SERVER.isStatue(mobEntity)) return false;
 
         return originalReturnValue;
     }
+
+	@Inject(method = "tick", at=@At("TAIL"))
+	private void simplymore$preventTarget(CallbackInfo ci) {
+		MobEntity entity = (MobEntity) (Object) this;
+
+		if(entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED))) {
+			entity.setTarget(null);
+			entity.setAttacking(false);
+		}
+	}
+
+	@ModifyReturnValue(method = "getTarget", at=@At("RETURN"))
+	private LivingEntity simplymore$preventNewTarget(LivingEntity original) {
+		MobEntity entity = (MobEntity) (Object) this;
+
+		if(entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED))) {
+			entity.setTarget(null);
+			entity.setAttacking(false);
+			return null;
+		}
+
+		return original;
+	}
 }

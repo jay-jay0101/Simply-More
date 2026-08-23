@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "#simplymore:uniques",
+    "#simplymore:tooltip/iron",
+    "#simplymore:tooltip/gold",
+    "#simplymore:tooltip/diamond",
+    "#simplymore:tooltip/netherite",
+    "#simplymore:tooltip/runic",
+    "simplymore:the_pan",
+    "simplymore:jester_penetrate"
+  ]
+}

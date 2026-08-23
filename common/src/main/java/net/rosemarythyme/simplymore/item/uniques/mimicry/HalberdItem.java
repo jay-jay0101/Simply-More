@@ -1,21 +1,25 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class HalberdItem extends MimicryItem {
-    public HalberdItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+public class HalberdItem extends MimicryItem implements TwoHandedWeapon {
+    public HalberdItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 
@@ -23,15 +27,15 @@ public class HalberdItem extends MimicryItem {
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 5.5f);
-            float damage = mimicryAttributes.getHalberdDamage();
+            float damage = MIMICRY_CONFIG.halberd.damage;
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
-                        target.damage(player.getDamageSources().playerAttack(player), damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        ModEffectsRegistry.BLEED.get(),
-                                        mimicryAttributes.getHalberdEffectTime(),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
+                                        MIMICRY_CONFIG.halberd.effectTime,
                                         1
                                 )
                         );
@@ -45,16 +49,16 @@ public class HalberdItem extends MimicryItem {
             if(ticksUsed % 7 != 0) return;
 
             List<LivingEntity> enemies = sweepAttack(player, 3.2f);
-            float damage = mimicryAttributes.getHalberdDamage();
+            float damage = MIMICRY_CONFIG.halberd.damage;
 
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
-                        target.damage(player.getDamageSources().playerAttack(player), damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        ModEffectsRegistry.BLEED.get(),
-                                        mimicryAttributes.getHalberdEffectTime(),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
+                                        MIMICRY_CONFIG.halberd.effectTime,
                                         1
                                 )
                         );
@@ -63,23 +67,29 @@ public class HalberdItem extends MimicryItem {
         }
 
         if(ticksUsed >= 30) {
-            player.removeStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get());
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
     }
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryAttributes.isDisableHalberdVariant();
+        return MIMICRY_CONFIG.halberd.disabled;
     }
 
     @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.halberd");
+    public void appendSpecificTooltip(List<Text> tooltip) {
+        tooltip.add(Text.translatable("item.simplymore.mimicry.halberd.tooltip1").setStyle(Styles.TEXT));
     }
 
-    @Override
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.halberd.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.halberd.tooltip2").setStyle(textStyle));
+    public static class MimicryEffectSettings extends TooltipSettings {
+        public MimicryEffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_HALBERD));
+        }
+
+        public boolean disabled = false;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float damage = 4f;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 180;
     }
 }

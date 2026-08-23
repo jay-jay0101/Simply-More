@@ -1,5 +1,7 @@
 {
-  "item": "simplymore:grandfrost",
-  "luminance": 12,
-  "water_sensitive": false
+    "luminance": 12,
+    "water_sensitive": false,
+    "match": {
+        "items": "simplymore:grandfrost"
+    }
 }

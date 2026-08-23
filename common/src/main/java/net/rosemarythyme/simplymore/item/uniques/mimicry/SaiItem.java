@@ -1,43 +1,40 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 public class SaiItem extends MimicryItem {
-    public SaiItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public SaiItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryAttributes.isDisableSaiVariant();
+        return MIMICRY_CONFIG.sai.disabled;
     }
 
     @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.sai");
-    }
-
-    @Override
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.sai.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.sai.tooltip2").setStyle(textStyle));
+    public void appendSpecificTooltip(List<Text> tooltip) {
+        tooltip.add(Text.translatable("item.simplymore.mimicry.sai.tooltip1").setStyle(Styles.TEXT));
     }
 
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = mimicryAttributes.getSaiDamage();
+        float damage = MIMICRY_CONFIG.sai.damage;
 
         if(ticksUsed == 4 || ticksUsed == 7 || ticksUsed == 10) {
             List<LivingEntity> enemies = stabAttack(player, 2, 0.25f);
@@ -45,18 +42,18 @@ public class SaiItem extends MimicryItem {
                     target -> {
                         if(target.isBlocking()) return;
                         target.timeUntilRegen = 0;
-                        target.damage(player.getDamageSources().playerAttack(player), damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
-                                        ModEffectsRegistry.BLEED.get(),
-                                        mimicryAttributes.getSaiEffectTime(),
+                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
+                                        MIMICRY_CONFIG.sai.effectTime,
                                         0
                                 )
                         );
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.BLINDNESS,
-                                        mimicryAttributes.getSaiEffectTime(),
+                                        MIMICRY_CONFIG.sai.effectTime,
                                         0
                                 )
                         );
@@ -65,8 +62,20 @@ public class SaiItem extends MimicryItem {
         }
 
         if(ticksUsed >= 15) {
-            player.removeStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get());
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
 
+    }
+
+    public static class MimicryEffectSettings extends TooltipSettings {
+        public MimicryEffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_SAI));
+        }
+
+        public boolean disabled = false;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float damage = 5.5f;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 80;
     }
 }

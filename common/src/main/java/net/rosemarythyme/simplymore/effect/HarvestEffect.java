@@ -14,7 +14,7 @@ public class HarvestEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity livingEntity, int amplifier) {
         double range = 20;
         Box searchArea = new Box(
                 livingEntity.getX() - range,
@@ -30,6 +30,8 @@ public class HarvestEffect extends StatusEffect {
                 continue;
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 40, 0), livingEntity);
         }
+
+        return super.applyUpdateEffect(livingEntity, amplifier);
     }
 
     @Override

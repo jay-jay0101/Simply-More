@@ -1,116 +1,81 @@
 package net.rosemarythyme.simplymore.item.uniques.joke;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundCategory;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.util.Rarity;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
-import net.rosemarythyme.simplymore.item.normal.SimplyMoreSwordItem;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.data.Sound;
+import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ThePanItem extends SimplyMoreSwordItem {
 
-    String[] repairIngredient;
-    static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static final UniqueEffectConfig UNIQUE_EFFECT = ConfigWrapper.UNIQUE;
 
-    public ThePanItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
-        this.repairIngredient = new String[]{"minecraft:iron_ingot"};
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        // Check if the game is running on the client side.
-        // If so, we don't need to handle the knockback effect or sound playback.
-        if (attacker.getWorld().isClient()) {
-            // Call the superclass's postHit method to handle any default behavior.
-            return super.postHit(stack, target, attacker);
-        }
-
-        // Check if the attacker's random number generator returns a value greater than 30.
-        // If so, we don't apply the knockback effect.
-        // This is, functionally, the same as checking if the attacker's random number generator returns a value less than or equal to 30.
-        if (attacker.getRandom().nextBetween(1, 100) > effect.getPanBonkChance()) {
-            // Call the superclass's postHit method to handle any default behavior.
-            return super.postHit(stack, target, attacker);
-        }
-
-        // Get the positions of the target and attacker entities.
-        Vec3d targetPosition = target.getPos();
-        Vec3d attackerPosition = attacker.getPos();
-
-        // Calculate the difference in x and z coordinates between the target and attacker positions.
-        double deltaX = targetPosition.getX() - attackerPosition.getX();
-        double deltaZ = targetPosition.getZ() - attackerPosition.getZ();
-
-        // Calculate the distance between the target and attacker positions using the Pythagorean theorem.
-        double distance = Math.hypot(deltaX, deltaZ);
-
-        // Check if the distance is zero.
-        // If so, we don't apply the knockback effect.
-        if (distance == 0) {
-            // Call the superclass's postHit method to handle any default behavior.
-            return super.postHit(stack, target, attacker);
-        }
-
-        // Define the knockback strength.
-        float knockbackStrength = effect.getPanBonkStrength();
-
-        // Normalize the delta x and z values to get the direction of the knockback.
-        double normalizedDeltaX = deltaX / distance;
-        double normalizedDeltaZ = deltaZ / distance;
-
-        // Apply the knockback effect to the target entity.
-        target.setVelocity(normalizedDeltaX * knockbackStrength, 0.2, normalizedDeltaZ * knockbackStrength);
-        target.velocityModified = true;
-
-        // Play the sound effect at the attacker's position.
-        attacker.getWorld().playSound(null, attacker.getBlockPos(), SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.PLAYERS, 1, 1);
-
-        // Return true to indicate that the method handled the hit.
-        return true;
+    public ThePanItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed, new Item.Settings().fireproof().rarity(Rarity.COMMON));
     }
 
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        List<Item> potentialIngredients = new ArrayList<>(List.of());
-        Arrays.stream(this.repairIngredient).toList().forEach(
-                (repIngredient) -> potentialIngredients.add(
-                        Registries.ITEM.get(new Identifier(repIngredient))));
-        return potentialIngredients.contains(ingredient.getItem());
+        return ingredient.getItem() == Items.IRON_INGOT || super.canRepair(stack, ingredient);
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker.getWorld().isClient) return super.postHit(stack, target, attacker);
+
+        if (MathUtils.chance(attacker, UNIQUE_EFFECT.the_pan.chance)) {
+            AttackUtils.knockback(attacker, target, UNIQUE_EFFECT.the_pan.knockbackStrength);
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.BLOCK_ANVIL_PLACE));
+        }
+
+        return super.postHit(stack, target, attacker);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
-
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip2").setStyle(Styles.TEXT));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.THE_PAN));
+        }
+
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.3f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float knockbackStrength = 20f;
+    }
+
+    protected void generateDynamicTooltip(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        SimplySwordsClientAPI.generateDynamicTooltip(itemStack, tooltipContext, tooltip, type, "simplymore", "oracle_index:books/simplymore/weapon_types", "oracle_index:books/simplymore/unique_weapons", "", getConfigPath());
+    }
+
+    protected Identifier getConfigPath() {
+        return Identifier.of("simplymore.unique_effect.the_pan");
     }
 }

@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "id": "simplymore:darksent"
+    },
+    "title": {
+      "translate": "advancements.simplymore.darksent.title",
+      "with": []
+    },
+    "description": {
+      "translate": "advancements.simplyswords.obtain_unique.description",
+      "with": [
+        {
+          "translate": "item.simplymore.darksent"
+        }
+      ]
+    },
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:ruptured_idol",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:ruptured_idol"
+            ],
+            "components": {
+              "simplyswords:awakening": 8,
+              "simplyswords:awakening_route": "simplymore:darksent"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

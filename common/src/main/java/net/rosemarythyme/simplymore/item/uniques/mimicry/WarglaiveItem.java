@@ -1,38 +1,41 @@
 package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.uniques.MimicryItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 public class WarglaiveItem extends MimicryItem {
-    public WarglaiveItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public WarglaiveItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override
     public void usageTimeline(PlayerEntity player, int ticksUsed) {
         if(ticksUsed == 8) {
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicryAttributes.getWarglaiveFirstDamage();
+            float damage = MIMICRY_CONFIG.warglaive.firstDamage;
 
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
-                        target.damage(player.getDamageSources().playerAttack(player), damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryAttributes.getWarglaiveEffectTime(),
+                                        MIMICRY_CONFIG.warglaive.effectTime,
                                         0
                                 )
                         );
@@ -46,16 +49,16 @@ public class WarglaiveItem extends MimicryItem {
 
         if(ticksUsed == 30) {
             List<LivingEntity> enemies = spinAttack(player, 4f);
-            float damage = mimicryAttributes.getWarglaiveSecondDamage();
+            float damage = MIMICRY_CONFIG.warglaive.secondDamage;
 
             enemies.forEach(
                     target -> {
                         if(target.isBlocking()) return;
-                        target.damage(player.getDamageSources().playerAttack(player), damage);
+                        AttackUtils.hitWithEnchants(player, target, damage);
                         target.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.SLOWNESS,
-                                        mimicryAttributes.getWarglaiveEffectTime(),
+                                        MIMICRY_CONFIG.warglaive.effectTime,
                                         0
                                 )
                         );
@@ -64,23 +67,31 @@ public class WarglaiveItem extends MimicryItem {
         }
 
         if(ticksUsed >= 36) {
-            player.removeStatusEffect(ModEffectsRegistry.MIMICRY_HAPPENING.get());
+            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
         }
     }
 
     @Override
     public boolean isFormDisabledInConfig() {
-        return mimicryAttributes.isDisableWarglaiveVariant();
+        return MIMICRY_CONFIG.warglaive.disabled;
     }
 
     @Override
-    public Text getMimicryFormName() {
-        return Text.translatable("item.simplymore.mimicry.warglaive");
+    public void appendSpecificTooltip(List<Text> tooltip) {
+        tooltip.add(Text.translatable("item.simplymore.mimicry.warglaive.tooltip1").setStyle(Styles.TEXT));
     }
 
-    @Override
-    public void appendSpecificTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        tooltip.add(Text.translatable("item.simplymore.mimicry.warglaive.tooltip1").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.mimicry.warglaive.tooltip2").setStyle(textStyle));
+    public static class MimicryEffectSettings extends TooltipSettings {
+        public MimicryEffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.MIMICRY_WARGLAIVE));
+        }
+
+        public boolean disabled = false;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float firstDamage = 5f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float secondDamage = 6.75f;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 80;
     }
 }

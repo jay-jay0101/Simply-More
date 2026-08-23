@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mythicmetals"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "simplymore:aquarium_great_katana"
+  },
+  "addition": {
+    "item": "mythicmetals:aquarium_ingot"
+  },
+  "result": {
+    "id": "simplymore:tidesinger_great_katana",
+    "count": 1
+  },
+  "template": {
+    "item": "mythicmetals:tidesinger_smithing_template"
+  }
+}

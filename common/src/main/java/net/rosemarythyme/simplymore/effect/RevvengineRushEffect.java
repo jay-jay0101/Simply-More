@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.effect;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -14,12 +13,13 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
-import net.rosemarythyme.simplymore.config.WrapperConfig;
-import net.rosemarythyme.simplymore.entity.KickbackAreaEffectCloudEntity;
+import net.rosemarythyme.simplymore.entity.legacy.KickbackAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.uniques.RevvengineItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -32,19 +32,16 @@ public class RevvengineRushEffect extends StatusEffect {
         super(category, color);
     }
 
-    protected static WrapperConfig config = AutoConfig.getConfigHolder(WrapperConfig.class).getConfig();
-    protected static UniqueEffectConfig effect = config.uniqueEffects;
+    protected static UniqueEffectConfig effect = ConfigWrapper.UNIQUE;
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
-
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         // Sound
         if(entity.age % 2 == 0)
             entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get(), SoundCategory.PLAYERS, 1, 1.2f);
 
         // Movement
-        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(entity.getYaw());
+        Vector3d normalisedVector = MathUtils.getNormalised2dVector(entity.getYaw());
         entity.setVelocity(normalisedVector.x() * 0.6, entity.getVelocity().getY(), normalisedVector.z()  * 0.6);
         entity.velocityModified = true;
 
@@ -104,51 +101,41 @@ public class RevvengineRushEffect extends StatusEffect {
                 position.getZ() + normalisedVector.z()
         );
 
-        Box box = new Box(
-                particlePos.getX() - 1,
-                particlePos.getY() - 1,
-                particlePos.getZ() - 1,
-                particlePos.getX() + 1,
-                particlePos.getY() + 1,
-                particlePos.getZ() + 1
-
-        );
-
-        List<LivingEntity> entities = entity.getWorld().getNonSpectatingEntities(LivingEntity.class, box).stream().filter(
-                livingEntity -> (livingEntity != entity && !livingEntity.isTeammate(entity))).toList();
+        Box box = MathUtils.createCubeBox(particlePos, 1);
+        List<LivingEntity> entities = AttackUtils.cuboidAttack(entity, box);
 
         if(!entities.isEmpty()) {
             if(amplifier > 0) {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase3EffectTime(),
-                        effect.getRevvenginePhase3Damage(),
+                        effect.revvengine.p3effectTime,
+                        effect.revvengine.p3damage,
                         true
                 );
             } else {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase2EffectTime(),
-                        effect.getRevvenginePhase2Damage(),
+                        effect.revvengine.p2effectTime,
+                        effect.revvengine.p2damage,
                         false
                 );
             }
         }
 
         // On End Effect
-        if (entity.hasStatusEffect(this) && entity.getStatusEffect(this).getDuration() < 10) {
+        if (entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS)) && entity.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS)).getDuration() < 10) {
             if(amplifier > 0) {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase3EffectTime(),
-                        effect.getRevvenginePhase3Damage(),
+                        effect.revvengine.p3effectTime,
+                        effect.revvengine.p3damage,
                         true
                 );
             } else {
                 causeSlash(
                         entity,
-                        effect.getRevvenginePhase2EffectTime(),
-                        effect.getRevvenginePhase2Damage(),
+                        effect.revvengine.p2effectTime,
+                        effect.revvengine.p2damage,
                         false
                 );
             }
@@ -167,14 +154,16 @@ public class RevvengineRushEffect extends StatusEffect {
                     )
             );
         }
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     public void causeSlash(LivingEntity user, int effectTime, float damage, boolean isTier3) {
         if(user.getWorld().isClient) return;
 
-        user.removeStatusEffect(this);
+        user.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS));
         Vec3d position = user.getEyePos();
-        Vector3d normalisedVector = SimplyMoreHelperMethods.getNormalised2dVector(user.getYaw());
+        Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
 
         Vec3d particlePos = new Vec3d(
                 position.getX() + normalisedVector.x(),
@@ -182,34 +171,25 @@ public class RevvengineRushEffect extends StatusEffect {
                 position.getZ() + normalisedVector.z()
         );
 
-        Box box = new Box(
-                particlePos.getX() - 1,
-                particlePos.getY() - 1,
-                particlePos.getZ() - 1,
-                particlePos.getX() + 1,
-                particlePos.getY() + 1,
-                particlePos.getZ() + 1
-
-        );
-        for (LivingEntity livingEntity : user.getWorld().getNonSpectatingEntities(LivingEntity.class, box)) {
-            if (livingEntity.isTeammate(user) || livingEntity == user || livingEntity.isInvulnerable()) continue;
-
-            livingEntity.damage(
+        Box box = MathUtils.createCubeBox(particlePos, 1);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
+        for (LivingEntity target : targets) {
+            target.damage(
                     user.getDamageSources().playerAttack((PlayerEntity) user),
                     RevvengineItem.getHealthModifiedValue(user,
-                            effect.getRevvengineMaxDamagePercentageBuff(),
+                            effect.revvengine.damageBuff,
                             damage) + damage
             );
 
-            livingEntity.addStatusEffect(
+            target.addStatusEffect(
                     new StatusEffectInstance(
-                            ModEffectsRegistry.BLEED.get(),
+                            StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
                             effectTime,
                             0
                     )
             );
 
-            livingEntity.addStatusEffect(
+            target.addStatusEffect(
                     new StatusEffectInstance(
                             StatusEffects.BLINDNESS,
                             effectTime,
@@ -218,7 +198,7 @@ public class RevvengineRushEffect extends StatusEffect {
             );
 
             if(isTier3) {
-                livingEntity.setOnFireFor(effectTime/20);
+                target.setOnFireFor(effectTime / 20f);
             }
 
             user.getWorld().playSound(null, particlePos.getX(), particlePos.getY(), particlePos.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1,0.5f);

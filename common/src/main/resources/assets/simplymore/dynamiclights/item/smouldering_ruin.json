@@ -1,5 +1,7 @@
 {
-  "item": "simplymore:smouldering_ruin",
-  "luminance": 13,
-  "water_sensitive": true
+    "luminance": 13,
+    "water_sensitive": true,
+    "match": {
+        "items": "simplymore:smouldering_ruin"
+    }
 }

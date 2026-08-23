@@ -1,12 +1,14 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -16,30 +18,34 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
 public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
 
-    int skillCooldown = effect.getTidebreakerInsanityTeleportCooldown();
+    int skillCooldown = UNIQUE_CONFIG.tidebreaker.cooldown;
     int lastHitTime;
     LivingEntity lastHit;
 
-    public TidebreakerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public TidebreakerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
-    
+
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (!attacker.getWorld().isClient()) {
-            if (attacker.getRandom().nextBetween(1, 100) <= effect.getTidebreakerInsanityCloudChance()) {
-                if (!attacker.hasStatusEffect(ModEffectsRegistry.TIDEBREAKER.get())) {
-                    attacker.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.TIDEBREAKER.get(), effect.getTidebreakerInsanityCloudDuration(), 0), attacker);
+            if (MathUtils.chance(attacker, UNIQUE_CONFIG.tidebreaker.chance)) {
+                if (!attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.TIDEBREAKER))) {
+                    attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.TIDEBREAKER), UNIQUE_CONFIG.tidebreaker.cloudTime, 0), attacker);
                 }
             }
 
@@ -47,7 +53,6 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
             lastHit = target;
 
         }
-        return super.postHit(stack, target, attacker);
     }
 
 
@@ -59,13 +64,13 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         if (lastHit == null
                 || !lastHit.isAlive()
                 || lastHit.getWorld() != user.getWorld()
-                || lastHit.distanceTo(user) > effect.getTidebreakerInsanityTeleportMaxDistance())
+                || lastHit.distanceTo(user) > UNIQUE_CONFIG.tidebreaker.range)
             return super.use(world, user, hand);
 
         if (shouldTeleport(user, lastHit)) {
             swapUserAndTarget(user, lastHit);
             resetLastHit();
-            user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
+            user.getItemCooldownManager().set(this, skillCooldown);
         }
 
 
@@ -73,7 +78,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
     }
 
     private boolean shouldTeleport(PlayerEntity user, LivingEntity target) {
-        return target.getWorld() == user.getWorld() && target.distanceTo(user) <= effect.getTidebreakerInsanityTeleportMaxDistance();
+        return target.getWorld() == user.getWorld() && target.distanceTo(user) <= UNIQUE_CONFIG.tidebreaker.range;
     }
 
     private void swapUserAndTarget(PlayerEntity user, LivingEntity target) {
@@ -88,8 +93,8 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         double userY = user.getY();
         double userZ = user.getZ();
 
-        user.teleport(targetX, targetY, targetZ);
-        target.teleport(userX, userY, userZ);
+        user.teleport(targetX, targetY, targetZ, false);
+        target.teleport(userX, userY, userZ, false);
 
         world.playSound(null, targetX, targetY, targetZ, SoundRegistry.ELEMENTAL_BOW_WATER_SHOOT_IMPACT_02.get(), SoundCategory.PLAYERS, 1, 1);
         world.playSound(null, userX, userY, userZ, SoundRegistry.ELEMENTAL_BOW_WATER_SHOOT_IMPACT_02.get(), SoundCategory.PLAYERS, 1, 1);
@@ -98,44 +103,59 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
         serverWorld.spawnParticles(ParticleTypes.SPLASH, userX, userY, userZ, 300, 2, 0, 2, 0);
     }
 
-    int stepMod = 0;
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (!world.isClient) {
             lastHitTime++;
 
-            if (lastHitTime > effect.getTidebreakerInsanityTeleportMaxTime())
+            if (lastHitTime > UNIQUE_CONFIG.tidebreaker.teleportTime)
                 resetLastHit();
         }
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.BUBBLE, ParticleTypes.BUBBLE, ParticleTypes.FALLING_WATER);
+    }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip6").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip7",
-                SimplyMoreHelperMethods.translateTicks(effect.getTidebreakerInsanityTeleportMaxTime()),
-                effect.getTidebreakerInsanityTeleportMaxDistance()).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5",
+                MathUtils.translateTicks(UNIQUE_CONFIG.tidebreaker.teleportTime),
+                UNIQUE_CONFIG.tidebreaker.range).setStyle(textStyle));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
     
     // Made this a separate method to make it easier to understand what is going on for a reader of the code
     private void resetLastHit() {
         lastHit = null;
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.TIDEBREAKER));
+        }
+
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 400;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.25f;
+        @ValidatedInt.Restrict(min = 0)
+        public int cloudTime = 300;
+        @ValidatedInt.Restrict(min = 0)
+        public int range = 15;
+        @ValidatedInt.Restrict(min = 0)
+        public int teleportTime = 200;
     }
 }

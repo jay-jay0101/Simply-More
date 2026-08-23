@@ -3,6 +3,24 @@
   "textures": {
     "layer0": "simplymore:item/uniques/idols/ruptured_idol"
   },
+  "overrides": [
+    {
+      "predicate": {"simplymore:idol_path": 0.25},
+      "model": "simplymore:item/ascended_idol"
+    },
+    {
+      "predicate": {"simplymore:idol_path": 0.5},
+      "model": "simplymore:item/tarnished_idol"
+    },
+    {
+      "predicate": {"simplymore:idol_path": 0.75},
+      "model": "simplymore:item/holylight"
+    },
+    {
+      "predicate": {"simplymore:idol_path": 1.0},
+      "model": "simplymore:item/darksent"
+    }
+  ],
   "display": {
     "thirdperson_righthand": {
       "rotation": [ 0, -90, 55 ],

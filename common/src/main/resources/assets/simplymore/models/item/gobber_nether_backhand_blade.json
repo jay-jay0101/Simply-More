@@ -1,6 +1,0 @@
-{
-  "parent": "simplyswords:item/template_longdagger",
-  "textures": {
-    "layer0": "simplymore:item/backhand_blade/gobber_nether"
-  }
-}

@@ -1,0 +1,16 @@
+{
+  "type": "simplyswords:smithing_reroll",
+  "base": {
+    "item": "simplymore:runic_quarterstaff"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+    "id": "simplymore:runic_quarterstaff",
+    "count": 1
+  },
+  "template": {
+    "item": "simplyswords:runic_tablet"
+  }
+}

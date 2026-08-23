@@ -1,117 +1,152 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import net.minecraft.client.item.TooltipContext;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Style;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.entity.BlizzardEntity;
+import net.rosemarythyme.simplymore.entity.IcewallEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
+import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
+import net.sweenus.simplyswords.api.WeaponAbilityContext;
+import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
+import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class GrandfrostItem extends SimplyMoreUniqueSwordItem {
-    int skillCooldown = effect.getGrandfrostBlizzardCooldown();
-
-    public GrandfrostItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon, UniqueWeaponActiveAbility {
+    public static GrandfrostItem.EffectSettings SETTINGS = UNIQUE_CONFIG.grandfrost;
+    public GrandfrostItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
+        super(toolMaterial, attackDamage, attackSpeed);
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-            if (!attacker.getWorld().isClient()) {
-                if (attacker.getRandom().nextBetween(1, 100) <= effect.getGrandfrostChillingChance() || target.isBlocking()) {
-                    target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL.get(), effect.getGrandfrostChillingTime(), 0), attacker);
-                }
-            }
-        return super.postHit(stack, target, attacker);
+    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
+        if (target.isBlocking() || MathUtils.chance(attacker, SETTINGS.chance)) {
+            new TargetList(target)
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CHILL), SETTINGS.chillTime, 0)
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN), SETTINGS.stunTime, 0)
+                    .applyEffect(StatusEffects.SLOWNESS, SETTINGS.chillTime, 2);
+
+            AudioVisualUtils.playSound(world, target.getPos(), new Sound(SoundEvents.ENTITY_PLAYER_HURT_FREEZE));
+            AudioVisualUtils.particleAroundEntity(target, ParticleTypes.SNOWFLAKE, 40, 0.5f, 0);
+        }
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (user.getWorld().isClient()) {
-            return super.use(world, user, hand);
-        }
-
-        int boxSize = effect.getGrandfrostBlizzardRange();
-        Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
-        List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-
-        if (livingEntities.size() > 1) {
-            boolean isNonTeammateNearby = false;
-
-            for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity == user || livingEntity.isTeammate(user)) {
-                    continue;
-                }
-
-                isNonTeammateNearby = true;
-
-                Vec3d userPosition = user.getPos();
-                Vec3d entityPosition = livingEntity.getPos();
-
-                double deltaX = entityPosition.getX() - userPosition.getX();
-                double deltaZ = entityPosition.getZ() - userPosition.getZ();
-                double distance = Math.hypot(deltaX, deltaZ);
-
-                if (distance == 0) {
-                    return super.use(world, user, hand);
-                }
-
-                float knockbackStrength = effect.getGrandfrostBlizzardStrength();
-                double normalizedDeltaX = deltaX / distance;
-                double normalizedDeltaZ = deltaZ / distance;
-
-                livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.CHILL.get(), effect.getGrandfrostBlizzardEffectTime(), 0));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.getGrandfrostBlizzardEffectTime(), 3));
-                livingEntity.setVelocity(normalizedDeltaX * knockbackStrength, 0.4, normalizedDeltaZ * knockbackStrength);
-                livingEntity.velocityModified = true;
-            }
-            if(isNonTeammateNearby) {
-                user.getItemCooldownManager().set(this.getDefaultStack().getItem(), skillCooldown);
-                ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SNOWFLAKE, user.getX(), user.getY() + 3, user.getZ(), 1000, 3, 0, 3, 0.25);
-                user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get(), user.getSoundCategory(), 2F, 0.3F);
-            }
-        }
-        return super.use(world, user, hand);
+        return useFromDefaultInput(world, user, hand);
     }
 
-    int stepMod = 0;
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE);
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public boolean canActivate(WeaponAbilityContext context) {
+        return context.actor().isAlive();
     }
 
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+    @Override
+    public boolean activate(WeaponAbilityContext context) {
+        List<BlizzardEntity> blizzards = AttackUtils.getOwnedAbilities(context.actor(), BlizzardEntity.class);
 
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip2").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip3").setStyle(textStyle));
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip4").setStyle(textStyle));
-        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip5").setStyle(textStyle));
+        if(blizzards.isEmpty()) {
+            if(!AttackUtils.spawnAbility(new BlizzardEntity(context.actor(), context.actor().getPos()), context.actor(), true)) return false;
+            AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get()));
 
-        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+            int walls = (int) Math.ceil(SETTINGS.radius * Math.PI);
+            float arc = 360f / walls;
+
+            for(int i = 0; i < walls; i++) {
+                float yaw = arc * i;
+                Vec3d delta = MathUtils.getDirectionalVector(yaw, 0).multiply(SETTINGS.radius);
+
+                AttackUtils.spawnAbility(new IcewallEntity(context.actor(), context.origin().add(delta)), context.actor(), true);
+            }
+
+            return context.activationSource() != WeaponAbilityActivationSource.PLAYER;
+        }
+
+        List<IcewallEntity> walls = AttackUtils.getOwnedAbilities(context.actor(), IcewallEntity.class);
+
+        blizzards.forEach(Entity::discard);
+        walls.forEach(IcewallEntity::lower);
+
+        AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_01.get()));
+
+        return true;
+    }
+
+    @Override
+    public int getActivationCooldownTicks(ItemStack stack, WeaponAbilityContext context) {
+        return SETTINGS.cooldown;
+    }
+
+    @Override
+    public FootfallParticles getFootfalls() {
+        return new FootfallParticles(ParticleTypes.ITEM_SNOWBALL, ParticleTypes.ITEM_SNOWBALL, ParticleTypes.SNOWFLAKE);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip2").setStyle(Styles.TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip3").setStyle(Styles.TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip4").setStyle(Styles.TEXT));
+        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+
+        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    public static class EffectSettings extends TooltipSettings {
+        public EffectSettings() {
+            super(new ItemStackTooltipAppender(ItemRegistry.GRANDFROST));
+        }
+
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float chance = 0.25f;
+        @ValidatedInt.Restrict(min = 0)
+        public int chillTime = 240;
+        @ValidatedInt.Restrict(min = 0)
+        public int stunTime = 10;
+        @ValidatedDouble.Restrict(min = 0)
+        public double radius = 6.5;
+        @ValidatedInt.Restrict(min = 0)
+        public int wallDuration = 500;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 500;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float knockUpDamage = 12f;
+        @ValidatedDouble.Restrict(min = 0f)
+        public double knockUp = 0.25f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float blizzardDamage = 4f;
     }
 }

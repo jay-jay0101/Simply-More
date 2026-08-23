@@ -9,7 +9,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
-import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+
+import java.util.List;
 
 public class TidebreakerEffect extends StatusEffect {
 
@@ -19,7 +23,7 @@ public class TidebreakerEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity affectedEntity, int amplifier) {
         if (!affectedEntity.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) affectedEntity.getWorld();
             spawnParticles(serverWorld, affectedEntity);
@@ -27,7 +31,7 @@ public class TidebreakerEffect extends StatusEffect {
             applyInsanityEffect(affectedEntity, serverWorld);
         }
 
-        super.applyUpdateEffect(affectedEntity, amplifier);
+        return super.applyUpdateEffect(affectedEntity, amplifier);
     }
 
     private void spawnParticles(ServerWorld serverWorld, LivingEntity affectedEntity) {
@@ -42,11 +46,11 @@ public class TidebreakerEffect extends StatusEffect {
     }
 
     private void applyInsanityEffect(LivingEntity affectedEntity, ServerWorld serverWorld) {
-        for (LivingEntity target : serverWorld.getNonSpectatingEntities(LivingEntity.class, new Box(affectedEntity.getX() - 3, affectedEntity.getY() - 2, affectedEntity.getZ() - 3, affectedEntity.getX() + 3, affectedEntity.getY() + 8, affectedEntity.getZ() + 3))) {
-            if (target == affectedEntity || target.isTeammate(affectedEntity)) {
-                continue;
-            }
-            target.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.INSANITY.get(), 160, 0), affectedEntity);
+        Box box = MathUtils.createCubeBox(affectedEntity.getPos(), 3);
+        List<LivingEntity> targets = AttackUtils.cuboidAttack(affectedEntity, box);
+
+        for (LivingEntity target : targets) {
+            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.INSANITY), 160, 0), affectedEntity);
         }
     }
 

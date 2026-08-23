@@ -1,0 +1,148 @@
+{
+	"values": [
+		{
+			"id": "simplyswords:emberlash",
+			"required": false
+		},
+		{
+			"id": "simplymore:boas_fang",
+			"required": false
+		},
+		{
+			"id": "simplymore:smouldering_ruin",
+			"required": false
+		},
+		{
+			"id": "simplymore:wooden_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:stone_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:iron_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:diamond_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:gold_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:netherite_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:runic_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_nether_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_end_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:adamantite_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:aquarium_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:banglum_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:carmot_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:kyber_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:mythril_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:orichalcum_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:osmium_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:prometheum_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:quadrillum_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:runite_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:star_platinum_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:bronze_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:steel_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:stormyx_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:palladium_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:metallurgium_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:celestium_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:copper_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:durasteel_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:hallowed_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:legendary_banglum_backhand_blade",
+			"required": false
+		},
+		{
+			"id": "simplymore:tidesinger_backhand_blade",
+			"required": false
+		}
+	]
+}

@@ -1,5 +1,7 @@
 {
-  "item": "simplymore:glimmerstep",
-  "luminance": 15,
-  "water_sensitive": false
+    "luminance": 15,
+    "water_sensitive": false,
+    "match": {
+        "items": "simplymore:glimmerstep"
+    }
 }
