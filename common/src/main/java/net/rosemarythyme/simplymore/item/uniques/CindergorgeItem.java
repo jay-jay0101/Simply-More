@@ -13,8 +13,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
@@ -37,12 +35,12 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem {
     }
 
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-//        startUsing(user.getStackInHand(hand), hand);
-        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
-
-    }
+//    @Override
+//    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+////        startUsing(user.getStackInHand(hand), hand);
+//        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+//
+//    }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {

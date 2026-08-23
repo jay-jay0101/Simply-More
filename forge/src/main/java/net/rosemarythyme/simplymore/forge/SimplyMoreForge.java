@@ -6,7 +6,6 @@ import net.rosemarythyme.simplymore.SimplyMore;
 @Mod(SimplyMore.ID)
 public final class SimplyMoreForge {
     public SimplyMoreForge() {
-        // Run our common setup.
         SimplyMore.init();
     }
 }

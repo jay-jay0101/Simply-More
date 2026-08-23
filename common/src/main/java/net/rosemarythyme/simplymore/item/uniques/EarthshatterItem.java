@@ -13,13 +13,11 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
@@ -50,11 +48,11 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHa
 
 
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
-
-    }
+//    @Override
+//    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+//        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+//
+//    }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {

@@ -30,7 +30,6 @@ import net.sweenus.simplyswords.registry.ItemsRegistry;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -672,20 +671,19 @@ public class ItemRegistry {
 
         for (WeaponType type : WEAPON_TYPES) {
             String id = name + "_" + type.name;
-            Item item;
 
-            try {
-                item = constructor.newInstance(
-                        material,
-                        damage + type.damage,
-                        type.swingSpeed,
-                        settings
-                );
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-
-            items.add(ITEMS.register(id, () -> item));
+            items.add(ITEMS.register(id, () -> {
+                try {
+                    return constructor.newInstance(
+                            material,
+                            damage + type.damage,
+                            type.swingSpeed,
+                            settings
+                    );
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
         }
 
         return List.copyOf(items);

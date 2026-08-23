@@ -33,33 +33,35 @@ public class SimplyMore {
 	}
 
 	public static void init() {
-		LifecycleEvent.SETUP.register(() -> {
-			ConfigWrapper.register();
+		ScreenHandlerRegistry.register();
+		ConfigWrapper.register();
+		StatusEffectRegistry.register();
 
-			StatusEffectRegistry.register();
+		EntityRegistry.register();
 
-			EntityRegistry.register();
+		ItemRegistry.register();
+		RecipeTypeRegistry.register();
+		TransformationRegistry.register();
 
-			ItemRegistry.register();
-			RecipeTypeRegistry.register();
-			ImplicitRegistry.register();
-			TransformationRegistry.register();
-			AwakeningProfileRegistry.register();
+		ItemComponentRegistry.register();
+		TagRegistry.register();
 
-			ItemComponentRegistry.register();
-			TagRegistry.register();
+		SimplyMore.registerEvents();
+		SoundEventRegistry.register();
 
-			ItemRegistry.registerItemGroup();
-			LootRegistry.register();
+		EnvExecutor.runInEnv(Env.SERVER, () -> SimplyMore::initServer);
+		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::initClient);
+		PacketRegistry.registerC2S();
 
-			SimplyMore.registerEvents();
-			SoundEventRegistry.register();
-			ScreenHandlerRegistry.register();
+		LifecycleEvent.SETUP.register(SimplyMore::postSetupInit);
+	}
 
-			EnvExecutor.runInEnv(Env.SERVER, () -> SimplyMore::initServer);
-			EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::initClient);
-			PacketRegistry.registerC2S();
-		});
+	public static void postSetupInit() {
+		ItemRegistry.registerItemGroup();
+		ImplicitRegistry.register();
+		AwakeningProfileRegistry.register();
+		LootRegistry.register();
+		ClientItemPropertyRegistry.register();
 	}
 
 	@Environment(EnvType.SERVER)
@@ -71,7 +73,6 @@ public class SimplyMore {
 	public static void initClient() {
 		ClientTooltipRegistry.register();
 		ClientEntityRendererRegistry.register();
-		ClientItemPropertyRegistry.register();
 
 		PacketRegistry.registerS2CRecievers();
 	}

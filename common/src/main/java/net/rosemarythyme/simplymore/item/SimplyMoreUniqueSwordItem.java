@@ -52,12 +52,10 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
         ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();
         ConsecutiveHitsComponent component = stack.get(hits);
         if(component != null) {
-            if(!selected) {
+            if(component.swungThisFrame() && !component.hitThisFrame()) {
                 stack.remove(hits);
-            }
-
-            if(component.lastHitTime() != component.lastSwingTime()) {
-                stack.remove(hits);
+            } else if (component.swungThisFrame()) {
+                stack.set(hits, new ConsecutiveHitsComponent(component.num(), false, false));
             }
         }
 
@@ -67,9 +65,9 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     public void onSwing(ItemStack stack, ServerWorld world, LivingEntity user) {
         ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();
         ConsecutiveHitsComponent component = stack.get(hits);
-        if(component == null) component = ConsecutiveHitsComponent.DEFAULT;
 
-        stack.set(hits, new ConsecutiveHitsComponent(component.num(), component.lastHitTime(), world.getTime()));
+        if(component == null) component = ConsecutiveHitsComponent.DEFAULT;
+        stack.set(hits, new ConsecutiveHitsComponent(component.num(), true, component.hitThisFrame()));
     }
 
     @Override
@@ -81,9 +79,9 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
         ConsecutiveHitsComponent component = stack.get(hits);
         if(component == null) component = ConsecutiveHitsComponent.DEFAULT;
 
-        if(component.lastHitTime() != component.lastSwingTime()) {
+        if(!component.hitThisFrame()) {
             int newNum = component.num() + 1;
-            stack.set(hits, new ConsecutiveHitsComponent(newNum, world.getTime(), component.lastSwingTime()));
+            stack.set(hits, new ConsecutiveHitsComponent(newNum, true, true));
 
             onHit(stack, target, attacker, world, newNum, true);
         } else {

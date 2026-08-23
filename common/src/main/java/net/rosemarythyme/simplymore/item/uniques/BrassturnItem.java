@@ -7,7 +7,6 @@ import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
@@ -15,8 +14,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
@@ -64,13 +61,13 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
         }
     }
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        if (MathUtils.getCounterComponent(stack).value() <= 0) return TypedActionResult.fail(stack);
-
-        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
-    }
+//    @Override
+//    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+//        ItemStack stack = user.getStackInHand(hand);
+//        if (MathUtils.getCounterComponent(stack).value() <= 0) return TypedActionResult.fail(stack);
+//
+//        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
+//    }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
