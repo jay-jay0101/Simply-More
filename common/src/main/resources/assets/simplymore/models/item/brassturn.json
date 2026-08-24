@@ -26,8 +26,8 @@
     }
   },
   "overrides": [
-    {"predicate": {"simplymore:oxidisation": 0.375},"model": "simplymore:item/brassturn_exposed"},
-    {"predicate": {"simplymore:oxidisation": 0.6875},"model": "simplymore:item/brassturn_weathered"},
-    {"predicate": {"simplymore:oxidisation": 1.0},"model": "simplymore:item/brassturn_oxidised"}
+    {"predicate": {"simplymore:oxidisation": 0.1},"model": "simplymore:item/brassturn_exposed"},
+    {"predicate": {"simplymore:oxidisation": 0.2},"model": "simplymore:item/brassturn_weathered"},
+    {"predicate": {"simplymore:oxidisation": 0.3},"model": "simplymore:item/brassturn_oxidised"}
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": {
+      "item": "minecraft:diamond"
+    },
+    "Y": {
+      "item": "minecraft:iron_nugget"
+    },
+	"S": {
+      "item": "minecraft:diamond_sword"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XXX",
+    "XSX"
+  ],
+  "result": {
+    "item": "simplymore:diamond_grandsword"
+  }
+}

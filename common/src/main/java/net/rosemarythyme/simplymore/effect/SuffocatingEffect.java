@@ -11,9 +11,9 @@ public class SuffocatingEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.damage(entity.getDamageSources().inWall(), 1.0F);
-        return super.applyUpdateEffect(entity, amplifier);
+        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

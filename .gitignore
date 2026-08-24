@@ -29,7 +29,6 @@ bin/
 *.DS_Store
 
 run/
-run2/
 
 # java
 
@@ -37,6 +36,3 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
-
-# Wiki
-=.mdx

@@ -1,87 +1,33 @@
 package net.rosemarythyme.simplymore;
 
-import dev.architectury.event.events.client.ClientLifecycleEvent;
-import dev.architectury.event.events.client.ClientTickEvent;
-import dev.architectury.event.events.common.LifecycleEvent;
-import dev.architectury.event.events.common.PlayerEvent;
-import dev.architectury.event.events.common.TickEvent;
 import dev.architectury.utils.Env;
 import dev.architectury.utils.EnvExecutor;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.util.Identifier;
-import net.rosemarythyme.simplymore.client.registry.ClientEntityRendererRegistry;
-import net.rosemarythyme.simplymore.client.registry.ClientItemPropertyRegistry;
-import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
-import net.rosemarythyme.simplymore.config.ConfigWrapper;
-import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
-import net.rosemarythyme.simplymore.event.TickClientEffects;
-import net.rosemarythyme.simplymore.event.TickServerEffects;
-import net.rosemarythyme.simplymore.item.LootRegistry;
+import net.rosemarythyme.simplymore.client.SimplyMoreClientInit;
+import net.rosemarythyme.simplymore.config.ModConfigs;
 import net.rosemarythyme.simplymore.registry.*;
-import net.rosemarythyme.simplymore.registry.item.*;
-import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.util.LootTableModifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class SimplyMore {
     public static final Logger LOGGER = LoggerFactory.getLogger("simplymore");
 	public static final String ID = "simplymore";
 
-	public static Identifier identifier(String path) {
-		return Identifier.of(ID, path);
-	}
-
 	public static void init() {
-		ScreenHandlerRegistry.register();
-		ConfigWrapper.register();
-		StatusEffectRegistry.register();
+		ModConfigs.registerConfigs();
 
-		EntityRegistry.register();
+		ModEffectsRegistry.registerModEffects();
 
-		ItemRegistry.register();
-		RecipeTypeRegistry.register();
-		TransformationRegistry.register();
+		ModEntityRegistry.registerModEntities();
+		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMoreClientInit::registerEntityRenderers);
 
-		ItemComponentRegistry.register();
-		TagRegistry.register();
+		ModItemsRegistry.registerModItems();
 
-		SimplyMore.registerEvents();
-		SoundEventRegistry.register();
+		ModTagRegistry.registerModTags();
 
-		EnvExecutor.runInEnv(Env.SERVER, () -> SimplyMore::initServer);
-		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::initClient);
-		PacketRegistry.registerC2S();
+		ModRecipesRegistry.registerModRecipes();
 
-		LifecycleEvent.SETUP.register(SimplyMore::postSetupInit);
-	}
+		LootTableModifier.registerLootTableChanges();
 
-	public static void postSetupInit() {
-		ItemRegistry.registerItemGroup();
-		ImplicitRegistry.register();
-		AwakeningProfileRegistry.register();
-		LootRegistry.register();
-		ClientItemPropertyRegistry.register();
-	}
-
-	@Environment(EnvType.SERVER)
-	public static void initServer() {
-		PacketRegistry.registerS2C();
-	}
-
-	@Environment(EnvType.CLIENT)
-	public static void initClient() {
-		ClientTooltipRegistry.register();
-		ClientEntityRendererRegistry.register();
-
-		PacketRegistry.registerS2CRecievers();
-	}
-
-	public static void registerEvents() {
-		PlayerEvent.PLAYER_JOIN.register(new RemoveStatusOnJoin());
-		LifecycleEvent.SERVER_STARTED.register((ignored) -> ActiveAbilityManager.SERVER.clear());
-		ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register((ignored) -> ClientActiveAbilityManager.CLIENT.clear());
-		TickEvent.SERVER_PRE.register(new TickServerEffects());
-		ClientTickEvent.CLIENT_POST.register(new TickClientEffects());
+		LOGGER.info(ID + " Initialized Successfully!");
 	}
 }

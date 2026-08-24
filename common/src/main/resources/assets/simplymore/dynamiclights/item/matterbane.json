@@ -1,7 +1,5 @@
 {
-    "luminance": 13,
-    "water_sensitive": false,
-    "match": {
-        "items": "simplymore:matterbane"
-    }
+  "item": "simplymore:matterbane",
+  "luminance": 13,
+  "water_sensitive": false
 }

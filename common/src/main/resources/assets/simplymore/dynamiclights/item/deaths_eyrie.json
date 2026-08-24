@@ -1,7 +1,5 @@
 {
-    "luminance": 3,
-    "water_sensitive": false,
-    "match": {
-        "items": "simplymore:deaths_eyrie"
-    }
+  "item": "simplymore:deaths_eyrie",
+  "luminance": 3,
+  "water_sensitive": false
 }

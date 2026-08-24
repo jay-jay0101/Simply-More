@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:smouldering_ruin"
+    },
+    "title": "Why Fight Death?",
+    "description": "Find the unique weapon Smouldering Ruin.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:smouldering_ruin"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

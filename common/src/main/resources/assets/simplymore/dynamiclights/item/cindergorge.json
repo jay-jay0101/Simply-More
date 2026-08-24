@@ -1,7 +1,5 @@
 {
-    "luminance": 10,
-    "water_sensitive": true,
-    "match": {
-        "items": "simplymore:cindergorge"
-    }
+  "item": "simplymore:cindergorge",
+  "luminance": 10,
+  "water_sensitive": true
 }

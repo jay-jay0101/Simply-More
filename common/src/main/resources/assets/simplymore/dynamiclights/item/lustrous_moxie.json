@@ -1,7 +1,5 @@
 {
-    "luminance": 15,
-    "water_sensitive": false,
-    "match": {
-        "items": "simplymore:lustrous_moxie"
-    }
+  "item": "simplymore:lustrous_moxie",
+  "luminance": 15,
+  "water_sensitive": false
 }

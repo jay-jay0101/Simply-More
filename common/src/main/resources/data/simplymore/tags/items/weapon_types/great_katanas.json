@@ -1,0 +1,145 @@
+{
+	"replace": false,
+	"values": [
+		{
+			"id": "simplymore:great_slither",
+			"required": false
+		},
+		{
+			"id": "simplymore:lustrous_moxie",
+			"required": false
+		},
+		{
+			"id": "simplymore:wooden_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:stone_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:iron_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:diamond_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:gold_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:netherite_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:runic_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_nether_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_end_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:adamantite_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:aquarium_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:banglum_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:carmot_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:kyber_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:mythril_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:orichalcum_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:osmium_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:prometheum_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:quadrillum_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:runite_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:star_platinum_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:bronze_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:steel_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:stormyx_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:palladium_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:metallurgium_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:celestium_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:copper_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:durasteel_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:hallowed_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:legendary_banglum_great_katana",
+			"required": false
+		},
+		{
+			"id": "simplymore:tidesinger_great_katana",
+			"required": false
+		}
+	]
+}

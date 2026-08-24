@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:culterex"
+    },
+    "title": "May a Curse Befall Thee",
+    "description": "Find the unique weapon Culterex.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:culterex"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:mimicry_longsword"
+    },
+    "title": "Who- What- Huh?",
+    "description": "Find the unique weapon Mimi-cry.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:mimicry_longsword",
+              "simplymore:mimicry_twinblade",
+              "simplymore:mimicry_rapier",
+              "simplymore:mimicry_katana",
+              "simplymore:mimicry_sai",
+              "simplymore:mimicry_spear",
+              "simplymore:mimicry_glaive",
+              "simplymore:mimicry_warglaive",
+              "simplymore:mimicry_cutlass",
+              "simplymore:mimicry_claymore",
+              "simplymore:mimicry_greathammer",
+              "simplymore:mimicry_greataxe",
+              "simplymore:mimicry_chakram",
+              "simplymore:mimicry_scythe",
+              "simplymore:mimicry_halberd",
+              "simplymore:mimicry_great_katana",
+              "simplymore:mimicry_grandsword",
+              "simplymore:mimicry_backhand_blade",
+              "simplymore:mimicry_lance",
+              "simplymore:mimicry_khopesh",
+              "simplymore:mimicry_dagger",
+              "simplymore:mimicry_pernach",
+              "simplymore:mimicry_quarterstaff",
+              "simplymore:mimicry_great_spear",
+              "simplymore:mimicry_deer_horns"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

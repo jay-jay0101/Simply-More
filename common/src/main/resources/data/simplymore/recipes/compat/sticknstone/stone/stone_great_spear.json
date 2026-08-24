@@ -1,0 +1,33 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "sticknstone"
+        }
+    ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sticknstone"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+   "s": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "pattern": [
+    " MM",
+    " sM",
+    "s  "
+  ],
+  "result": {
+    "item": "simplymore:stone_great_spear"
+  }
+}

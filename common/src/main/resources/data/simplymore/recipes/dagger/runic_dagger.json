@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+"item": "simplymore:netherite_dagger"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+"item": "simplymore:runic_dagger"
+  },
+  "template": {
+"item": "simplyswords:runic_tablet"
+  }
+}

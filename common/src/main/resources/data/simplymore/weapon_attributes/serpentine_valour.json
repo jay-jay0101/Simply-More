@@ -1,6 +1,6 @@
 {
-    "parent": "simplymore:template_great_spear",
-    "attributes": {
-        "range_bonus": 3.0
+  "parent": "simplymore:template_great_spear",
+  "attributes": {
+    "attack_range": 5.5
     }
-}
+  }

@@ -1,0 +1,7 @@
+{
+  "parent": "simplyswords:item/template_longsword",
+  "textures": {
+    "layer0": "simplymore:item/uniques/matterbane/magenta",
+    "layer1": "simplymore:item/uniques/matterbane/magenta_layer"
+  }
+}

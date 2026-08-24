@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "simplymore:the_blood_harvester"
+    },
+    "title": "The Red Moon Calls",
+    "description": "Find the unique weapon The Blood Harvester.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "simplymore:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "simplymore:the_blood_harvester"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

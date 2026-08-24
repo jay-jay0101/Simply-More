@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+"item": "simplymore:runic_quarterstaff"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+"item": "simplymore:runic_quarterstaff"
+  },
+  "template": {
+"item": "simplyswords:runic_tablet"
+  }
+}

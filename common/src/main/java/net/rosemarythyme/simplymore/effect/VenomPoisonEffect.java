@@ -11,15 +11,14 @@ public class VenomPoisonEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity.getHealth() > 2.0F) {
             entity.damage(entity.getDamageSources().magic(), 2.0F);
         }
         else if (entity.getHealth() > 1.0F) {
             entity.damage(entity.getDamageSources().magic(), 1.0F);
         }
-
-        return super.applyUpdateEffect(entity, amplifier);
+        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

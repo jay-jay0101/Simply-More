@@ -5,12 +5,17 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.animations.CrowEntityAnimations;
-import net.rosemarythyme.simplymore.entity.legacy.CrowEntity;
+import net.rosemarythyme.simplymore.entity.CrowEntity;
 
+
+// Made with Blockbench 4.11.2
+// Exported for Minecraft version 1.17+ for Yarn
+// Paste this class into your mod and generate all required imports
 public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
-	public static final EntityModelLayer LAYER = new EntityModelLayer(SimplyMore.identifier("crow"), "bone");
+	public static final EntityModelLayer CROW_LAYER = new EntityModelLayer(new Identifier(SimplyMore.ID, "crow"), "bone");
 
 	private final ModelPart main;
 	private final ModelPart head;
@@ -46,8 +51,8 @@ public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
 		return TexturedModelData.of(modelData, 32, 32);
 	}
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
-		main.render(matrices, vertexConsumer, light, overlay, color);
+	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+		main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 	}
 
 	@Override

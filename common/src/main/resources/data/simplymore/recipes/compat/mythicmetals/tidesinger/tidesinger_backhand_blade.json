@@ -1,0 +1,29 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "mythicmetals"
+        }
+    ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "mythicmetals"
+      ]
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "simplymore:aquarium_backhand_blade"
+  },
+  "addition": {
+    "item": "mythicmetals:aquarium_ingot"
+  },
+  "result": {
+    "item": "simplymore:tidesinger_backhand_blade"
+  },
+  "template": {
+    "item": "mythicmetals:tidesinger_smithing_template"
+  }
+}
