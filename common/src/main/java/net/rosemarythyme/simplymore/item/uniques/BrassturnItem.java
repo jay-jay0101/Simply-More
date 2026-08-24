@@ -1,99 +1,132 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
-import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.WeaponAttributesConfig;
-import net.rosemarythyme.simplymore.entity.legacy.JetstreamEntity;
+import net.rosemarythyme.simplymore.entity.JetAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.data.FootfallParticles;
-import net.rosemarythyme.simplymore.util.data.Sound;
-import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
-import net.sweenus.simplyswords.config.settings.TooltipSettings;
-import net.sweenus.simplyswords.util.Styles;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
+import java.util.UUID;
 
 
-public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackModifierItem {
-    WeaponAttributesConfig attributes = ConfigWrapper.ATTRIBUTES;
+public class BrassturnItem extends SimplyMoreUniqueSwordItem {
 
-    public BrassturnItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
-        super(toolMaterial, attackDamage, attackSpeed);
-    }
+    protected static WeaponAttributesConfig attributes = config.weaponAttributes;
 
-    @Override
-    public CounterComponent getDefaultCounterComponent() {
-        return new CounterComponent(0, 16, 16);
-    }
-
-    @Override
-    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
-        if (attacker.getWorld().isClient()) return;
-
-        MathUtils.addToCounterComponent(stack, 1);
-
-        if (MathUtils.chance(attacker, UNIQUE_CONFIG.brassturn.chance)) {
-            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ENTITY_ZOMBIE_INFECT, 0.5f, 2f));
-
-            AttackUtils.spawnAbility(new JetstreamEntity(attacker, attacker.getPos()), attacker);
-        }
+    public BrassturnItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 //    @Override
-//    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-//        ItemStack stack = user.getStackInHand(hand);
-//        if (MathUtils.getCounterComponent(stack).value() <= 0) return TypedActionResult.fail(stack);
-//
-//        return AttackUtils.holdToUse((ServerWorld) world, user, hand);
-//    }
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
+        double attackSpeedModifier = getOxidisation(stack) * ((3.4f + attributes.getBrassturnMaxSwingSpeed()) / -16f);
+
+        Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers = super.getAttributeModifiers(slot);
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+        builder.putAll(attributeModifiers);
+        builder.put(
+                EntityAttributes.GENERIC_ATTACK_SPEED,
+                new EntityAttributeModifier(UUID.fromString("ebdfffcf-7f0d-4502-96ec-e4f6b995fe2f"), "Weapon modifier", attackSpeedModifier, EntityAttributeModifier.Operation.ADDITION)
+        );
+
+        return slot == EquipmentSlot.MAINHAND ? builder.build() : super.getAttributeModifiers(slot);
+    }
+
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker.getWorld().isClient()) return super.postHit(stack, target, attacker);
+
+        int oxidisation = getOxidisation(stack) + 1;
+        saveOxidisation(stack, oxidisation);
+
+        if(attacker.getRandom().nextBetween(1, 100) <= effect.getBrassturnJetChance()) {
+
+            attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.ENTITY_ZOMBIE_INFECT, SoundCategory.PLAYERS, 0.5f,2);
+
+            ((ServerWorld) attacker.getWorld()).spawnEntity(new JetAreaEffectCloudEntity(
+                    target.getWorld(),
+                    target.getX(),
+                    target.getY(),
+                    target.getZ(),
+                    attacker
+            ));
+        }
+
+        return super.postHit(stack, target, attacker);
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack itemStack = user.getStackInHand(hand);
+        if (getOxidisation(itemStack) <= 0) return TypedActionResult.fail(itemStack);
+
+        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
+            return TypedActionResult.fail(itemStack);
+        } else {
+            user.setCurrentHand(hand);
+            return TypedActionResult.consume(itemStack);
+        }
+    }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (MathUtils.getCounterComponent(stack).value() <= 0) {
-            user.stopUsingItem();
-            return;
-        }
+        if (getOxidisation(stack) <= 0) user.stopUsingItem();
 
-        if (remainingUseTicks % UNIQUE_CONFIG.brassturn.scrapeTime == 0) {
-            MathUtils.addToCounterComponent(stack, -1);
+        if (remainingUseTicks % effect.getBrassturnScrapeTime() == 0 && user.getWorld() instanceof ServerWorld serverWorld) {
+            int oxidisation = getOxidisation(stack) - 1;
+            saveOxidisation(stack, oxidisation);
 
-            if (MathUtils.chance(user, UNIQUE_CONFIG.brassturn.sparkChance)) {
-                AudioVisualUtils.particleAroundEntity(user, ParticleTypes.WAX_ON, 20, 0.5, 0.2f);
-                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.BLOCK_BEACON_POWER_SELECT, 0.5f, 2f));
+            if(user.getRandom().nextBetween(1, 100) <= effect.getBrassturnSparkChance()) {
+                serverWorld.spawnParticles(ParticleTypes.WAX_ON,user.getX(),user.getY(),user.getZ(),20,0.5,1,0.5,0.2);
+                serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.PLAYERS, 0.5f,2);
+                int boxSize = 3;
+                Box box = new Box(user.getX() - boxSize, user.getY() - 2, user.getZ() - boxSize, user.getX() + boxSize, user.getY() + boxSize, user.getZ() + boxSize);
+                List<LivingEntity> livingEntities = user.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
 
-//                AttackUtils.cubeAttack(user, user.getPos(), 3, AttackUtils.AttackTarget.ENEMIES)
-//                        .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUNNED), UNIQUE_CONFIG.brassturn.stunTime, 0);
+                for (LivingEntity livingEntity : livingEntities) {
+                    if (livingEntity == user || livingEntity.isTeammate(user)) {
+                        continue;
+                    }
+
+                    livingEntity.addStatusEffect(new StatusEffectInstance(ModEffectsRegistry.STUNNED.get(), effect.getBrassturnSparkStunDuration(),0));
+                }
+
             } else {
-                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ITEM_AXE_SCRAPE));
+                serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.PLAYERS, 1f,1);
             }
         }
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+    public int getMaxUseTime(ItemStack stack) {
+        return 999999;
     }
 
     @Override
@@ -101,51 +134,56 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
         return UseAction.BOW;
     }
 
-    @Override
-    public FootfallParticles getFootfalls() {
-        return new FootfallParticles(ParticleTypes.ASH);
-    }
+    public static int getOxidisation(ItemStack stack) {
+        final int maxOxidisation = 16; // Constant
 
-    @Override
-    public AttributeModifiersComponent getModifier(ItemStack stack, AttributeModifiersComponent base) {
-        float oxidisationAmount = MathUtils.getCounterComponent(stack).value() / 16f;
-        double minimumModifier = 4 + attributes.uniqueWeaponsSwingSpeed.brassturn_attack_speed - 0.6;
-
-        return base.with(
-                EntityAttributes.GENERIC_ATTACK_SPEED,
-                new EntityAttributeModifier(
-                        SimplyMore.identifier("oxidisation"),
-                        minimumModifier * -oxidisationAmount,
-                        EntityAttributeModifier.Operation.ADD_VALUE
-                ),
-                AttributeModifierSlot.MAINHAND
-        );
-    }
-
-    @Override
-    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip1").setStyle(Styles.ABILITY));
-        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip2").setStyle(Styles.TEXT));
-        tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
-        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip5").setStyle(Styles.TEXT));
-
-        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
-    }
-
-    public static class EffectSettings extends TooltipSettings {
-        public EffectSettings() {
-            super(new ItemStackTooltipAppender(ItemRegistry.BRASSTURN));
+        NbtElement oxiRaw = stack.getOrCreateNbt().get("simplymore:oxidisation");
+        if (oxiRaw == null) {
+            saveOxidisation(stack, maxOxidisation);
+            return maxOxidisation;
         }
 
-        @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float chance = 0.15f;
-        @ValidatedInt.Restrict(min = 0)
-        public int stunTime = 15;
-        @ValidatedInt.Restrict(min = 1)
-        public int scrapeTime = 5;
-        @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float sparkChance = 0.25f;
+        String oxiString = oxiRaw.toString().replaceAll("\"", "");
+
+        int oxiNumber = 0;
+        try {
+            oxiNumber = Math.min(maxOxidisation, Integer.parseInt(oxiString));
+        } catch (NumberFormatException e) {
+            oxiNumber = maxOxidisation;
+            saveOxidisation(stack, maxOxidisation);
+        }
+
+        return oxiNumber;
+    }
+
+    public static void saveOxidisation(ItemStack stack, int oxidisation) {
+        stack.getOrCreateNbt().putString("simplymore:oxidisation",Integer.toString(oxidisation));
+    }
+
+    int stepMod = 0;
+    @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.ASH);
+        super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
+
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.literal(" "));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.brassturn.tooltip6").setStyle(textStyle));
+
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

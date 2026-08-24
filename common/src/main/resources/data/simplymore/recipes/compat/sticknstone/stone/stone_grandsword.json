@@ -1,0 +1,36 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "sticknstone"
+        }
+    ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sticknstone"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stone_sword"
+    },
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "B": {
+      "tag": "minecraft:stone_buttons"
+    }
+  },
+  "pattern": [
+    "BMB",
+    "MMM",
+    "MSM"
+  ],
+  "result": {
+    "item": "simplymore:stone_grandsword"
+  }
+}

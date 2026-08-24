@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+"item": "simplymore:diamond_great_spear"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+"item": "simplymore:netherite_great_spear"
+  },
+  "template": {
+"item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

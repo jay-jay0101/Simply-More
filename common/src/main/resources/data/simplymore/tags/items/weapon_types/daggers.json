@@ -1,0 +1,145 @@
+{
+	"replace": false,
+	"values": [
+		{
+			"id": "simplymore:the_vessel_breach",
+			"required": false
+		},
+		{
+			"id": "simplymore:culterex",
+			"required": false
+		},
+		{
+			"id": "simplymore:wooden_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:stone_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:iron_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:diamond_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:gold_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:netherite_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:runic_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_nether_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:gobber_end_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:adamantite_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:aquarium_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:banglum_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:carmot_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:kyber_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:mythril_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:orichalcum_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:osmium_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:prometheum_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:quadrillum_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:runite_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:star_platinum_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:bronze_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:steel_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:stormyx_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:palladium_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:metallurgium_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:celestium_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:copper_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:durasteel_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:hallowed_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:legendary_banglum_dagger",
+			"required": false
+		},
+		{
+			"id": "simplymore:tidesinger_dagger",
+			"required": false
+		}
+	]
+}

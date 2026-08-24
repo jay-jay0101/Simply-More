@@ -14,9 +14,9 @@ public class RadiantEffect extends StatusEffect {
 
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING,7,4));
-        return super.applyUpdateEffect(entity, amplifier);
+        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

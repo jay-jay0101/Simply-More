@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "simplymore:netherite_great_katana"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+    "item": "simplymore:runic_great_katana"
+  },
+  "template": {
+    "item": "simplyswords:runic_tablet"
+  }
+}

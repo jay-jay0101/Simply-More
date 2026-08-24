@@ -12,10 +12,10 @@ public class FallDamageImmunityEffect extends StatusEffect {
 
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.fallDistance = 0;
 
-        return super.applyUpdateEffect(entity, amplifier);
+        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

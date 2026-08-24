@@ -14,10 +14,10 @@ public class RageEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int Amplifier) {
+    public void applyUpdateEffect(LivingEntity entity, int Amplifier) {
         entity.damage(entity.getDamageSources().genericKill(), 1.0F);
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,7,4));
-        return super.applyUpdateEffect(entity, Amplifier);
+        super.applyUpdateEffect(entity, Amplifier);
     }
 
     @Override

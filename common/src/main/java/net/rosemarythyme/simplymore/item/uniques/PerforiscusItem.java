@@ -1,58 +1,56 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
-import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.legacy.FlowerFieldAreaEffectCloudEntity;
+import net.rosemarythyme.simplymore.entity.FlowerFieldAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.data.FootfallParticles;
-import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
-import net.sweenus.simplyswords.config.settings.TooltipSettings;
-import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
-import net.sweenus.simplyswords.util.Styles;
+import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 
-public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
-    int skillCooldown = UNIQUE_CONFIG.perforiscus.cooldown;
+public class PerforiscusItem extends SimplyMoreUniqueSwordItem {
+    int skillCooldown = effect.getPerforiscusCooldown();
 
     public static final int maxBloom = 15;
 
-    public PerforiscusItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
-        super(toolMaterial, attackDamage, attackSpeed);
+    public PerforiscusItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
 
 
     @Override
-    public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
-        if (attacker.getWorld().isClient()) return;
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker.getWorld().isClient())
+            return super.postHit(stack, target, attacker);
 
-        int amplifier = attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)) ?
-                attacker.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)).getAmplifier() +1 : 0;
+        int amplifier = attacker.hasStatusEffect(ModEffectsRegistry.BLOOM.get()) ?
+                attacker.getStatusEffect(ModEffectsRegistry.BLOOM.get()).getAmplifier() +1 : 0;
 
         amplifier = Math.min(amplifier, maxBloom);
 
         attacker.addStatusEffect(
                 new StatusEffectInstance(
-                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM),
-                        UNIQUE_CONFIG.perforiscus.bloomTime,
+                        ModEffectsRegistry.BLOOM.get(),
+                        effect.getPerforiscusBloomTime(),
                         amplifier
                 )
         );
+
+        return super.postHit(stack, target, attacker);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHan
         int amplifier = 0;
 
         try {
-            amplifier = user.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM)).getAmplifier();
+            amplifier = user.getStatusEffect(ModEffectsRegistry.BLOOM.get()).getAmplifier();
         } catch (NullPointerException ignored) {
         }
 
@@ -75,12 +73,12 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHan
                     )
             );
 
-            StatusEffectInstance effect = user.getStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM));
-            user.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM));
+            StatusEffectInstance effect = user.getStatusEffect(ModEffectsRegistry.BLOOM.get());
+            user.removeStatusEffect(ModEffectsRegistry.BLOOM.get());
 
             if(amplifier > 7) {
                 user.addStatusEffect(new StatusEffectInstance(
-                        StatusEffectRegistry.getReference(StatusEffectRegistry.BLOOM),
+                        ModEffectsRegistry.BLOOM.get(),
                         effect.getDuration(),
                         effect.getAmplifier() - 8
                 ));
@@ -92,35 +90,30 @@ public class PerforiscusItem extends SimplyMoreUniqueSwordItem implements TwoHan
         return super.use(world, user, hand);
     }
 
+
+    int stepMod = 0;
     @Override
-    public FootfallParticles getFootfalls() {
-        return new FootfallParticles(ParticleTypes.FALLING_SPORE_BLOSSOM);
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        stepMod = SimplyMoreHelperMethods.simplyMore$footfallsHelper(entity, stack, world, stepMod, ParticleTypes.FALLING_SPORE_BLOSSOM);
+        super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-        Style rightClickStyle = Styles.RIGHT_CLICK;
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style abilityStyle = HelperMethods.getStyle("ability");
+        Style textStyle = HelperMethods.getStyle("text");
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip1").setStyle(abilityStyle));
         tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip3").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip4").setStyle(textStyle));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip5").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.perforiscus.tooltip6").setStyle(textStyle));
 
-        super.appendTooltip(itemStack, tooltipContext, tooltip, type);
-    }
-
-    public static class EffectSettings extends TooltipSettings {
-        public EffectSettings() {
-            super(new ItemStackTooltipAppender(ItemRegistry.PERFORISCUS));
-        }
-
-        @ValidatedInt.Restrict(min = 0)
-        public int bloomTime = 500;
-        @ValidatedInt.Restrict(min = 0)
-        public int cooldown = 800;
+        super.appendTooltip(itemStack, world, tooltip, tooltipContext);
     }
 }

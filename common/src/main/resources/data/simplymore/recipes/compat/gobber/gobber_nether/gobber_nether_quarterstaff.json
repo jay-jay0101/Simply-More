@@ -1,0 +1,33 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "gobber2"
+        }
+    ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "gobber2"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+   "s": {
+      "item": "gobber2:gobber2_rod_nether"
+    },
+    "M": {
+      "item": "gobber2:gobber2_ingot_nether"
+    }
+  },
+  "pattern": [
+    " M ",
+    " s ",
+    " M "
+  ],
+  "result": {
+    "item": "simplymore:gobber_nether_quarterstaff"
+  }
+}

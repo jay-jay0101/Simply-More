@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "simplyswords:item/contained_remnant_inner",
-    "layer1": "simplymore:item/reforming_remnant"
-  }
-}
