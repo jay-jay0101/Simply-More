@@ -25,6 +25,7 @@ import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class SimplyMore {
+	@SuppressWarnings("unused")
     public static final Logger LOGGER = LoggerFactory.getLogger("simplymore");
 	public static final String ID = "simplymore";
 
@@ -57,9 +58,9 @@ public class SimplyMore {
 	}
 
 	public static void postSetupInit() {
-		ItemRegistry.registerItemGroup();
 		ImplicitRegistry.register();
 		AwakeningProfileRegistry.register();
+		ItemRegistry.addToItemGroup();
 		LootRegistry.register();
 		ClientItemPropertyRegistry.register();
 	}

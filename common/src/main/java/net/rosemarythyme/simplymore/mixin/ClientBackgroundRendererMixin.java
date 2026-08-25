@@ -23,9 +23,9 @@ public class ClientBackgroundRendererMixin {
     private static void simplymore$tintFog(Args args) {
         float strength = ClientActiveAbilityManager.CLIENT.getAbilityStrength(ActiveAbilityManager.Type.HARVEST);
         if (strength > 0f) {
-            args.set(0, MathHelper.lerp(strength, args.get(0), 1f));
-            args.set(1, MathHelper.lerp(strength, args.get(1), 0f));
-            args.set(2, MathHelper.lerp(strength, args.get(2), 0f));
+            args.set(0, MathHelper.lerp(strength, args.get(0), 0.545f));
+            args.set(1, MathHelper.lerp(strength, args.get(1), 0.1f));
+            args.set(2, MathHelper.lerp(strength, args.get(2), 0.1f));
         }
     }
 
@@ -34,9 +34,9 @@ public class ClientBackgroundRendererMixin {
         float strength = ClientActiveAbilityManager.CLIENT.getAbilityStrength(ActiveAbilityManager.Type.HARVEST);
         if (strength > 0f) {
             RenderSystem.setShaderFogColor(
-                    MathHelper.lerp(strength, red, 1f),
-                    MathHelper.lerp(strength, green, 0f),
-                    MathHelper.lerp(strength, blue, 0f)
+                    MathHelper.lerp(strength, red, 0.545f),
+                    MathHelper.lerp(strength, green, 0.1f),
+                    MathHelper.lerp(strength, blue, 0.1f)
             );
             ci.cancel();
         }

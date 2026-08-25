@@ -22,11 +22,11 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public class ClientCameraMixin {
 
     @Unique
-    private static Vector2f offset = new Vector2f(0, 0);
+    private static Vector2f simplymore$offset = new Vector2f(0, 0);
 
     @Inject(method = "setRotation", at=@At("HEAD"))
     public void simplmore$calculateRotation(float yaw, float pitch, CallbackInfo ci) {
-        offset = ScreenshakeManager.calculateRotation();
+        simplymore$offset = ScreenshakeManager.calculateRotation();
     }
 
     @ModifyArgs(method = "update", at= @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setPos(DDD)V"))
@@ -44,11 +44,11 @@ public class ClientCameraMixin {
 
     @ModifyVariable(method = "setRotation", at=@At("HEAD"), ordinal = 0, argsOnly = true)
     public float simplymore$modifyYaw(float yaw) {
-        return yaw + offset.getX();
+        return yaw + simplymore$offset.getX();
     }
 
     @ModifyVariable(method = "setRotation", at=@At("HEAD"), ordinal = 1, argsOnly = true)
     public float simplymore$modifyPitch(float pitch) {
-        return pitch + offset.getY();
+        return pitch + simplymore$offset.getY();
     }
 }

@@ -75,9 +75,9 @@ public abstract class ClientWorldRendererMixin {
     private void simplymore$tintFog(Args args) {
         float strength = ClientActiveAbilityManager.CLIENT.getAbilityStrength(ActiveAbilityManager.Type.HARVEST);
         if (strength > 0f) {
-            args.set(0, MathHelper.lerp(strength, args.get(0), 1f));
-            args.set(1, MathHelper.lerp(strength, args.get(1), 0f));
-            args.set(2, MathHelper.lerp(strength, args.get(2), 0f));
+            args.set(0, MathHelper.lerp(strength, args.get(0), 0.545f));
+            args.set(1, MathHelper.lerp(strength, args.get(1), 0.1f));
+            args.set(2, MathHelper.lerp(strength, args.get(2), 0.1f));
         }
     }
 

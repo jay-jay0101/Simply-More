@@ -657,6 +657,7 @@ public class ItemRegistry {
         }
 
         ITEMS.register();
+        TABS.register();
     }
 
     public static List<RegistrySupplier<Item>> registerSet(Class<? extends Item> clazz, String name, int damage, ToolMaterial material, Item.Settings settings) {
@@ -703,7 +704,7 @@ public class ItemRegistry {
                             )
             );
 
-    public static void registerItemGroup() {
+    public static void addToItemGroup() {
         if (Platform.isModLoaded("sticknstone")) {
             StickNStoneCompatRegistry.addToGroup();
         }
@@ -756,8 +757,6 @@ public class ItemRegistry {
         addToItemGroup(CULTEREX);
         addToItemGroup(JESTER_PENETRATE);
         addToItemGroup(THE_PAN);
-
-        TABS.register();
     }
 
 
