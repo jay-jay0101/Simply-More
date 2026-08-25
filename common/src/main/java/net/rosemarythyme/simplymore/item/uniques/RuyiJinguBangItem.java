@@ -3,12 +3,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +16,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Pair;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
@@ -33,7 +26,10 @@ import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.*;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
@@ -47,7 +43,7 @@ import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
-public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility, StoppableAbilityItem, StackModifierItem, HudOverlayItem<Pair<Float, Long>> {
+public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility, StoppableAbilityItem, StackModifierItem, HudOverlayItem {
     public static final RuyiJinguBangItem.EffectSettings SETTINGS = UNIQUE_CONFIG.ruyi_jingu_bang;
 
     @Override
@@ -198,33 +194,6 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
                 ),
                 AttributeModifierSlot.MAINHAND
         );
-    }
-
-    @Override
-    public void renderHudOverlay(DrawContext context, ItemStack stack, ClientPlayerEntity player, RenderTickCounter tickCounter) {
-        Pair<Float, Long> data = HudUtils.getCache(this, stack, player);
-        Pair<Float, Long> prevData = HudUtils.getPreviousCache(this);
-        if(prevData == null) prevData = data;
-
-        long time = data.getRight();
-
-        MatrixStack matrices = context.getMatrices();
-        matrices.push();
-
-        float progress = MathUtils.clampedLerp(player.getWorld().getTime() + tickCounter.getTickDelta(false), time, time + 10, prevData.getLeft(), data.getLeft());
-        HudUtils.renderProgressBar(context, progress, 0xFFAA6C39, 0x88D3AF37, 0xFFD3AF37);
-
-        TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
-        Text text = Text.translatable("item.simplymore.ruyi_jingu_bang.overlay", MathUtils.toPercentage(progress));
-
-        int width = renderer.getWidth(text);
-        context.drawText(renderer, text, -width/2, -15, 0xFFAE8625, true);
-        matrices.pop();
-    }
-
-    @Override
-    public Pair<Float, Long> getHudData(ItemStack stack, ClientPlayerEntity player) {
-        return new Pair<>(MathUtils.getCounterComponentProgress(stack), player.getWorld().getTime());
     }
 
     public static class EffectSettings extends TooltipSettings {

@@ -10,6 +10,7 @@ import dev.architectury.utils.EnvExecutor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
+import net.rosemarythyme.simplymore.client.hud.HudOverlayItemRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientEntityRendererRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientItemPropertyRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
@@ -61,7 +62,13 @@ public class SimplyMore {
 		AwakeningProfileRegistry.register();
 		ItemRegistry.addToItemGroup();
 		LootRegistry.register();
+		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::postSetupClientInit);
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static void postSetupClientInit() {
 		ClientItemPropertyRegistry.register();
+		HudOverlayItemRegistry.register();
 	}
 
 	@Environment(EnvType.SERVER)
@@ -78,6 +85,7 @@ public class SimplyMore {
 		registerClientEvents();
 	}
 
+	@Environment(EnvType.CLIENT)
 	public static void registerClientEvents() {
 		ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register((ignored) -> ClientActiveAbilityManager.CLIENT.clear());
 		ClientTickEvent.CLIENT_POST.register(new TickClientEffects());

@@ -3,12 +3,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
@@ -29,7 +23,10 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.*;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.PredicateUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
@@ -41,11 +38,13 @@ import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 
-public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon, UniqueWeaponActiveAbility, HudOverlayItem<Map<LivingEntity, Integer>> {
+public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon, UniqueWeaponActiveAbility, HudOverlayItem {
     public static final SoulfractureItem.EffectSettings SETTINGS = UNIQUE_CONFIG.soulfracture;
 
     public SoulfractureItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
@@ -192,49 +191,6 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
         appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
-    }
-
-    @Override
-    public void renderHudOverlay(DrawContext context, ItemStack stack, ClientPlayerEntity player, RenderTickCounter tickCounter) {
-        final int DELTA_Y = 10;
-
-        Map<LivingEntity, Integer> data = HudUtils.getCache(this, stack, player);
-        MatrixStack matrices = context.getMatrices();
-        TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
-
-        for(Map.Entry<LivingEntity, Integer> target : data.entrySet()) {
-
-            matrices.push();
-            matrices.translate(HudUtils.SQUARE_BORDER_SIZE * -4, 0, 0);
-            HudUtils.renderSquareProgress(context, 4, target.getValue(), 0xFF3E5A64, 0xFF60FFED);
-            matrices.pop();
-
-            context.drawText(renderer, target.getKey().getName(), 2, (-DELTA_Y / 2) + 1, 0xFF60FFED, true);
-            matrices.translate(0, DELTA_Y, 0);
-        }
-    }
-
-    @Override
-    public Map<LivingEntity, Integer> getHudData(ItemStack stack, ClientPlayerEntity player) {
-        List<LivingEntity> entities = player.getWorld().getEntitiesByClass(LivingEntity.class, MathUtils.createCubeBox(player.getPos(), 40), ignored -> true);
-        Map<UUID, LivingEntity> uuids = entities.stream().collect(Collectors.toMap(
-            Entity::getUuid,
-            entity -> entity
-        ));
-
-        List<SoulFragmentEntity> fragments = AttackUtils.getOwnedAbilities(player, SoulFragmentEntity.class);
-
-        return fragments.stream()
-        .collect(Collectors.groupingBy(SoulFragmentEntity::getPerson))
-        .entrySet().stream()
-        .filter(entry -> entry.getKey().isPresent())
-        .sorted(Map.Entry.<Optional<UUID>, List<SoulFragmentEntity>>comparingByValue(Comparator.comparingInt(List::size)).reversed())
-        .limit(3)
-                .filter(entry -> uuids.containsKey(entry.getKey().get()))
-        .collect(Collectors.toMap(
-                entry -> uuids.get(entry.getKey().get()),
-                entry -> entry.getValue().size()
-        ));
     }
 
     public static class EffectSettings extends TooltipSettings {

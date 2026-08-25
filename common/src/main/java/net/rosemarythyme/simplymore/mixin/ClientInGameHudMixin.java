@@ -8,6 +8,8 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.rosemarythyme.simplymore.client.hud.HudOverlay;
+import net.rosemarythyme.simplymore.client.hud.HudOverlayItemRegistry;
 import net.rosemarythyme.simplymore.config.ClientConfig;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
@@ -48,7 +50,7 @@ public class ClientInGameHudMixin {
             if(stack.getItem() instanceof TwoHandedWeapon) return;
         }
 
-        if(stack.getItem() instanceof HudOverlayItem<?> hudOverlayItem) {
+        if(HudOverlayItemRegistry.getOverlay(stack.getItem()) instanceof HudOverlay<?> hudOverlayItem) {
             SimplySwordsClientAPI.pushWeaponHudTransform(context);
             hudOverlayItem.renderHudOverlay(context, stack, player, counter);
             context.getMatrices().pop();
@@ -57,7 +59,7 @@ public class ClientInGameHudMixin {
 
     @Unique
     private static boolean simplymore$isStackInvalid(ItemStack stack) {
-        return stack.isEmpty() || !(stack.getItem() instanceof HudOverlayItem<?>) || (AwakeningApi.isAwakeningSystemEnabled() && !AwakeningApi.isAbilityUnlocked(stack));
+        return stack.isEmpty() || !(stack.getItem() instanceof HudOverlayItem) || (AwakeningApi.isAwakeningSystemEnabled() && !AwakeningApi.isAbilityUnlocked(stack));
     }
 
     @Unique

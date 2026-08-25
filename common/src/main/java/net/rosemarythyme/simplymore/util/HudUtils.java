@@ -3,14 +3,14 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
+import net.rosemarythyme.simplymore.client.hud.HudOverlay;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class HudUtils {
-    private static final Map<HudOverlayItem<?>, Object> CACHE = new HashMap<>();
-    private static final Map<HudOverlayItem<?>, Object> LAST_CACHE = new HashMap<>();
+    private static final Map<HudOverlay<?>, Object> CACHE = new HashMap<>();
+    private static final Map<HudOverlay<?>, Object> LAST_CACHE = new HashMap<>();
 
     public static void clearCache() {
         LAST_CACHE.clear();
@@ -20,12 +20,12 @@ public class HudUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getCache(HudOverlayItem<T> item, ItemStack stack, ClientPlayerEntity player) {
+    public static <T> T getCache(HudOverlay<T> item, ItemStack stack, ClientPlayerEntity player) {
         return (T) CACHE.computeIfAbsent(item, data -> item.getHudData(stack, player));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getPreviousCache(HudOverlayItem<T> item) {
+    public static <T> T getPreviousCache(HudOverlay<T> item) {
         return (T) LAST_CACHE.getOrDefault(item, null);
     }
 

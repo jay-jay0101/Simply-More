@@ -2,12 +2,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -18,7 +12,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Pair;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -33,7 +26,10 @@ import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.*;
+import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -50,7 +46,8 @@ import net.sweenus.simplyswords.util.Styles;
 import java.util.List;
 import java.util.Set;
 
-public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOverlayItem<Pair<Float, Long>>, UniqueWeaponActiveAbility, StoppableAbilityItem {
+
+public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility, StoppableAbilityItem, HudOverlayItem {
     public static MoundshifterItem.EffectSettings SETTINGS = UNIQUE_CONFIG.moundshifter;
 
     @Override
@@ -155,7 +152,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
         ActiveAbilityManager.SERVER.stop(user, ActiveAbilityManager.Type.DRILL);
 
         if(remainingDuration > getMaxUseTime(stack, user) - 10) return;
-        emerge((ServerWorld) world, user.getVehicle() instanceof LivingEntity vehicle ? vehicle : user, remainingDuration < getMaxUseTime(stack, user) - 30);
+        emerge(world, user.getVehicle() instanceof LivingEntity vehicle ? vehicle : user, remainingDuration < getMaxUseTime(stack, user) - 30);
     }
 
     public static void emerge(ServerWorld world, LivingEntity user, boolean includeEarthquake) {
@@ -173,7 +170,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
         if(includeEarthquake && user.isOnGround()) createEarthquake(world, source, pos);
 
         AttackUtils.cubeAttack(source, pos, 3, AttackUtils.AttackTarget.ENEMIES)
-                        .addVelocity(0, 1f, 0);
+                .addVelocity(0, 1f, 0);
 
         if(source instanceof PlayerEntity player) {
             player.getItemCooldownManager().set(ItemRegistry.MOUNDSHIFTER.get(), SETTINGS.cooldown);
@@ -207,33 +204,6 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements HudOv
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.moundshifter.tooltip5").setStyle(textStyle));
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
-    }
-
-    @Override
-    public void renderHudOverlay(DrawContext context, ItemStack stack, ClientPlayerEntity player, RenderTickCounter tickCounter) {
-        Pair<Float, Long> data = HudUtils.getCache(this, stack, player);
-        Pair<Float, Long> prevData = HudUtils.getPreviousCache(this);
-        if(prevData == null) prevData = data;
-
-        long time = data.getRight();
-
-        MatrixStack matrices = context.getMatrices();
-        matrices.push();
-
-        float progress = MathUtils.clampedLerp(player.getWorld().getTime() + tickCounter.getTickDelta(false), time, time + 10, prevData.getLeft(), data.getLeft());
-        HudUtils.renderProgressBar(context, progress, 0xFF281B0D, 0x88895129, 0xFF895129);
-
-        TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
-        Text text = Text.translatable("item.simplymore.moundshifter.overlay", MathUtils.toPercentage(progress));
-
-        int width = renderer.getWidth(text);
-        context.drawText(renderer, text, -width/2, -15, 0xFF654321, true);
-        matrices.pop();
-    }
-
-    @Override
-    public Pair<Float, Long> getHudData(ItemStack stack, ClientPlayerEntity player) {
-        return new Pair<>(MathUtils.getCounterComponentProgress(stack), player.getWorld().getTime());
     }
 
 
