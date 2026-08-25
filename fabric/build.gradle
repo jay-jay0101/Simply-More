@@ -52,6 +52,7 @@ dependencies {
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury-fabric:$project.architectury_api_version"
     modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
+    modImplementation("curse.maven:simplyswords-659887:${simplyswords_fabric_version}")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
