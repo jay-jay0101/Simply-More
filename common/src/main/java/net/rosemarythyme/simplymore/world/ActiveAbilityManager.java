@@ -267,8 +267,4 @@ public class ActiveAbilityManager {
     public boolean isStatue(LivingEntity entity) {
         return isInAbility(entity, Type.STATUE) || isInAbility(entity, Type.PETRIFIED);
     }
-
-    public static boolean isStatueOnEither(LivingEntity entity) {
-        return SERVER.isStatue(entity) || ClientActiveAbilityManager.CLIENT.isStatue(entity);
-    }
 }

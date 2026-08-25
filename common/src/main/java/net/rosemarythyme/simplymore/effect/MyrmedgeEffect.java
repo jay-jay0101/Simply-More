@@ -5,7 +5,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.rosemarythyme.simplymore.item.uniques.MyrmedgeItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 
-public class MyrmedgeEffect extends SolidifyEffect {
+public class MyrmedgeEffect extends StunEffect {
 
 
     public MyrmedgeEffect(StatusEffectCategory category, int color) {
@@ -26,10 +26,4 @@ public class MyrmedgeEffect extends SolidifyEffect {
 
         return super.applyUpdateEffect(livingEntity, amplifier);
     }
-
-    @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
-    }
-
 }

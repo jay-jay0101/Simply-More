@@ -46,9 +46,8 @@ public class SimplyMore {
 
 		ItemComponentRegistry.register();
 		TagRegistry.register();
-
-		SimplyMore.registerEvents();
 		SoundEventRegistry.register();
+		registerEvents();
 
 		EnvExecutor.runInEnv(Env.SERVER, () -> SimplyMore::initServer);
 		EnvExecutor.runInEnv(Env.CLIENT, () -> SimplyMore::initClient);
@@ -76,13 +75,17 @@ public class SimplyMore {
 		ClientEntityRendererRegistry.register();
 
 		PacketRegistry.registerS2CRecievers();
+		registerClientEvents();
+	}
+
+	public static void registerClientEvents() {
+		ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register((ignored) -> ClientActiveAbilityManager.CLIENT.clear());
+		ClientTickEvent.CLIENT_POST.register(new TickClientEffects());
 	}
 
 	public static void registerEvents() {
 		PlayerEvent.PLAYER_JOIN.register(new RemoveStatusOnJoin());
 		LifecycleEvent.SERVER_STARTED.register((ignored) -> ActiveAbilityManager.SERVER.clear());
-		ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register((ignored) -> ClientActiveAbilityManager.CLIENT.clear());
 		TickEvent.SERVER_PRE.register(new TickServerEffects());
-		ClientTickEvent.CLIENT_POST.register(new TickClientEffects());
 	}
 }

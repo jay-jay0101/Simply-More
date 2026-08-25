@@ -16,10 +16,15 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class EntityUtils {
     private static final Map<LivingEntity, Long> SWING_CACHE = new HashMap<>();
@@ -73,20 +78,21 @@ public class EntityUtils {
 
     public static void reapplyAndIncrementEffect(LivingEntity entity, RegistryEntry<StatusEffect> effect, int duration, int additionalAmplifier, int maxAmplifier) {
         int amplifier = additionalAmplifier - 1;
-        if(entity.hasStatusEffect(effect)) {
-            amplifier = entity.getStatusEffect(effect).getAmplifier() + additionalAmplifier;
+
+        StatusEffectInstance instance = entity.getStatusEffect(effect);
+        if(instance != null) {
+            amplifier = instance.getAmplifier() + additionalAmplifier;
         }
 
         entity.addStatusEffect(new StatusEffectInstance(effect, duration, Math.min(amplifier, maxAmplifier)));
     }
 
     public static void incrementEffect(LivingEntity entity, RegistryEntry<StatusEffect> effect, int additionalAmplifier, int maxAmplifier) {
-        if(!entity.hasStatusEffect(effect)) return;
+        StatusEffectInstance instance = entity.getStatusEffect(effect);
+        if(instance == null) return;
 
-        StatusEffectInstance effectInstance = entity.getStatusEffect(effect);
-
-        int amplifier = effectInstance.getAmplifier() + additionalAmplifier;
-        entity.addStatusEffect(new StatusEffectInstance(effect, effectInstance.getDuration(), Math.min(amplifier, maxAmplifier)));
+        int amplifier = instance.getAmplifier() + additionalAmplifier;
+        entity.addStatusEffect(new StatusEffectInstance(effect, instance.getDuration(), Math.min(amplifier, maxAmplifier)));
     }
 
     public static boolean isHolding(LivingEntity entity, ItemStack stack) {
@@ -112,5 +118,16 @@ public class EntityUtils {
         BlockHitResult hit = entity.getWorld().raycast(new RaycastContext(pos, targetPos, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ShapeContext.of(entity)));
 
         return hit.getPos();
+    }
+
+    public static boolean isStunned(LivingEntity entity) {
+        return isStunned(entity, false);
+    }
+
+    public static boolean isStunned(LivingEntity entity, boolean includeClient) {
+        return ActiveAbilityManager.SERVER.isStatue(entity)
+                || (includeClient && ClientActiveAbilityManager.CLIENT.isStatue(entity))
+                || entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN))
+                || entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.IMPLICIT_STUN));
     }
 }

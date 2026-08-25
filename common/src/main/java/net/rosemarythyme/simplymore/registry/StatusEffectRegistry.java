@@ -10,14 +10,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.config.ConfigWrapper;
-import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.effect.*;
 
 
 public class StatusEffectRegistry {
-    private static final UniqueEffectConfig UNIQUE_CONFIG = ConfigWrapper.UNIQUE;
-
     public static final DeferredRegister<StatusEffect> EFFECTS =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.STATUS_EFFECT);
 
@@ -43,7 +39,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> IMPLICIT_STUN = registerEffect(
             "implicit_stun",
-            new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
+            new StunEffect(StatusEffectCategory.HARMFUL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             SimplyMore.identifier("implicit_stun_attack_speed"),
@@ -59,7 +55,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> STUN = registerEffect(
             "stun",
-            new SolidifyEffect(StatusEffectCategory.HARMFUL,8948877)
+            new StunEffect(StatusEffectCategory.HARMFUL,8948877)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             SimplyMore.identifier("stun_attack_speed"),

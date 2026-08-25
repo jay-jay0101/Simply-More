@@ -11,6 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ImplicitRegistry;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.sweenus.simplyswords.item.component.WeaponImplicitComponent;
@@ -77,7 +78,7 @@ public abstract class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "swimUpward", cancellable = true)
 	private void simplymore$preventSwim(TagKey<Fluid> fluid, CallbackInfo ci) {
 		LivingEntity entity = (LivingEntity) (Object) this;
-		if(ActiveAbilityManager.isStatueOnEither(entity)) {
+		if(EntityUtils.isStunned(entity, true)) {
 			ci.cancel();
 		}
 	}
@@ -86,7 +87,7 @@ public abstract class LivingEntityMixin {
 	private Vec3d simplymore$preventTravel(Vec3d value) {
 		LivingEntity entity = (LivingEntity) (Object) this;
 
-		if(ActiveAbilityManager.isStatueOnEither(entity)) {
+		if(EntityUtils.isStunned(entity, true)) {
 			return new Vec3d(0, value.getY() > 0 ? 0 : value.getY(), 0);
 		}
 
@@ -97,7 +98,7 @@ public abstract class LivingEntityMixin {
 	private void simplymore$preventJump(CallbackInfo ci) {
 		LivingEntity entity = (LivingEntity) (Object) this;
 
-		if(ActiveAbilityManager.isStatueOnEither(entity)) {
+		if(EntityUtils.isStunned(entity, true)) {
 			ci.cancel();
 		}
 	}
@@ -107,6 +108,6 @@ public abstract class LivingEntityMixin {
 	private boolean simplymore$preventClimb(boolean original) {
 		LivingEntity entity = (LivingEntity) (Object) this;
 
-		return original && !ActiveAbilityManager.isStatueOnEither(entity);
+		return original && !EntityUtils.isStunned(entity, true);
 	}
 }

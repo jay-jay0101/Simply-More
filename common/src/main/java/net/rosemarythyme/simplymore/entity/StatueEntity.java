@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
@@ -123,7 +123,7 @@ public class StatueEntity extends AbstractVisibleAbilityEntity {
 
     @Override
     protected void serverTick(LivingEntity owner) {
-        if(!ClientActiveAbilityManager.SERVER.isStatue(owner)) {
+        if(!ActiveAbilityManager.SERVER.isStatue(owner)) {
             discard();
         }
 
