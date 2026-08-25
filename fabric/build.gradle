@@ -42,7 +42,7 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
-    modImplementation("curse.maven:simplyswords-659887:5255981")
+    modImplementation("curse.maven:simplyswords-659887:8723376")
 }
 
 processResources {
