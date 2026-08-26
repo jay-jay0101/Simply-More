@@ -17,7 +17,7 @@ import net.rosemarythyme.simplymore.entity.AuraOfCorruptionAreaEffectCloudEntity
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -82,9 +82,9 @@ public class DarksentItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style textStyle = HelperMethods.getStyle("text");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
+        Style textStyle = Styles.TEXT;
+        Style abilityStyle = Styles.ABILITY;
+        Style rightClickStyle = Styles.RIGHT_CLICK;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip1").setStyle(abilityStyle));

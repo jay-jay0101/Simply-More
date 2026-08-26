@@ -22,7 +22,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -134,9 +134,9 @@ public class StasisItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style rightClickStyle = HelperMethods.getStyle("rightclick");
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+        Style rightClickStyle = Styles.RIGHT_CLICK;
+        Style abilityStyle = Styles.ABILITY;
+        Style textStyle = Styles.TEXT;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip1").setStyle(abilityStyle));

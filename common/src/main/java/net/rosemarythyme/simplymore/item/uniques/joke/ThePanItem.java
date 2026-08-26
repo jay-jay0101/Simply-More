@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.item.normal.SimplyMoreSwordItem;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,8 +104,8 @@ public class ThePanItem extends SimplyMoreSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style abilityStyle = HelperMethods.getStyle("ability");
-        Style textStyle = HelperMethods.getStyle("text");
+        Style abilityStyle = Styles.ABILITY;
+        Style textStyle = Styles.TEXT;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.the_pan.tooltip1").setStyle(abilityStyle));

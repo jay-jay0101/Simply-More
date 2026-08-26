@@ -35,7 +35,7 @@ import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
 import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
 import net.rosemarythyme.simplymore.registry.ModTagRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 import org.joml.Vector3d;
 
 import java.util.ArrayList;
@@ -45,9 +45,9 @@ import java.util.Random;
 
 
 public class MimicryItem extends SimplyMoreUniqueSwordItem {
-    protected final Style rightClickStyle = HelperMethods.getStyle("rightclick");
-    protected final Style abilityStyle = HelperMethods.getStyle("ability");
-    protected final Style textStyle = HelperMethods.getStyle("text");
+    protected final Style rightClickStyle = Styles.RIGHT_CLICK;
+    protected final Style abilityStyle = Styles.ABILITY;
+    protected final Style textStyle = Styles.TEXT;
 
     protected static MimicryAttributesConfig mimicryAttributes = config.mimicry;
 

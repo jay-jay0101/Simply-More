@@ -11,13 +11,14 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.registry.ModEffectsRegistry;
+import net.sweenus.simplyswords.item.LegacyWeaponAttributes;
 import net.sweenus.simplyswords.item.RunicSwordItem;
 
 public class RunicLanceItem extends RunicSwordItem {
     String[] repairIngredient;
 
     public RunicLanceItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings, String... repairIngredient) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, LegacyWeaponAttributes.configure(settings, attackDamage, attackSpeed));
 
         this.repairIngredient = repairIngredient;
     }

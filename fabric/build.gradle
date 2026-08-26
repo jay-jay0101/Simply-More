@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
+    id 'com.gradleup.shadow'
 }
 
 architectury {
@@ -7,20 +7,44 @@ architectury {
     fabric()
 }
 
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+}
+
 configurations {
-    common {
-        canBeResolved = true
-        canBeConsumed = false
-    }
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
+}
 
-    // Files in this configuration will be bundled into your mod using the Shadow plugin.
-    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
-    shadowBundle {
-        canBeResolved = true
-        canBeConsumed = false
+repositories {
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    maven { url 'https://maven.blamejared.com' }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    mavenLocal()
+    maven {
+        name 'Gegy'
+        url 'https://maven.gegy.dev'
+    }
+    maven { url = "https://jitpack.io" }
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    maven {
+        name = "FzzyMaven"
+        url = "https://maven.fzzyhmstrs.me/"
     }
 }
 
@@ -39,34 +63,46 @@ dependencies {
 
     modImplementation "curse.maven:mythicmetals-410127:5418365"
 
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
-    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+    common(project(path: ':common')) {transitive = false}
+    shadowCommon(project(path: ':common', configuration: 'transformProductionFabric')) {transitive = false}
 
-    modImplementation("curse.maven:simplyswords-659887:8723376")
+    modImplementation("curse.maven:simplyswords-659887:8723373")
 }
 
 processResources {
-    inputs.property 'version', project.version
+    inputs.property "version", project.version
 
-    filesMatching('fabric.mod.json') {
-        expand version: project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
     }
 }
 
 shadowJar {
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
+    exclude "architectury.common.json"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set("dev-shadow")
 }
 
 remapJar {
+    injectAccessWidener = true
     inputFile.set shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveClassifier.set(null)
 }
 
-repositories {
-    maven {
-        url "https://cursemaven.com"
+jar {
+    archiveClassifier.set("dev")
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
     }
-    maven { url = "https://jitpack.io" }
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/releases/" }
 }

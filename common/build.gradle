@@ -1,5 +1,39 @@
 architectury {
-    common rootProject.enabled_platforms.split(',')
+    common(rootProject.enabled_platforms.split(","))
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/simplymore.accesswidener")
+}
+
+repositories {
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    maven { url 'https://maven.blamejared.com' }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    mavenLocal()
+    maven {
+        name 'Gegy'
+        url 'https://maven.gegy.dev'
+    }
+    maven { url = "https://jitpack.io" }
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    maven {
+        name = "FzzyMaven"
+        url = "https://maven.fzzyhmstrs.me/"
+    }
+    maven { url 'https://maven.wispforest.io' }
 }
 
 dependencies {
@@ -11,24 +45,11 @@ dependencies {
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
-    modImplementation("curse.maven:simplyswords-659887:8723376")
+    modImplementation("curse.maven:simplyswords-659887:8723373")
 
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
     modCompileOnly("com.terraformersmc:modmenu:${rootProject.mod_menu_version}") { transitive false }
-}
-
-loom {
-    accessWidenerPath = file("src/main/resources/simplymore.accesswidener")
-}
-
-repositories {
-    maven {
-        url "https://cursemaven.com"
-    }
-    maven { url = "https://jitpack.io" }
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/releases/" }
 }

@@ -34,6 +34,7 @@ import net.rosemarythyme.simplymore.registry.compat.Gobber2CompatRegistry;
 import net.rosemarythyme.simplymore.registry.compat.MythicMetalsCompatProxy;
 import net.rosemarythyme.simplymore.registry.compat.StickNStoneCompatRegistry;
 import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
+import net.sweenus.simplyswords.item.LegacyWeaponAttributes;
 import net.sweenus.simplyswords.item.RunicSwordItem;
 
 import java.util.ArrayList;
@@ -96,10 +97,9 @@ public class ModItemsRegistry {
             "runic_great_katana",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getGreatKatanaDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getGreatKatanaSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof()
+                    (float)attributes.getGreatKatanaSwingSpeed())
             )
     );
 
@@ -155,7 +155,7 @@ public class ModItemsRegistry {
                     "minecraft:netherite_ingot"
             )
     );
-    
+
     public static final RegistrySupplier<Item> IRON_BACKHAND_BLADE = ITEMS.register(
             "iron_backhand_blade",
             () -> new SimplyMoreSwordItem(
@@ -200,10 +200,9 @@ public class ModItemsRegistry {
             "runic_backhand_blade",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getBackhandBladeDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getBackhandBladeSwingSpeed(),
-                    new Item.Settings()
-                            .fireproof()
+                    (float)attributes.getBackhandBladeSwingSpeed())
             )
     );
 
@@ -305,9 +304,9 @@ public class ModItemsRegistry {
             "runic_khopesh",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getKhopeshDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getKhopeshSwingSpeed(),
-                    new Item.Settings().fireproof()
+                    (float)attributes.getKhopeshSwingSpeed())
             )
     );
 
@@ -359,9 +358,9 @@ public class ModItemsRegistry {
             "runic_dagger",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getDaggerDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getDaggerSwingSpeed(),
-                    new Item.Settings().fireproof()
+                    (float)attributes.getDaggerSwingSpeed())
             )
     );
 
@@ -413,9 +412,9 @@ public class ModItemsRegistry {
             "runic_pernach",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getPernachDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getPernachSwingSpeed(),
-                    new Item.Settings()
+                    (float)attributes.getPernachSwingSpeed())
             )
     );
 
@@ -467,9 +466,9 @@ public class ModItemsRegistry {
             "runic_quarterstaff",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getQuarterstaffDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getQuarterstaffSwingSpeed(),
-                    new Item.Settings().fireproof()
+                    (float)attributes.getQuarterstaffSwingSpeed())
             )
     );
 
@@ -518,9 +517,9 @@ public class ModItemsRegistry {
             "runic_great_spear",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getGreatSpearDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getGreatSpearSwingSpeed(),
-                    new Item.Settings().fireproof()
+                    (float)attributes.getGreatSpearSwingSpeed())
             )
     );
 
@@ -569,14 +568,11 @@ public class ModItemsRegistry {
             "runic_deer_horns",
             () -> new RunicSwordItem(
                     SimplyMoreToolMaterial.SIMPLY_MORE_RUNIC,
+                    LegacyWeaponAttributes.configure(new Item.Settings().fireproof(),
                     attributes.getDeerHornsDamageModifier() + 3 + attributes.getRunicWeaponDamageModifier(),
-                    (float)attributes.getDeerHornsSwingSpeed(),
-                    new Item.Settings().fireproof()
+                    (float)attributes.getDeerHornsSwingSpeed())
             )
     );
-
-
-
 
     public static final RegistrySupplier<Item> GREAT_SLITHER = ITEMS.register(
             "great_slither",

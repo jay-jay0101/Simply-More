@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SimplySwordsAPI.class)
 public abstract class UniqueSwordMixin {
-	@Inject(at = @At("HEAD"), method = "onClickedGemSocketLogic")
+	@Inject(at = @At("HEAD"), method = "onClickedGemSocketLogic*")
 	private static void simplyMore$onClickedGemSocketLogic(ItemStack stack, ItemStack otherStack, PlayerEntity player, CallbackInfo info) {
 		String powerType = null;
 		if (otherStack.isOf(ModItemsRegistry.RUNEFUSED_CARVER.get()) && stack.getOrCreateNbt().getString("runic_power").equals("no_socket"))

@@ -7,7 +7,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class RuneCarverItem extends Item {
 
     @Override
     public Text getName(ItemStack stack) {
-        Style RUNIC = type.equals("runic")? HelperMethods.getStyle("runic") : HelperMethods.getStyle("legendary");
+        Style RUNIC = type.equals("runic")? Styles.RUNIC : Styles.LEGENDARY;
         return Text.translatable(this.getTranslationKey(stack)).setStyle(RUNIC);
     }
 

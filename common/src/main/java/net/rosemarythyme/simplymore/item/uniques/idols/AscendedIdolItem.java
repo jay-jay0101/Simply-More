@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AuraOfPurityAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
@@ -45,14 +46,14 @@ public class AscendedIdolItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        Style UNIQUE = net.sweenus.simplyswords.util.HelperMethods.getStyle("unique");
+        Style UNIQUE = Styles.UNIQUE;
         return Text.translatable(this.getTranslationKey(stack)).setStyle(UNIQUE);
     }
 
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        Style textStyle = net.sweenus.simplyswords.util.HelperMethods.getStyle("text");
-        Style abilityStyle = net.sweenus.simplyswords.util.HelperMethods.getStyle("ability");
+        Style textStyle = net.sweenus.simplyswords.util.Styles.TEXT;
+        Style abilityStyle = net.sweenus.simplyswords.util.Styles.ABILITY;
 
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.ascended_idol.tooltip1").setStyle(abilityStyle));

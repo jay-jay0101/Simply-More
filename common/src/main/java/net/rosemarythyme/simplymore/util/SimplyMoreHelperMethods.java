@@ -153,7 +153,7 @@ public class SimplyMoreHelperMethods {
             stepMod = 7;
         }
 
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, particleEffect, particleEffect, particleEffect, true);
+        HelperMethods.createFootfalls(entity, stack, world, particleEffect, particleEffect, particleEffect, true);
         return stepMod;
     }
 
@@ -164,7 +164,7 @@ public class SimplyMoreHelperMethods {
             stepMod = 7;
         }
 
-        HelperMethods.createFootfalls(entity, stack, world, stepMod, particleEffect, sprintParticleEffect, passiveParticleEffect, true);
+        HelperMethods.createFootfalls(entity, stack, world, particleEffect, sprintParticleEffect, passiveParticleEffect, true);
         return stepMod;
     }
 

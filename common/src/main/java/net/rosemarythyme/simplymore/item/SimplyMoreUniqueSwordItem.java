@@ -1,10 +1,6 @@
 package net.rosemarythyme.simplymore.item;
 
-import com.google.common.collect.Multimap;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -16,10 +12,9 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.config.WrapperConfig;
 import net.rosemarythyme.simplymore.item.uniques.idols.DarksentItem;
 import net.rosemarythyme.simplymore.item.uniques.idols.HolyLightItem;
-import net.rosemarythyme.simplymore.registry.ModItemsRegistry;
+import net.sweenus.simplyswords.item.LegacyWeaponAttributes;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
-import net.sweenus.simplyswords.registry.ItemsRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
+import net.sweenus.simplyswords.util.Styles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +28,7 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     protected static UniqueEffectConfig effect = config.uniqueEffects;
 
     public SimplyMoreUniqueSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings.fireproof());
+        super(toolMaterial, LegacyWeaponAttributes.configure(settings, attackDamage, attackSpeed));
         this.repairIngredient = new String[]{"simplyswords:runic_tablet"};
     }
 
@@ -48,8 +43,8 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        Style UNIQUE = HelperMethods.getStyle("unique");
-        Style LEGENDARY = HelperMethods.getStyle("legendary");
+        Style UNIQUE = Styles.UNIQUE;
+        Style LEGENDARY = Styles.LEGENDARY;
         if (stack.getItem() instanceof HolyLightItem || stack.getItem() instanceof DarksentItem) {
             this.iRarity = "LEGENDARY";
             return Text.translatable(this.getTranslationKey(stack)).setStyle(LEGENDARY);
