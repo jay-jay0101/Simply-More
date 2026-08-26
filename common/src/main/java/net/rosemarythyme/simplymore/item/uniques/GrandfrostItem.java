@@ -120,7 +120,7 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHand
         tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip3").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.grandfrost.tooltip4").setStyle(Styles.TEXT));
-        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

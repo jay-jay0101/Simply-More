@@ -1,11 +1,5 @@
 package net.rosemarythyme.simplymore.entity;
 
-import com.mojang.authlib.GameProfile;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.recipebook.ClientRecipeBook;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
@@ -14,20 +8,17 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.c2s.common.SyncedClientOptions;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.stat.StatHandler;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
+import net.rosemarythyme.simplymore.client.util.ClientProxy;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -64,19 +55,20 @@ public class StatueEntity extends AbstractVisibleAbilityEntity {
     public record StatueData(LivingEntity owner, EntityType<?> type, NbtCompound compound) {
         public LivingEntity snapshot(World world) {
             Class<? extends LivingEntity> clazz = owner.getClass();
+
             try {
                 if(ServerPlayerEntity.class.isAssignableFrom(clazz)) {
                     ServerWorld serverWorld = (ServerWorld) world;
-                    Entity player = clazz.getDeclaredConstructor(MinecraftServer.class, ServerWorld.class, GameProfile.class, SyncedClientOptions.class).newInstance(serverWorld.getServer(), serverWorld, ((ServerPlayerEntity) owner).getGameProfile(), ((ServerPlayerEntity) owner).getClientOptions());
-                    return (ServerPlayerEntity) player;
-                } else if (ClientPlayerEntity.class.isAssignableFrom(clazz)) {
-                    Entity player = clazz.getDeclaredConstructor(MinecraftClient.class, ClientWorld.class, ClientPlayNetworkHandler.class, StatHandler.class, ClientRecipeBook.class, boolean.class, boolean.class).newInstance(MinecraftClient.getInstance(), ((ClientPlayerEntity) owner).clientWorld, MinecraftClient.getInstance().getNetworkHandler(), null, null, false, false);
-                    return (ClientPlayerEntity) player;
+                    ServerPlayerEntity player = (ServerPlayerEntity) owner;
+
+                    return  new ServerPlayerEntity(serverWorld.getServer(), serverWorld, player.getGameProfile(), player.getClientOptions());
+                } else if (world.isClient()) {
+                    if(ClientProxy.ClientStatueSnapshot$isPlayer(clazz)) return ClientProxy.ClientStatueSnapshot$snapshotPlayer(owner);
                 }
 
                 Entity entity = clazz.getDeclaredConstructor(EntityType.class, World.class).newInstance(type, world);
                 return entity instanceof LivingEntity livingEntity ? livingEntity : null;
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {
+            } catch (ReflectiveOperationException ignored) {
                 return null;
             }
         }

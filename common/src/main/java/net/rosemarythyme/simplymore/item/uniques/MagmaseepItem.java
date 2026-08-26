@@ -104,7 +104,7 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
         tooltip.add(Text.translatable("item.simplymore.magmaseep.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.magmaseep.tooltip3").setStyle(Styles.TEXT));
-        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
         TooltipUtils.appendSpellScaleTooltip(tooltip, "fire");

@@ -95,7 +95,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem implements 
         tooltip.add(Text.translatable("item.simplymore.the_blood_harvester.tooltip3",
                 MathUtils.translateTicks(UNIQUE_CONFIG.the_blood_harvester.harvestTime)
         ).setStyle(Styles.TEXT));
-        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

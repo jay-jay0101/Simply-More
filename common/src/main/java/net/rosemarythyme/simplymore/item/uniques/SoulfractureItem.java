@@ -188,7 +188,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
         tooltip.add(Text.translatable("item.simplymore.soulfracture.tooltip4").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.soulfracture.tooltip5").setStyle(Styles.TEXT));
-        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

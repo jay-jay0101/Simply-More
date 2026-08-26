@@ -176,7 +176,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
         tooltip.add(Text.translatable("item.simplymore.ruyi_jingu_bang.tooltip3").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplymore.ruyi_jingu_bang.tooltip4").setStyle(Styles.TEXT));
-        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

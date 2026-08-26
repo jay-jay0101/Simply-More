@@ -11,7 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.rosemarythyme.simplymore.entity.SoulFragmentEntity;
 import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.HudUtils;
+import net.rosemarythyme.simplymore.client.util.HudUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
 import java.util.*;

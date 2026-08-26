@@ -3,7 +3,7 @@ package net.rosemarythyme.simplymore.event;
 import dev.architectury.event.events.client.ClientTickEvent;
 import net.minecraft.client.MinecraftClient;
 import net.rosemarythyme.simplymore.client.camera.ScreenshakeManager;
-import net.rosemarythyme.simplymore.util.HudUtils;
+import net.rosemarythyme.simplymore.client.util.HudUtils;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 
 public class TickClientEffects implements ClientTickEvent.Client {

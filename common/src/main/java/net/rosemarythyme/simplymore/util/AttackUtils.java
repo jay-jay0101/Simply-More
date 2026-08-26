@@ -235,7 +235,7 @@ public class AttackUtils {
 
     public static <T extends AbstractAbilityPlacementEntity> List<T> getOwnedAbilities(LivingEntity owner, Class<T> clazz) {
         return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 120))
-                .stream().filter((e) -> e.getOwner() instanceof LivingEntity o && owner.getUuid().equals(o.getUuid())).toList();
+                .stream().filter((e) -> owner.getUuid().equals(e.getOwnerUUID().orElse(null))).toList();
     }
 
     public static <T extends AbstractAbilityProjectileEntity> List<T> getOwnedProjectiles(LivingEntity owner, Class<T> clazz) {

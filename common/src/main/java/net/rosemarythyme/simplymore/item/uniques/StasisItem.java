@@ -139,7 +139,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
         tooltip.add(Text.translatable("item.simplymore.stasis.tooltip3").setStyle(Styles.TEXT));
-        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

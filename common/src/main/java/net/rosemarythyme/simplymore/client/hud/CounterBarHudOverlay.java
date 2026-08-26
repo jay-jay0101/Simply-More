@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
-import net.rosemarythyme.simplymore.util.HudUtils;
+import net.rosemarythyme.simplymore.client.util.HudUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
 public class CounterBarHudOverlay implements HudOverlay<Pair<Float, Long>> {

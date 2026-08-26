@@ -126,7 +126,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem implements UniqueW
         tooltip.add(Text.literal(""));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
         tooltip.add(Text.translatable("item.simplymore.black_pearl.tooltip3").setStyle(textStyle));
-        appendAbilityCooldownTooltip(tooltip, SETTINGS.cooldown);
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }

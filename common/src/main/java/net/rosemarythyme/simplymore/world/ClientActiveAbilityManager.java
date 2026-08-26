@@ -1,14 +1,11 @@
 package net.rosemarythyme.simplymore.world;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
 import java.util.*;
 
-@Environment(EnvType.CLIENT)
 public class ClientActiveAbilityManager extends ActiveAbilityManager {
     public static final ClientActiveAbilityManager CLIENT = new ClientActiveAbilityManager();
 

@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.util;
+package net.rosemarythyme.simplymore.client.util;
 
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;

@@ -82,11 +82,7 @@ public class SimplyMore {
 		ClientEntityRendererRegistry.register();
 
 		PacketRegistry.registerS2CRecievers();
-		registerClientEvents();
-	}
 
-	@Environment(EnvType.CLIENT)
-	public static void registerClientEvents() {
 		ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register((ignored) -> ClientActiveAbilityManager.CLIENT.clear());
 		ClientTickEvent.CLIENT_POST.register(new TickClientEffects());
 	}
