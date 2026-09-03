@@ -41,7 +41,7 @@ public class SoulFragmentEntityRenderer extends AbstractCollectableEntityRendere
     @Override
     public Identifier getTexture(AbstractCollectableEntity entity) {
         int texture = ((SoulFragmentEntity) entity).texture;
-        return SimplyMore.identifier("textures/entity/soul_fragment" + texture + ".png");
+        return SimplyMore.identifier("textures/entity/objects/soul_fragment/soul_fragment" + texture + ".png");
     }
 
     @Override

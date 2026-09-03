@@ -42,5 +42,11 @@ public class ClientEntityRendererRegistry {
         EntityRendererRegistry.register(EntityRegistry.DUG_BLOCK, DugBlockEntityRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.STATUE, StatueRenderer::new);
+
+        EntityModelLayerRegistry.register(SpiritualTormentorModel.LAYER, SpiritualTormentorModel::getTexturedModelData);
+        EntityRendererRegistry.register(EntityRegistry.SPIRITUAL_TORMENTOR, SpiritualTormentorRenderer::new);
+
+        EntityModelLayerRegistry.register(SpiritualGuardianModel.LAYER, SpiritualGuardianModel::getTexturedModelData);
+        EntityRendererRegistry.register(EntityRegistry.SPIRITUAL_GUARDIAN, SpiritualGuardianRenderer::new);
     }
 }

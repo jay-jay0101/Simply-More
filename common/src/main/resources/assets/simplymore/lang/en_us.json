@@ -14,7 +14,7 @@
   "effect.simplymore.insanity": "Insanity",
   "effect.simplymore.tidebreaker_rain": "Madness Rain",
   "effect.simplymore.blessing": "Blessing",
-  "effect.simplymore.curse": "Curse",
+  "effect.simplymore.fragile": "Fragile",
   "effect.simplymore.constricted": "Constricted",
   "effect.simplymore.radiant_mark": "Radiant Mark",
   "effect.simplymore.soul_lock": "Soul Lock",
@@ -29,11 +29,6 @@
   "effect.simplymore.implicit_stun": "Implicit Stun",
   "effect.simplymore.implicit_mining_fatigue": "Implicit Fatigue",
   "effect.simplymore.dazzled": "Dazzled",
-
-  "item.simplymore.runefused_carver": "Runefused Carver",
-  "item.simplymore.netherfused_carver": "Netherfused Carver",
-  "item.simplymore.runefused_carver.tooltip1": "Can be used to form the rune socket on a unique weapon that doesn't have it.",
-  "item.simplymore.netherfused_carver.tooltip1": "Can be used to form the nether socket on a unique weapon that doesn't have it.",
 
   "item.simplymore.wooden_great_katana": "Wooden Great Katana",
   "item.simplymore.stone_great_katana": "Stone Great Katana",
@@ -316,28 +311,26 @@
   "item.simplymore.ruyi_jingu_bang.overlay": "Size %s",
 
   "item.simplymore.ruptured_idol": "Ruptured Idol",
-  "item.simplymore.ruptured_idol.tooltip1": "A remnant energy resonates within.",
+  "item.simplymore.ruptured_idol.tooltip1": "A remnant energy resonates within...",
 
   "item.simplymore.ascended_idol": "Ascended Idol",
-  "item.simplymore.ascended_idol.tooltip1": "Unique Effect: Blessed",
-  "item.simplymore.ascended_idol.tooltip2": "Chance on hit to spread holy water, creating an aura of purity in which you gain strength and have negative effects cured.",
-  "item.simplymore.ascended_idol.tooltip6": "An enlightened power harmonizes within.",
+  "item.simplymore.holylight.tooltip1": "Unique Effect: Blessed",
+  "item.simplymore.holylight.tooltip2": "Chance on hit to spray holy water, granting a blessing to allies that blocks the next hit of damage.",
+  "item.simplymore.holylight.tooltip3": "An enlightened power harmonizes within...",
 
   "item.simplymore.holylight": "Holylight",
-  "item.simplymore.holylight.tooltip1": "Unique Effect: Blessed",
-  "item.simplymore.holylight.tooltip2": "Chance on hit to spread holy water, creating an aura of purity in which you gain strength and have negative effects cured.",
-  "item.simplymore.holylight.tooltip6": "Grant you and all allies nearby a short blessing. If you take damage while it is active, nullify it and heal for %s hearts instead.",
+  "item.simplymore.holylight.tooltip4": "Summon a spiritual guardian, who invokes an aura of purity. The guardian will follow you slowly.",
+  "item.simplymore.holylight.tooltip5": "Within the aura, the guardian will retaliate towards enemies that strike you or your allies.",
+  "item.simplymore.holylight.tooltip6": "Within the aura, you and allies have their negative status effects drain much quicker. The guardian grows stronger when a status effect is drained fully.",
 
   "item.simplymore.tarnished_idol": "Tarnished Idol",
-  "item.simplymore.tarnished_idol.tooltip1": "Unique Effect: Accursed",
-  "item.simplymore.tarnished_idol.tooltip2": "Chance on hit to spread unholy water, creating an aura of corruption which inflicts wither and weakness to enemies within.",
-  "item.simplymore.tarnished_idol.tooltip6": "A fallen power crashes within.",
+  "item.simplymore.darksent.tooltip1": "Unique Effect: Accursed",
+  "item.simplymore.darksent.tooltip2": "Chance on hit to spray unholy water, cursing nearby enemies to take more damage for a short duration.",
+  "item.simplymore.darksent.tooltip3": "A fallen power crashes within...",
 
   "item.simplymore.darksent": "Darksent",
-  "item.simplymore.darksent.tooltip1": "Unique Effect: Accursed",
-  "item.simplymore.darksent.tooltip2": "Chance on hit to spread unholy water, creating an aura of corruption which inflicts wither and weakness to enemies within.",
-  "item.simplymore.darksent.tooltip6": "Curse all enemies nearby for a short duration. Cursed enemies are blinded and slowed heavily upon taking damage.",
-  "item.simplymore.darksent.tooltip9": "Cursed enemies also take %s damage.",
+  "item.simplymore.darksent.tooltip4": "Summon a spiritual tormentor, who invokes an aura of decay. The tormentor will charge towards enemies, slamming through and launching them into the air.",
+  "item.simplymore.darksent.tooltip5": "Within the aura, enemies have their positive status effects drain much quicker. Once a status effect drains fully, the target takes damage, and the tormentor grows stronger.",
 
   "item.simplymore.boas_fang": "Boa's Fang",
   "item.simplymore.boas_fang.tooltip1": "Unique Effect: Deadly Embrace",
@@ -965,6 +958,10 @@
   "simplymore.unique_effect.holylight.cooldown": "Blessing cooldown",
   "simplymore.unique_effect.holylight.includeGlobalBlacklist": "Blessed includes Global Effect Blacklist",
   "simplymore.unique_effect.holylight.blacklist": "Blessed Effect Blacklist",
+
+  "simplymore.unique_effect.idols": "Holylight + Darksent",
+  "simplymore.unique_effect.idols.holylight": "Holylight",
+  "simplymore.unique_effect.idols.darksent": "Darksent",
 
   "simplymore.unique_effect.darksent": "§6[Darksent]§7",
   "simplymore.unique_effect.darksent.chance": "Accursed water spread chance",

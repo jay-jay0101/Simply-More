@@ -54,6 +54,6 @@ public class StatueRenderer extends EntityRenderer<StatueEntity> {
     }
 
     public static Identifier getTexture() {
-        return SimplyMore.identifier("textures/entity/statue.png");
+        return SimplyMore.identifier("textures/entity/misc/statue.png");
     }
 }

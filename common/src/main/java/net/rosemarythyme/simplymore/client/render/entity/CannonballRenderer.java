@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.models.CannonballModel;
-import net.rosemarythyme.simplymore.entity.CannonballEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.CannonballEntity;
 
 public class CannonballRenderer extends EntityRenderer<CannonballEntity> {
     private final CannonballModel model;
@@ -31,6 +31,6 @@ public class CannonballRenderer extends EntityRenderer<CannonballEntity> {
 
     @Override
     public Identifier getTexture(CannonballEntity entity) {
-        return SimplyMore.identifier("textures/entity/cannonball.png");
+        return SimplyMore.identifier("textures/entity/projectiles/cannonball.png");
     }
 }

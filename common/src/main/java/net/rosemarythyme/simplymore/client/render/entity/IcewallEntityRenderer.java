@@ -32,6 +32,6 @@ public class IcewallEntityRenderer extends LivingEntityRenderer<IcewallEntity, I
 
     @Override
     public Identifier getTexture(IcewallEntity entity) {
-        return SimplyMore.identifier("textures/entity/icewall.png");
+        return SimplyMore.identifier("textures/entity/objects/icewall.png");
     }
 }

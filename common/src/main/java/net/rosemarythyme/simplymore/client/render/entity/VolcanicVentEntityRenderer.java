@@ -31,6 +31,6 @@ public class VolcanicVentEntityRenderer extends LivingEntityRenderer<VolcanicVen
 
     @Override
     public Identifier getTexture(VolcanicVentEntity entity) {
-        return SimplyMore.identifier("textures/entity/volcanic_vent.png");
+        return SimplyMore.identifier("textures/entity/objects/volcanic_vent.png");
     }
 }

@@ -34,6 +34,6 @@ public class LightOrbEntityRenderer extends LivingEntityRenderer<LightOrbEntity,
 
     @Override
     public Identifier getTexture(LightOrbEntity entity) {
-        return SimplyMore.identifier("textures/entity/light_orb.png");
+        return SimplyMore.identifier("textures/entity/objects/light_orb.png");
     }
 }

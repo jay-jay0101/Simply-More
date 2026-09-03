@@ -37,7 +37,7 @@ public class LightbeamEntityRenderer extends LivingEntityRenderer<LightbeamEntit
 
     @Override
     public Identifier getTexture(LightbeamEntity entity) {
-        return SimplyMore.identifier("textures/entity/lightbeam.png");
+        return SimplyMore.identifier("textures/entity/objects/lightbeam.png");
     }
 
     @Override

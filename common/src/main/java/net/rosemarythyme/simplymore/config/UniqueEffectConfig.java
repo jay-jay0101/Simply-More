@@ -5,8 +5,6 @@ import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.uniques.*;
-import net.rosemarythyme.simplymore.item.uniques.TO_REMOVE.DarksentItem;
-import net.rosemarythyme.simplymore.item.uniques.TO_REMOVE.HolylightItem;
 import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.MimicryItem;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
@@ -41,8 +39,7 @@ public class UniqueEffectConfig extends Config {
     public MyrmedgeItem.EffectSettings myrmedge = new MyrmedgeItem.EffectSettings();
     public SerpentineValourItem.EffectSettings serpentine_valour = new SerpentineValourItem.EffectSettings();
     public ThePanItem.EffectSettings the_pan = new ThePanItem.EffectSettings();
-    public HolylightItem.EffectSettings holylight = new HolylightItem.EffectSettings();
-    public DarksentItem.EffectSettings darksent = new DarksentItem.EffectSettings();
+    public IdolItem.EffectSettings idols = new IdolItem.EffectSettings();
     public SmoulderingRuinItem.EffectSettings smouldering_ruin = new SmoulderingRuinItem.EffectSettings();
     public SoulfractureItem.EffectSettings soulfracture = new SoulfractureItem.EffectSettings();
     public StasisItem.EffectSettings stasis = new StasisItem.EffectSettings();

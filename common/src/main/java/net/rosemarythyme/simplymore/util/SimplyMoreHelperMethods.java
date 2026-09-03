@@ -3,8 +3,6 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -70,7 +68,6 @@ public class SimplyMoreHelperMethods {
 
             livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING));
 
-            livingEntity.heal(effect.holylight.blessingHeal);
 
 
             livingEntity.getWorld().playSound(null,livingEntity.getBlockPos(), SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value(), SoundCategory.PLAYERS);
@@ -79,16 +76,16 @@ public class SimplyMoreHelperMethods {
             return;
         }
 
-        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE))) {
+        if (!livingEntity.isInvulnerableTo(source) && livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FRAGILE))) {
 
-            livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CURSE));
+            livingEntity.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FRAGILE));
 
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.darksent.curseWeakenTime,3));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.darksent.curseWeakenTime,0));
+//            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, effect.darksent.curseWeakenTime,3));
+//            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, effect.darksent.curseWeakenTime,0));
 
             livingEntity.getWorld().playSound(null,livingEntity.getBlockPos(), SoundEvents.ENTITY_ALLAY_ITEM_TAKEN, SoundCategory.PLAYERS);
             ((ServerWorld) livingEntity.getWorld()).spawnParticles(ParticleTypes.SCULK_SOUL,livingEntity.getX(),livingEntity.getY()+1,livingEntity.getZ(),50,0.25,0.5,0.25,0.1);
-            livingEntity.damage(source, amount * (effect.darksent.curseDamageMultiplier + 1));
+//            livingEntity.damage(source, amount * (effect.darksent.curseDamageMultiplier + 1));
             info.cancel();
         }
     }

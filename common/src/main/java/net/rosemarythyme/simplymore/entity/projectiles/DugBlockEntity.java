@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.projectiles;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

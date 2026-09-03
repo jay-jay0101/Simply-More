@@ -15,7 +15,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
-import net.rosemarythyme.simplymore.entity.AbstractAbilityProjectileEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.AbstractAbilityProjectileEntity;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.api.SpellScalingProfile;
@@ -117,7 +117,7 @@ public class AttackUtils {
 
     public static boolean canTarget(LivingEntity attacker, LivingEntity target, AttackTarget targetType) {
         if(attacker == null || target == null) return false;
-        if(target instanceof AbstractAbilityPlacementEntity) return false;
+        if(EntityUtils.isUntargetable(target)) return false;
 
         if(!target.canHit()) return false;
 

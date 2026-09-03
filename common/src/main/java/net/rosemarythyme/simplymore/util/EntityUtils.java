@@ -3,20 +3,27 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
+import net.rosemarythyme.simplymore.entity.AbstractSpiritualEntity;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
@@ -37,8 +44,10 @@ public class EntityUtils {
                 }
             }
         } else {
-            WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, target.getStackInHand(Hand.MAIN_HAND), time);
-            WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, target.getStackInHand(Hand.OFF_HAND), time);
+            if(target.getWorld() instanceof ServerWorld world) {
+                WeaponAbilityCooldownManager.setCooldown(world, target, target.getStackInHand(Hand.MAIN_HAND), time);
+                WeaponAbilityCooldownManager.setCooldown(world, target, target.getStackInHand(Hand.OFF_HAND), time);
+            }
         }
     }
 
@@ -129,5 +138,32 @@ public class EntityUtils {
                 || (includeClient && ClientActiveAbilityManager.CLIENT.isStatue(entity))
                 || entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN))
                 || entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.IMPLICIT_STUN));
+    }
+
+    public static float modifyDamageTaken(LivingEntity livingEntity, DamageSource source, float original) {
+        RegistryEntry<StatusEffect> blessing = StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING);
+        if(livingEntity.hasStatusEffect(blessing)) {
+            if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+                AudioVisualUtils.particleAroundEntity(livingEntity, ParticleTypes.WAX_ON, 100, 0.2f, 10);
+                AudioVisualUtils.playSound(livingEntity.getWorld(), livingEntity.getPos(), new Sound(SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value()).setPitch(1.4f));
+
+                livingEntity.removeStatusEffect(blessing);
+                return 0;
+            }
+        }
+
+        RegistryEntry<StatusEffect> fragile = StatusEffectRegistry.getReference(StatusEffectRegistry.FRAGILE);
+        StatusEffectInstance fragileInstance = livingEntity.getStatusEffect(fragile);
+        if(fragileInstance != null) {
+            int level = fragileInstance.getAmplifier() + 1;
+            original *= 1 + (level * 0.25f);
+        }
+
+        return original;
+    }
+
+    public static boolean isUntargetable(LivingEntity livingEntity) {
+        return livingEntity instanceof AbstractAbilityPlacementEntity ||
+                livingEntity instanceof AbstractSpiritualEntity;
     }
 }

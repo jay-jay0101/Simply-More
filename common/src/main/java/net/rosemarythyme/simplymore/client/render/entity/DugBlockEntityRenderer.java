@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.DugBlockEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.DugBlockEntity;
 
 public class DugBlockEntityRenderer extends EntityRenderer<DugBlockEntity> {
     private final BlockRenderManager blockRenderManager;

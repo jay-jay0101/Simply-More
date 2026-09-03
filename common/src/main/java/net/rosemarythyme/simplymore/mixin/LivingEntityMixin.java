@@ -12,7 +12,6 @@ import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ImplicitRegistry;
 import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.sweenus.simplyswords.item.component.WeaponImplicitComponent;
 import net.sweenus.simplyswords.registry.ComponentTypeRegistry;
@@ -34,10 +33,11 @@ public abstract class LivingEntityMixin {
 		return original || (component != null && component.implicitId() == ImplicitRegistry.GRANDSWORD.id());
 	}
 
-	@Inject(at = @At("HEAD"), method = "applyDamage", cancellable = true)
-	private void simplymore$applyDamage(DamageSource source, float amount, CallbackInfo info) {
+	@ModifyVariable(at = @At("HEAD"), method = "applyDamage", argsOnly = true, ordinal = 0)
+	private float simplymore$modifyDamageTaken(float original, DamageSource source) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
-		SimplyMoreHelperMethods.simplyMore$onDamageEffects(amount, source, info, livingEntity);
+
+		return EntityUtils.modifyDamageTaken(livingEntity, source, original);
 	}
 
 	@Inject(at = @At("HEAD"), method = "heal", cancellable = true)

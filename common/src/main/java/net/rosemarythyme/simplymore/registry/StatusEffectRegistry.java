@@ -11,6 +11,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.effect.*;
+import net.sweenus.simplyswords.api.ObserverStatusEffectSyncRegistry;
 
 
 public class StatusEffectRegistry {
@@ -205,9 +206,9 @@ public class StatusEffectRegistry {
             new StatusEffect(StatusEffectCategory.BENEFICIAL,16709211)
     );
 
-    public static final RegistrySupplier<StatusEffect> CURSE = registerEffect(
-            "curse",
-            new StatusEffect(StatusEffectCategory.HARMFUL,3152180)
+    public static final RegistrySupplier<StatusEffect> FRAGILE = registerEffect(
+            "fragile",
+            new StatusEffect(StatusEffectCategory.HARMFUL,0xB9A6BD)
     );
 
     public static final RegistrySupplier<StatusEffect> SUFFOCATION = registerEffect(
@@ -239,6 +240,8 @@ public class StatusEffectRegistry {
     
     public static void register() {
         EFFECTS.register();
+
+        ObserverStatusEffectSyncRegistry.register(BLESSING.getId());
     }
 
     public static RegistrySupplier<StatusEffect> registerEffect(String name, StatusEffect effect) {

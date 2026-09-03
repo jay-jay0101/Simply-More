@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.entity;
+package net.rosemarythyme.simplymore.entity.projectiles;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

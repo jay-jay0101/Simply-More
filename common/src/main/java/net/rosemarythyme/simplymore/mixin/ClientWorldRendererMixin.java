@@ -13,6 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.Biome;
 import net.rosemarythyme.simplymore.client.render.features.BladeOfTheGrotesqueAuraRenderer;
+import net.rosemarythyme.simplymore.client.render.features.BlessingEffectFeatureRenderer;
 import net.rosemarythyme.simplymore.client.render.features.BloodHarvesterSenseRenderer;
 import net.rosemarythyme.simplymore.client.render.features.SoulfractureAuraRenderer;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
@@ -21,6 +22,7 @@ import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.sweenus.simplyswords.client.api.ObserverStatusEffectClientApi;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -65,6 +67,10 @@ public abstract class ClientWorldRendererMixin {
                 if(AttackUtils.canTarget(player, entity, AttackUtils.AttackTarget.ENEMIES)) {
                     BloodHarvesterSenseRenderer.render(entity, stack, vertexConsumers, camera);
                 }
+            }
+
+            if(ObserverStatusEffectClientApi.isActive(entity, StatusEffectRegistry.BLESSING.getId())) {
+                BlessingEffectFeatureRenderer.render(entity, stack, tickCounter.getTickDelta(true), vertexConsumers);
             }
 
             stack.pop();

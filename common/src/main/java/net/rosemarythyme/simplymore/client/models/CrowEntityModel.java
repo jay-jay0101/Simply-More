@@ -56,12 +56,12 @@ public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
 	}
 
 	@Override
-	public void setAngles(CrowEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+	public void setAngles(CrowEntity entity, float limbAngle, float limbDistance, float delta, float headYaw, float headPitch) {
 		this.getPart().traverse().forEach(ModelPart::resetTransform);
 
 		this.head.pitch = headPitch * (float) (Math.PI / 180.0);
 		this.head.yaw = headYaw * (float) (Math.PI / 180.0);
 
-		this.updateAnimation(entity.flapAnimationState, CrowEntityAnimations.FLAP,animationProgress,1f);
+		this.updateAnimation(entity.flapAnimationState, CrowEntityAnimations.FLAP, delta,1f);
 	}
 }

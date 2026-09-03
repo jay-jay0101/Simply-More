@@ -7,8 +7,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.RotationAxis;
 import net.rosemarythyme.simplymore.SimplyMore;
+import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 
@@ -23,7 +23,7 @@ public class BloodHarvesterSenseRenderer {
             RenderLayer.MultiPhaseParameters.builder()
                     .program(RenderPhase.POSITION_COLOR_TEXTURE_LIGHTMAP_PROGRAM)
                     .texture(new RenderPhase.Texture(
-                            SimplyMore.identifier("textures/entity/blood_sense.png"),
+                            SimplyMore.identifier("textures/entity/icons/blood_sense.png"),
                             false,
                             false
                     ))
@@ -40,8 +40,7 @@ public class BloodHarvesterSenseRenderer {
 
         stack.push();
 
-        stack.multiply(camera.getRotation());
-        stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+        RenderUtils.renderTowardsCamera(camera, stack);
 
         stack.translate(0, entity.getHeight() / 2f, 0);
 
@@ -63,7 +62,7 @@ public class BloodHarvesterSenseRenderer {
         stack.pop();
     }
 
-    public static void renderName(LivingEntity entity, TextRenderer renderer, MatrixStack stack, VertexConsumerProvider vcs, int opacity) {
+    private static void renderName(LivingEntity entity, TextRenderer renderer, MatrixStack stack, VertexConsumerProvider vcs, int opacity) {
         Text name = entity.getName();
         float width = renderer.getWidth(name);
 

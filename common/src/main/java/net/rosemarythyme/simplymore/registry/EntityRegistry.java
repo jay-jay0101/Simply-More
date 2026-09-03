@@ -12,6 +12,8 @@ import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.*;
 import net.rosemarythyme.simplymore.entity.legacy.*;
+import net.rosemarythyme.simplymore.entity.projectiles.CannonballEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.DugBlockEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,12 +68,6 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<LavaLiquidEntity>> LAVA =
             registerMarkerEntity("lava", LavaLiquidEntity::new, 1f, 1f);
 
-    public static final RegistrySupplier<EntityType<AuraOfPurityEntity>> AURA_OF_PURITY =
-            registerMarkerEntity("aura_of_purity", AuraOfPurityEntity::new);
-
-    public static final RegistrySupplier<EntityType<AuraOfCorruptionEntity>> AURA_OF_CORRUPTION =
-            registerMarkerEntity("aura_of_corruption", AuraOfCorruptionEntity::new);
-
     public static final RegistrySupplier<EntityType<EruptionEntity>> ERUPTION =
             registerMarkerEntity("eruption", EruptionEntity::new);
 
@@ -89,6 +85,26 @@ public class EntityRegistry {
 
     public static final RegistrySupplier<EntityType<StatueEntity>> STATUE =
             registerMarkerEntity("statue", StatueEntity::new, 1f, 2f);
+
+    public static final RegistrySupplier<EntityType<SpiritualGuardianEntity>> SPIRITUAL_GUARDIAN = registerType(
+            EntityType.Builder.<SpiritualGuardianEntity>create(SpiritualGuardianEntity::new, SpawnGroup.MISC)
+                    .dimensions(1f, 2f)
+                    .makeFireImmune()
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "spiritual_guardian"
+    );
+
+    public static final RegistrySupplier<EntityType<SpiritualTormentorEntity>> SPIRITUAL_TORMENTOR = registerType(
+            EntityType.Builder.<SpiritualTormentorEntity>create(SpiritualTormentorEntity::new, SpawnGroup.MISC)
+                    .dimensions(1f, 2f)
+                    .makeFireImmune()
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "spiritual_tormentor"
+    );
 
     public static final RegistrySupplier<EntityType<DugBlockEntity>> DUG_BLOCK = registerType(
             EntityType.Builder.<DugBlockEntity>create(DugBlockEntity::new, SpawnGroup.MISC)
@@ -133,6 +149,7 @@ public class EntityRegistry {
     public static void register() {
         ENTITIES.register();
         EntityAttributeRegistry.register(CROW, CrowEntity::createMobAttributes);
+        EntityAttributeRegistry.register(SPIRITUAL_GUARDIAN, SpiritualGuardianEntity::createMobAttributes);
 
         for(var marker : MARKERS) {
             EntityAttributeRegistry.register(marker, LivingEntity::createLivingAttributes);

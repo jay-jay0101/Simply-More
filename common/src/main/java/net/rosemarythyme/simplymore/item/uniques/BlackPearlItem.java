@@ -23,7 +23,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.entity.CannonballEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.CannonballEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.SoundEventRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;

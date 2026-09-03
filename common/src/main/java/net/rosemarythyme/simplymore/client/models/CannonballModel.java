@@ -6,7 +6,7 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.rosemarythyme.simplymore.SimplyMore;
-import net.rosemarythyme.simplymore.entity.CannonballEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.CannonballEntity;
 
 public class CannonballModel extends EntityModel<CannonballEntity> {
 	public static final EntityModelLayer LAYER = new EntityModelLayer(SimplyMore.identifier("cannonball"), "bone");
