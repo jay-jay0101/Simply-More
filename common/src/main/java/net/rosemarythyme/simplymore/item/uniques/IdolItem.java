@@ -10,17 +10,17 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.entity.SpiritualGuardianEntity;
 import net.rosemarythyme.simplymore.entity.SpiritualTormentorEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.registry.SoundEventRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.AwakeningProfileRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.ConfigUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.AwakeningApi;
@@ -46,16 +46,33 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
 
     @Override
     public boolean activate(WeaponAbilityContext context) {
+        Vec3d spawnPos = EntityUtils.rangeAroundPoint(context.origin(), context.actor(), context.actor().getYaw(), 2);
+
         ItemStack stack = context.actor().getStackInHand(context.hand());
         IdolTier tier = getTier(stack);
 
+        AudioVisualUtils.playSound(context.world(), spawnPos, new Sound(SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN).setPitch(0.5f));
+        AudioVisualUtils.playSound(context.world(), spawnPos, new Sound(SoundEventRegistry.SUMMON_GUARDIAN.get()));
+
+        AudioVisualUtils.applyScreenshake(context.world(), spawnPos, context.actor(), 10, 1, 22);
+
         if(tier.path == IdolPath.HOLYLIGHT) {
-            context.world().spawnEntity(new SpiritualGuardianEntity(context.actor(), context.origin()));
+            AudioVisualUtils.playSound(context.world(), spawnPos, new Sound(SoundRegistry.ELEMENTAL_SWORD_HOLY_ATTACK_01.get()));
+            context.world().spawnEntity(new SpiritualGuardianEntity(context.actor(), spawnPos));
         } else if (tier.path == IdolPath.DARKSENT) {
-            context.world().spawnEntity(new SpiritualTormentorEntity(context.actor(), context.origin()));
+            context.world().spawnEntity(new SpiritualTormentorEntity(context.actor(), spawnPos));
         }
 
         return true;
+    }
+
+    @Override
+    public int getActivationCooldownTicks(ItemStack stack, WeaponAbilityContext context) {
+        return switch (getTier(stack).path) {
+            case HOLYLIGHT -> HOLYLIGHT.cooldown;
+            case DARKSENT -> DARKSENT.cooldown;
+            default -> 0;
+        };
     }
 
     @Override
@@ -76,7 +93,8 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
                             .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING), HOLYLIGHT.blessingDuration, 0);
 
                     AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_HOLY_ATTACK_03.get()));
-                    AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.WAX_OFF, 100, 0.2f, 10);
+                    AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.WAX_OFF, 10, 0.2f, 10);
+                    AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.RAIN, 100, 0.2f, 1);
                 }
             } else if (tier.path == IdolPath.DARKSENT) {
                 if(MathUtils.chance(attacker, DARKSENT.chance)) {
@@ -204,7 +222,24 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
 
             @ValidatedDouble.Restrict(min = 0)
             public double baseAuraRange = 8;
+            @ValidatedDouble.Restrict(min = 0)
+            public double maxAuraRange = 12;
+            @ValidatedInt.Restrict(min = 0)
+            public int maxStrength = 8;
+            @ValidatedInt.Restrict(min = 0)
+            public int guardianDuration = 600;
 
+            @ValidatedInt.Restrict(min = 0)
+            public int attackCooldown = 30;
+            @ValidatedFloat.Restrict(min = 0)
+            public float baseReflect = 0.4f;
+            @ValidatedFloat.Restrict(min = 0)
+            public float maxReflect = 0.6f;
+            @ValidatedFloat.Restrict(min = 0)
+            public float maxReflectDamage = 50;
+
+            @ValidatedInt.Restrict(min = 0)
+            public int effectDrainRate = 8;
             public boolean includeGlobalBlacklist = true;
             public ValidatedSet<Identifier> blacklist = ConfigUtils.createEffectList();
         }

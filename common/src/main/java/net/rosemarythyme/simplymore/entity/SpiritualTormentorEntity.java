@@ -18,6 +18,11 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
     }
 
     @Override
+    public float getStrength() {
+        return (float) this.dataTracker.get(STRENGTH) / 8; //todo
+    }
+
+    @Override
     public boolean isAttacking() {
         return false;
     }

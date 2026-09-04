@@ -4,17 +4,14 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 
 import java.util.List;
 
 public class FlowerFieldAreaEffectCloudEntity extends AreaEffectCloudEntity {
     public FlowerFieldAreaEffectCloudEntity(World world, double x, double y, double z, LivingEntity owner) {
         super(world, x, y, z);
-        SimplyMoreHelperMethods.simplyMore$setAreaEffectCloudParameters(this, ParticleTypes.TOTEM_OF_UNDYING, 8, 0f, 0, owner, 300);
     }
 
     @Override

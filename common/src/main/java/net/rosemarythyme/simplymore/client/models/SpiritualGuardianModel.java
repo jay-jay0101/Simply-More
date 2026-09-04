@@ -8,7 +8,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.animations.SpiritualGuardianAnimations;
 import net.rosemarythyme.simplymore.entity.SpiritualGuardianEntity;
-import org.joml.Vector3f;
 
 public class SpiritualGuardianModel extends SinglePartEntityModel<SpiritualGuardianEntity> {
 	public static final EntityModelLayer LAYER = new EntityModelLayer(SimplyMore.identifier("spiritual_guardian"), "BODY");
@@ -81,9 +80,8 @@ public class SpiritualGuardianModel extends SinglePartEntityModel<SpiritualGuard
 		HEAD.setAngles(0, (float) Math.toRadians(netHeadYaw), 0);
 		BODY.setAngles(0f, (float) Math.toRadians(90f), 0f);
 
-		BODY.translate(new Vector3f(0, 1, 0));
-
-		this.updateAnimation(entity.idleArms, SpiritualGuardianAnimations.ARMS_SWAY, delta,1f);
+		this.updateAnimation(entity.idleArmsAnim, SpiritualGuardianAnimations.ARMS_SWAY, delta,1f);
+		this.updateAnimation(entity.attackAnim, SpiritualGuardianAnimations.SWING, delta,1f);
 	}
 
 	@Override

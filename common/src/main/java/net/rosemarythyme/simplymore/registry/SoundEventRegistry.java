@@ -10,6 +10,7 @@ public class SoundEventRegistry {
     public static final DeferredRegister<SoundEvent> SOUND = DeferredRegister.create(SimplyMore.ID, RegistryKeys.SOUND_EVENT);
 
     public static RegistrySupplier<SoundEvent> COINS = registerSound("coins");
+    public static RegistrySupplier<SoundEvent> SUMMON_GUARDIAN = registerSound("summon_guardian");
 
     public static RegistrySupplier<SoundEvent> registerSound(String id) {
         return SOUND.register(id, () -> SoundEvent.of(SimplyMore.identifier(id)));

@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Ownable;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -239,6 +240,11 @@ public class AttackUtils {
     }
 
     public static <T extends AbstractAbilityProjectileEntity> List<T> getOwnedProjectiles(LivingEntity owner, Class<T> clazz) {
+        return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 120))
+                .stream().filter((e) -> e.getOwner() instanceof LivingEntity o && owner.getUuid().equals(o.getUuid())).toList();
+    }
+
+    public static <T extends LivingEntity & Ownable> List<T> getOwnedEntities(LivingEntity owner, Class<T> clazz) {
         return owner.getWorld().getNonSpectatingEntities(clazz, MathUtils.createCubeBox(owner.getPos(), 120))
                 .stream().filter((e) -> e.getOwner() instanceof LivingEntity o && owner.getUuid().equals(o.getUuid())).toList();
     }

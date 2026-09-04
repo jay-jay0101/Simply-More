@@ -13,7 +13,6 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -24,7 +23,6 @@ public class KickbackAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
     public KickbackAreaEffectCloudEntity(World world, double x, double y, double z, int radius, LivingEntity owner) {
         super(world, x, y, z);
-        SimplyMoreHelperMethods.simplyMore$setAreaEffectCloudParameters(this, new DustParticleEffect(new Vector3f(0f,0f,0f), 5), radius, 0, 0, owner, effect.revvengine.explosionWindup);
     }
 
     @Override

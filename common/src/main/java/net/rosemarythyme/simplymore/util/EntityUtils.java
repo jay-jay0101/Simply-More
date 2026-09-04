@@ -22,6 +22,7 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AbstractSpiritualEntity;
+import net.rosemarythyme.simplymore.entity.SpiritualGuardianEntity;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -141,6 +142,9 @@ public class EntityUtils {
     }
 
     public static float modifyDamageTaken(LivingEntity livingEntity, DamageSource source, float original) {
+        final float damage = original;
+        AttackUtils.getOwnedEntities(livingEntity, SpiritualGuardianEntity.class).forEach(guardian -> guardian.tryRetaliate(livingEntity, damage, source));
+
         RegistryEntry<StatusEffect> blessing = StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING);
         if(livingEntity.hasStatusEffect(blessing)) {
             if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
@@ -165,5 +169,22 @@ public class EntityUtils {
     public static boolean isUntargetable(LivingEntity livingEntity) {
         return livingEntity instanceof AbstractAbilityPlacementEntity ||
                 livingEntity instanceof AbstractSpiritualEntity;
+    }
+
+    public static boolean drainEffect(LivingEntity entity, StatusEffectInstance effect, int drain) {
+        int currentDuration = effect.getDuration();
+
+        entity.removeStatusEffect(effect.getEffectType());
+        if(currentDuration > drain + 1) {
+            entity.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), effect.getDuration() - drain, effect.getAmplifier()));
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isWithinCylinder(LivingEntity entity, Vec3d centerPos, double horizontalRange, double verticalRange) {
+        if(centerPos.distanceTo(new Vec3d(entity.getX(), centerPos.getY(), entity.getZ())) > horizontalRange) return false;
+        return !(Math.abs(centerPos.getY() - entity.getY()) > verticalRange);
     }
 }

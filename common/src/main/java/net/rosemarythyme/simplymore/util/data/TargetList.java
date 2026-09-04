@@ -96,6 +96,18 @@ public record TargetList(Set<LivingEntity> targets) {
                 new StatusEffectInstance(effect, duration, amplifier))
         );
     }
+
+    public TargetList onEachEffect(Predicate<StatusEffect> predicate, BiConsumer<LivingEntity, StatusEffectInstance> consumer) {
+        return this.onEach((target) -> {
+            List.copyOf(target.getStatusEffects()).stream().filter((effect) -> predicate.test(effect.getEffectType().value()))
+                    .forEach((effect) -> consumer.accept(target, effect));
+        });
+    }
+
+    public TargetList onEachEffect(BiConsumer<LivingEntity, StatusEffectInstance> consumer) {
+        return this.onEachEffect((ignored) -> true, consumer);
+    }
+
     public TargetList targetIndicator() {
         return this.onEach(AudioVisualUtils::targetIndicator);
     }

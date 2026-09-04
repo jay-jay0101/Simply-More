@@ -5,7 +5,6 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Box;
@@ -15,7 +14,6 @@ import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.SimplyMoreHelperMethods;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import org.joml.Vector3f;
 
@@ -32,7 +30,6 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
     public PoisonBoltAreaEffectCloudEntity(World world, double x, double y, double z, LivingEntity owner, int version) {
         super(world, x, y, z);
-        SimplyMoreHelperMethods.simplyMore$setAreaEffectCloudParameters(this, ParticleTypes.ASH, 0.25f, 0, 0, owner, 21);
         this.version = version;
     }
 

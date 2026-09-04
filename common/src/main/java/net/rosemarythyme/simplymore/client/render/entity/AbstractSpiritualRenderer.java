@@ -8,6 +8,8 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.entity.AbstractSpiritualEntity;
 
@@ -18,16 +20,24 @@ public abstract class AbstractSpiritualRenderer<E extends AbstractSpiritualEntit
 
     @Override
     public void render(E livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        //todo: add scaling
+        float riseFall = livingEntity.getRiseFall();
 
         matrixStack.push();
-        matrixStack.translate(0, (Math.sin(livingEntity.getAge() / 10f) + 1) / 6f, 0);
+        if(riseFall == 1) {
+            matrixStack.translate(0, (Math.sin(livingEntity.getAge() / 10f) + 1) / 6f, 0);
+        } else {
+            matrixStack.translate(0, (1 - riseFall) * -2, 0);
+        }
+
+        float scale = MathHelper.lerp(livingEntity.getStrength(), 1f, 1.5f) * riseFall;
+        matrixStack.scale(scale, scale, scale);
+
         super.render(livingEntity, f, g, matrixStack, vertexConsumerProvider, i);
         matrixStack.pop();
 
         matrixStack.push();
         RenderUtils.applySlowRotation(matrixStack, livingEntity.getAge());
-        RenderUtils.drawFloorPlane(vertexConsumerProvider, matrixStack, getAuraTexture(), LightmapTextureManager.MAX_LIGHT_COORDINATE, 0xFFFFFFFF, (float) livingEntity.getAuraRange() * 2);
+        RenderUtils.drawFloorPlane(vertexConsumerProvider, matrixStack, getAuraTexture(), LightmapTextureManager.MAX_LIGHT_COORDINATE, 0xFFFFFFFF, (float) livingEntity.getAuraRange() * 2 * riseFall);
         matrixStack.pop();
     }
 

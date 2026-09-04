@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 public class PredicateUtils {
     public static final Predicate<StatusEffect> BENEFICIAL_EFFECT = StatusEffect::isBeneficial;
     public static final Predicate<StatusEffect> HARMFUL_EFFECT = (effect -> effect.getCategory() == StatusEffectCategory.HARMFUL);
+    public static final Predicate<StatusEffect> IS_INSTANT = (StatusEffect::isInstant);
 
     public static Predicate<StatusEffect> createForEffectBlacklist(ValidatedSet<Identifier> set, boolean shouldIncludeGlobal) {
         return (effect) -> !ConfigUtils.isEffectBlacklisted(effect, set, shouldIncludeGlobal);

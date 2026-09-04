@@ -10,31 +10,66 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.ai.SpiritNavigation;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractSpiritualEntity extends MobEntity {
+public abstract class AbstractSpiritualEntity extends MobEntity implements Ownable {
     protected static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(AbstractSpiritualEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     protected static final TrackedData<Integer> STRENGTH = DataTracker.registerData(AbstractSpiritualEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public final AnimationState idleArms = new AnimationState();
-    protected int age = 0;
+    public final AnimationState idleArmsAnim = new AnimationState();
+    protected int age = -20;
 
     public int getAge() {
         return age;
     }
 
     @Override
+    public @Nullable Entity getOwner() {
+        Optional<UUID> uuid = this.dataTracker.get(OWNER);
+        if(uuid.isEmpty()) return null;
+
+        if(this.getWorld().isClient) return this.getWorld().getPlayerByUuid(uuid.get());
+        return ((ServerWorld) this.getWorld()).getEntity(uuid.get());
+    }
+
+    public float getRiseFall() {
+        if(age > 0) return MathUtils.clampedLerp(age, getLifespan(), getLifespan() + 20, 1f, 0f);
+        return MathUtils.clampedLerp(age, -20, 0, 0f, 1f);
+    }
+
+    public abstract float getStrength();
+
+    @Override
     public boolean canHaveStatusEffect(StatusEffectInstance effect) {
         return false;
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+
+        nbt.putInt("Age", age);
+        nbt.putInt("Strength", this.dataTracker.get(STRENGTH));
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+
+        this.age = nbt.getInt("Age");
+        this.dataTracker.set(STRENGTH, nbt.getInt("Strength"));
     }
 
     @Override
@@ -71,10 +106,7 @@ public abstract class AbstractSpiritualEntity extends MobEntity {
 
     protected void serverTick(LivingEntity owner) {
         if(!isAttacking()) {
-            if(this.navigation.isIdle()) {
-            }
             this.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, owner.getEyePos());
-
 
             if (this.distanceTo(owner) > getAuraRange() / 2) {
                 if(this.age % 10 == 0) {
@@ -89,8 +121,8 @@ public abstract class AbstractSpiritualEntity extends MobEntity {
     public abstract double getAuraRange();
 
     public void animate() {
-        if (!idleArms.isRunning()) {
-            idleArms.start(this.age);
+        if(!isAttacking()) {
+            idleArmsAnim.start(this.age);
         }
     }
 
@@ -106,7 +138,10 @@ public abstract class AbstractSpiritualEntity extends MobEntity {
 
         age++;
         if(age > getLifespan()) {
-            discard();
+            if(age > getLifespan() + 20) {
+                discard();
+            }
+
             return;
         }
 

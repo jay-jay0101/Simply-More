@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.client.animations;// Save this class in your mod and generate all required imports
+package net.rosemarythyme.simplymore.client.animations;
 
 import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.animation.AnimationHelper;
@@ -6,15 +6,7 @@ import net.minecraft.client.render.entity.animation.Keyframe;
 import net.minecraft.client.render.entity.animation.Transformation;
 
 public class SpiritualGuardianAnimations {
-	public static final Animation BOB = Animation.Builder.create(2.0F).looping()
-		.addBoneAnimation("BODY", new Transformation(Transformation.Targets.TRANSLATE,
-			new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
-			new Keyframe(1.0F, AnimationHelper.createTranslationalVector(0.0F, 3.0F, 0.0F), Transformation.Interpolations.LINEAR),
-			new Keyframe(2.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR)
-		))
-		.build();
-
-	public static final Animation SWING = Animation.Builder.create(1.125F)
+	public static final Animation SWING = Animation.Builder.create(1.125F).looping() // minecraft anims suck this isn't meant to loop but making it loop makes it work
 		.addBoneAnimation("BODY", new Transformation(Transformation.Targets.ROTATE, 
 			new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, -30.0F, 0.0F), Transformation.Interpolations.LINEAR)
 		))
