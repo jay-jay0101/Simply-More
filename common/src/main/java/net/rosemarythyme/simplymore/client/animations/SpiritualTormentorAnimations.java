@@ -17,8 +17,8 @@ public class SpiritualTormentorAnimations {
 
 	public static final Animation HAND_SWAY = Animation.Builder.create(2.5F).looping()
 		.addBoneAnimation("RIGHT_ARM", new Transformation(Transformation.Targets.ROTATE, 
-			new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
-			new Keyframe(1.25F, AnimationHelper.createRotationalVector(-19.9085F, -11.306F, -9.2134F), Transformation.Interpolations.LINEAR),
+			new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
+			new Keyframe(1.25F, AnimationHelper.createRotationalVector(-19.9085F, -11.306F, -9.2134F), Transformation.Interpolations.CUBIC),
 			new Keyframe(2.5F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR)
 		))
 		.addBoneAnimation("LEFT_ARM", new Transformation(Transformation.Targets.ROTATE, 

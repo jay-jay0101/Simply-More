@@ -2,13 +2,14 @@ package net.rosemarythyme.simplymore.client.models;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.rosemarythyme.simplymore.SimplyMore;
+import net.rosemarythyme.simplymore.client.animations.SpiritualTormentorAnimations;
 import net.rosemarythyme.simplymore.entity.SpiritualTormentorEntity;
 
-public class SpiritualTormentorModel extends EntityModel<SpiritualTormentorEntity> {
+public class SpiritualTormentorModel extends SinglePartEntityModel<SpiritualTormentorEntity> {
 	public static final EntityModelLayer LAYER = new EntityModelLayer(SimplyMore.identifier("spiritual_tormentor"), "BODY");
 
 	private final ModelPart BODY;
@@ -66,11 +67,22 @@ public class SpiritualTormentorModel extends EntityModel<SpiritualTormentorEntit
 	}
 
 	@Override
-	public void setAngles(SpiritualTormentorEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setAngles(SpiritualTormentorEntity entity, float limbSwing, float limbSwingAmount, float delta, float netHeadYaw, float headPitch) {
+		this.getPart().traverse().forEach(ModelPart::resetTransform);
+
+		HEAD.setAngles(0, (float) Math.toRadians(netHeadYaw), 0);
+		BODY.setAngles(0f, (float) Math.toRadians(90f), 0f);
+
+		this.updateAnimation(entity.idleArmsAnim, SpiritualTormentorAnimations.HAND_SWAY, delta,1f);
 	}
 
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
 		BODY.render(matrices, vertexConsumer, light, overlay, color);
+	}
+
+	@Override
+	public ModelPart getPart() {
+		return BODY;
 	}
 }

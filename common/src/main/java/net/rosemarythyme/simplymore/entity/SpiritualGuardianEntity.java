@@ -5,14 +5,11 @@ import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -81,14 +78,6 @@ public class SpiritualGuardianEntity extends AbstractSpiritualEntity {
     @Override
     public boolean isAttacking() {
         return this.dataTracker.get(CURRENT_ATTACK_DURATION).isPresent();
-    }
-
-    public static DefaultAttributeContainer.Builder createMobAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_JUMP_STRENGTH, 0.11F)
-                .add(EntityAttributes.GENERIC_GRAVITY, 0.004F)
-                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2F);
     }
 
     @Override

@@ -27,7 +27,8 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<CrowEntity>> CROW = registerType(
             EntityType.Builder.<CrowEntity>create(CrowEntity::new, SpawnGroup.MISC)
                     .dimensions(0.25f, 0.25f)
-                    .makeFireImmune(),
+                    .makeFireImmune()
+                    .disableSummon(),
             "crow"
     );
 
@@ -37,7 +38,8 @@ public class EntityRegistry {
                     .makeFireImmune()
                     .eyeHeight(0.13F)
                     .maxTrackingRange(4)
-                    .trackingTickInterval(1),
+                    .trackingTickInterval(1)
+                    .disableSummon(),
             "cannonball"
     );
 
@@ -149,7 +151,8 @@ public class EntityRegistry {
     public static void register() {
         ENTITIES.register();
         EntityAttributeRegistry.register(CROW, CrowEntity::createMobAttributes);
-        EntityAttributeRegistry.register(SPIRITUAL_GUARDIAN, SpiritualGuardianEntity::createMobAttributes);
+        EntityAttributeRegistry.register(SPIRITUAL_GUARDIAN, AbstractSpiritualEntity::createMobAttributes);
+        EntityAttributeRegistry.register(SPIRITUAL_TORMENTOR, AbstractSpiritualEntity::createMobAttributes);
 
         for(var marker : MARKERS) {
             EntityAttributeRegistry.register(marker, LivingEntity::createLivingAttributes);

@@ -3,6 +3,8 @@ package net.rosemarythyme.simplymore.entity;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -122,7 +124,7 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
 
     public void animate() {
         if(!isAttacking()) {
-            idleArmsAnim.start(this.age);
+            idleArmsAnim.startIfNotRunning(this.age);
         }
     }
 
@@ -212,5 +214,13 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
     @Override
     public boolean isPushedByFluids() {
         return false;
+    }
+
+    public static DefaultAttributeContainer.Builder createMobAttributes() {
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_JUMP_STRENGTH, 0.11F)
+                .add(EntityAttributes.GENERIC_GRAVITY, 0.004F)
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2F);
     }
 }
