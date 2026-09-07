@@ -1,6 +1,7 @@
 package net.rosemarythyme.simplymore.client.tooltip.motifs;
 
 import net.minecraft.client.gui.DrawContext;
+import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.sweenus.simplytooltips.api.BorderPalette;
 import net.sweenus.simplytooltips.api.TooltipTheme;
 
@@ -68,17 +69,7 @@ public class CogMotif implements FullMotif {
             drawRotatedSquare(context, cx + rx, cy + ry, armSize, -gRot, BORDER_COLOR);
         }
 
-        for(int dx = -(radius - 1); dx <= radius - 1; dx++) {
-            int dy = (int) Math.ceil(Math.sqrt((radius * radius) - (dx * dx)));
-            int dy2 = (int) Math.ceil(Math.sqrt((innerRadius * innerRadius) - (dx * dx)));
-
-            if(dy2 > 0) {
-                context.fill(cx + dx, cy + dy, cx + dx + 1, cy + dy2, COLOR);
-                context.fill(cx + dx, cy - dy + 1, cx + dx + 1, cy - dy2 + 1, COLOR);
-            } else {
-                context.fill(cx + dx, cy + dy, cx + dx + 1, (cy - dy) + 1, COLOR);
-            }
-        }
+        RenderUtils.drawHollowCircle(context, cx, cy, radius, radius - innerRadius, COLOR, new RenderUtils.Bound());
     }
 
     public void drawRotatedSquare(DrawContext context, int cx, int cy, int radius, float rot, int color) {
