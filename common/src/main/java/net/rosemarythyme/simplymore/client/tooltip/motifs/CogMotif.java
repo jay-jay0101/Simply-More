@@ -10,11 +10,13 @@ public class CogMotif implements FullMotif {
     public void draw(DrawContext context, int x, int y, int w, int h, long timeMs) {
         float rot = (timeMs % 3600) / 10f;
 
-        drawCog(context, x + w - 60, y + (int) Math.floor(h*0.2f), 20, 7, 7, rot + 45);
-        drawCog(context, x + 40, y + (int) Math.floor(h*0.4f), 15, 5, 5, rot);
-        drawCog(context, x + w - 30, y + (int) Math.floor(h*0.5f), 10, 3, 4, rot + 80);
-        drawCog(context, x + (w/2), y + (int) Math.floor(h*0.6f), 15, 5, 5, rot + 20);
-        drawCog(context, x + 50, y + (int) Math.floor(h*0.8f), 10, 3, 4, rot + 80);
+        RenderUtils.Bound bound = new RenderUtils.Bound(x, y, w, h);
+
+        drawCog(context, x + w - 60, y + (int) Math.floor(h*0.2f), 20, 7, 7, rot + 45, bound);
+        drawCog(context, x + 40, y + (int) Math.floor(h*0.4f), 15, 5, 5, rot, bound);
+        drawCog(context, x + w - 30, y + (int) Math.floor(h*0.5f), 10, 3, 4, rot + 80, bound);
+        drawCog(context, x + (w/2), y + (int) Math.floor(h*0.6f), 15, 5, 5, rot + 20, bound);
+        drawCog(context, x + 50, y + (int) Math.floor(h*0.8f), 10, 3, 4, rot + 80, bound);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class CogMotif implements FullMotif {
     }
 
 
-    public void drawCog(DrawContext context, int cx, int cy, int radius, int innerRadius, int armSize, float rot) {
+    public void drawCog(DrawContext context, int cx, int cy, int radius, int innerRadius, int armSize, float rot, RenderUtils.Bound bound) {
         final int ARMS = 6;
         final int COLOR = 0xC0C15A36;
         final int BORDER_COLOR = 0xA04A1300;
@@ -66,13 +68,13 @@ public class CogMotif implements FullMotif {
             int rx = (int) Math.ceil(radius * c);
             int ry = (int) Math.ceil(radius * s);
 
-            drawRotatedSquare(context, cx + rx, cy + ry, armSize, -gRot, BORDER_COLOR);
+            drawRotatedSquare(context, cx + rx, cy + ry, armSize, -gRot, BORDER_COLOR, bound);
         }
 
-        RenderUtils.drawHollowCircle(context, cx, cy, radius, radius - innerRadius, COLOR, new RenderUtils.Bound());
+        RenderUtils.drawHollowCircle(context, cx, cy, radius, radius - innerRadius, COLOR, bound);
     }
 
-    public void drawRotatedSquare(DrawContext context, int cx, int cy, int radius, float rot, int color) {
+    public void drawRotatedSquare(DrawContext context, int cx, int cy, int radius, float rot, int color, RenderUtils.Bound bound) {
         double a = Math.toRadians(rot);
         double s = Math.sin(a);
         double c = Math.cos(a);
@@ -101,7 +103,10 @@ public class CogMotif implements FullMotif {
                 }
             }
 
-            context.fill(cx + dx, cy - dy1, cx + dx + 1, cy + dy2, color);
+            RenderUtils.Bound draw = new RenderUtils.Bound(cx + dx, cy - dy1, 1, dy2 + dy1)
+                    .clampWithin(bound);
+
+            context.fill(draw.x(), draw.y(), draw.x() + draw.width(), draw.y() + draw.height(), color);
         }
     }
 
