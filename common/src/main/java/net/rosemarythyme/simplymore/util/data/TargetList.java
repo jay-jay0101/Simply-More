@@ -7,16 +7,19 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,6 +35,20 @@ public record TargetList(Set<LivingEntity> targets) {
 
     public TargetList filter(Predicate<LivingEntity> predicate) {
         return new TargetList(targets.stream().filter(predicate).collect(Collectors.toSet()));
+    }
+
+    public Optional<LivingEntity> getAny() {
+        return targets.stream().findAny();
+    }
+
+    public Optional<Pair<LivingEntity, Float>> getByMax(Function<LivingEntity, Float> function) {
+        return targets.stream().map((livingEntity) -> new Pair<>(livingEntity, function.apply(livingEntity)))
+                .max(Comparator.comparingDouble(Pair::getRight));
+    }
+
+    public Optional<Pair<LivingEntity, Float>> getByMin(Function<LivingEntity, Float> function) {
+        return targets.stream().map((livingEntity) -> new Pair<>(livingEntity, function.apply(livingEntity)))
+                .min(Comparator.comparingDouble(Pair::getRight));
     }
 
     public TargetList filterByType(Class<? extends LivingEntity> clazz) {

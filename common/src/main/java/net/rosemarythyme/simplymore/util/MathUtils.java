@@ -138,8 +138,8 @@ public class MathUtils {
         );
     }
 
-    public static Pair<Float, Float> getYawAndPitch(Vec3d velocity) {
-        Vec3d dir = velocity.normalize();
+    public static Pair<Float, Float> getYawAndPitch(Vec3d direction) {
+        Vec3d dir = direction.normalize();
 
         float yaw = (float) Math.toDegrees(Math.atan2(-dir.x, dir.z));
         float pitch = (float) Math.toDegrees(Math.asin(-dir.y));

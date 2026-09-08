@@ -1,6 +1,5 @@
 package net.rosemarythyme.simplymore.entity;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
@@ -15,7 +14,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.IdolItem;
@@ -99,10 +97,6 @@ public class SpiritualGuardianEntity extends AbstractSpiritualEntity {
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-    }
-
-    @Override
     protected @Nullable SoundEvent getAmbientSound() {
         return SoundEvents.PARTICLE_SOUL_ESCAPE.value();
     }
@@ -137,7 +131,7 @@ public class SpiritualGuardianEntity extends AbstractSpiritualEntity {
             if(EntityUtils.isWithinCylinder(attackData.target, this.getPos(), range, range)) {
                 if(!(this.getOwner() instanceof LivingEntity owner)) return;
 
-                attackData.target.damage(AttackUtils.getHitSource(owner), attackData.damage);
+                attackData.target.damage(AttackUtils.getHitSource(owner), attackData.damage * MathUtils.clampedLerp(getStrength(), 0, IdolItem.HOLYLIGHT.maxStrength, IdolItem.HOLYLIGHT.baseReflect, IdolItem.HOLYLIGHT.maxReflect));
                 AudioVisualUtils.particleAroundEntity(attackData.target, ParticleTypes.WAX_OFF, 40, 0.2f, 20);
             }
         }

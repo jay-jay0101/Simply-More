@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.util;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -9,6 +10,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
@@ -16,6 +18,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
@@ -161,6 +164,9 @@ public class EntityUtils {
         if(fragileInstance != null) {
             int level = fragileInstance.getAmplifier() + 1;
             original *= 1 + (level * 0.25f);
+
+            AudioVisualUtils.playSound(livingEntity.getWorld(), livingEntity.getPos(), new Sound(SoundEvents.BLOCK_GLASS_BREAK).setPitch(1.2f));
+            AudioVisualUtils.particleAroundEntity(livingEntity, new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GLASS.getDefaultState()), 40, 0.2f, 0.2f);
         }
 
         return original;
@@ -186,5 +192,29 @@ public class EntityUtils {
     public static boolean isWithinCylinder(LivingEntity entity, Vec3d centerPos, double horizontalRange, double verticalRange) {
         if(centerPos.distanceTo(new Vec3d(entity.getX(), centerPos.getY(), entity.getZ())) > horizontalRange) return false;
         return !(Math.abs(centerPos.getY() - entity.getY()) > verticalRange);
+    }
+
+    public enum StepUpResult {
+        NOT_ON_FLOOR,
+        TOO_SHORT,
+        TOO_TALL,
+        SUCCESS
+    }
+
+    public static StepUpResult tryStepUp(LivingEntity entity, Vec3d velocity) {
+        if(!entity.isOnGround()) return StepUpResult.NOT_ON_FLOOR;
+
+        Vec3d horizontalDirection = new Vec3d(velocity.getX(), 0, velocity.getZ());
+
+        Vec3d pos = entity.getPos();
+        BlockHitResult bottomBlock = entity.getWorld().raycast(new RaycastContext(pos, pos.add(horizontalDirection), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
+        if(bottomBlock.getType() != HitResult.Type.BLOCK) return StepUpResult.TOO_SHORT;
+
+        Vec3d topPos = entity.getPos().offset(Direction.UP, 1);
+        BlockHitResult topBlock = entity.getWorld().raycast(new RaycastContext(topPos, topPos.add(horizontalDirection), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
+        if(topBlock.getType() == HitResult.Type.BLOCK) return StepUpResult.TOO_TALL;
+
+        entity.refreshPositionAfterTeleport(entity.getX(), entity.getY() + 1, entity.getZ());
+        return StepUpResult.SUCCESS;
     }
 }

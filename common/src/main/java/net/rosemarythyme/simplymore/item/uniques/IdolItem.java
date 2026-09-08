@@ -60,6 +60,7 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
             AudioVisualUtils.playSound(context.world(), spawnPos, new Sound(SoundRegistry.ELEMENTAL_SWORD_HOLY_ATTACK_01.get()));
             context.world().spawnEntity(new SpiritualGuardianEntity(context.actor(), spawnPos));
         } else if (tier.path == IdolPath.DARKSENT) {
+            AudioVisualUtils.playSound(context.world(), spawnPos, new Sound(SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_IMPACT_01.get()).setPitch(0.5f));
             context.world().spawnEntity(new SpiritualTormentorEntity(context.actor(), spawnPos));
         }
 
@@ -98,6 +99,10 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
                 }
             } else if (tier.path == IdolPath.DARKSENT) {
                 if(MathUtils.chance(attacker, DARKSENT.chance)) {
+                    AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.DARK_SWORD_SPELL.get()));
+                    AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FLAME, 10, 0.2f, 0.2f);
+                    AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_OBSIDIAN_TEAR, 100, 0.4f, 0f);
+
                     AttackUtils.cubeAttack(attacker, attacker.getPos(), DARKSENT.curseRange, AttackUtils.AttackTarget.ENEMIES)
                             .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FRAGILE), DARKSENT.curseDuration, DARKSENT.curseLevel - 1);
                 }
@@ -259,7 +264,31 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
 
             @ValidatedDouble.Restrict(min = 0)
             public double baseAuraRange = 8;
+            @ValidatedDouble.Restrict(min = 0)
+            public double maxAuraRange = 12;
+            @ValidatedInt.Restrict(min = 0)
+            public int maxStrength = 8;
+            @ValidatedInt.Restrict(min = 0)
+            public int tormentorDuration = 600;
+            @ValidatedInt.Restrict(min = 0)
+            public int attackCooldown = 50;
+            @ValidatedFloat.Restrict(min = 0)
+            public float baseDamage = 12f;
+            @ValidatedFloat.Restrict(min = 0)
+            public float maxDamage = 24f;
+            @ValidatedFloat.Restrict(min = 0)
+            public float minDashSpeed = 1f;
+            @ValidatedFloat.Restrict(min = 0)
+            public float maxDashSpeed = 1.6f;
+            @ValidatedFloat.Restrict(min = 0)
+            public float knockUpHeight = 1f;
+            @ValidatedFloat.Restrict(min = 0)
+            public float drainDamage = 4f;
+            @ValidatedInt.Restrict(min = 0)
+            public int timeBeforeCharge = 20;
 
+            @ValidatedInt.Restrict(min = 0)
+            public int effectDrainRate = 8;
             public boolean includeGlobalBlacklist = true;
             public ValidatedSet<Identifier> blacklist = ConfigUtils.createEffectList();
         }

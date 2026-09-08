@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.entity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -11,11 +12,14 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.ai.SpiritNavigation;
@@ -118,6 +122,29 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
                 this.navigation.stop();
             }
         }
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {}
+
+    @Override
+    public boolean isTouchingWater() {
+        return false;
+    }
+
+    @Override
+    public boolean isSubmergedIn(TagKey<Fluid> fluidTag) {
+        return false;
+    }
+
+    @Override
+    public boolean isSubmergedInWater() {
+        return false;
+    }
+
+    @Override
+    public boolean isInsideWaterOrBubbleColumn() {
+        return false;
     }
 
     public abstract double getAuraRange();

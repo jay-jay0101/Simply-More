@@ -32,6 +32,7 @@ public class SpiritualTormentorModel extends SinglePartEntityModel<SpiritualTorm
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
+
 		ModelPartData BODY = modelPartData.addChild("BODY", ModelPartBuilder.create().uv(0, 0).cuboid(-6.0F, -23.0F, -10.0F, 12.0F, 10.0F, 20.0F, new Dilation(0.0F))
 		.uv(0, 30).cuboid(-6.0F, -13.0F, -7.0F, 12.0F, 10.0F, 14.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 16.0F, 0.0F));
 
@@ -69,11 +70,15 @@ public class SpiritualTormentorModel extends SinglePartEntityModel<SpiritualTorm
 	@Override
 	public void setAngles(SpiritualTormentorEntity entity, float limbSwing, float limbSwingAmount, float delta, float netHeadYaw, float headPitch) {
 		this.getPart().traverse().forEach(ModelPart::resetTransform);
+		delta -= 20;
 
 		HEAD.setAngles(0, (float) Math.toRadians(netHeadYaw), 0);
 		BODY.setAngles(0f, (float) Math.toRadians(90f), 0f);
 
 		this.updateAnimation(entity.idleArmsAnim, SpiritualTormentorAnimations.HAND_SWAY, delta,1f);
+		this.updateAnimation(entity.chargeAnim, SpiritualTormentorAnimations.CHARGE, delta,1f);
+		this.updateAnimation(entity.startChargeAnim, SpiritualTormentorAnimations.START_CHARGE, delta,1f);
+		this.updateAnimation(entity.endChargeAnim, SpiritualTormentorAnimations.SWING, delta,1f);
 	}
 
 	@Override
