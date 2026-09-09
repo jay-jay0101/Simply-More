@@ -164,15 +164,15 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
             tooltip.add(Text.translatable("item.simplymore.ruptured_idol.tooltip1").setStyle(Styles.TEXT));
         } else {
             switch (tier.path) {
-                case HOLYLIGHT -> appendHolylightTooltip(tooltip, tier.hasActive);
-                case DARKSENT -> appendDarksentTooltip(tooltip, tier.hasActive);
+                case HOLYLIGHT -> appendHolylightTooltip(tooltip, itemStack, tier.hasActive);
+                case DARKSENT -> appendDarksentTooltip(tooltip, itemStack, tier.hasActive);
             }
         }
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
 
-    public static void appendHolylightTooltip(List<Text> tooltip, boolean hasActive) {
+    public static void appendHolylightTooltip(List<Text> tooltip, ItemStack stack, boolean hasActive) {
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip1").setStyle(Styles.ABILITY));
         tooltip.add(Text.translatable("item.simplymore.holylight.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
@@ -184,12 +184,13 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
             tooltip.add(Text.translatable("item.simplymore.holylight.tooltip5").setStyle(Styles.TEXT));
             tooltip.add(Text.literal(""));
             tooltip.add(Text.translatable("item.simplymore.holylight.tooltip6").setStyle(Styles.TEXT));
+            appendAbilityCooldownTooltip(tooltip, stack, HOLYLIGHT.cooldown);
         } else {
             tooltip.add(Text.translatable("item.simplymore.holylight.tooltip3").setStyle(Styles.TEXT));
         }
     }
 
-    public static void appendDarksentTooltip(List<Text> tooltip, boolean hasActive) {
+    public static void appendDarksentTooltip(List<Text> tooltip, ItemStack stack, boolean hasActive) {
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip1").setStyle(Styles.ABILITY));
         tooltip.add(Text.translatable("item.simplymore.darksent.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
@@ -199,6 +200,7 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
             tooltip.add(Text.translatable("item.simplymore.darksent.tooltip4").setStyle(Styles.TEXT));
             tooltip.add(Text.literal(""));
             tooltip.add(Text.translatable("item.simplymore.darksent.tooltip5").setStyle(Styles.TEXT));
+            appendAbilityCooldownTooltip(tooltip, stack, DARKSENT.cooldown);
         } else {
             tooltip.add(Text.translatable("item.simplymore.darksent.tooltip3").setStyle(Styles.TEXT));
         }
