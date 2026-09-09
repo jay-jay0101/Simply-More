@@ -99,7 +99,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
 
     @Override
     public double getAuraRange() {
-        return IdolItem.DARKSENT.baseAuraRange;
+        return MathHelper.lerp(getStrength(), IdolItem.DARKSENT.baseAuraRange, IdolItem.DARKSENT.maxAuraRange);
     }
 
     @Override
