@@ -260,9 +260,9 @@
 
   "item.simplymore.vipers_call": "Viper's Call",
   "item.simplymore.vipers_call.tooltip1": "Unique Effect: Unending Venom",
-  "item.simplymore.vipers_call.tooltip2": "While held, status effects that run out stayactive until you unequip the weapon, albeit at its weakest level.",
-  "item.simplymore.vipers_call.tooltip5": "This effect only occurs if held in the mainhand.",
-  "item.simplymore.vipers_call.tooltip7": "Summon a large ring around yourself which damages and poisons enemies.",
+  "item.simplymore.vipers_call.tooltip2": "While held, status effects that run out stay active until you unequip the weapon, albeit at its weakest level.",
+  "item.simplymore.vipers_call.tooltip3": "This effect only occurs if held in the mainhand.",
+  "item.simplymore.vipers_call.tooltip4": "Invoke an area around you where allies share positive effects, and enemies share negative effects.",
 
   "item.simplymore.timekeeper": "Timekeeper",
   "item.simplymore.timekeeper_day.tooltip1": "Unique Effect: Curse of Ra",

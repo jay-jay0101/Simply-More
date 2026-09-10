@@ -104,7 +104,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (world.isClient) return;
         if (!(entity instanceof PlayerEntity player)) return;
-        if (!EntityUtils.isHolding(player, stack)) return;
+        if (!EntityUtils.isHoldingInMainHand(player, stack)) return;
         if (player.getItemCooldownManager().isCoolingDown(this)) return;
 
         int crowStacks = MathUtils.getCounterComponent(stack).value();

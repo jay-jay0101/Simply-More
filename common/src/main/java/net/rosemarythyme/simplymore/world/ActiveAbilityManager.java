@@ -7,6 +7,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -21,16 +23,17 @@ import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
+import net.rosemarythyme.simplymore.item.uniques.VipersCallItem;
 import net.rosemarythyme.simplymore.networking.s2c.S2CAbilityManagerPacket;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ActiveAbilityManager {
     public static final ActiveAbilityManager SERVER = new ActiveAbilityManager();
@@ -50,11 +53,29 @@ public class ActiveAbilityManager {
         activeAbilities.clear();
     }
 
+    public float getInOutStrength(LivingEntity player, Type type) {
+        if(!isInAbility(player, type)) return 0f;
+
+        float durationPercentage = (float) this.getCurrentDuration(player, type) / this.getTotalDuration(player, type);
+        float durationStrength = 1f;
+
+        if(durationPercentage <= 0.1f) {
+            durationStrength =  MathUtils.clampedLerp(durationPercentage, 0, 0.1f, 0f, 1f);
+        }
+
+        if(durationPercentage >= 0.9f) {
+            durationStrength = 1f - MathUtils.clampedLerp(durationPercentage, 0.9f, 1f, 0f, 1f);
+        }
+
+        return durationStrength;
+    }
+
     public enum Type {
         HARVEST(ActiveAbilityManager::harvestTick, (player) -> HashMultimap.create(), 32),
         DRILL(ActiveAbilityManager::drillTick, ActiveAbilityManager::drillModifiers,100),
         STATUE(ActiveAbilityManager::statueTick, ActiveAbilityManager::statueModifiers, 100),
-        PETRIFIED(ActiveAbilityManager::petrifiedTick, ActiveAbilityManager::statueModifiers, 100);
+        PETRIFIED(ActiveAbilityManager::petrifiedTick, ActiveAbilityManager::statueModifiers, 100),
+        VIPERS_CALL(ActiveAbilityManager::vipersCallTick, (player) -> HashMultimap.create(), 32);
 
         final Function<ActiveAbility, Integer> run;
         final Function<LivingEntity, Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier>> modifiers;
@@ -125,6 +146,17 @@ public class ActiveAbilityManager {
         if(ability.isEmpty()) return 0;
 
         return ability.get().remainingDuration;
+    }
+
+    public int getTotalDuration(LivingEntity owner, Type type) {
+        Optional<ActiveAbility> ability = new ArrayList<>(activeAbilities).stream().filter((a) ->
+                a.owner() == owner &&
+                        a.type() == type
+        ).findFirst();
+
+        if(ability.isEmpty()) return 0;
+
+        return ability.get().duration;
     }
 
     private void sync(ActiveAbility ability) {
@@ -248,6 +280,39 @@ public class ActiveAbilityManager {
             BladeOfTheGrotesqueItem.breakOutVisuals(ability.owner);
             return 0;
         }
+
+        return ability.remainingDuration - 1;
+    }
+
+    private static int vipersCallTick(ActiveAbility ability) {
+        AudioVisualUtils.particleAroundEntity(ability.owner, ParticleTypes.SPORE_BLOSSOM_AIR, 3, 2f, 1f);
+        TargetList nearby = AttackUtils.cylinderAttack(ability.owner, ability.owner.getPos(), VipersCallItem.SETTINGS.auraRange, 4, AttackUtils.AttackTarget.OTHERS_AND_USER_POSITIVELY);
+
+        List<StatusEffectInstance> positive = new ArrayList<>();
+        List<StatusEffectInstance> negative = new ArrayList<>();
+
+        Predicate<StatusEffect> predicate = PredicateUtils.createForEffectBlacklist(VipersCallItem.SETTINGS.blacklist, VipersCallItem.SETTINGS.includeGlobalBlacklist);
+        for (LivingEntity entity : nearby.targets()) {
+            if(AttackUtils.canTarget(ability.owner, entity, AttackUtils.AttackTarget.ENEMIES)) {
+                for(StatusEffectInstance instance : List.copyOf(entity.getStatusEffects())) {
+                    if(predicate.and(PredicateUtils.HARMFUL_EFFECT).test(instance.getEffectType().value())) {
+                        negative.add(instance);
+                    }
+                }
+            } else {
+                for(StatusEffectInstance instance : List.copyOf(entity.getStatusEffects())) {
+                    if(predicate.and(PredicateUtils.BENEFICIAL_EFFECT).test(instance.getEffectType().value())) {
+                        positive.add(instance);
+                    }
+                }
+            }
+        }
+
+        nearby.filterByTargetType(ability.owner, AttackUtils.AttackTarget.ALLIES_AND_USER)
+                .onEach((entity) -> positive.forEach(instance -> entity.addStatusEffect(new StatusEffectInstance(instance))));
+
+        nearby.filterByTargetType(ability.owner, AttackUtils.AttackTarget.ENEMIES)
+                .onEach((entity) -> negative.forEach(instance -> entity.addStatusEffect(new StatusEffectInstance(instance))));
 
         return ability.remainingDuration - 1;
     }

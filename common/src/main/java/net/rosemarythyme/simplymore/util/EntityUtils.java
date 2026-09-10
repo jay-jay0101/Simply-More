@@ -108,7 +108,7 @@ public class EntityUtils {
         entity.addStatusEffect(new StatusEffectInstance(effect, instance.getDuration(), Math.min(amplifier, maxAmplifier)));
     }
 
-    public static boolean isHolding(LivingEntity entity, ItemStack stack) {
+    public static boolean isHoldingInMainHand(LivingEntity entity, ItemStack stack) {
         return entity.getStackInHand(Hand.MAIN_HAND).equals(stack);
     }
 

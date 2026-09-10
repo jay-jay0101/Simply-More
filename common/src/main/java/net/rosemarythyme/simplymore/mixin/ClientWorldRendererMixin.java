@@ -12,10 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.Biome;
-import net.rosemarythyme.simplymore.client.render.features.BladeOfTheGrotesqueAuraRenderer;
-import net.rosemarythyme.simplymore.client.render.features.BlessingEffectFeatureRenderer;
-import net.rosemarythyme.simplymore.client.render.features.BloodHarvesterSenseRenderer;
-import net.rosemarythyme.simplymore.client.render.features.SoulfractureAuraRenderer;
+import net.rosemarythyme.simplymore.client.render.features.*;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
@@ -61,6 +58,10 @@ public abstract class ClientWorldRendererMixin {
 
             if(EntityUtils.isHolding(entity, ItemRegistry.BLADE_OF_THE_GROTESQUE.get())) {
                 BladeOfTheGrotesqueAuraRenderer.render(entity, stack, vertexConsumers, WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getBlockPos()));
+            }
+
+            if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.VIPERS_CALL)) {
+                VipersCallAuraRenderer.render(entity, stack, vertexConsumers);
             }
 
             if(ClientActiveAbilityManager.CLIENT.isInAbility(player, ActiveAbilityManager.Type.HARVEST)) {

@@ -35,7 +35,7 @@ public class JesterPenetrateItem extends SimplyMoreSwordItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if(!(entity instanceof LivingEntity livingEntity)) return;
 
-        if (world.getTime() % 20 == 0 && EntityUtils.isHolding(livingEntity, stack)) {
+        if (world.getTime() % 20 == 0 && EntityUtils.isHoldingInMainHand(livingEntity, stack)) {
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 1));
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0));
