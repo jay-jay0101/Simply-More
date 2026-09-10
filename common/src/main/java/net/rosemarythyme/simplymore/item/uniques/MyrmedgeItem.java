@@ -30,6 +30,7 @@ import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
@@ -84,6 +85,8 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem implements UniqueWea
     }
 
     public static void stopAbility(LivingEntity entity) {
+        EntityUtils.cooldown(entity, ItemRegistry.MYRMEDGE.get(), SETTINGS.cooldown, true);
+
         LivingEntity target = getActiveMyrmedgeTarget(entity);
         if(target == null) return;
 
@@ -106,6 +109,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem implements UniqueWea
 
         GrabbedComponent component = stack.get(ItemComponentRegistry.GRABBED.get());
         if(component == null) return null;
+        if(component.time() < world.getTime() - SETTINGS.grabTime) return null;
 
         Entity entity = world.getEntity(component.entityId());
         if(!(entity instanceof LivingEntity target)) return null;
