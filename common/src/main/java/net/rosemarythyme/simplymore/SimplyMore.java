@@ -3,7 +3,6 @@ package net.rosemarythyme.simplymore;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
-import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
 import dev.architectury.utils.Env;
 import dev.architectury.utils.EnvExecutor;
@@ -15,7 +14,6 @@ import net.rosemarythyme.simplymore.client.registry.ClientEntityRendererRegistry
 import net.rosemarythyme.simplymore.client.registry.ClientItemPropertyRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
-import net.rosemarythyme.simplymore.event.RemoveStatusOnJoin;
 import net.rosemarythyme.simplymore.event.TickClientEffects;
 import net.rosemarythyme.simplymore.event.TickServerEffects;
 import net.rosemarythyme.simplymore.item.LootRegistry;
@@ -88,7 +86,6 @@ public class SimplyMore {
 	}
 
 	public static void registerEvents() {
-		PlayerEvent.PLAYER_JOIN.register(new RemoveStatusOnJoin());
 		LifecycleEvent.SERVER_STARTED.register((ignored) -> ActiveAbilityManager.SERVER.clear());
 		TickEvent.SERVER_PRE.register(new TickServerEffects());
 	}

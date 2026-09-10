@@ -182,7 +182,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
     }
 
     @Override
-    public AttributeModifiersComponent getModifier(ItemStack stack, AttributeModifiersComponent base) {
+    public AttributeModifiersComponent getModifier(LivingEntity entity, ItemStack stack, AttributeModifiersComponent base) {
         float size = MathUtils.getCounterComponentProgress(stack);
 
         return base.with(

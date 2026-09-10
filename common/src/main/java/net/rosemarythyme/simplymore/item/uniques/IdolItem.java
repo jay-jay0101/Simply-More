@@ -5,6 +5,7 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
@@ -12,8 +13,11 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.SpiritualGuardianEntity;
 import net.rosemarythyme.simplymore.entity.SpiritualTormentorEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
@@ -42,6 +46,11 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
         NONE,
         DARKSENT,
         HOLYLIGHT
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        return useFromDefaultInput(world, user, hand);
     }
 
     @Override

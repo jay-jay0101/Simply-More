@@ -13,7 +13,6 @@ import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
-import org.joml.Vector3d;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
@@ -24,17 +23,17 @@ public class MathUtils {
         return player.getRandom().nextFloat() <= chance;
     }
 
-    public static Vector3d getNormalised2dVector(float yaw) {
+    public static Vec3d getNormalised2dVector(float yaw) {
         double yawAngle = Math.toRadians(yaw);
         double cosYaw = Math.cos(yawAngle);
         double sinYaw = Math.sin(yawAngle);
 
-        return new Vector3d(-sinYaw, 0, cosYaw);
+        return new Vec3d(-sinYaw, 0, cosYaw);
     }
 
-    public static Vector3d getNormalised3dVector(Entity entity) {
+    public static Vec3d getNormalised3dVector(Entity entity) {
         Vec3d vector = entity.getRotationVec(1.0F).normalize();
-        return new Vector3d(
+        return new Vec3d(
                 vector.getX(),
                 vector.getY(),
                 vector.getZ()

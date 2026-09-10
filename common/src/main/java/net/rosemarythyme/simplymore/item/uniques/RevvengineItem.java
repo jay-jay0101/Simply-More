@@ -22,8 +22,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
@@ -33,7 +33,6 @@ import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.util.Styles;
-import org.joml.Vector3d;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -189,12 +188,12 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
 
     public void phase1(LivingEntity user) {
         Vec3d position = user.getEyePos();
-        Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
+        Vec3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
 
         Vec3d particlePos = new Vec3d(
-                position.getX() + normalisedVector.x(),
+                position.getX() + normalisedVector.x,
                 position.getY(),
-                position.getZ() + normalisedVector.z()
+                position.getZ() + normalisedVector.z
         );
 
         Box box = MathUtils.createCubeBox(user.getPos(), 1);

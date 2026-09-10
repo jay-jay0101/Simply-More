@@ -107,7 +107,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     }
 
     @Override
-    public AttributeModifiersComponent getModifier(ItemStack stack, AttributeModifiersComponent base) {
+    public AttributeModifiersComponent getModifier(LivingEntity entity, ItemStack stack, AttributeModifiersComponent base) {
         float oxidisationAmount = MathUtils.getCounterComponent(stack).value() / 16f;
         double minimumModifier = 4 + attributes.uniqueWeaponsSwingSpeed.brassturn_attack_speed - 0.6;
 

@@ -27,17 +27,16 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.MimicryConfig;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.TagRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
-import org.joml.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -304,8 +303,8 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
     }
 
     public void jump(LivingEntity target, float xzStrength, float yStrength) {
-        Vector3d facingVector = MathUtils.getNormalised2dVector(target.getYaw()).mul(xzStrength);
-        target.setVelocity(facingVector.x(), yStrength, facingVector.z());
+        Vec3d facingVector = MathUtils.getNormalised2dVector(target.getYaw()).multiply(xzStrength);
+        target.setVelocity(facingVector.x, yStrength, facingVector.z);
         target.velocityModified = true;
     }
 
@@ -315,12 +314,12 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
     public List<LivingEntity> sweepAttack(PlayerEntity player, float range, int angle) {
         Vec3d position = player.getEyePos();
-        Vector3d normalisedVector = MathUtils.getNormalised2dVector(player.getYaw() + angle);
+        Vec3d normalisedVector = MathUtils.getNormalised2dVector(player.getYaw() + angle);
 
         Vec3d particlePos = new Vec3d(
-                position.getX() + (normalisedVector.x() * range),
+                position.getX() + (normalisedVector.x * range),
                 position.getY(),
-                position.getZ() + (normalisedVector.z() * range)
+                position.getZ() + (normalisedVector.z * range)
         );
 
         Box box = new Box(
@@ -371,11 +370,11 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
         for(int i = 0; i < 10; i++) {
             float particleRange = range / 1.5f;
 
-            Vector3d normalisedVector = MathUtils.getNormalised2dVector(i * 36);
+            Vec3d normalisedVector = MathUtils.getNormalised2dVector(i * 36);
 
-            double xPos = player.getX() + (normalisedVector.x() * particleRange);
+            double xPos = player.getX() + (normalisedVector.x * particleRange);
             double yPos = player.getEyeY();
-            double zPos = player.getZ() + (normalisedVector.z() * particleRange);
+            double zPos = player.getZ() + (normalisedVector.z * particleRange);
 
             ((ServerWorld) player.getWorld()).spawnParticles(ParticleTypes.SWEEP_ATTACK, xPos, yPos, zPos, 1, 0, 0 , 0, 0);
             player.getWorld().playSound(null, xPos, yPos, zPos, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1, player.getRandom().nextBetween(9,14)/10f);
@@ -407,13 +406,11 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem {
 
         for (int j = 0; j < range/coverage; j++) {
 
-            Vector3d normalisedVector = MathUtils.getNormalised3dVector(player);
+            Vec3d normalisedVector = MathUtils.getNormalised3dVector(player);
 
-
-
-            double dX = normalisedVector.x() * j * coverage * 1.2f;
-            double dY = normalisedVector.y() * j * coverage * 1.2f;
-            double dZ = normalisedVector.z() * j * coverage * 1.2f;
+            double dX = normalisedVector.x * j * coverage * 1.2f;
+            double dY = normalisedVector.y * j * coverage * 1.2f;
+            double dZ = normalisedVector.z * j * coverage * 1.2f;
 
             double x = player.getX() + dX;
             double y = player.getEyeY() + dY;

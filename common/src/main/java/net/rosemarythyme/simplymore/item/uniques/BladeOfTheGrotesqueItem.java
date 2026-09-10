@@ -99,7 +99,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
     }
 
     @Override
-    public AttributeModifiersComponent getModifier(ItemStack stack, AttributeModifiersComponent base) {
+    public AttributeModifiersComponent getModifier(LivingEntity entity, ItemStack stack, AttributeModifiersComponent base) {
         return base.with(
                 EntityAttributes.GENERIC_MOVEMENT_SPEED,
                 new EntityAttributeModifier(

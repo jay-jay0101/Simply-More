@@ -57,14 +57,14 @@ public class KatanaItem extends MimicryItem implements TwoHandedWeapon {
 
             double distance = Vector3d.distance(currentPos.getX(), currentPos.getY(), currentPos.getZ(), maxDistance.getX(), maxDistance.getY(), maxDistance.getZ());
 
-            Vector3d normalisedVector = MathUtils.getNormalised3dVector(player);
+            Vec3d normalisedVector = MathUtils.getNormalised3dVector(player);
             for(int i = 0; i < 15; i++) {
                 double distanceInterval = distance/((double) 15 /(i+1));
 
                 Vec3d slashPos = new Vec3d(
-                        currentPos.getX() + (normalisedVector.x() * distanceInterval),
-                        currentPos.getY() + (normalisedVector.y() * distanceInterval),
-                        currentPos.getZ() + (normalisedVector.z() * distanceInterval)
+                        currentPos.getX() + (normalisedVector.x * distanceInterval),
+                        currentPos.getY() + (normalisedVector.y * distanceInterval),
+                        currentPos.getZ() + (normalisedVector.z * distanceInterval)
                 );
 
                 List<LivingEntity> livingEntities = katanaAttack(player,slashPos.getX(), slashPos.getY(), slashPos.getZ(), 1.3f);

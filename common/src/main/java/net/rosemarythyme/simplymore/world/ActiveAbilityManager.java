@@ -10,6 +10,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -23,8 +24,10 @@ import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
 import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
+import net.rosemarythyme.simplymore.item.uniques.MyrmedgeItem;
 import net.rosemarythyme.simplymore.item.uniques.VipersCallItem;
 import net.rosemarythyme.simplymore.networking.s2c.S2CAbilityManagerPacket;
+import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.Sound;
@@ -75,7 +78,8 @@ public class ActiveAbilityManager {
         DRILL(ActiveAbilityManager::drillTick, ActiveAbilityManager::drillModifiers,100),
         STATUE(ActiveAbilityManager::statueTick, ActiveAbilityManager::statueModifiers, 100),
         PETRIFIED(ActiveAbilityManager::petrifiedTick, ActiveAbilityManager::statueModifiers, 100),
-        VIPERS_CALL(ActiveAbilityManager::vipersCallTick, (player) -> HashMultimap.create(), 32);
+        VIPERS_CALL(ActiveAbilityManager::vipersCallTick, (player) -> HashMultimap.create(), 32),
+        GRASPING(ActiveAbilityManager::graspingTick, ActiveAbilityManager::graspingModifiers, 0);
 
         final Function<ActiveAbility, Integer> run;
         final Function<LivingEntity, Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier>> modifiers;
@@ -317,10 +321,49 @@ public class ActiveAbilityManager {
         return ability.remainingDuration - 1;
     }
 
+    private static int graspingTick(ActiveAbility ability) {
+        LivingEntity target = MyrmedgeItem.getActiveMyrmedgeTarget(ability.owner);
+        if(target == null) {
+            MyrmedgeItem.stopAbility(ability.owner);
+            return 0;
+        }
+
+        target.dismountVehicle();
+        target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN), 5, 0));
+        target.refreshPositionAfterTeleport(EntityUtils.rangeAroundPoint(ability.owner.getEyePos(), target, ability.owner.getYaw(), 1.5f));
+        target.fallDistance = 0;
+
+        if(ability.remainingDuration % 20 == 0) {
+            if(target instanceof PlayerEntity playerTarget) {
+                HungerManager manager = playerTarget.getHungerManager();
+                manager.setSaturationLevel(0);
+                manager.setFoodLevel(manager.getFoodLevel() - 1);
+            }
+
+            target.damage(AttackUtils.getHitSource(ability.owner), MyrmedgeItem.SETTINGS.grabDamage);
+            ability.owner.heal(1);
+
+            if(ability.owner instanceof PlayerEntity player) {
+                player.getHungerManager().add(2, 0.1f);
+            }
+        }
+
+        return ability.remainingDuration - 1;
+    }
+
     private static Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> statueModifiers(LivingEntity entity) {
         Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> map = HashMultimap.create();
         map.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(SimplyMore.identifier("statue_attack_speed"), -1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(SimplyMore.identifier("statue_attack_damage"), -1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
+        return map;
+    }
+
+    private static Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> graspingModifiers(LivingEntity entity) {
+        Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> map = HashMultimap.create();
+        map.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(SimplyMore.identifier("grasping_attack_speed"), -1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(SimplyMore.identifier("grasping_attack_damage"), -1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        map.put(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(SimplyMore.identifier("grasping_move_speed"), -MyrmedgeItem.SETTINGS.grabSelfSlow, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
         return map;
     }

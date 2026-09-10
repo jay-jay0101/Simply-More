@@ -45,8 +45,8 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
             AudioVisualUtils.handleFootfalls(entity, stack, world, footfallParticles);
         }
 
-        if(stack.getItem() instanceof StackModifierItem modifierItem) {
-            StackModifierItem.applyStackModifier(stack, modifierItem);
+        if(stack.getItem() instanceof StackModifierItem modifierItem && entity instanceof LivingEntity livingEntity) {
+            StackModifierItem.applyStackModifier(livingEntity, stack, modifierItem);
         }
 
         ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();

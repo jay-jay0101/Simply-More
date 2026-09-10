@@ -85,21 +85,6 @@ public class StatusEffectRegistry {
             new StarlightEffect(StatusEffectCategory.BENEFICIAL,11393254)
     );
 
-    public static final RegistrySupplier<StatusEffect> GRASPING = registerEffect(
-            "grasping",
-            new MyrmedgeEffect(StatusEffectCategory.BENEFICIAL,7865862).addAttributeModifier(
-                    EntityAttributes.GENERIC_ATTACK_SPEED,
-                    SimplyMore.identifier("grasping_attack_speed"),
-                    -99,
-                    EntityAttributeModifier.Operation.ADD_VALUE
-            ).addAttributeModifier(
-                    EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                    SimplyMore.identifier("grasping_damage"),
-                    -9999,
-                    EntityAttributeModifier.Operation.ADD_VALUE
-            )
-    );
-
     public static final RegistrySupplier<StatusEffect> SOUL_HEALTH = registerEffect(
             "soul_health",
             new StatusEffect(StatusEffectCategory.BENEFICIAL,7865862).addAttributeModifier(

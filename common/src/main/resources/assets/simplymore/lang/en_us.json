@@ -231,11 +231,10 @@
   "item.simplymore.jester_penetrate.tooltip3": "This effect only occurs if held in the mainhand.",
 
   "item.simplymore.myrmedge": "Myrmedge",
-  "item.simplymore.myrmedge.tooltip1": "Unique Effect: Hunter's Instincts",
+  "item.simplymore.myrmedge.tooltip1": "Unique Effect: Ravenous",
   "item.simplymore.myrmedge.tooltip2": "The more hungry you are, the faster you move and the more damage you deal.",
-  "item.simplymore.myrmedge.tooltip4": "Grasp an enemy in front of you, sapping hunger and health to fill your hunger bar. If you reach full hunger, you begin to fill your health.",
-  "item.simplymore.myrmedge.tooltip7": "After %s seconds, spit the target away.",
-  "item.simplymore.myrmedge.tooltip8": "While you are grasping someone, you cannot attack, but your target gains weakness and mining fatigue.",
+  "item.simplymore.myrmedge.tooltip3": "Grasp an enemy in front of you, sapping hunger and health to fill your hunger bar. While you are grasping someone, neither you nor your target can attack",
+  "item.simplymore.myrmedge.tooltip4": "After %s seconds, or after reactivating the ability, spit the target away.",
 
   "item.simplymore.black_pearl": "Black Pearl",
   "item.simplymore.black_pearl.tooltip1": "Unique Effect: Plunder",
@@ -1058,7 +1057,8 @@
   "simplymore.unique_effect.timekeeper.chance.desc": "Affects Curse of Ra, Curse of Khonsu and Curse of Thoth",
 
   "simplymore.unique_effect.vipers_call": "§6[Viper's Call]§7",
-  "simplymore.unique_effect.vipers_call.cooldown": "Circle of Venom cooldown",
+  "simplymore.unique_effect.vipers_call.cooldown": "Cooldown",
+  "simplymore.unique_effect.vipers_call.duration": "Everlasting Circle duration",
   "simplymore.unique_effect.vipers_call.includeGlobalBlacklist": "Unending Venom includes Global Effect Blacklist",
   "simplymore.unique_effect.vipers_call.blacklist": "Unending Venom Blacklist",
 

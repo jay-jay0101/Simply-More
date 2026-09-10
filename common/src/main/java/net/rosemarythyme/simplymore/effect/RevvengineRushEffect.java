@@ -21,7 +21,6 @@ import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import org.joml.Vector3d;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -41,8 +40,8 @@ public class RevvengineRushEffect extends StatusEffect {
             entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get(), SoundCategory.PLAYERS, 1, 1.2f);
 
         // Movement
-        Vector3d normalisedVector = MathUtils.getNormalised2dVector(entity.getYaw());
-        entity.setVelocity(normalisedVector.x() * 0.6, entity.getVelocity().getY(), normalisedVector.z()  * 0.6);
+        Vec3d normalisedVector = MathUtils.getNormalised2dVector(entity.getYaw());
+        entity.setVelocity(normalisedVector.x * 0.6, entity.getVelocity().getY(), normalisedVector.z  * 0.6);
         entity.velocityModified = true;
 
         // Particles
@@ -96,9 +95,9 @@ public class RevvengineRushEffect extends StatusEffect {
         Vec3d position = entity.getEyePos();
 
         Vec3d particlePos = new Vec3d(
-                position.getX() + normalisedVector.x(),
+                position.getX() + normalisedVector.x,
                 position.getY(),
-                position.getZ() + normalisedVector.z()
+                position.getZ() + normalisedVector.z
         );
 
         Box box = MathUtils.createCubeBox(particlePos, 1);
@@ -163,12 +162,12 @@ public class RevvengineRushEffect extends StatusEffect {
 
         user.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS));
         Vec3d position = user.getEyePos();
-        Vector3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
+        Vec3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
 
         Vec3d particlePos = new Vec3d(
-                position.getX() + normalisedVector.x(),
+                position.getX() + normalisedVector.x,
                 position.getY(),
-                position.getZ() + normalisedVector.z()
+                position.getZ() + normalisedVector.z
         );
 
         Box box = MathUtils.createCubeBox(particlePos, 1);
