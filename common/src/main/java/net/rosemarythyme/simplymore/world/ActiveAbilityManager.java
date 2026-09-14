@@ -323,7 +323,7 @@ public class ActiveAbilityManager {
 
     private static int graspingTick(ActiveAbility ability) {
         LivingEntity target = MyrmedgeItem.getActiveMyrmedgeTarget(ability.owner);
-        if(target == null) {
+        if(target == null || ability.remainingDuration == 1) {
             MyrmedgeItem.stopAbility(ability.owner);
             return 0;
         }
