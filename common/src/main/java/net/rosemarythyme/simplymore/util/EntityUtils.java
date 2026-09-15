@@ -85,8 +85,12 @@ public class EntityUtils {
         return entity.getVehicle() instanceof LivingEntity;
     }
 
-    public static BlockHitResult raycastDown(LivingEntity entity, Vec3d pos, World world, double maxRange) {
+    public static BlockHitResult raycastDown(Entity entity, Vec3d pos, World world, double maxRange) {
         return world.raycast(new RaycastContext(pos, pos.offset(Direction.DOWN, maxRange), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
+    }
+
+    public static BlockHitResult raycastUp(Entity entity, Vec3d pos, World world, double maxRange) {
+        return world.raycast(new RaycastContext(pos, pos.offset(Direction.UP, maxRange), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
     }
 
     public static void reapplyAndIncrementEffect(LivingEntity entity, RegistryEntry<StatusEffect> effect, int duration, int additionalAmplifier, int maxAmplifier) {
@@ -108,6 +112,24 @@ public class EntityUtils {
         entity.addStatusEffect(new StatusEffectInstance(effect, instance.getDuration(), Math.min(amplifier, maxAmplifier)));
     }
 
+    public static boolean isActiveStack(LivingEntity entity, ItemStack stack) {
+        if(entity.getStackInHand(Hand.MAIN_HAND).getItem() == stack.getItem()) {
+            return entity.getStackInHand(Hand.MAIN_HAND) == stack;
+        }
+
+        return isHolding(entity, stack);
+    }
+
+    public static ItemStack getItemInEitherHand(Item item, LivingEntity entity) {
+        ItemStack stack = entity.getStackInHand(Hand.MAIN_HAND);
+        if(stack.getItem() == item) return stack;
+
+        stack = entity.getStackInHand(Hand.OFF_HAND);
+        if(stack.getItem() == item) return stack;
+
+        return ItemStack.EMPTY;
+    }
+
     public static boolean isHoldingInMainHand(LivingEntity entity, ItemStack stack) {
         return entity.getStackInHand(Hand.MAIN_HAND).equals(stack);
     }
@@ -115,6 +137,11 @@ public class EntityUtils {
     public static boolean isHolding(LivingEntity entity, Item item) {
         if(entity.getStackInHand(Hand.MAIN_HAND).getItem() == item) return true;
         return !(item instanceof TwoHandedWeapon) && entity.getStackInHand(Hand.OFF_HAND).getItem() == item;
+    }
+
+    public static boolean isHolding(LivingEntity entity, ItemStack stack) {
+        if(entity.getStackInHand(Hand.MAIN_HAND) == stack) return true;
+        return !(stack.getItem() instanceof TwoHandedWeapon) && entity.getStackInHand(Hand.OFF_HAND) == stack;
     }
 
     public static void spawnAround(World world, LivingEntity entity, Vec3d pos, double horizontalRange, double verticalRange) {

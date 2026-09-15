@@ -84,7 +84,7 @@ public class WeaponAttributesConfig extends Config {
         public int tidebreaker_damage_modifier = 3;
         public int ruyijingubang_damage_modifier = 3;
         public int rupturedidol_damage_modifier = 4;
-        public int boasfang_damage_modifier = 1;
+        public int crustspire_damage_modifier = 2;
         public int earthshatter_damage_modifier = 6;
         public int soulfracture_damage_modifier = 3;
         public int serpentinevalour_damage_modifier = 5;
@@ -119,7 +119,7 @@ public class WeaponAttributesConfig extends Config {
         public float tidebreaker_attack_speed = -1.9f;
         public float ruyijingubang_attack_speed = -2.0f;
         public float rupturedidol_attack_speed = -2.7f;
-        public float boasfang_attack_speed = -2.2f;
+        public float crustspire_attack_speed = -1.8f;
         public float earthshatter_attack_speed = -3.4f;
         public float soulfracture_attack_speed = -2.6f;
         public float serpentinevalour_attack_speed = -3.3f;

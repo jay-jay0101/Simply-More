@@ -98,7 +98,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
         double range = (size * (SETTINGS.maxSlamRange - 5)) + 5;
         double width = (size * (SETTINGS.maxSlamWidth - 0.25)) + 0.25;
         float damage = (size * (SETTINGS.maxSlamDamage - 5)) + 5;
-        int sunderedArmor = Math.round(size * SETTINGS.maxSlamSundereredArmor);
+        int sunderedArmor = Math.round(size * SETTINGS.maxSlamSunderedArmor);
 
         AttackUtils.lineAttack(user, user.getEyePos(), user.getYaw(), user.getPitch(), range, width, AttackUtils.AttackTarget.ENEMIES)
                 .damage(damage, AttackUtils.getHitSource(user))
@@ -214,7 +214,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
         @ValidatedFloat.Restrict(min = 5)
         public float maxSlamDamage = 48;
         @ValidatedInt.Restrict(min = 0)
-        public int maxSlamSundereredArmor = 80;
+        public int maxSlamSunderedArmor = 80;
         @ValidatedInt.Restrict(min = 0)
         public int slamSunderedArmorDuration = 200;
         @ValidatedInt.Restrict(min = 0)

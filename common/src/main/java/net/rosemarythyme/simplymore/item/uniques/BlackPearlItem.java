@@ -89,7 +89,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem implements UniqueW
     public boolean activate(WeaponAbilityContext context) {
         Vec3d velocity = MathUtils.getDirectionalVector(context.actor().getYaw(), context.actor().getPitch());
 
-        context.actor().addVelocity(MathUtils.getDirectionalVector(context.actor().getYaw(), context.actor().getPitch()).multiply(-SETTINGS.cannonballRecoil));
+        context.actor().addVelocity(velocity.multiply(-SETTINGS.cannonballRecoil));
         context.actor().velocityModified = true;
 
         AudioVisualUtils.applyScreenshake(context.world(), context.origin(), context.actor(), 0.5f, 1.5f, 10);

@@ -14,6 +14,7 @@ public class HudOverlayItemRegistry {
         OVERLAYS.put(ItemRegistry.SOULFRACTURE.get(), new SoulfractureHud());
         OVERLAYS.put(ItemRegistry.MOUNDSHIFTER.get(), new CounterBarHudOverlay("item.simplymore.moundshifter.overlay", 0xFF281B0D, 0x88895129, 0xFF895129, 0xFF654321));
         OVERLAYS.put(ItemRegistry.RUYI_JINGU_BANG.get(), new CounterBarHudOverlay("item.simplymore.ruyi_jingu_bang.overlay", 0xFFAA6C39, 0x88D3AF37, 0xFFD3AF37, 0xFFAE8625));
+        OVERLAYS.put(ItemRegistry.CRUSTSPIRE.get(), new CounterHudOverlay("item.simplymore.crustspire.overlay", 0xFF281B0D, 0xFF895129, 0xFF654321));
     }
 
     @Nullable

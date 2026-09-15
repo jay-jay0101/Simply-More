@@ -1,17 +1,17 @@
 {
   "display": {
     "icon": {
-      "id": "simplymore:boas_fang"
+      "id": "simplymore:crustspire"
     },
     "title": {
-      "translate": "advancements.simplymore.boas_fang.title",
+      "translate": "advancements.simplymore.crustspire.title",
       "with": []
     },
     "description": {
       "translate": "advancements.simplyswords.find_unique.description",
       "with": [
         {
-          "translate": "item.simplymore.boas_fang"
+          "translate": "item.simplymore.crustspire"
         }
       ]
     },
@@ -28,7 +28,7 @@
         "items": [
           {
             "items": [
-              "simplymore:boas_fang"
+              "simplymore:crustspire"
             ]
           }
         ]

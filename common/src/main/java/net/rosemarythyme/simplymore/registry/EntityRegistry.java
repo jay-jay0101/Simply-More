@@ -13,7 +13,9 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.*;
 import net.rosemarythyme.simplymore.entity.legacy.*;
 import net.rosemarythyme.simplymore.entity.projectiles.CannonballEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.DripstoneSpikeEntity;
 import net.rosemarythyme.simplymore.entity.projectiles.DugBlockEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.FallingDripstoneSpikeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +121,27 @@ public class EntityRegistry {
             "dug_block"
     );
 
+    public static final RegistrySupplier<EntityType<DripstoneSpikeEntity>> DRIPSTONE_SPIKE = registerType(
+            EntityType.Builder.<DripstoneSpikeEntity>create(DripstoneSpikeEntity::new, SpawnGroup.MISC)
+                    .dimensions(0.25f, 0.25f)
+                    .makeFireImmune()
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "dripstone_spike"
+    );
+
+    public static final RegistrySupplier<EntityType<FallingDripstoneSpikeEntity>> FALLING_DRIPSTONE_SPIKE = registerType(
+            EntityType.Builder.<FallingDripstoneSpikeEntity>create(FallingDripstoneSpikeEntity::new, SpawnGroup.MISC)
+                    .dimensions(0.25f, 0.25f)
+                    .makeFireImmune()
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "falling_dripstone_spike"
+    );
 
 
 

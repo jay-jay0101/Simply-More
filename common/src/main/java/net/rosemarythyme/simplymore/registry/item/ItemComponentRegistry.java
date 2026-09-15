@@ -17,6 +17,11 @@ public class ItemComponentRegistry {
                     .codec(CounterComponent.CODEC)
                     .packetCodec(CounterComponent.PACKET_CODEC).build());
 
+    public static final RegistrySupplier<ComponentType<ActiveHitsComponent>> ACTIVE_HITS = COMPONENT_TYPES.register("active_hits",
+            () -> ComponentType.<ActiveHitsComponent>builder()
+                    .codec(ActiveHitsComponent.CODEC)
+                    .packetCodec(ActiveHitsComponent.PACKET_CODEC).build());
+
     public static final RegistrySupplier<ComponentType<ConsecutiveHitsComponent>> CONSECUTIVE_HITS = COMPONENT_TYPES.register("consecutive_hits",
             () -> ComponentType.<ConsecutiveHitsComponent>builder()
                     .codec(ConsecutiveHitsComponent.CODEC)

@@ -15,7 +15,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
@@ -134,7 +133,7 @@ public class DugBlockEntity extends AbstractAbilityProjectileEntity {
     }
 
     private void moveBehind(LivingEntity owner) {
-        setPosition(getBehindPos(owner, this));
+        setPosition(MathUtils.getPosBehindEntity(owner, this, this.offset, 1.3f, 1f));
         this.setRotation(owner.getYaw(), 0);
     }
 
@@ -176,24 +175,8 @@ public class DugBlockEntity extends AbstractAbilityProjectileEntity {
         return movementOverride != null && movementOverride.type == MovementOverride.Type.SHOOT;
     }
 
-    private static Vec3d getBehindPos(LivingEntity owner, DugBlockEntity block) {
-        Vec3d direct = EntityUtils.rangeAroundPoint(owner.getEyePos().offset(Direction.UP, 0.5f), block, owner.getYaw() + 180, 1);
-
-        float offsetPos;
-        if(block.offset % 2 == 0) {
-            offsetPos = (float) block.offset / 2;
-        } else {
-            offsetPos = (float) (block.offset + 1) / 2;
-            offsetPos = (float) -Math.floor(offsetPos);
-        }
-
-        Vec3d tangent = MathUtils.getDirectionalVector(owner.getYaw() + 90, 0);
-
-        return direct.add(tangent.multiply(offsetPos * 1.3f));
-    }
-
     private static void movementOnSpawn(DugBlockEntity block, LivingEntity owner) {
-        Vec3d targetPos = getBehindPos(owner, block);
+        Vec3d targetPos = MathUtils.getPosBehindEntity(owner, block, block.offset, 1.3f, 1f);
 
         MovementOverride override = block.movementOverride;
         block.setPosition(override.startPos.lerp(targetPos, 1f - MathUtils.clampedLerp(override.remainingDuration, 0, override.duration, 0f, 1f)));

@@ -7,6 +7,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
@@ -57,6 +58,22 @@ public class MathUtils {
         float output = decimal * 100;
         return String.valueOf((int) Math.floor(output))
                 .concat("%");
+    }
+
+    public static Vec3d getPosBehindEntity(LivingEntity owner, Entity entity, int ordinal, double offset, double behindRange) {
+        Vec3d direct = EntityUtils.rangeAroundPoint(owner.getEyePos().offset(Direction.UP, 0.5f), entity, owner.getYaw() + 180, (float) behindRange);
+
+        float offsetPos;
+        if(ordinal % 2 == 0) {
+            offsetPos = (float) ordinal / 2;
+        } else {
+            offsetPos = (float) (ordinal + 1) / 2;
+            offsetPos = (float) -Math.floor(offsetPos);
+        }
+
+        Vec3d tangent = MathUtils.getDirectionalVector(owner.getYaw() + 90, 0);
+
+        return direct.add(tangent.multiply(offsetPos * offset));
     }
 
     public static CounterComponent getCounterComponent(ItemStack stack) {

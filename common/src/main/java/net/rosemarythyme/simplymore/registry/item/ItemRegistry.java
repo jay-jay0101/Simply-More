@@ -309,13 +309,18 @@ public class ItemRegistry {
             () -> new RemovedItem(() -> new ItemStack(MYRMEDGE.get()))
     );
 
+    public static final RegistrySupplier<Item> CRUSTSPIRE = ITEMS.register(
+            "crustspire",
+            () -> new CrustspireItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.crustspire_damage_modifier,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.crustspire_attack_speed
+            )
+    );
 
+    @Deprecated
     public static final RegistrySupplier<Item> BOAS_FANG = ITEMS.register(
             "boas_fang",
-            () -> new BoasFangItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.boasfang_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.boasfang_attack_speed
-            )
+            () -> new RemovedItem(() -> new ItemStack(CRUSTSPIRE.get()))
     );
 
     public static final RegistrySupplier<Item> EARTHSHATTER = ITEMS.register(
@@ -743,7 +748,7 @@ public class ItemRegistry {
         addToItemGroup(getAwakenedStack(RUPTURED_IDOL, 8, AwakeningProfileRegistry.HOLYLIGHT));
         addToItemGroup(getAwakenedStack(RUPTURED_IDOL, 8, AwakeningProfileRegistry.DARKSENT));
 
-        addToItemGroup(BOAS_FANG);
+        addToItemGroup(CRUSTSPIRE);
         addToItemGroup(EARTHSHATTER);
         addToItemGroup(SOULFRACTURE);
         addToItemGroup(SERPENTINE_VALOUR);

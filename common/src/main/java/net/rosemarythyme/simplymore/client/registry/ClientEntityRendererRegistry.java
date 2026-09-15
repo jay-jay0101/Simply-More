@@ -40,6 +40,8 @@ public class ClientEntityRendererRegistry {
         EntityRendererRegistry.register(EntityRegistry.LIGHTNING_POINT, LightningPointEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.EARTHQUAKE, EarthquakeEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.DUG_BLOCK, DugBlockEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.DRIPSTONE_SPIKE, DripstoneSpikeEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.FALLING_DRIPSTONE_SPIKE, DripstoneSpikeEntityRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.STATUE, StatueRenderer::new);
 

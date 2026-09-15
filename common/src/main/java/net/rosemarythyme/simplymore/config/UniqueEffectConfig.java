@@ -26,7 +26,7 @@ public class UniqueEffectConfig extends Config {
 
     public BlackPearlItem.EffectSettings black_pearl = new BlackPearlItem.EffectSettings();
     public BladeOfTheGrotesqueItem.EffectSettings blade_of_the_grotesque = new BladeOfTheGrotesqueItem.EffectSettings();
-    public BoasFangItem.EffectSettings boas_fang = new BoasFangItem.EffectSettings();
+    public CrustspireItem.EffectSettings crustspire = new CrustspireItem.EffectSettings();
     public EarthshatterItem.EffectSettings earthshatter = new EarthshatterItem.EffectSettings();
     public GlimmerstepItem.EffectSettings glimmerstep = new GlimmerstepItem.EffectSettings();
     public GrandfrostItem.EffectSettings grandfrost = new GrandfrostItem.EffectSettings();
