@@ -13,11 +13,11 @@ import net.rosemarythyme.simplymore.client.util.HudUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
 public class CounterBarHudOverlay implements HudOverlay<Pair<Float, Long>> {
-    private final String translationKey;
-    private final int borderColor;
-    private final int backgroundColor;
-    private final int fillColor;
-    private final int textColor;
+    protected final String translationKey;
+    protected final int borderColor;
+    protected final int backgroundColor;
+    protected final int fillColor;
+    protected final int textColor;
 
     public CounterBarHudOverlay(String translationKey, int borderColor, int backgroundColor, int fillColor, int textColor) {
         this.translationKey = translationKey;
@@ -39,14 +39,30 @@ public class CounterBarHudOverlay implements HudOverlay<Pair<Float, Long>> {
         matrices.push();
 
         float progress = MathUtils.clampedLerp(player.getWorld().getTime() + tickCounter.getTickDelta(false), time, time + 10, prevData.getLeft(), data.getLeft());
-        HudUtils.renderProgressBar(context, progress, borderColor, backgroundColor, fillColor);
+        HudUtils.renderProgressBar(context, progress, getBorderColor(data.getLeft()), getBackgroundColor(data.getLeft()), getFillColor(data.getLeft()));
 
         TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
 
         Text text = Text.translatable(translationKey, MathUtils.toPercentage(progress));
         int width = renderer.getWidth(text);
-        context.drawText(renderer, text, -width/2, -15, textColor, true);
+        context.drawText(renderer, text, -width/2, -15, getTextColor(data.getLeft()), true);
         matrices.pop();
+    }
+
+    protected int getBorderColor(float data) {
+        return borderColor;
+    }
+
+    protected int getBackgroundColor(float data) {
+        return backgroundColor;
+    }
+
+    protected int getFillColor(float data) {
+        return fillColor;
+    }
+
+    protected int getTextColor(float data) {
+        return textColor;
     }
 
     @Override

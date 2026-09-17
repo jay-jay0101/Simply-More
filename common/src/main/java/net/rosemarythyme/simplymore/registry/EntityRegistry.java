@@ -143,11 +143,6 @@ public class EntityRegistry {
             "falling_dripstone_spike"
     );
 
-
-
-    public static final RegistrySupplier<EntityType<JetstreamEntity>> JETSTREAM =
-            registerMarkerEntity("jetstream", JetstreamEntity::new);
-
     public static final RegistrySupplier<EntityType<RiftEntity>> RIFT =
             registerMarkerEntity("rift", RiftEntity::new);
 

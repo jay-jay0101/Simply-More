@@ -364,8 +364,12 @@
 
   "item.simplymore.brassturn": "Brassturn",
   "item.simplymore.brassturn.tooltip1": "Unique Effect: Aging Mechanisms",
-  "item.simplymore.brassturn.tooltip2": "Hitting targets causes this weapon to oxidize, lowering its swing speed to a halt. Chance on hit to summon a jet of steam which flings people up.",
-  "item.simplymore.brassturn.tooltip5": "Gradually remove the oxidization from the weapon. This sometimes sprays sparks which can stun enemies.",
+  "item.simplymore.brassturn.tooltip2": "Hitting targets causes this weapon to oxidize, lowering its swing speed to a halt.",
+  "item.simplymore.brassturn.tooltip3": "While held, a gear appears around you.",
+  "item.simplymore.brassturn.unempowered_tooltip": "Further effects unlock at Awakening level 4. Upgrade this weapon at a Runic Forge.",
+  "item.simplymore.brassturn.tooltip4": "Gradually remove the oxidization from the weapon.",
+  "item.simplymore.brassturn.tooltip5": "The gear begins to revolve with ramping speed. Enemies hit by the gear are flung, depending on how fast it is rotating.",
+  "item.simplymore.brassturn.overlay": "Oxidation %s",
 
   "item.simplymore.cindergorge": "Cindergorge",
   "item.simplymore.cindergorge.tooltip1": "Unique Effect: Searing Barbs",
@@ -1078,9 +1082,11 @@
 
   "simplymore.unique_effect.brassturn": "§6[Brassturn]§7",
   "simplymore.unique_effect.brassturn.chance": "Jetstream chance",
-  "simplymore.unique_effect.brassturn.stunTime": "Deoxidization sparking stun duration",
   "simplymore.unique_effect.brassturn.scrapeTime": "Deoxidization interval",
-  "simplymore.unique_effect.brassturn.sparkChance": "Deoxidization sparking chance",
+  "simplymore.unique_effect.brassturn.minKnockback": "Minimum gear knockback",
+  "simplymore.unique_effect.brassturn.maxKnockback": "Maximum gear knockback",
+  "simplymore.unique_effect.brassturn.minDamage": "Minimum gear damage",
+  "simplymore.unique_effect.brassturn.maxDamage": "Maximum gear damage",
 
   "simplymore.unique_effect.cindergorge": "§6[Cindergorge]§7",
   "simplymore.unique_effect.cindergorge.chance": "Searing Barbs chance",

@@ -57,7 +57,10 @@ public class AwakeningProfileRegistry {
             )
             .build();
 
+    public static final AwakeningProfile BRASSTURN = new AwakeningProfile(0.5F, 0.75F, 0);
+
     public static void register() {
         SimplySwordsAPI.registerAwakeningFormFamily(RUPTURED_IDOL);
+        SimplySwordsAPI.registerAwakeningProfile(ItemRegistry.BRASSTURN.get(), BRASSTURN);
     }
 }

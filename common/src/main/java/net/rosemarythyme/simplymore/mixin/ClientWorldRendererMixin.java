@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -12,16 +13,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.Biome;
-import net.rosemarythyme.simplymore.client.render.features.*;
+import net.rosemarythyme.simplymore.client.render.features.FeatureRenderManager;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
-import net.sweenus.simplyswords.client.api.ObserverStatusEffectClientApi;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -32,6 +31,10 @@ import java.util.List;
 
 @Mixin(WorldRenderer.class)
 public abstract class ClientWorldRendererMixin {
+    @Shadow @Nullable private VertexBuffer lightSkyBuffer;
+
+    @Shadow @Nullable private ClientWorld world;
+
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;draw()V"))
     private void simplymore$auras(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci, @Local VertexConsumerProvider.Immediate vertexConsumers) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -52,28 +55,7 @@ public abstract class ClientWorldRendererMixin {
                     pos.z - cameraPos.z
             );
 
-            if(EntityUtils.isHolding(entity, ItemRegistry.SOULFRACTURE.get())) {
-                SoulfractureAuraRenderer.render(entity, stack, vertexConsumers);
-            }
-
-            if(EntityUtils.isHolding(entity, ItemRegistry.BLADE_OF_THE_GROTESQUE.get())) {
-                BladeOfTheGrotesqueAuraRenderer.render(entity, stack, vertexConsumers, WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getBlockPos()));
-            }
-
-            if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.VIPERS_CALL)) {
-                VipersCallAuraRenderer.render(entity, stack, vertexConsumers);
-            }
-
-            if(ClientActiveAbilityManager.CLIENT.isInAbility(player, ActiveAbilityManager.Type.HARVEST)) {
-                if(AttackUtils.canTarget(player, entity, AttackUtils.AttackTarget.ENEMIES)) {
-                    BloodHarvesterSenseRenderer.render(entity, stack, vertexConsumers, camera);
-                }
-            }
-
-            if(ObserverStatusEffectClientApi.isActive(entity, StatusEffectRegistry.BLESSING.getId())) {
-                BlessingEffectFeatureRenderer.render(entity, stack, tickCounter.getTickDelta(true), vertexConsumers);
-            }
-
+            FeatureRenderManager.render(entity, stack, vertexConsumers, player, camera, tickCounter, world);
             stack.pop();
         }
     }
