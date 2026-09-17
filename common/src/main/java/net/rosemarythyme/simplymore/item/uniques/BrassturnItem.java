@@ -122,6 +122,12 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ITEM_AXE_SCRAPE));
         }
 
+        if(isSecondaryEffectUnlocked(stack)) {
+           spinGear(world, user, stack, remainingUseTicks);
+        }
+    }
+
+    public void spinGear(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         int useTime = AttackUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
         float extraSpeedMult = MathUtils.clampedLerp(useTime, 0, SETTINGS.scrapeTime * 16, 1f, GEAR_SPEED);
         stack.set(ItemComponentRegistry.COG_ROTATION.get(), getCogRotation(stack).update(world.getTime(), MathUtils.getCounterComponentProgress(stack), extraSpeedMult, true));
