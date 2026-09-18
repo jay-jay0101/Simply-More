@@ -2,6 +2,7 @@ package net.rosemarythyme.simplymore.world;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
 import java.util.*;
@@ -54,7 +55,7 @@ public class ClientActiveAbilityManager extends ActiveAbilityManager {
                 durationStrength = 1f - MathUtils.clampedLerp(durationPercentage, 0.9f, 1f, 0f, 1f);
             }
 
-            float rangePercentage = (float) (ability.owner().getPos().distanceTo(player.getPos()) / type.range);
+            float rangePercentage = (float) (ability.owner().getPos().distanceTo(player.getPos()) / type.implementation.syncRange);
             float rangeStrength = 1f;
 
             if(rangePercentage >= 0.9f) {
@@ -69,5 +70,10 @@ public class ClientActiveAbilityManager extends ActiveAbilityManager {
 
         STRENGTH_CACHE.put(type, value);
         return value;
+    }
+
+    @Override
+    public void add(LivingEntity owner, Type type, int duration, int currentDuration) {
+        super.add(owner, type, duration, currentDuration);
     }
 }

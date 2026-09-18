@@ -36,7 +36,6 @@ public class PlayerItemUseManager {
         }
 
         CACHE.remove(player);
-
         player.stopUsingItem();
     }
 

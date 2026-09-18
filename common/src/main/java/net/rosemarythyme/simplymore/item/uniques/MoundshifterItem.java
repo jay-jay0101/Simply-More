@@ -152,7 +152,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
         ActiveAbilityManager.SERVER.stop(user, ActiveAbilityManager.Type.DRILL);
 
         if(remainingDuration > getMaxUseTime(stack, user) - 10) return;
-        emerge(world, user.getVehicle() instanceof LivingEntity vehicle ? vehicle : user, remainingDuration < getMaxUseTime(stack, user) - 30);
+        emerge(world, user.getVehicle() instanceof LivingEntity vehicle ? vehicle : user, user.isOnGround() && remainingDuration < getMaxUseTime(stack, user) - 30);
     }
 
     public static void emerge(ServerWorld world, LivingEntity user, boolean includeEarthquake) {
