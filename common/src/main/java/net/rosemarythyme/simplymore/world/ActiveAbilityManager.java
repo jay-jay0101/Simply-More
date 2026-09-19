@@ -8,7 +8,9 @@ import net.rosemarythyme.simplymore.networking.s2c.S2CAbilityManagerPacket;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.abilities.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ActiveAbilityManager {
     public static final ActiveAbilityManager SERVER = new ActiveAbilityManager();
@@ -35,6 +37,7 @@ public class ActiveAbilityManager {
         PETRIFIED(new PetrifiedAbilityType()),
         VIPERS_CALL(new VipersCallAbilityType()),
         GRASPING(new GraspingAbilityType()),
+        MIMICRY(new MimicryAbilityType()),
         ;
 
         final ActiveAbilityType implementation;
@@ -116,9 +119,10 @@ public class ActiveAbilityManager {
     }
 
     public Optional<ActiveAbility> get(LivingEntity owner, Type type) {
-        return new ArrayList<>(activeAbilities).stream().filter((a) ->
-                a.owner() == owner &&
-                        a.type() == type
+        return new ArrayList<>(activeAbilities).stream().filter((ability) ->
+                ability.owner() != null &&
+                        ability.owner().getUuid().equals(owner.getUuid()) &&
+                        ability.type() == type
         ).findFirst();
     }
 
@@ -152,6 +156,7 @@ public class ActiveAbilityManager {
         }
 
         finishing.forEach(ability -> stop(ability.owner, ability.type));
+        remaining.removeAll(finishing);
 
         activeAbilities.clear();
         activeAbilities.addAll(remaining);

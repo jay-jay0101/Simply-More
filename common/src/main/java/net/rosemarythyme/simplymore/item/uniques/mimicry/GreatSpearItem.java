@@ -3,14 +3,13 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
+import net.rosemarythyme.simplymore.util.PredicateUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
@@ -25,41 +24,32 @@ public class GreatSpearItem extends MimicryItem implements TwoHandedWeapon {
 
 
     @Override
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
+
+        if(ticksUsed == 1) {
+            MimicryTimelineUtils.startAnimation(entity, 6, MimicryVisualEntity.Animation.DOWN_SWING);
+        }
+
         if(ticksUsed == 6) {
-            List<LivingEntity> enemies = slamAttack(player, 4f);
-            float damage = MIMICRY_CONFIG.great_spear.slamDamage;
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        target.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffects.MINING_FATIGUE,
-                                        MIMICRY_CONFIG.great_spear.effectTime,
-                                        25
-                                )
-                        );
-                        jump(target, 0, 0.525f);
-                    }
-            );
+            MimicryTimelineUtils.slamAttack(entity, 4f)
+                    .filter(PredicateUtils.IS_NOT_BLOCKING)
+                    .damageWithEnchants(MIMICRY_CONFIG.great_spear.slamDamage, entity)
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN), MIMICRY_CONFIG.great_spear.effectTime, 25)
+                    .addVelocity(0, 0.65f, 0);
+        }
+
+        if(ticksUsed == 16) {
+            MimicryTimelineUtils.startAnimation(entity, 4, MimicryVisualEntity.Animation.STAB);
         }
 
         if(ticksUsed == 18) {
-            List<LivingEntity> enemies = stabAttack(player, 6,0.8f);
-            float damage = MIMICRY_CONFIG.great_spear.stabDamage;
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player,target, MIMICRY_CONFIG.great_spear.knockback);
-                    }
-            );
+            MimicryTimelineUtils.stabAttack(entity, 5, 0.8f)
+                    .filter(PredicateUtils.IS_NOT_BLOCKING)
+                    .damageWithEnchants(MIMICRY_CONFIG.great_spear.stabDamage, entity)
+                    .knockback(entity, MIMICRY_CONFIG.great_spear.knockback);
         }
 
-        if(ticksUsed >= 28) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
-        }
+        return ticksUsed >= 28;
     }
 
     @Override
@@ -85,6 +75,6 @@ public class GreatSpearItem extends MimicryItem implements TwoHandedWeapon {
         @ValidatedInt.Restrict(min = 0)
         public int effectTime = 20;
         @ValidatedFloat.Restrict(min = 0f)
-        public float knockback = 1.3f;
+        public float knockback = 1.5f;
     }
 }

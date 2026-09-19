@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -31,18 +32,44 @@ import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class EntityUtils {
     private static final Map<LivingEntity, Long> SWING_CACHE = new HashMap<>();
 
+    public static void replaceStackInInventory(LivingEntity entity, ItemStack oldStack, ItemStack newStack) {
+        if(entity instanceof PlayerEntity player) {
+            PlayerInventory inventory = player.getInventory();
+
+            int slot = inventory.getSlotWithStack(oldStack);
+            if(slot != -1) {
+                inventory.setStack(slot, newStack);
+                return;
+            }
+        }
+
+        if(entity.getStackInHand(Hand.MAIN_HAND) == oldStack) {
+            entity.setStackInHand(Hand.MAIN_HAND, newStack);
+        } else if (entity.getStackInHand(Hand.OFF_HAND) == oldStack) {
+            entity.setStackInHand(Hand.OFF_HAND, newStack);
+        }
+    }
+
+    public static List<ItemStack> getEntireInventory(PlayerEntity player) {
+        PlayerInventory inventory = player.getInventory();
+
+        List<ItemStack> stacks = new ArrayList<>(inventory.main);
+        stacks.addAll(inventory.offHand);
+        stacks.addAll(inventory.armor);
+        return stacks;
+    }
+
     public static void putAllItemsOnCooldown(LivingEntity target, int time) {
         if (target instanceof PlayerEntity playerTarget) {
-            for (ItemStack item : playerTarget.getInventory().main) {
+            for (ItemStack item : getEntireInventory(playerTarget)) {
                 if (!playerTarget.getItemCooldownManager().isCoolingDown(item.getItem())) {
                     playerTarget.getItemCooldownManager().set(item.getItem(), time);
                 }
@@ -243,5 +270,9 @@ public class EntityUtils {
 
         entity.refreshPositionAfterTeleport(entity.getX(), entity.getY() + 1, entity.getZ());
         return StepUpResult.SUCCESS;
+    }
+
+    public static void lifesteal(LivingEntity attacker, float value) {
+        attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * value);
     }
 }

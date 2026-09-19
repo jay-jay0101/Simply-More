@@ -3,14 +3,12 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -22,35 +20,25 @@ public class BackhandBladeItem extends MimicryItem {
         super(toolMaterial, attackDamage, attackSpeed);
     }
 
-
     @Override
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
         if(ticksUsed > 2 && 9 >= ticksUsed) {
-            jump(player,3f,0f);
+            if(ticksUsed % 3 == 0) {
+                MimicryVisualEntity.Animation anim = ticksUsed % 6 == 0 ? MimicryVisualEntity.Animation.REVERSE_LONG_SWING : MimicryVisualEntity.Animation.LONG_SWING;
+                MimicryTimelineUtils.startAnimation(entity, 3, anim);
+            }
 
-            List<LivingEntity> enemies = sweepAttack(player, 2f);
-            float damage = MIMICRY_CONFIG.backhand_blade.damage;
-
-            enemies.forEach(
-                    target -> {
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        target.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffects.BLINDNESS,
-                                        MIMICRY_CONFIG.backhand_blade.effectTime,
-                                        0
-                                )
-                        );
-                    }
-            );
+            MimicryTimelineUtils.move(entity,3f,0f);
+            MimicryTimelineUtils.sweepAttack(entity, 2f)
+                    .damageWithEnchants(MIMICRY_CONFIG.backhand_blade.damage, entity)
+                    .applyEffect(StatusEffects.BLINDNESS, MIMICRY_CONFIG.backhand_blade.effectTime, 0);
         }
+
         if(ticksUsed > 10 && 16 >= ticksUsed) {
-            jump(player,-3f,0f);
+            MimicryTimelineUtils.move(entity,-3f,0f);
         }
 
-        if(ticksUsed >= 18) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
-        }
+        return ticksUsed >= 18;
     }
 
     @Override

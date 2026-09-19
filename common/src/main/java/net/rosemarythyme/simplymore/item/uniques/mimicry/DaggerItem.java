@@ -3,14 +3,15 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
+import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -23,31 +24,26 @@ public class DaggerItem extends MimicryItem {
     }
 
     @Override
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
+        if(ticksUsed == 1) {
+            MimicryTimelineUtils.startAnimation(entity, 6, MimicryVisualEntity.Animation.SWING);
+        }
+
         if(ticksUsed == 3) {
-            List<LivingEntity> enemies = sweepAttack(player, 1.4f);
-            float damage = MIMICRY_CONFIG.dagger.damage;
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        player.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffects.INVISIBILITY,
-                                        MIMICRY_CONFIG.dagger.effectTime
-                                )
-                        );
-                    }
-            );
+            TargetList targets = MimicryTimelineUtils.sweepAttack(entity, 1.4f)
+                    .filter(PredicateUtils.IS_NOT_BLOCKING)
+                    .damageWithEnchants(MIMICRY_CONFIG.dagger.damage, entity)
+                    .applyEffect(StatusEffects.BLINDNESS, MIMICRY_CONFIG.dagger.effectTime, 0)
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), MIMICRY_CONFIG.dagger.effectTime, 0);
+
+            if(targets.isPopulated()) new TargetList(entity).applyEffect(StatusEffects.INVISIBILITY, MIMICRY_CONFIG.dagger.invisTime, 0);
         }
 
         if(ticksUsed == 6) {
-            jump(player, -3f, 0.4f);
+            MimicryTimelineUtils.move(entity, -3f, 0.4f);
         }
 
-        if(ticksUsed >= 13) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
-        }
+        return ticksUsed >= 13;
     }
 
     @Override
@@ -69,6 +65,8 @@ public class DaggerItem extends MimicryItem {
         @ValidatedFloat.Restrict(min = 0f)
         public float damage = 6f;
         @ValidatedInt.Restrict(min = 0)
-        public int effectTime = 120;
+        public int invisTime = 120;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 60;
     }
 }

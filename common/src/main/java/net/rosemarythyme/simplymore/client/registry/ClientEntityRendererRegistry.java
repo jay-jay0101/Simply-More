@@ -50,5 +50,7 @@ public class ClientEntityRendererRegistry {
 
         EntityModelLayerRegistry.register(SpiritualGuardianModel.LAYER, SpiritualGuardianModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.SPIRITUAL_GUARDIAN, SpiritualGuardianRenderer::new);
+
+        EntityRendererRegistry.register(EntityRegistry.MIMICRY_VISUAL, MimicryVisualRenderer::new);
     }
 }

@@ -99,12 +99,21 @@ public class AttackUtils {
         target.timeUntilRegen = regenTime;
     }
 
-    public static void hitWithEnchants(PlayerEntity attacker, LivingEntity target, float damage) {
+    public static void applyExtraDamageWithEnchants(LivingEntity attacker, LivingEntity target, float damageBonus) {
+        int regenTime = target.timeUntilRegen;
+
+        target.timeUntilRegen = 0;
+        hitWithEnchants(attacker, target, damageBonus);
+
+        target.timeUntilRegen = regenTime;
+    }
+
+    public static void hitWithEnchants(LivingEntity attacker, LivingEntity target, float damage) {
         if(!(attacker.getWorld() instanceof ServerWorld world)) return;
 
         ItemStack weapon = attacker.getStackInHand(Hand.MAIN_HAND);
 
-        DamageSource source = target.getDamageSources().playerAttack(attacker);
+        DamageSource source = getHitSource(attacker);
         float damageTotal = EnchantmentHelper.getDamage(world, weapon, target, source, damage);
 
         if (target.damage(source, damageTotal)) {

@@ -144,21 +144,30 @@ public class ImplicitRegistry {
         SimplySwordsAPI.registerWeaponType(ItemRegistry.DEATHS_EYRIE.get(), Identifier.of(SimplySwords.MOD_ID, "claymore"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.REVVENGINE.get(), Identifier.of(SimplySwords.MOD_ID, "katana"));
 
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_RAPIER.get(), Identifier.of(SimplySwords.MOD_ID, "rapier"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_CUTLASS.get(), Identifier.of(SimplySwords.MOD_ID, "cutlass"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_SAI.get(), Identifier.of(SimplySwords.MOD_ID, "sai"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_DAGGER.get(), Identifier.of(SimplySwords.MOD_ID, "dagger"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_CLAYMORE.get(), Identifier.of(SimplySwords.MOD_ID, "claymore"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_LONGSWORD.get(), Identifier.of(SimplySwords.MOD_ID, "longsword"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GREATHAMMER.get(), Identifier.of(SimplySwords.MOD_ID, "greathammer"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_TWINBLADE.get(), Identifier.of(SimplySwords.MOD_ID, "twinblade"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_RAPIER.get(), Identifier.of(SimplySwords.MOD_ID, "rapier"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_KATANA.get(), Identifier.of(SimplySwords.MOD_ID, "katana"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_SAI.get(), Identifier.of(SimplySwords.MOD_ID, "sai"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_SPEAR.get(), Identifier.of(SimplySwords.MOD_ID, "spear"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GLAIVE.get(), Identifier.of(SimplySwords.MOD_ID, "glaive"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_HALBERD.get(), Identifier.of(SimplySwords.MOD_ID, "halberd"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_WARGLAIVE.get(), Identifier.of(SimplySwords.MOD_ID, "warglaive"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_CUTLASS.get(), Identifier.of(SimplySwords.MOD_ID, "cutlass"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_CLAYMORE.get(), Identifier.of(SimplySwords.MOD_ID, "claymore"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GREATHAMMER.get(), Identifier.of(SimplySwords.MOD_ID, "greathammer"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GREATAXE.get(), Identifier.of(SimplySwords.MOD_ID, "greataxe"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_CHAKRAM.get(), Identifier.of(SimplySwords.MOD_ID, "chakram"));
         SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_SCYTHE.get(), Identifier.of(SimplySwords.MOD_ID, "scythe"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GREATAXE.get(), Identifier.of(SimplySwords.MOD_ID, "greataxe"));
-        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_TWINBLADE.get(), Identifier.of(SimplySwords.MOD_ID, "twinblade"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_HALBERD.get(), Identifier.of(SimplySwords.MOD_ID, "halberd"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GREAT_KATANA.get(), Identifier.of(SimplySwords.MOD_ID, "katana"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GRANDSWORD.get(), GRANDSWORD.weaponType());
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_BACKHAND_BLADE.get(), Identifier.of(SimplySwords.MOD_ID, "halberd"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_LANCE.get(), LANCE.weaponType());
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_KHOPESH.get(), KHOPESH.weaponType());
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_DAGGER.get(), Identifier.of(SimplySwords.MOD_ID, "dagger"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_PERNACH.get(), PERNACH.weaponType());
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_QUARTERSTAFF.get(), Identifier.of(SimplySwords.MOD_ID, "warglaive"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_GREAT_SPEAR.get(), Identifier.of(SimplySwords.MOD_ID, "spear"));
+        SimplySwordsAPI.registerWeaponType(ItemRegistry.MIMICRY_DEER_HORNS.get(), KHOPESH.weaponType());
     }
 }

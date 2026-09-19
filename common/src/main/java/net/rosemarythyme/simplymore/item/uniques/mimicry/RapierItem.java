@@ -3,13 +3,14 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
+import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -32,42 +33,22 @@ public class RapierItem extends MimicryItem {
         tooltip.add(Text.translatable("item.simplymore.mimicry.rapier.tooltip1").setStyle(Styles.TEXT));
     }
 
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = MIMICRY_CONFIG.rapier.damage;
-
-        if(ticksUsed == 4 || ticksUsed == 16) {
-            List<LivingEntity> enemies = stabAttack(player, 3, 0.25f);
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        target.timeUntilRegen = 0;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        target.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
-                                        MIMICRY_CONFIG.rapier.effectTime,
-                                        0
-                                )
-                        );
-                    }
-            );
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
+        if(ticksUsed == 2 || ticksUsed == 5 || ticksUsed == 8 || ticksUsed == 11 || ticksUsed == 14) {
+            MimicryTimelineUtils.startAnimation(entity, 4, MimicryVisualEntity.Animation.STAB);
         }
 
-        if(ticksUsed == 7 || ticksUsed == 10 || ticksUsed == 13) {
-            List<LivingEntity> enemies = stabAttack(player, 3, 0.25f);
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        target.timeUntilRegen = 0;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                    }
-            );
+        if(ticksUsed == 4 || ticksUsed == 7 || ticksUsed == 10 || ticksUsed == 13 || ticksUsed == 16) {
+            TargetList targets = MimicryTimelineUtils.stabAttack(entity, 3f, 0.25f)
+                    .filter(PredicateUtils.IS_NOT_BLOCKING)
+                    .forceDamageWithEnchants(MIMICRY_CONFIG.rapier.damage, entity);
+
+            if(ticksUsed == 4 || ticksUsed == 16) {
+                targets.applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), MIMICRY_CONFIG.rapier.effectTime, 0);
+            }
         }
 
-        if(ticksUsed >= 22) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
-        }
-
+        return ticksUsed >= 22;
     }
 
     public static class MimicryEffectSettings extends TooltipSettings {

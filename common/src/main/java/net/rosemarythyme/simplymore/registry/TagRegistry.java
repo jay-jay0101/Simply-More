@@ -5,10 +5,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.rosemarythyme.simplymore.SimplyMore;
 
-import java.util.Map;
-
-import static java.util.Map.entry;
-
 public class TagRegistry {
     public static TagKey<Item> LONGSWORD = TagKey.of(RegistryKeys.ITEM, SimplyMore.identifier("weapon_types/longswords"));
     public static TagKey<Item> TWINBLADE = TagKey.of(RegistryKeys.ITEM, SimplyMore.identifier("weapon_types/twinblades"));
@@ -41,32 +37,4 @@ public class TagRegistry {
 
     public static void register() {
     }
-
-    public static final Map<String, TagKey<Item>> MIMICRY_TAGS = Map.ofEntries(
-            entry("longsword", LONGSWORD),
-            entry("twinblade", TWINBLADE),
-            entry("rapier", RAPIER),
-            entry("katana", KATANA),
-            entry("spear", SPEAR),
-            entry("sai", SAI),
-            entry("glaive", GLAIVE),
-            entry("warglaive", WARGLAIVE),
-            entry("cutlass", CUTLASS),
-            entry("claymore", CLAYMORE),
-            entry("greathammer", GREATHAMMER),
-            entry("greataxe", GREATAXE),
-            entry("chakram", CHAKRAM),
-            entry("scythe", SCYTHE),
-            entry("halberd", HALBERD),
-            entry("great_katana", GREAT_KATANA),
-            entry("grandsword", GRANDSWORD),
-            entry("backhand_blade", BACKHAND_BLADE),
-            entry("lance", LANCE),
-            entry("khopesh", KHOPESH),
-            entry("dagger", DAGGER),
-            entry("pernach", PERNACH),
-            entry("quarterstaff", QUARTERSTAFF),
-            entry("great_spear", GREAT_SPEAR),
-            entry("deer_horns", DEER_HORNS)
-    );
 }

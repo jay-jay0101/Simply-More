@@ -8,6 +8,8 @@
     "ClientBackgroundRendererMixin",
     "ClientBipedEntityRendererMixin",
     "ClientCameraMixin",
+    "ClientEntityRenderDispatcherMixin",
+    "ClientHeldItemRendererMixin",
     "ClientInGameHudMixin",
     "ClientLivingEntityRendererMixin",
     "ClientPlayerEntityRendererMixin",

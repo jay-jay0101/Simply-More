@@ -3,14 +3,14 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
+import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -23,34 +23,26 @@ public class KhopeshItem extends MimicryItem {
     }
 
     @Override
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
         if(ticksUsed == 3) {
-            jump(player, 2.6f, 0.4f);
+            MimicryTimelineUtils.move(entity, 2.6f, 0.4f);
+        }
+
+        if(ticksUsed == 12) {
+            MimicryTimelineUtils.startAnimation(entity, 6, MimicryVisualEntity.Animation.SWING);
         }
 
         if(ticksUsed == 14) {
-            List<LivingEntity> enemies = sweepAttack(player, 1.2f);
-            float damage = MIMICRY_CONFIG.khopesh.damage;
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        player.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffects.SPEED,
-                                        MIMICRY_CONFIG.khopesh.effectTime,
-                                        2
-                                )
-                        );
-                    }
-            );
+            TargetList targets = MimicryTimelineUtils.sweepAttack(entity, 1.2f)
+                    .filter(PredicateUtils.IS_NOT_BLOCKING)
+                    .damageWithEnchants(MIMICRY_CONFIG.khopesh.damage, entity);
+
+            if(targets.isPopulated()) {
+                new TargetList(entity).applyEffect(StatusEffects.SPEED, MIMICRY_CONFIG.khopesh.effectTime, 2);
+            }
         }
 
-
-
-        if(ticksUsed >= 20) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
-        }
+        return ticksUsed >= 20;
     }
 
     @Override

@@ -100,6 +100,9 @@ public class EntityRegistry {
             "spiritual_guardian"
     );
 
+    public static final RegistrySupplier<EntityType<MimicryVisualEntity>> MIMICRY_VISUAL =
+            registerMarkerEntity("mimicry_visual", MimicryVisualEntity::new, 0.25f, 0.25f);
+
     public static final RegistrySupplier<EntityType<SpiritualTormentorEntity>> SPIRITUAL_TORMENTOR = registerType(
             EntityType.Builder.<SpiritualTormentorEntity>create(SpiritualTormentorEntity::new, SpawnGroup.MISC)
                     .dimensions(1f, 2f)

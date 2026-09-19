@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
 
-public class DugBlockEntity extends AbstractAbilityProjectileEntity {
+public class  DugBlockEntity extends AbstractAbilityProjectileEntity {
     protected static final TrackedData<BlockState> STATE = DataTracker.registerData(DugBlockEntity.class, TrackedDataHandlerRegistry.BLOCK_STATE);
     private MovementOverride movementOverride;
     private int offset;

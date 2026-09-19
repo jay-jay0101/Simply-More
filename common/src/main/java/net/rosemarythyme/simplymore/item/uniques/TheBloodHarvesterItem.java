@@ -18,6 +18,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
@@ -28,7 +29,6 @@ import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -45,13 +45,14 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem implements 
         if(!isFirstInTick) return;
         if(target instanceof ArmorStandEntity) return;
 
+        float lifesteal = SETTINGS.harvestLifesteal;
         if(ActiveAbilityManager.SERVER.isInAbility(attacker, ActiveAbilityManager.Type.HARVEST)) {
-            attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.harvestLifesteal);
+            lifesteal = SETTINGS.lifesteal;
             new TargetList(target)
-                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.the_blood_harvester.bleedTime, 0);
-        } else {
-            attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * UNIQUE_CONFIG.the_blood_harvester.lifesteal);
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), SETTINGS.bleedTime, 0);
         }
+
+        EntityUtils.lifesteal(attacker, lifesteal);
     }
 
     @Override

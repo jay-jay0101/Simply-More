@@ -3,7 +3,6 @@ package net.rosemarythyme.simplymore.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -17,10 +16,8 @@ import net.rosemarythyme.simplymore.client.render.features.FeatureRenderManager;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -31,10 +28,6 @@ import java.util.List;
 
 @Mixin(WorldRenderer.class)
 public abstract class ClientWorldRendererMixin {
-    @Shadow @Nullable private VertexBuffer lightSkyBuffer;
-
-    @Shadow @Nullable private ClientWorld world;
-
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;draw()V"))
     private void simplymore$auras(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci, @Local VertexConsumerProvider.Immediate vertexConsumers) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -129,7 +122,7 @@ public abstract class ClientWorldRendererMixin {
     }
 
     @Inject(method = "renderEntity", at = @At("HEAD"), cancellable = true)
-    private void simplymore$preventEntityRender(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
+    private void simplymore$modifyRender(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if(player == null) return;
 

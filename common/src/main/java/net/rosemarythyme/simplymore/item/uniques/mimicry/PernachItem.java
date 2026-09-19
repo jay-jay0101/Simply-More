@@ -3,14 +3,13 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -22,56 +21,29 @@ public class PernachItem extends MimicryItem {
         super(toolMaterial, attackDamage, attackSpeed);
     }
 
-
     @Override
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        float damage = MIMICRY_CONFIG.pernach.damage;
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
+        if(ticksUsed == 1 || ticksUsed == 10 || ticksUsed == 19) {
+            MimicryVisualEntity.Animation anim = ticksUsed == 10 ? MimicryVisualEntity.Animation.REVERSE_SWING : MimicryVisualEntity.Animation.SWING;
+            MimicryTimelineUtils.startAnimation(entity, 6, anim);
+        }
 
         if(ticksUsed == 3 || ticksUsed == 12) {
-            List<LivingEntity> enemies = sweepAttack(player, 1.4f);
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) AttackUtils.breakShield(target);
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                    }
-            );
+            MimicryTimelineUtils.sweepAttack(entity, 1.4f)
+                    .breakShield()
+                    .forceDamageWithEnchants(MIMICRY_CONFIG.pernach.damage, entity);
         }
 
         if(ticksUsed == 21) {
-            List<LivingEntity> enemies = sweepAttack(player, 1.6f);
-
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        target.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffects.SLOWNESS,
-                                        MIMICRY_CONFIG.pernach.effectTime,
-                                        1
-                                )
-                        );
-                        target.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffects.WEAKNESS,
-                                        MIMICRY_CONFIG.pernach.effectTime,
-                                        0
-                                )
-                        );
-                        target.addStatusEffect(
-                                new StatusEffectInstance(
-                                        StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
-                                        MIMICRY_CONFIG.pernach.effectTime,
-                                        0
-                                )
-                        );
-                    }
-            );
+            MimicryTimelineUtils.sweepAttack(entity, 1.6f)
+                    .breakShield()
+                    .damageWithEnchants(MIMICRY_CONFIG.pernach.damage, entity)
+                    .applyEffect(StatusEffects.SLOWNESS, MIMICRY_CONFIG.pernach.effectTime, 1)
+                    .applyEffect(StatusEffects.WEAKNESS, MIMICRY_CONFIG.pernach.effectTime, 0)
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), MIMICRY_CONFIG.pernach.effectTime, 0);
         }
 
-        if(ticksUsed >= 25) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
-        }
+        return ticksUsed >= 25;
     }
 
     @Override

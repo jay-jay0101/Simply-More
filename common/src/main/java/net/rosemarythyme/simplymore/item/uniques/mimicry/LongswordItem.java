@@ -2,12 +2,13 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
+import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.util.Styles;
@@ -20,22 +21,21 @@ public class LongswordItem extends MimicryItem {
     }
 
     @Override
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        if(ticksUsed == 3) {
-            List<LivingEntity> enemies = sweepAttack(player, 1.6f);
-            float damage = MIMICRY_CONFIG.longsword.damage + (enemies.size() * MIMICRY_CONFIG.longsword.extraDamage);
-            enemies.forEach(
-                    target -> {
-                        if(target.isBlocking()) return;
-                        AttackUtils.hitWithEnchants(player, target, damage);
-                        knockback(player, target, MIMICRY_CONFIG.longsword.knockback);
-                    }
-            );
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
+        if(ticksUsed == 1) {
+            MimicryTimelineUtils.startAnimation(entity, 6, MimicryVisualEntity.Animation.SWING);
         }
 
-        if(ticksUsed >= 13) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
+        if(ticksUsed == 3) {
+            TargetList targets = MimicryTimelineUtils.sweepAttack(entity, 1.6f);
+
+            float damage = MIMICRY_CONFIG.longsword.damage + (targets.size() * MIMICRY_CONFIG.longsword.extraDamage);
+            targets.filter(PredicateUtils.IS_NOT_BLOCKING)
+                    .damageWithEnchants(damage, entity)
+                    .knockback(entity, MIMICRY_CONFIG.longsword.knockback);
         }
+
+        return ticksUsed >= 13;
     }
 
     @Override

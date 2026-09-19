@@ -2,14 +2,17 @@ package net.rosemarythyme.simplymore.item.uniques.mimicry;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.Vec3d;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.*;
+import net.rosemarythyme.simplymore.util.data.Sound;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
@@ -25,43 +28,37 @@ public class GreatKatanaItem extends MimicryItem implements TwoHandedWeapon {
 
 
     @Override
-    public void usageTimeline(PlayerEntity player, int ticksUsed) {
-        player.addStatusEffect(
-                new StatusEffectInstance(
-                        StatusEffects.SLOWNESS,
-                        10,
-                        4
-                )
-        );
+    public boolean usageTimeline(LivingEntity entity, int ticksUsed) {
+        if(ticksUsed > 3 && 22 >= ticksUsed && ticksUsed % 4 == 0) {
+            MimicryVisualEntity.Animation anim = switch ((int) Math.floor(ticksUsed % 9 / 3f)) {
+                case 0 -> MimicryVisualEntity.Animation.LONG_SWING;
+                case 1 -> MimicryVisualEntity.Animation.REVERSE_LONG_SWING;
+                case 2 -> MimicryVisualEntity.Animation.DOWN_SWING;
+                default -> MimicryVisualEntity.Animation.NONE;
+            };
 
-        if(ticksUsed == 30) {
-            List<LivingEntity> enemies = slamAttack(player, 6);
-            float damage = MIMICRY_CONFIG.great_katana.damage;
+            MimicryTimelineUtils.startAnimation(entity, 4, anim);
 
-            if(!enemies.isEmpty()) {
-                LivingEntity mainTarget = enemies.get(player.getRandom().nextBetween(0, enemies.size() - 1));
-
-                enemies.forEach(
-                        target -> {
-                            if (target.isBlocking()) return;
-                            target.timeUntilRegen = 0;
-                            player.teleport(target.getX(), target.getY(), target.getZ(), false);
-                            sweepAttack(player, 0.1f);
-                            if (target == mainTarget) {
-                                AttackUtils.hitWithEnchants(player, target, damage + MIMICRY_CONFIG.great_katana.extraDamage);
-                            } else {
-                                AttackUtils.hitWithEnchants(player, target, damage);
-                            }
-                        }
-                );
-
-                player.teleport(mainTarget.getX(), mainTarget.getY(), mainTarget.getZ(), false);
+            if (ticksUsed == 20) {
+                sweepAttack(entity, 5f)
+                        .forceDamageWithEnchants(MIMICRY_CONFIG.great_katana.damage, entity)
+                        .knockback(entity, MIMICRY_CONFIG.great_katana.knockback);
+            } else {
+                sweepAttack(entity, 3f)
+                        .filter(PredicateUtils.IS_NOT_BLOCKING)
+                        .forceDamageWithEnchants(MIMICRY_CONFIG.great_katana.damage, entity);
             }
         }
+        return ticksUsed >= 29;
+    }
 
-        if(ticksUsed >= 40) {
-            player.removeStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.MIMICRY_HAPPENING));
-        }
+    public static TargetList sweepAttack(LivingEntity player, float radius) {
+        Vec3d position = player.getEyePos().add(MathUtils.getNormalised2dVector(player.getYaw()).multiply(radius));
+
+        AudioVisualUtils.playSound(player.getWorld(), position, new Sound(SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK).setPitch(0.5f));
+        AudioVisualUtils.particleCube((ServerWorld) player.getWorld(), position, ParticleTypes.SWEEP_ATTACK, Math.round(radius * radius * 2 * 2), radius - 0.5f, 0);
+
+        return AttackUtils.cubeAttack(player, position, radius, AttackUtils.AttackTarget.ENEMIES);
     }
 
     @Override
@@ -81,8 +78,8 @@ public class GreatKatanaItem extends MimicryItem implements TwoHandedWeapon {
 
         public boolean disabled = false;
         @ValidatedFloat.Restrict(min = 0f)
-        public float damage = 14f;
+        public float damage = 5f;
         @ValidatedFloat.Restrict(min = 0f)
-        public float extraDamage = 4f;
+        public float knockback = 1.5f;
     }
 }

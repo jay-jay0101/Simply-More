@@ -3,19 +3,22 @@ package net.rosemarythyme.simplymore.client.util;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
+import net.rosemarythyme.simplymore.client.render.entity.MimicryVisualRenderer;
+import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
 
+import java.util.Optional;
+
 public class RenderUtils {
     public record Bound(int x, int y, int width, int height) {
-
-        public Bound() {
-            this(-0xFFFF, -0xFFFF, 0xFFFF * 2, 0xFFFF * 2);
-        }
-
         public Bound clampWithin(Bound other) {
             int x1 = Math.max(Math.min(x, x + width),
                     Math.min(other.x, other.x + other.width));
@@ -204,5 +207,23 @@ public class RenderUtils {
     public static void renderTowardsCamera(Camera camera, MatrixStack stack) {
         stack.multiply(camera.getRotation());
         stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+    }
+
+    public static float getModelRotationOverride(LivingEntity entity, float tickDelta, float original) {
+        if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.MIMICRY)) {
+            Optional<MimicryVisualEntity> visual = entity.getWorld().getNonSpectatingEntities(MimicryVisualEntity.class, MathUtils.createCubeBox(entity.getPos(), 20)).stream()
+                    .filter((v) -> v.getOwnerUUID().isPresent() && v.getOwnerUUID().get().equals(entity.getUuid()))
+                    .findAny();
+
+            if(visual.isEmpty()) return original;
+
+            MimicryVisualEntity.Animation animation = visual.get().getAnimation();
+            if(animation != MimicryVisualEntity.Animation.SPIN) return original;
+
+            MimicryVisualEntity.AnimationData data = MimicryVisualRenderer.getAnimation(visual.get(), entity, tickDelta);
+            if(data != null) return data.yaw();
+        }
+
+        return original;
     }
 }

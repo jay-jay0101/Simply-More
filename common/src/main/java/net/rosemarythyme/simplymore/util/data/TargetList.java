@@ -41,6 +41,12 @@ public record TargetList(Set<LivingEntity> targets) {
         return targets.stream().findAny();
     }
 
+    public TargetList breakShield() {
+        return this.onEach((target) -> {
+            if(target.isBlocking()) AttackUtils.breakShield(target);
+        });
+    }
+
     public Optional<Pair<LivingEntity, Float>> getByMax(Function<LivingEntity, Float> function) {
         return targets.stream().map((livingEntity) -> new Pair<>(livingEntity, function.apply(livingEntity)))
                 .max(Comparator.comparingDouble(Pair::getRight));
@@ -166,6 +172,14 @@ public record TargetList(Set<LivingEntity> targets) {
 
     public TargetList damage(float amount, DamageSource source) {
         return this.onEach((entity -> entity.damage(source, amount)));
+    }
+
+    public TargetList damageWithEnchants(float amount, LivingEntity attacker) {
+        return this.onEach((entity -> AttackUtils.hitWithEnchants(attacker, entity, amount)));
+    }
+
+    public TargetList forceDamageWithEnchants(float amount, LivingEntity attacker) {
+        return this.onEach((entity -> AttackUtils.applyExtraDamageWithEnchants(attacker, entity, amount)));
     }
 
     public TargetList forceDamage(float amount, DamageSource source) {
