@@ -4,10 +4,7 @@ import dev.architectury.networking.NetworkManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.rosemarythyme.simplymore.networking.c2s.C2STransformRemnantPacket;
-import net.rosemarythyme.simplymore.networking.s2c.S2CAbilityManagerPacket;
-import net.rosemarythyme.simplymore.networking.s2c.S2CChangeAbilityAgePacket;
-import net.rosemarythyme.simplymore.networking.s2c.S2CParticleCylinderPacket;
-import net.rosemarythyme.simplymore.networking.s2c.S2CScreenShakePacket;
+import net.rosemarythyme.simplymore.networking.s2c.*;
 
 public class PacketRegistry {
     @Environment(EnvType.SERVER)

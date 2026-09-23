@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "simplymore:lightning"
+    "simplymore:lightning",
+    "simplymore:bleed"
   ]
 }

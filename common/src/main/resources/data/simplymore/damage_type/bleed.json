@@ -1,0 +1,7 @@
+{
+  "message_id": "simplymore.bleed",
+  "exhaustion": 0,
+  "scaling": "never",
+  "effects": "hurt",
+  "death_message_type": "default"
+}

@@ -36,6 +36,12 @@ public class AudioVisualUtils {
         }
     }
 
+    public static void applyScreenshake(LivingEntity entity, float intensity, int duration) {
+        if(entity instanceof ServerPlayerEntity player) {
+            NetworkManager.sendToPlayer(player, new S2CScreenShakePacket(intensity, duration, true));
+        }
+    }
+
     public static void handleFootfalls(Entity entity, ItemStack stack, World world, FootfallParticles particles) {
         HelperMethods.createFootfalls(entity, stack, world, particles.walkingParticle(), particles.sprintingParticle(), particles.passiveParticle(), true);
     }

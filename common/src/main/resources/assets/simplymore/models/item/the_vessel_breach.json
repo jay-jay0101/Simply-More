@@ -1,7 +1,6 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "simplyswords:item/template_longdagger",
   "textures": {
-    "layer0": "simplymore:item/uniques/the_vessel_breach/the_vessel_breach",
-    "layer1": "simplymore:item/uniques/the_vessel_breach/the_vessel_breach_layer1"
+    "layer0": "simplymore:item/uniques/the_vessel_breach"
   }
 }

@@ -1,10 +1,6 @@
 {
 	"values": [
 		{
-			"id": "simplymore:the_vessel_breach",
-			"required": false
-		},
-		{
 			"id": "simplymore:crustspire",
 			"required": false
 		},

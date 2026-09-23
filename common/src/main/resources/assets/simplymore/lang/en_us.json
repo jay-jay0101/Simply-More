@@ -3,6 +3,9 @@
 
   "entity.simplymore.crow": "Crow",
 
+  "death.attack.simplymore.bleed": "%s lost too much blood",
+  "death.attack.simplymore.bleed.player": "%s lost too much blood whilst trying to escape %s",
+
   "effect.simplymore.chill": "Chill",
   "effect.simplymore.venom": "Venom",
   "effect.simplymore.rage": "Adrenaline Rage",
@@ -248,7 +251,7 @@
   "item.simplymore.the_vessel_breach": "The Vessel Breach",
   "item.simplymore.the_vessel_breach.tooltip1": "Unique Effect: Blood Purger",
   "item.simplymore.the_vessel_breach.tooltip2": "This weapon has %s lifesteal.",
-  "item.simplymore.the_vessel_breach.tooltip3": "Cut yourself for %s of your health to enter a rage. While enraged, you bleed but may not take damage otherwise. You also gain %s lifesteal, a damage increase and inflict bleed.",
+  "item.simplymore.the_vessel_breach.tooltip3": "Cut yourself for %s of your health to enter a rage. While enraged, you constantly take damage over time but cannot take damage from any other source. You also gain %s lifesteal, a damage increase and begin to inflict wounded.",
 
   "item.simplymore.blade_of_the_grotesque": "Blade of the Grotesque",
   "item.simplymore.blade_of_the_grotesque.tooltip1": "Unique Effect: False Appearance",

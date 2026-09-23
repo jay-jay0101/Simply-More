@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
@@ -78,6 +79,6 @@ public class ClientInGameHudMixin {
         }
 
         int color = ConfigWrapper.CLIENT.flashbang.get() == ClientConfig.Flashbang.LIGHT ? 0xFFFFFF : 0x000000;
-        context.fill(0, 0, context.getScaledWindowWidth(), context.getScaledWindowHeight(), ((int) alpha << 24) | color);
+        context.fill(RenderLayer.getGuiOverlay(), 0, 0, context.getScaledWindowWidth(), context.getScaledWindowHeight(), ((int) alpha << 24) | color);
     }
 }

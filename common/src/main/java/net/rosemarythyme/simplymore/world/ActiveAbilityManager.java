@@ -38,6 +38,7 @@ public class ActiveAbilityManager {
         VIPERS_CALL(new VipersCallAbilityType()),
         GRASPING(new GraspingAbilityType()),
         MIMICRY(new MimicryAbilityType()),
+        RAGE(new RageAbilityType()),
         ;
 
         final ActiveAbilityType implementation;

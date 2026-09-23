@@ -3,7 +3,6 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -43,16 +42,15 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem implements 
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if(!isFirstInTick) return;
-        if(target instanceof ArmorStandEntity) return;
 
-        float lifesteal = SETTINGS.harvestLifesteal;
+        float lifesteal = SETTINGS.lifesteal;
         if(ActiveAbilityManager.SERVER.isInAbility(attacker, ActiveAbilityManager.Type.HARVEST)) {
-            lifesteal = SETTINGS.lifesteal;
+            lifesteal = SETTINGS.harvestLifesteal;
             new TargetList(target)
                     .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), SETTINGS.bleedTime, 0);
         }
 
-        EntityUtils.lifesteal(attacker, lifesteal);
+        EntityUtils.lifesteal(attacker, target, lifesteal);
     }
 
     @Override
@@ -82,7 +80,7 @@ public class TheBloodHarvesterItem extends SimplyMoreUniqueSwordItem implements 
 
     @Override
     public FootfallParticles getFootfalls() {
-        return new FootfallParticles(ParticleTypes.LANDING_LAVA, ParticleTypes.LANDING_LAVA, ParticleTypes.CRIMSON_SPORE);
+        return new FootfallParticles(ParticleTypes.CRIMSON_SPORE);
     }
 
     @Override

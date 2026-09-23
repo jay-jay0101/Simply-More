@@ -5,6 +5,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -202,6 +203,12 @@ public class EntityUtils {
         final float damage = original;
         AttackUtils.getOwnedEntities(livingEntity, SpiritualGuardianEntity.class).forEach(guardian -> guardian.tryRetaliate(livingEntity, damage, source));
 
+        if(ActiveAbilityManager.SERVER.isInAbility(livingEntity, ActiveAbilityManager.Type.RAGE)) {
+            if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+                return 0;
+            }
+        }
+
         RegistryEntry<StatusEffect> blessing = StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING);
         if(livingEntity.hasStatusEffect(blessing)) {
             if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
@@ -272,7 +279,8 @@ public class EntityUtils {
         return StepUpResult.SUCCESS;
     }
 
-    public static void lifesteal(LivingEntity attacker, float value) {
+    public static void lifesteal(LivingEntity attacker, LivingEntity target, float value) {
+        if(target instanceof ArmorStandEntity) return;
         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * value);
     }
 }

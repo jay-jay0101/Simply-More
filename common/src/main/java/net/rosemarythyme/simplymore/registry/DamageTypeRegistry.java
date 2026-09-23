@@ -16,6 +16,12 @@ public class DamageTypeRegistry {
                     SimplyMore.identifier("lightning")
             );
 
+    public static final RegistryKey<DamageType> BLEED =
+            RegistryKey.of(
+                    RegistryKeys.DAMAGE_TYPE,
+                    SimplyMore.identifier("bleed")
+            );
+
     public static DamageSource damageSourceOf(World world, RegistryKey<DamageType> type) {
         return damageSourceOf(world, type, null);
     }
