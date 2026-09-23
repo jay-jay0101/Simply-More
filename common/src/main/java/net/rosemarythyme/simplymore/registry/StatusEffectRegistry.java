@@ -121,22 +121,6 @@ public class StatusEffectRegistry {
             new ChillEffect(StatusEffectCategory.HARMFUL,10875635)
     );
 
-    public static final RegistrySupplier<StatusEffect> RAGE = registerEffect(
-            "rage",
-            new RageEffect(StatusEffectCategory.NEUTRAL,7865862)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            SimplyMore.identifier("rage_damage"),
-                            1.5,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            SimplyMore.identifier("rage_speed"),
-                            0.04,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
-    );
-
     public static final RegistrySupplier<StatusEffect> GROTESQUE_WARD = registerEffect(
             "grotesque_ward",
             new StatusEffect(StatusEffectCategory.HARMFUL, 1023141)
