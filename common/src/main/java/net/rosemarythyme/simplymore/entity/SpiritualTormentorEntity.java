@@ -128,7 +128,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
         double travelledRange = Math.sqrt(this.squaredDistanceTo(new Vec3d(attackData.originalPos.getX(), this.getY(), attackData.originalPos.getZ())));
         if(time > MAX_ATTACK_TIME
                 || travelledRange >= attackData.intendedRange
-                || EntityUtils.tryStepUp(this, horizontalVelocity) == EntityUtils.StepUpResult.TOO_TALL) {
+                || EntityUtils.tryStepUp(this, horizontalVelocity, 1) == EntityUtils.StepUpResult.TOO_TALL) {
             endAttack();
         }
     }

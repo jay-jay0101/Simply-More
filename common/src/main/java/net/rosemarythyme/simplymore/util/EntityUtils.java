@@ -23,6 +23,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
@@ -37,9 +38,17 @@ import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 public class EntityUtils {
     private static final Map<LivingEntity, Long> SWING_CACHE = new HashMap<>();
+
+    public static float getHealthPercentage(LivingEntity entity) {
+        float maxHp = entity.getMaxHealth();
+        if(maxHp == 0) return 0f;
+
+        return entity.getHealth() / entity.getMaxHealth();
+    }
 
     public static void replaceStackInInventory(LivingEntity entity, ItemStack oldStack, ItemStack newStack) {
         if(entity instanceof PlayerEntity player) {
@@ -256,31 +265,65 @@ public class EntityUtils {
     }
 
     public enum StepUpResult {
+        NO_WALL,
         NOT_ON_FLOOR,
-        TOO_SHORT,
         TOO_TALL,
         SUCCESS
     }
 
-    public static StepUpResult tryStepUp(LivingEntity entity, Vec3d velocity) {
-        if(!entity.isOnGround()) return StepUpResult.NOT_ON_FLOOR;
+    public static boolean isRunningIntoWall(LivingEntity entity, Vec3d velocity) {
+        double length = velocity.length();
+        if(length <= 0.01f) return false;
 
-        Vec3d horizontalDirection = new Vec3d(velocity.getX(), 0, velocity.getZ());
+        Iterable<VoxelShape> collisions = entity.getWorld().getBlockCollisions(entity, entity.getBoundingBox().stretch(velocity));
+        return Entity.adjustMovementForCollisions(entity, velocity, entity.getBoundingBox(), entity.getWorld(), StreamSupport.stream(collisions.spliterator(), false).toList()).length() <= length * 0.6f;
+    }
 
-        Vec3d pos = entity.getPos();
-        BlockHitResult bottomBlock = entity.getWorld().raycast(new RaycastContext(pos, pos.add(horizontalDirection), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
-        if(bottomBlock.getType() != HitResult.Type.BLOCK) return StepUpResult.TOO_SHORT;
+    public static boolean isOnGround(LivingEntity entity) {
+        Vec3d newPos = EntityUtils.raycastDown(entity, entity.getPos(), entity.getWorld(), 1).getPos();
+        return entity.getPos().distanceTo(newPos) <= 0.1f;
+    }
 
-        Vec3d topPos = entity.getPos().offset(Direction.UP, 1);
-        BlockHitResult topBlock = entity.getWorld().raycast(new RaycastContext(topPos, topPos.add(horizontalDirection), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
-        if(topBlock.getType() == HitResult.Type.BLOCK) return StepUpResult.TOO_TALL;
+    public static StepUpResult tryStepUp(LivingEntity entity, Vec3d velocity, float height) {
+        Vec3d horizontalDirection = new Vec3d(velocity.getX(), 0, velocity.getZ()).normalize();
 
-        entity.refreshPositionAfterTeleport(entity.getX(), entity.getY() + 1, entity.getZ());
+        if(!isRunningIntoWall(entity, horizontalDirection)) return StepUpResult.NO_WALL;
+        if(!isOnGround(entity)) return StepUpResult.NOT_ON_FLOOR;
+
+        BlockHitResult hit = null;
+        for(int i = 0; i < height * 2; i++) {
+            Vec3d pos = entity.getPos().offset(Direction.UP, i * 0.5f);
+
+            BlockHitResult block = blockInRange(entity, pos, horizontalDirection);
+            if(block.getType() != HitResult.Type.BLOCK) break;
+
+            hit = block;
+        }
+
+        if(hit == null) return StepUpResult.TOO_TALL;
+
+        Vec3d offset = new Vec3d(horizontalDirection.getX(),hit.getPos().getY() - entity.getY() + 0.6, horizontalDirection.getZ());
+        if(!entity.getWorld().isSpaceEmpty(entity, entity.getBoundingBox().offset(offset))) return StepUpResult.TOO_TALL;
+
+        Vec3d pos = EntityUtils.raycastDown(entity, entity.getPos().add(offset), entity.getWorld(), 1).getPos();
+        entity.requestTeleport(pos.getX(), pos.getY(), pos.getZ());
         return StepUpResult.SUCCESS;
+    }
+
+    private static BlockHitResult blockInRange(LivingEntity entity, Vec3d pos, Vec3d offset) {
+        return entity.getWorld().raycast(new RaycastContext(pos, pos.add(offset), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ShapeContext.absent()));
     }
 
     public static void lifesteal(LivingEntity attacker, LivingEntity target, float value) {
         if(target instanceof ArmorStandEntity) return;
         attacker.heal((float) HelperMethods.getEntityAttackDamage(attacker) * value);
+    }
+
+    public static StepUpResult dash(LivingEntity entity, float strength, float stepup) {
+        Vec3d velocity = MathUtils.getDirectionalVector(entity.getYaw(), 0).multiply(strength);
+        entity.setVelocity(velocity.getX(), entity.getVelocity().getY(), velocity.getZ());
+        entity.velocityModified = true;
+
+        return EntityUtils.tryStepUp(entity, velocity, stepup);
     }
 }

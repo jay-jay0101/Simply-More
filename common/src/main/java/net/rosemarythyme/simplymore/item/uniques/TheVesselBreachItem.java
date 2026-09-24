@@ -10,7 +10,6 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -79,7 +78,7 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem implements Un
     @Override
     public boolean canActivate(WeaponAbilityContext context) {
         return !ActiveAbilityManager.SERVER.isInAbility(context.actor(), ActiveAbilityManager.Type.RAGE) &&
-                context.actor().getHealth() / context.actor().getMaxHealth() > Math.min(1, SETTINGS.startupDamage + 0.15f);
+                EntityUtils.getHealthPercentage(context.actor()) > Math.min(1, SETTINGS.startupDamage + 0.15f);
     }
 
     @Override
@@ -94,19 +93,15 @@ public class TheVesselBreachItem extends SimplyMoreUniqueSwordItem implements Un
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-        Style rightClickStyle = Styles.RIGHT_CLICK;
-
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip1").setStyle(abilityStyle));
+        tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip1").setStyle(Styles.ABILITY));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip2",
-                MathUtils.toPercentage(UNIQUE_CONFIG.the_vessel_breach.lifesteal)).setStyle(textStyle));
+                MathUtils.toPercentage(UNIQUE_CONFIG.the_vessel_breach.lifesteal)).setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(Styles.RIGHT_CLICK));
         tooltip.add(Text.translatable("item.simplymore.the_vessel_breach.tooltip3",
                 MathUtils.toPercentage(UNIQUE_CONFIG.the_vessel_breach.startupDamage),
-                MathUtils.toPercentage(UNIQUE_CONFIG.the_vessel_breach.rageLifesteal)).setStyle(textStyle));
+                MathUtils.toPercentage(UNIQUE_CONFIG.the_vessel_breach.rageLifesteal)).setStyle(Styles.TEXT));
 
         appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);

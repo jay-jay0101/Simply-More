@@ -1,0 +1,7 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "simplymore:item/revvengine",
+  "textures": {
+    "layer1": "simplymore:item/uniques/revvengine/spikes2"
+  }
+}

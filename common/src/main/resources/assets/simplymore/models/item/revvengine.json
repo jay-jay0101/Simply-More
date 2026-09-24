@@ -5,6 +5,11 @@
     "layer0": "simplymore:item/uniques/revvengine/revvengine",
     "layer1": "simplymore:item/uniques/revvengine/spikes"
   },
+  "overrides": [
+    {"predicate": {"simplymore:revs": 0.33},"model": "simplymore:item/revvengine1"},
+    {"predicate": {"simplymore:revs": 0.66},"model": "simplymore:item/revvengine2"},
+    {"predicate": {"simplymore:revs": 1},"model": "simplymore:item/revvengine3"}
+  ],
   "display": {
     "thirdperson_righthand": {
       "rotation": [0, -90, 55],

@@ -151,7 +151,14 @@ public record TargetList(Set<LivingEntity> targets) {
     }
 
     public TargetList pull(Vec3d pos, double strength) {
-        return this.onEach((target) -> AttackUtils.knockback(pos, target, -strength));
+        return this.onEach((target) -> {
+            if(target.getPos().distanceTo(pos) > strength) {
+                target.refreshPositionAfterTeleport(pos.getX(), pos.getY(), pos.getZ());
+                return;
+            }
+
+            AttackUtils.knockback(pos, target, -strength);
+        });
     }
 
     public TargetList incrementEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier, int maxAmplifier) {

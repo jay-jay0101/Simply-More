@@ -16,7 +16,6 @@ import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.sweenus.simplyswords.item.component.WeaponImplicitComponent;
 import net.sweenus.simplyswords.registry.ComponentTypeRegistry;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -24,8 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-
-	@Shadow public abstract boolean damage(DamageSource source, float amount);
 
 	@ModifyReturnValue(at= @At("RETURN"), method = "disablesShield")
 	private boolean simplymore$shouldBreakShields(boolean original) {

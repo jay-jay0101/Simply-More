@@ -2,231 +2,160 @@ package net.rosemarythyme.simplymore.item.uniques;
 
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
+import net.rosemarythyme.simplymore.SimplyMore;
+import net.rosemarythyme.simplymore.item.BiActiveUniqueSwordItem;
+import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
+import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
+import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.util.Styles;
-import org.joml.Vector3f;
 
 import java.util.List;
 
-public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
+public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHandedWeapon, StackModifierItem, HudOverlayItem, UniqueWeaponActiveAbility {
+    public static final RevvengineItem.EffectSettings SETTINGS = UNIQUE_CONFIG.revvengine;
 
     public RevvengineItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed);
     }
 
+    @Override
+    public CounterComponent getDefaultCounterComponent() {
+        return new CounterComponent(0, SETTINGS.maxRevs);
+    }
 
+    @Override
+    public boolean activate(WeaponAbilityContext context) {
+        return onPress(context.actor().getStackInHand(context.hand()), context.world(), context.actor());
+    }
+
+    @Override
+    public boolean onPress(ItemStack stack, ServerWorld world, LivingEntity user) {
+        if(MathUtils.getCounterComponentProgress(stack) >= 1f) return false;
+
+        MathUtils.addToCounterComponent(stack, 1);
+        new TargetList(user).applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN), 10, 0);
+
+        AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_LONG_VERSION_02.get()));
+        AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_LONG_VERSION_02.get()).setPitch(0.5f));
+        AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 30, 0.3f, 0.3);
+        AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FLAME, 30, 0.3f, 0.3);
+
+        return true;
+    }
+
+    @Override
+    public int getCooldownWhenHeld(ItemStack stack, ServerWorld world, LivingEntity user) {
+        return SETTINGS.cooldown;
+    }
+
+    @Override
+    public int getCooldownWhenPressed(ItemStack stack, ServerWorld world, LivingEntity user) {
+        return SETTINGS.revCooldown;
+    }
+
+    @Override
+    public void whileHeld(ItemStack stack, ServerWorld world, LivingEntity user, int ticksUsed) {
+        if(ticksUsed % SETTINGS.timeBetweenRevUses == 1) {
+            if(consumeRev(user, stack, world)) return;
+        }
+
+        Vec3d position = user.getEyePos().add(MathUtils.getNormalised2dVector(user.getYaw()).multiply(SETTINGS.range));
+        TargetList targets = AttackUtils.cubeAttack(user, position, SETTINGS.range, AttackUtils.AttackTarget.ENEMIES)
+                .filter(PredicateUtils.IS_NOT_BLOCKING);
+
+        if(ticksUsed % 5 == 0) {
+            AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 3, 0.2f, 0);
+            AudioVisualUtils.particleCube(world, position, ParticleTypes.SWEEP_ATTACK, 1, 0, 0);
+
+            int revs = MathUtils.getCounterComponent(stack).value();
+            targets.forceDamageWithEnchants(SETTINGS.damage, user)
+                    .applyEffect(StatusEffects.SLOWNESS, SETTINGS.slownessTime, 1)
+                    .pull(position, SETTINGS.pullStrength)
+                    .onEach((target) -> applyExtraHitEffects(user, target, revs, SETTINGS.damage));
+
+            if(targets.isPopulated()) {
+                AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 10, 0.3f, 0.2f);
+                AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FLAME, 10, 0.3f, 0.2f);
+                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_03.get()).setPitch(0f));
+            } else {
+                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get()));
+            }
+        }
+
+        EntityUtils.StepUpResult result = EntityUtils.dash(user, targets.isEmpty() ? SETTINGS.velocity : SETTINGS.velocityWhileCaught, 1);
+        if (result == EntityUtils.StepUpResult.TOO_TALL || result == EntityUtils.StepUpResult.NOT_ON_FLOOR) {
+            SimplyMore.LOGGER.info("{}", result);
+            user.stopUsingItem();
+        }
+    }
+
+    private boolean consumeRev(LivingEntity user, ItemStack stack, ServerWorld world) {
+        if(MathUtils.getCounterComponentProgress(stack) <= 0) {
+            user.stopUsingItem();
+            return true;
+        }
+
+        AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get()));
+        AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 30, 0.3f, 0.3);
+        AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FLAME, 30, 0.3f, 0.3);
+
+        MathUtils.addToCounterComponent(stack, -1);
+        return false;
+    }
+
+    @Override
+    public void beforeConfirmation(ItemStack stack, ServerWorld world, LivingEntity user, int ticksUntilHeld) {
+        if(ticksUntilHeld % 2 == 0) {
+            AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get()).setPitch(0.5f));
+            AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 3, 0.2f, 0);
+        }
+    }
 
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
-        if (attacker.getWorld().isClient()) return;
-
-        if (MathUtils.chance(attacker, UNIQUE_CONFIG.revvengine.chance)) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.revvengine.bleedTime, 0), attacker);
-        }
-
-
-        float extraDamage = getHealthModifiedValue(attacker,
-                UNIQUE_CONFIG.revvengine.damageBuff,
-                (float) HelperMethods.getEntityAttackDamage(attacker));
-
-        if (attacker instanceof PlayerEntity playerAttacker) {
-            target.timeUntilRegen = 0;
-            target.damage(target.getDamageSources().playerAttack(playerAttacker), extraDamage);
-        }
+        applyExtraHitEffects(attacker, target, MathUtils.getCounterComponent(stack).value(), (float) HelperMethods.getEntityAttackDamage(attacker));
     }
 
-    public static float getHealthModifiedValue(LivingEntity entity, float percentage, float value) {
-        float hpPercentage = entity.getHealth() / entity.getMaxHealth();
-        float extraPercentage = percentage * (1 - hpPercentage);
+    public void applyExtraHitEffects(LivingEntity attacker, LivingEntity target, int revs, float damage) {
+        float revPercentages = revs * SETTINGS.healthPercentagePerRev;
+        float hpPercentage = EntityUtils.getHealthPercentage(attacker) - revPercentages;
 
-        return value * extraPercentage;
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        user.setCurrentHand(hand);
-        return itemStack.getDamage() >= itemStack.getMaxDamage() - 1
-                ? TypedActionResult.fail(itemStack)
-                : TypedActionResult.consume(itemStack);
-    }
-
-    @Override
-    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if(user.getWorld().isClient()) {
-            super.usageTick(world, user, stack, remainingUseTicks);
-            return;
+        if (hpPercentage <= SETTINGS.inflictWoundedHealthPercentage) {
+            new TargetList(target)
+                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.revvengine.woundedTime, 0);
         }
 
-        if(user.age % 5 == 0)
-            user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get(), SoundCategory.PLAYERS, 1, 0.5f);
-
-        int ticksUsed = this.getMaxUseTime(stack, user) - remainingUseTicks;
-
-        if(ticksUsed >= UNIQUE_CONFIG.revvengine.p3windup) {
-            ((ServerWorld) user.getWorld()).spawnParticles(
-                    new DustParticleEffect(
-                            new Vector3f(0f,0f,0f),
-                            1
-                    ),
-                    user.getX(),
-                    user.getEyeY(),
-                    user.getZ(),
-                    22,
-                    0.75f,
-                    0.75f,
-                    0.75f,
-                    0.3f
-            );
-            ((ServerWorld) user.getWorld()).spawnParticles(
-                    ParticleTypes.LAVA,
-                    user.getX(),
-                    user.getY(),
-                    user.getZ(),
-                    3,
-                    0.2f,
-                    0.2f,
-                    0.2f,
-                    0.3f
-            );
-        } else if(ticksUsed >= UNIQUE_CONFIG.revvengine.p2windup) {
-            ((ServerWorld) user.getWorld()).spawnParticles(
-                    new DustParticleEffect(
-                            new Vector3f(0.5f,0.5f,0.5f),
-                            1
-                    ),
-                    user.getX(),
-                    user.getEyeY(),
-                    user.getZ(),
-                    15,
-                    0.75f,
-                    0.75f,
-                    0.75f,
-                    0.3f
-            );
-        } else if(ticksUsed >= UNIQUE_CONFIG.revvengine.p1windup) {
-            ((ServerWorld) user.getWorld()).spawnParticles(
-                    new DustParticleEffect(
-                            new Vector3f(1f,1f,1f),
-                            1
-                    ),
-                    user.getX(),
-                    user.getEyeY(),
-                    user.getZ(),
-                    8,
-                    0.75f,
-                    0.75f,
-                    0.75f,
-                    0.3f
-            );
+        if (hpPercentage <= SETTINGS.doubleDamageHealthPercentage && MathUtils.chance(attacker, SETTINGS.doubleDamageChance)) {
+            AttackUtils.applyExtraDamage(target, damage, AttackUtils.getHitSource(attacker));
         }
-
-
-        super.usageTick(world, user, stack, remainingUseTicks);
-    }
-
-    @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if(user.getWorld().isClient()) {
-            super.onStoppedUsing(stack, world, user, remainingUseTicks);
-            return;
-        }
-
-        int ticksUsed = this.getMaxUseTime(stack, user) - remainingUseTicks;
-
-        int time = 0;
-        int amplifier = 0;
-
-        if(ticksUsed >= UNIQUE_CONFIG.revvengine.p3windup) {
-            amplifier = 1;
-            time = (int) getHealthModifiedValue(user, UNIQUE_CONFIG.revvengine.rangeBuff, 45);
-            time += 40;
-            ((PlayerEntity) user).getItemCooldownManager().set(this, UNIQUE_CONFIG.revvengine.p3cooldown);
-        } else if(ticksUsed >= UNIQUE_CONFIG.revvengine.p2windup) {
-            time = (int) getHealthModifiedValue(user, UNIQUE_CONFIG.revvengine.rangeBuff, 25);
-            time += 25;
-            ((PlayerEntity) user).getItemCooldownManager().set(this, UNIQUE_CONFIG.revvengine.p2cooldown);
-        } else if(ticksUsed >= UNIQUE_CONFIG.revvengine.p1windup) {
-            phase1(user);
-        }
-
-        if(time>0) {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.RAVENOUS), time, amplifier));
-        }
-
-        super.onStoppedUsing(stack, world, user, remainingUseTicks);
-    }
-
-    public void phase1(LivingEntity user) {
-        Vec3d position = user.getEyePos();
-        Vec3d normalisedVector = MathUtils.getNormalised2dVector(user.getYaw());
-
-        Vec3d particlePos = new Vec3d(
-                position.getX() + normalisedVector.x,
-                position.getY(),
-                position.getZ() + normalisedVector.z
-        );
-
-        Box box = MathUtils.createCubeBox(user.getPos(), 1);
-        List<LivingEntity> targets = AttackUtils.cuboidAttack(user, box);
-
-        for (LivingEntity target : targets) {
-            target.damage(
-                    user.getDamageSources().playerAttack((PlayerEntity) user),
-                    getHealthModifiedValue(user,
-                            UNIQUE_CONFIG.revvengine.damageBuff,
-                            UNIQUE_CONFIG.revvengine.p1damage) + UNIQUE_CONFIG.revvengine.p1damage
-            );
-
-            target.addStatusEffect(
-                    new StatusEffectInstance(
-                            StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED),
-                            UNIQUE_CONFIG.revvengine.bleedTime,
-                            0
-                    )
-            );
-        }
-
-        ((PlayerEntity) user).getItemCooldownManager().set(this, UNIQUE_CONFIG.revvengine.p1cooldown);
-
-        user.getWorld().playSound(null, particlePos.getX(), particlePos.getY(), particlePos.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1,0.5f);
-
-
-        ((ServerWorld) user.getWorld()).spawnParticles(ParticleTypes.SWEEP_ATTACK, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 1, 0, 0 , 0, 0);
-    }
-
-    @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 9999999;
     }
 
     @Override
@@ -241,18 +170,34 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-        Style rightClickStyle = Styles.RIGHT_CLICK;
-
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip2", MathUtils.toPercentage(SETTINGS.inflictWoundedHealthPercentage), MathUtils.toPercentage(SETTINGS.doubleDamageHealthPercentage)).setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip4").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip3").setStyle(Styles.TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip4", SETTINGS.maxRevs).setStyle(Styles.TEXT));
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.revCooldown);
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclickheld").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.revvengine.tooltip5").setStyle(Styles.TEXT));
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
+    }
+
+    @Override
+    public AttributeModifiersComponent getModifier(LivingEntity entity, ItemStack stack, AttributeModifiersComponent base) {
+        return base.with(
+                EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                new EntityAttributeModifier(
+                        SimplyMore.identifier("kickback_damage"),
+                        MathHelper.lerp(1 - EntityUtils.getHealthPercentage(entity), 0, SETTINGS.maxDamageBonus),
+                        EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                ),
+                AttributeModifierSlot.MAINHAND
+        );
     }
 
     public static class EffectSettings extends TooltipSettings {
@@ -260,39 +205,41 @@ public class RevvengineItem extends SimplyMoreUniqueSwordItem implements TwoHand
             super(new ItemStackTooltipAppender(ItemRegistry.REVVENGINE));
         }
 
-        @ValidatedInt.Restrict(min = 0)
-        public int p1cooldown = 240;
-        @ValidatedInt.Restrict(min = 0)
-        public int p2cooldown = 360;
-        @ValidatedInt.Restrict(min = 0)
-        public int p3cooldown = 440;
-        @ValidatedInt.Restrict(min = 0)
-        public int p1windup = 10;
-        @ValidatedInt.Restrict(min = 0)
-        public int p2windup = 40;
-        @ValidatedInt.Restrict(min = 0)
-        public int p3windup = 80;
-        @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float chance = 0.2f;
-        @ValidatedInt.Restrict(min = 0)
-        public int bleedTime = 80;
         @ValidatedFloat.Restrict(min = 0f)
-        public int p1damage = 7;
-        @ValidatedFloat.Restrict(min = 0f)
-        public int p2damage = 12;
+        public float maxDamageBonus = 0.4f;
         @ValidatedInt.Restrict(min = 0)
-        public int p2effectTime = 120;
+        public int woundedTime = 100;
         @ValidatedFloat.Restrict(min = 0f)
-        public int p3damage = 15;
+        public float doubleDamageChance = 0.15f;
         @ValidatedInt.Restrict(min = 0)
-        public int p3effectTime = 100;
-        @ValidatedInt.Restrict(min = 0)
-        public int explosionWindup = 80;
+        public int maxRevs = 3;
+
         @ValidatedFloat.Restrict(min = 0f)
-        public int explosionDamage = 10;
-        @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float damageBuff = 0.6f;
-        @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float rangeBuff = 0.5f;
+        public float inflictWoundedHealthPercentage = 0.5f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float doubleDamageHealthPercentage = 0.3f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float healthPercentagePerRev = 0.1f;
+
+        @ValidatedInt.Restrict(min = 0)
+        public int revCooldown = 200;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 40;
+
+        @ValidatedFloat.Restrict(min = 0f)
+        public float velocity = 1.2f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float velocityWhileCaught = 0.6f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float damage = 4f;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float range = 1.5f;
+        @ValidatedInt.Restrict(min = 0)
+        public int slownessTime = 100;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float pullStrength = 0.6f;
+
+        @ValidatedInt.Restrict(min = 0)
+        public int timeBetweenRevUses = 40;
     }
 }

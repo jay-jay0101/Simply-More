@@ -101,11 +101,6 @@ public class StatusEffectRegistry {
             new BloomEffect(StatusEffectCategory.BENEFICIAL,7865862)
     );
 
-    public static final RegistrySupplier<StatusEffect> RAVENOUS = registerEffect(
-            "ravenous",
-            new RevvengineRushEffect(StatusEffectCategory.BENEFICIAL,9109504)
-    );
-
     public static final RegistrySupplier<StatusEffect> LIGHTWEIGHT = registerEffect(
             "lightweight",
             new FallDamageImmunityEffect(StatusEffectCategory.BENEFICIAL, 0xBFBFBF)
@@ -178,17 +173,6 @@ public class StatusEffectRegistry {
     public static final RegistrySupplier<StatusEffect> FRAGILE = registerEffect(
             "fragile",
             new StatusEffect(StatusEffectCategory.HARMFUL,0xB9A6BD)
-    );
-
-    public static final RegistrySupplier<StatusEffect> SUFFOCATION = registerEffect(
-            "constricted",
-            new SuffocatingEffect(StatusEffectCategory.HARMFUL,0)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            SimplyMore.identifier("constricted_speed"),
-                            -0.03,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                    )
     );
 
     public static final RegistrySupplier<StatusEffect> ARMOUR_CRUNCH = registerEffect(
