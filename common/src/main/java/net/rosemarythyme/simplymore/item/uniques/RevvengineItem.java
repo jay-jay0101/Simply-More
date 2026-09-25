@@ -92,28 +92,32 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
                 .filter(PredicateUtils.IS_NOT_BLOCKING);
 
         if(ticksUsed % 5 == 0) {
-            AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 3, 0.2f, 0);
-            AudioVisualUtils.particleCube(world, position, ParticleTypes.SWEEP_ATTACK, 1, 0, 0);
-
-            int revs = MathUtils.getCounterComponent(stack).value();
-            targets.forceDamageWithEnchants(SETTINGS.damage, user)
-                    .applyEffect(StatusEffects.SLOWNESS, SETTINGS.slownessTime, 1)
-                    .pull(position, SETTINGS.pullStrength)
-                    .onEach((target) -> applyExtraHitEffects(user, target, revs, SETTINGS.damage));
-
-            if(targets.isPopulated()) {
-                AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 10, 0.3f, 0.2f);
-                AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FLAME, 10, 0.3f, 0.2f);
-                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_03.get()).setPitch(0f));
-            } else {
-                AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get()));
-            }
+            attack(user, stack, world, position, targets);
         }
 
         EntityUtils.StepUpResult result = EntityUtils.dash(user, targets.isEmpty() ? SETTINGS.velocity : SETTINGS.velocityWhileCaught, 1);
         if (result == EntityUtils.StepUpResult.TOO_TALL || result == EntityUtils.StepUpResult.NOT_ON_FLOOR) {
-            SimplyMore.LOGGER.info("{}", result);
             user.stopUsingItem();
+        }
+    }
+
+    private void attack(LivingEntity user, ItemStack stack, ServerWorld world, Vec3d position, TargetList targets) {
+        AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 3, 0.2f, 0);
+        AudioVisualUtils.particleCube(world, position, ParticleTypes.SWEEP_ATTACK, 1, 0, 0);
+
+        int revs = MathUtils.getCounterComponent(stack).value();
+        targets.forceDamageWithEnchants(SETTINGS.damage, user)
+                .applyEffect(StatusEffects.SLOWNESS, SETTINGS.slownessTime, 1)
+                .pull(position, SETTINGS.pullStrength)
+                .onEach((target) -> applyExtraHitEffects(user, target, revs, SETTINGS.damage));
+
+        if(targets.isPopulated()) {
+            AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 10, 0.3f, 0.2f);
+            AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FLAME, 10, 0.3f, 0.2f);
+            AudioVisualUtils.applyScreenshake(world, user.getPos(), user, 4, 2, 15);
+            AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_03.get()).setPitch(0f));
+        } else {
+            AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_SHORT_VERSION_02.get()));
         }
     }
 
@@ -233,7 +237,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
         @ValidatedFloat.Restrict(min = 0f)
         public float damage = 4f;
         @ValidatedFloat.Restrict(min = 0f)
-        public float range = 1.5f;
+        public float range = 3f;
         @ValidatedInt.Restrict(min = 0)
         public int slownessTime = 100;
         @ValidatedFloat.Restrict(min = 0f)

@@ -44,7 +44,7 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
         if(!sync) return;
 
         List<ServerPlayerEntity> players = getServerWorld().getPlayers().stream().filter((player) -> player.squaredDistanceTo(getPos()) < 60 * 60).toList();
-        NetworkManager.sendToPlayers(players, new S2CChangeAbilityAgePacket(this.getId(), this.getLifespan()));
+        NetworkManager.sendToPlayers(players, new S2CChangeAbilityAgePacket(this.getId(), age));
     }
 
     @Override

@@ -44,4 +44,9 @@ public class LightbeamEntityRenderer extends LivingEntityRenderer<LightbeamEntit
     public boolean shouldRender(LightbeamEntity entity, Frustum frustum, double x, double y, double z) {
         return true;
     }
+
+
+    @Override
+    protected void setupTransforms(LightbeamEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+    }
 }

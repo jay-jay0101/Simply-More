@@ -52,7 +52,7 @@ public class RenderUtils {
         drawCircle(context, pos.x, pos.y, innerRadius, shadeColor , bound);
 
         int lx = pos.x + Math.round(radius * lightPos.x);
-        int ly = pos.y + Math.round(radius * lightPos.x);
+        int ly = pos.y + Math.round(radius * lightPos.y);
 
         drawCircleWithinCircle(context, new Vector2i(lx, ly), Math.round(innerRadius * 2 * (2/3f)), pos, innerRadius, normalColor, bound);
         drawCircleWithinCircle(context, new Vector2i(lx, ly), Math.round(innerRadius * 2 * (1/3f)), pos, innerRadius, highlightColor, bound);

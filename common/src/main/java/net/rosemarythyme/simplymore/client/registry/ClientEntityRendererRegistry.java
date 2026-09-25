@@ -42,6 +42,7 @@ public class ClientEntityRendererRegistry {
         EntityRendererRegistry.register(EntityRegistry.DUG_BLOCK, DugBlockEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.DRIPSTONE_SPIKE, DripstoneSpikeEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.FALLING_DRIPSTONE_SPIKE, DripstoneSpikeEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.ICE_SPIKE, IceSpikeEntityRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.STATUE, StatueRenderer::new);
 
@@ -52,5 +53,9 @@ public class ClientEntityRendererRegistry {
         EntityRendererRegistry.register(EntityRegistry.SPIRITUAL_GUARDIAN, SpiritualGuardianRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.MIMICRY_VISUAL, MimicryVisualRenderer::new);
+
+        EntityModelLayerRegistry.register(SunEntityModel.LAYER, SunEntityModel::getTexturedModelData);
+        EntityRendererRegistry.register(EntityRegistry.SUN, SunEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.MOON, MoonEntityRenderer::new);
     }
 }

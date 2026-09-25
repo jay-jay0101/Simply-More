@@ -4,6 +4,8 @@ import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.item.ItemPropertiesRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.Item;
@@ -64,6 +66,26 @@ public class ClientItemPropertyRegistry {
         }), item);
     }
 
+    public static void registerTimekeeperItemProperty(Item item, Identifier id) {
+        ItemPropertiesRegistry.register(item, id, (stack, client, entity, a) -> {
+            ClientWorld world = MinecraftClient.getInstance().world;
+            if(world == null) return 0f;
+
+            int worldTime = (int) Math.abs(world.getTimeOfDay() % 24000);
+            if(world.getDimension().hasFixedTime()) return 1f;
+
+            if(worldTime <= 1000) return 0.7f;
+            if(worldTime <= 8000) return 0f;
+            if(worldTime <= 10000) return 0.1f;
+            if(worldTime <= 12000) return 0.2f;
+            if(worldTime <= 13000) return 0.3f;
+            if(worldTime <= 20000) return 0.4f;
+            if(worldTime <= 22000) return 0.5f;
+
+            return 0.6f;
+        });
+    }
+
     @Environment(EnvType.CLIENT)
     public static void register() {
         registerDyeableItemProperty(ItemRegistry.MATTERBANE.get(), 1.75f, 0);
@@ -73,6 +95,8 @@ public class ClientItemPropertyRegistry {
         registerCounterItemProperty(ItemRegistry.MOUNDSHIFTER.get(), SimplyMore.identifier("pressure"));
         registerCounterItemProperty(ItemRegistry.RUYI_JINGU_BANG.get(), SimplyMore.identifier("size"));
         registerCounterItemProperty(ItemRegistry.REVVENGINE.get(), SimplyMore.identifier("revs"));
+
+        registerTimekeeperItemProperty(ItemRegistry.TIMEKEEPER.get(), SimplyMore.identifier("time"));
 
         SimplySwordsClientAPI.registerAwakeningFormModelProperty(ItemRegistry.RUPTURED_IDOL.get(), SimplyMore.identifier("idol_path"));
     }

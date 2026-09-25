@@ -19,7 +19,7 @@
     "simplymore:the_vessel_breach": {"theme": "blood", "badges": ["UNIQUE", "BACKHAND BLADE"]},
     "simplymore:blade_of_the_grotesque": {"theme": "death", "badges": ["UNIQUE", "CLAYMORE"]},
     "simplymore:vipers_call": {"theme": "poison", "badges": ["UNIQUE", "CHAKRAM"]},
-    "simplymore:timekeeper": {"theme": "fancy_gold", "badges": ["UNIQUE", "KHOPESH"]},
+    "simplymore:timekeeper": {"theme": "time", "badges": ["UNIQUE", "KHOPESH"]},
     "simplymore:matterbane": {"theme": "enchanted", "badges": ["UNIQUE", "LONGSWORD"]},
     "simplymore:smouldering_ruin": {"theme": "death", "badges": ["UNIQUE", "BACKHAND BLADE"]},
     "simplymore:stasis": {"theme": "lightning", "badges": ["UNIQUE", "QUARTERSTAFF"]},

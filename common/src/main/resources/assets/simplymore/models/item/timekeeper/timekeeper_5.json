@@ -1,0 +1,7 @@
+{
+  "parent": "simplymore:item/timekeeper",
+  "textures": {
+    "layer0": "simplymore:item/uniques/timekeeper/timekeeper",
+    "layer1": "simplymore:item/uniques/timekeeper/sun_5"
+  }
+}

@@ -12,10 +12,7 @@ import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.*;
 import net.rosemarythyme.simplymore.entity.legacy.*;
-import net.rosemarythyme.simplymore.entity.projectiles.CannonballEntity;
-import net.rosemarythyme.simplymore.entity.projectiles.DripstoneSpikeEntity;
-import net.rosemarythyme.simplymore.entity.projectiles.DugBlockEntity;
-import net.rosemarythyme.simplymore.entity.projectiles.FallingDripstoneSpikeEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +66,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<BlizzardEntity>> BLIZZARD =
             registerMarkerEntity("blizzard", BlizzardEntity::new);
 
+    public static final RegistrySupplier<EntityType<PlanetaryBurstEntity>> PLANETARY_BURST =
+            registerMarkerEntity("planet_burst", PlanetaryBurstEntity::new);
+
     public static final RegistrySupplier<EntityType<LavaLiquidEntity>> LAVA =
             registerMarkerEntity("lava", LavaLiquidEntity::new, 1f, 1f);
 
@@ -103,6 +103,12 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<MimicryVisualEntity>> MIMICRY_VISUAL =
             registerMarkerEntity("mimicry_visual", MimicryVisualEntity::new, 0.25f, 0.25f);
 
+    public static final RegistrySupplier<EntityType<SunEntity>> SUN =
+            registerMarkerEntity("sun", SunEntity::new, 14 / 16f, 14 / 16f);
+
+    public static final RegistrySupplier<EntityType<MoonEntity>> MOON =
+            registerMarkerEntity("moon", MoonEntity::new, 14 / 16f, 14 / 16f);
+
     public static final RegistrySupplier<EntityType<SpiritualTormentorEntity>> SPIRITUAL_TORMENTOR = registerType(
             EntityType.Builder.<SpiritualTormentorEntity>create(SpiritualTormentorEntity::new, SpawnGroup.MISC)
                     .dimensions(1f, 2f)
@@ -134,6 +140,18 @@ public class EntityRegistry {
                     .disableSummon(),
             "dripstone_spike"
     );
+
+    public static final RegistrySupplier<EntityType<IceSpikeEntity>> ICE_SPIKE = registerType(
+            EntityType.Builder.<IceSpikeEntity>create(IceSpikeEntity::new, SpawnGroup.MISC)
+                    .dimensions(0.25f, 0.25f)
+                    .makeFireImmune()
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "ice_spike"
+    );
+
 
     public static final RegistrySupplier<EntityType<FallingDripstoneSpikeEntity>> FALLING_DRIPSTONE_SPIKE = registerType(
             EntityType.Builder.<FallingDripstoneSpikeEntity>create(FallingDripstoneSpikeEntity::new, SpawnGroup.MISC)

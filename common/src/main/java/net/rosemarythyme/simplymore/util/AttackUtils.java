@@ -214,8 +214,7 @@ public class AttackUtils {
     }
 
     public static boolean spawnProjectile(AbstractAbilityProjectileEntity ability, LivingEntity owner) {
-        owner.getWorld().spawnEntity(ability);
-        return true;
+        return owner.getWorld().spawnEntity(ability);
     }
 
     public static boolean spawnAbility(AbstractAbilityPlacementEntity ability, LivingEntity owner, boolean onGround) {
