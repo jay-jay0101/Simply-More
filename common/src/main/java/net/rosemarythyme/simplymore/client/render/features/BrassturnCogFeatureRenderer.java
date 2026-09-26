@@ -12,7 +12,7 @@ import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.models.BrassturnCogModel;
-import net.rosemarythyme.simplymore.item.components.CogRotationComponent;
+import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
@@ -22,9 +22,9 @@ public class BrassturnCogFeatureRenderer {
     public static void render(LivingEntity entity, ClientWorld world, MatrixStack stack, float delta, VertexConsumerProvider vertexConsumerProvider, int light, ItemStack itemStack) {
         stack.push();
         float oxidation = MathUtils.getCounterComponentProgress(itemStack);
-        CogRotationComponent rot = itemStack.getOrDefault(ItemComponentRegistry.COG_ROTATION.get(), CogRotationComponent.DEFAULT);
+        RotationComponent rot = itemStack.getOrDefault(ItemComponentRegistry.ROTATION.get(), RotationComponent.DEFAULT);
 
-        stack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(rot.getRotation(delta + world.getTime(), oxidation, entity.isUsingItem())));
+        stack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(rot.getRotation(delta + world.getTime())));
         stack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
         stack.translate(0, -2f, 0);
 

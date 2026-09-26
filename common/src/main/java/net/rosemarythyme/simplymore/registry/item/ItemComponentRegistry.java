@@ -17,10 +17,10 @@ public class ItemComponentRegistry {
                     .codec(CounterComponent.CODEC)
                     .packetCodec(CounterComponent.PACKET_CODEC).build());
 
-    public static final RegistrySupplier<ComponentType<CogRotationComponent>> COG_ROTATION = COMPONENT_TYPES.register("cog_rotation",
-            () -> ComponentType.<CogRotationComponent>builder()
-                    .codec(CogRotationComponent.CODEC)
-                    .packetCodec(CogRotationComponent.PACKET_CODEC).build());
+    public static final RegistrySupplier<ComponentType<RotationComponent>> ROTATION = COMPONENT_TYPES.register("cog_rotation",
+            () -> ComponentType.<RotationComponent>builder()
+                    .codec(RotationComponent.CODEC)
+                    .packetCodec(RotationComponent.PACKET_CODEC).build());
 
     public static final RegistrySupplier<ComponentType<ActiveHitsComponent>> ACTIVE_HITS = COMPONENT_TYPES.register("active_hits",
             () -> ComponentType.<ActiveHitsComponent>builder()

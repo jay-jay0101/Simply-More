@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.item.components.CogRotationComponent;
+import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
@@ -79,11 +79,12 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     }
 
     public void changeOxidation(ItemStack stack, int change, LivingEntity entity) {
-        float oxidation = MathUtils.getCounterComponentProgress(stack);
         MathUtils.addToCounterComponent(stack, change);
+        updateRotation(stack, entity.getWorld(), 1f);
+    }
 
-        CogRotationComponent rot = stack.getOrDefault(ItemComponentRegistry.COG_ROTATION.get(), CogRotationComponent.DEFAULT);
-        stack.set(ItemComponentRegistry.COG_ROTATION.get(), rot.update(entity.getWorld().getTime(), oxidation, entity.isUsingItem()));
+    private float getRotationSpeed(float oxidation, float speedMultiplier) {
+        return MathUtils.clampedLerp(oxidation, 0, 1, speedMultiplier, 0f) * 6f;
     }
 
     @Override
@@ -97,9 +98,8 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
         if(!(world instanceof ServerWorld serverWorld)) return TypedActionResult.pass(user.getStackInHand(hand));
 
         ItemStack stack = user.getStackInHand(hand);
-        long time = user.getWorld().getTime();
+        updateRotation(stack, world, 1f);
 
-        stack.set(ItemComponentRegistry.COG_ROTATION.get(), getCogRotation(stack).update(time, MathUtils.getCounterComponentProgress(stack), 1, true));
         return AttackUtils.holdToUse(serverWorld, user, hand);
     }
 
@@ -129,8 +129,9 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
 
     public void spinGear(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         int useTime = AttackUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
+
         float extraSpeedMult = MathUtils.clampedLerp(useTime, 0, SETTINGS.scrapeTime * 16, 1f, GEAR_SPEED);
-        stack.set(ItemComponentRegistry.COG_ROTATION.get(), getCogRotation(stack).update(world.getTime(), MathUtils.getCounterComponentProgress(stack), extraSpeedMult, true));
+        updateRotation(stack, world, extraSpeedMult);
 
         if(useTime > 10) {
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.SWING_WOOSH.get()).setPitch(user.getRandom().nextBetween(8, 12) / 10f));
@@ -142,11 +143,14 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
 
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        stack.set(ItemComponentRegistry.COG_ROTATION.get(), getCogRotation(stack).update(world.getTime(), MathUtils.getCounterComponentProgress(stack), 1, false));
+        updateRotation(stack, world, 1f);
     }
 
-    private CogRotationComponent getCogRotation(ItemStack stack) {
-        return stack.getOrDefault(ItemComponentRegistry.COG_ROTATION.get(), CogRotationComponent.DEFAULT);
+    private void updateRotation(ItemStack stack, World world, float getRotationMultiplier) {
+        float speed = getRotationSpeed(MathUtils.getCounterComponentProgress(stack), getRotationMultiplier);
+
+        RotationComponent rot = stack.getOrDefault(ItemComponentRegistry.ROTATION.get(), RotationComponent.DEFAULT);
+        stack.set(ItemComponentRegistry.ROTATION.get(), rot.update(world.getTime(), speed));
     }
 
     @Override
