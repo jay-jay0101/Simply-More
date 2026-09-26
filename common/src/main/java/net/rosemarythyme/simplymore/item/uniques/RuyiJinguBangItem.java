@@ -101,7 +101,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
         int sunderedArmor = Math.round(size * SETTINGS.maxSlamSunderedArmor);
 
         AttackUtils.lineAttack(user, user.getEyePos(), user.getYaw(), user.getPitch(), range, width, AttackUtils.AttackTarget.ENEMIES)
-                .damage(damage, AttackUtils.getHitSource(user))
+                .damageWithEnchants(damage, user)
                 .addVelocity(0, -2, 0)
                 .incrementEffect(EffectRegistry.getReference(EffectRegistry.SUNDERED_ARMOR), SETTINGS.slamSunderedArmorDuration, sunderedArmor, 100);
 
