@@ -2,9 +2,12 @@ package net.rosemarythyme.simplymore.item.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 
 public record RotationComponent(float rot, long time, float speed) {
     public static final Codec<RotationComponent> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
@@ -21,6 +24,16 @@ public record RotationComponent(float rot, long time, float speed) {
     );
 
     public static final RotationComponent DEFAULT = new RotationComponent(0, 0, 0);
+
+    public static void update(ItemStack stack, World world, float newSpeed) {
+        RotationComponent rot = stack.getOrDefault(ItemComponentRegistry.ROTATION.get(), RotationComponent.DEFAULT);
+        stack.set(ItemComponentRegistry.ROTATION.get(), rot.update(world.getTime(), newSpeed));
+    }
+
+    public static float getRotation(ItemStack stack, double time) {
+        RotationComponent rot = stack.getOrDefault(ItemComponentRegistry.ROTATION.get(), RotationComponent.DEFAULT);
+        return rot.getRotation(time);
+    }
 
     public RotationComponent update(long time, float newSpeed) {
         float newRot = getRotation(time);

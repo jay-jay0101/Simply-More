@@ -1,13 +1,19 @@
 package net.rosemarythyme.simplymore.client.util;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import net.rosemarythyme.simplymore.client.render.entity.MimicryVisualRenderer;
 import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
+import net.rosemarythyme.simplymore.item.components.RotationComponent;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
@@ -209,7 +215,19 @@ public class RenderUtils {
         stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
     }
 
+    private static boolean isSpinningWithCindergorge(LivingEntity entity) {
+        if(entity instanceof PlayerEntity) {
+            return entity.getItemUseTime() > 3 && entity.getActiveItem().getItem().equals(ItemRegistry.CINDERGORGE.get());
+        }
+
+        return ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.FLAME_FLINGER);
+    }
+
     public static float getModelRotationOverride(LivingEntity entity, float tickDelta, float original) {
+        if(isSpinningWithCindergorge(entity)) {
+            return RotationComponent.getRotation(EntityUtils.getActiveItem(entity, ItemRegistry.CINDERGORGE.get()), entity.getWorld().getTime() + tickDelta);
+        }
+
         if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.MIMICRY)) {
             Optional<MimicryVisualEntity> visual = entity.getWorld().getNonSpectatingEntities(MimicryVisualEntity.class, MathUtils.createCubeBox(entity.getPos(), 20)).stream()
                     .filter((v) -> v.getOwnerUUID().isPresent() && v.getOwnerUUID().get().equals(entity.getUuid()))
@@ -225,5 +243,10 @@ public class RenderUtils {
         }
 
         return original;
+    }
+
+    public static boolean shouldForceThirdPerson() {
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+        return player != null && player.getItemUseTime() > 3 && player.getActiveItem().getItem().equals(ItemRegistry.CINDERGORGE.get());
     }
 }

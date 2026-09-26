@@ -55,7 +55,7 @@ public class FeatureRenderManager {
 
         if(brassturn.getItem() == ItemRegistry.BRASSTURN.get()
                 && BrassturnItem.isSecondaryEffectUnlocked(brassturn)) {
-            BrassturnCogFeatureRenderer.render(entity, world, stack, tickCounter.getTickDelta(true), vertexConsumers, WorldRenderer.getLightmapCoordinates(world, entity.getBlockPos()), brassturn);
+            BrassturnCogFeatureRenderer.render(world, stack, tickCounter.getTickDelta(true), vertexConsumers, WorldRenderer.getLightmapCoordinates(world, entity.getBlockPos()), brassturn);
         }
     }
 

@@ -5,6 +5,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.Vector2f;
 import net.rosemarythyme.simplymore.client.camera.ScreenshakeManager;
+import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -40,6 +41,11 @@ public class ClientCameraMixin {
             double ticksUsed = duration - currentDuration;
             args.set(1, (double) args.get(1) - MathUtils.clampedLerp((float) ticksUsed, 0, 10, 0, player.getHeight() / 2));
         }
+    }
+
+    @ModifyVariable(method = "update", at = @At("HEAD"), argsOnly = true, ordinal = 0)
+    public boolean simplymore$isThirdPerson(boolean thirdPerson) {
+        return thirdPerson || RenderUtils.shouldForceThirdPerson();
     }
 
     @ModifyVariable(method = "setRotation", at=@At("HEAD"), ordinal = 0, argsOnly = true)

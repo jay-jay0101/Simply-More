@@ -375,8 +375,8 @@
 
   "item.simplymore.cindergorge": "Cindergorge",
   "item.simplymore.cindergorge.tooltip1": "Unique Effect: Searing Barbs",
-  "item.simplymore.cindergorge.tooltip2": "While held gain slight thorns. If somebody is on fire when they take thorns damage they take additional fire damage.",
-  "item.simplymore.cindergorge.tooltip5": "Spin violently, flinging flames in all directions. After spinning, gain nausea equal to the length of your spin.",
+  "item.simplymore.cindergorge.tooltip2": "While held, attackers may take damage and are set on fire.",
+  "item.simplymore.cindergorge.tooltip3": "Spin violently forwards, bouncing off walls and flinging flames in all directions. After spinning, gain nausea depending on how long you spun.",
 
   "item.simplymore.deaths_eyrie": "Death's Eyrie",
   "item.simplymore.deaths_eyrie.tooltip1": "Unique Effect: Murder's Heed",
@@ -1099,8 +1099,10 @@
   "simplymore.unique_effect.cindergorge": "§6[Cindergorge]§7",
   "simplymore.unique_effect.cindergorge.chance": "Searing Barbs chance",
   "simplymore.unique_effect.cindergorge.thornsDamage": "Searing Barbs damage",
-  "simplymore.unique_effect.cindergorge.fireThornsDamage": "Searing Barbs damage to blazing enemies",
-  "simplymore.unique_effect.cindergorge.maxUseTime": "Max Spewing Spin duration",
+  "simplymore.unique_effect.cindergorge.thornsFireDuration": "Searing Barbs fire duration",
+  "simplymore.unique_effect.cindergorge.maxSpeed": "Spewing Spin speed",
+  "simplymore.unique_effect.cindergorge.acceleration": "Spewing Spin acceleration",
+  "simplymore.unique_effect.cindergorge.maxUseTime": "Maximum Spewing Spin duration",
   "simplymore.unique_effect.cindergorge.range": "Spewing Spin range",
   "simplymore.unique_effect.cindergorge.fireDamage": "Spewing Spin damage",
   "simplymore.unique_effect.cindergorge.cooldown": "Spewing Spin cooldown",

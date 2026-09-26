@@ -29,11 +29,16 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AbstractSpiritualEntity;
 import net.rosemarythyme.simplymore.entity.SpiritualGuardianEntity;
+import net.rosemarythyme.simplymore.item.uniques.CindergorgeItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.data.Sound;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
@@ -167,6 +172,15 @@ public class EntityUtils {
         return ItemStack.EMPTY;
     }
 
+    public static ItemStack getActiveItem(LivingEntity entity, Item item) {
+        if(entity instanceof PlayerEntity) {
+            ItemStack stack = entity.getActiveItem();
+            return stack.getItem().equals(item) ? stack : ItemStack.EMPTY;
+        }
+
+        return getItemInEitherHand(item, entity);
+    }
+
     public static boolean isHoldingInMainHand(LivingEntity entity, ItemStack stack) {
         return entity.getStackInHand(Hand.MAIN_HAND).equals(stack);
     }
@@ -179,6 +193,20 @@ public class EntityUtils {
     public static boolean isHolding(LivingEntity entity, ItemStack stack) {
         if(entity.getStackInHand(Hand.MAIN_HAND) == stack) return true;
         return !(stack.getItem() instanceof TwoHandedWeapon) && entity.getStackInHand(Hand.OFF_HAND) == stack;
+    }
+
+    public static boolean isHoldingAwakenedStack(LivingEntity entity, Item item) {
+        ItemStack stack = entity.getStackInHand(Hand.MAIN_HAND);
+        if(stack.getItem() == item && isStackAwakened(stack)) return true;
+
+        if(item instanceof TwoHandedWeapon) return false;
+
+        stack = entity.getStackInHand(Hand.OFF_HAND);
+        return stack.getItem() == item && isStackAwakened(stack);
+    }
+
+    public static boolean isStackAwakened(ItemStack stack) {
+        return !AwakeningApi.isAwakeningSystemEnabled() || AwakeningApi.isAbilityUnlocked(stack);
     }
 
     public static void spawnAround(World world, LivingEntity entity, Vec3d pos, double horizontalRange, double verticalRange) {
@@ -208,9 +236,23 @@ public class EntityUtils {
                 || entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.IMPLICIT_STUN));
     }
 
-    public static float modifyDamageTaken(LivingEntity livingEntity, DamageSource source, float original) {
-        final float damage = original;
+    private static void onHitTaken(LivingEntity livingEntity, DamageSource source, float amount) {
+        if (AttackUtils.isDamageSourceMelee(source) && isHoldingAwakenedStack(livingEntity, ItemRegistry.CINDERGORGE.get())) {
+            if(source.getAttacker() instanceof LivingEntity attacker && MathUtils.chance(livingEntity, CindergorgeItem.SETTINGS.chance)) {
+                AudioVisualUtils.particleAroundEntity(livingEntity, ParticleTypes.FLAME, 10, 0.5f, 0.2f);
+                AudioVisualUtils.playSound(livingEntity.getWorld(), livingEntity.getPos(), new Sound(SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_IMPACT_03.get()).setVolume(0.5f));
+
+                new TargetList(attacker).damage(CindergorgeItem.SETTINGS.thornsDamage, livingEntity.getDamageSources().inFire())
+                        .setOnFireFor(CindergorgeItem.SETTINGS.thornsFireDuration);
+            }
+        }
+
+        final float damage = amount;
         AttackUtils.getOwnedEntities(livingEntity, SpiritualGuardianEntity.class).forEach(guardian -> guardian.tryRetaliate(livingEntity, damage, source));
+    }
+
+    public static float modifyDamageTaken(LivingEntity livingEntity, DamageSource source, float original) {
+        onHitTaken(livingEntity, source, original);
 
         if(ActiveAbilityManager.SERVER.isInAbility(livingEntity, ActiveAbilityManager.Type.RAGE)) {
             if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
@@ -325,5 +367,16 @@ public class EntityUtils {
         entity.velocityModified = true;
 
         return EntityUtils.tryStepUp(entity, velocity, stepup);
+    }
+
+    public static Vec3d bounceHorizontally(LivingEntity entity, Vec3d velocity, float strength) {
+        Vec3d horizontal = new Vec3d(velocity.getX(), 0, velocity.getZ()).normalize();
+        BlockHitResult result = blockInRange(entity, entity.getPos(), horizontal);
+
+        if (result.getType() == HitResult.Type.MISS) result = blockInRange(entity, entity.getPos().offset(Direction.UP, 1), horizontal);
+        if (result.getType() == HitResult.Type.MISS) return velocity;
+
+        Vec3d normal = new Vec3d(result.getSide().getUnitVector());
+        return velocity.subtract(normal.multiply(2 * velocity.dotProduct(normal))).multiply(strength, 1, strength);
     }
 }

@@ -10,7 +10,9 @@ import net.rosemarythyme.simplymore.world.abilities.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ActiveAbilityManager {
     public static final ActiveAbilityManager SERVER = new ActiveAbilityManager();
@@ -39,6 +41,7 @@ public class ActiveAbilityManager {
         GRASPING(new GraspingAbilityType()),
         MIMICRY(new MimicryAbilityType()),
         RAGE(new RageAbilityType()),
+        FLAME_FLINGER(new FlameFlingType()),
         ;
 
         final ActiveAbilityType implementation;
@@ -121,6 +124,7 @@ public class ActiveAbilityManager {
 
     public Optional<ActiveAbility> get(LivingEntity owner, Type type) {
         return new ArrayList<>(activeAbilities).stream().filter((ability) ->
+                ability != null &&
                 ability.owner() != null &&
                         ability.owner().getUuid().equals(owner.getUuid()) &&
                         ability.type() == type
@@ -137,7 +141,7 @@ public class ActiveAbilityManager {
         List<ActiveAbility> finishing = new ArrayList<>();
 
         for(ActiveAbility ability : new ArrayList<>(activeAbilities)) {
-            if(ability.owner == null) continue;
+            if(ability == null || ability.owner == null) continue;
 
             int time = ability.tick();
             if(!ability.shouldContinue()) {
@@ -160,7 +164,7 @@ public class ActiveAbilityManager {
         remaining.removeAll(finishing);
 
         activeAbilities.clear();
-        activeAbilities.addAll(remaining);
+        activeAbilities.addAll(remaining.stream().filter(Objects::nonNull).collect(Collectors.toSet()));
     }
 
 

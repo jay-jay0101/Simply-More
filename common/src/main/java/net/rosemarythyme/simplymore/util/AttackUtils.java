@@ -108,6 +108,12 @@ public class AttackUtils {
         target.timeUntilRegen = regenTime;
     }
 
+    public static boolean isDamageSourceMelee(DamageSource source) {
+        return source.getSource() instanceof LivingEntity entitySource
+                && source.getAttacker() instanceof LivingEntity attacker
+                && attacker.equals(entitySource);
+    }
+
     public static void hitWithEnchants(LivingEntity attacker, LivingEntity target, float damage) {
         if(!(attacker.getWorld() instanceof ServerWorld world)) return;
 

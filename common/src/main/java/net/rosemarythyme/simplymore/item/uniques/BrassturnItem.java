@@ -22,11 +22,10 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
+import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
-import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
@@ -148,9 +147,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
 
     private void updateRotation(ItemStack stack, World world, float getRotationMultiplier) {
         float speed = getRotationSpeed(MathUtils.getCounterComponentProgress(stack), getRotationMultiplier);
-
-        RotationComponent rot = stack.getOrDefault(ItemComponentRegistry.ROTATION.get(), RotationComponent.DEFAULT);
-        stack.set(ItemComponentRegistry.ROTATION.get(), rot.update(world.getTime(), speed));
+        RotationComponent.update(stack, world, speed);
     }
 
     @Override

@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.client.hud.HudOverlay;
 import net.rosemarythyme.simplymore.client.hud.HudOverlayItemRegistry;
+import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.config.ClientConfig;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
@@ -39,6 +40,13 @@ public class ClientInGameHudMixin {
 
         simplymore$dazzled(context, player);
         simplymore$renderItemHudRenders(context, tickCounter, player);
+    }
+
+    @Inject(method = "renderCrosshair", at=@At("HEAD"), cancellable = true)
+    public void simplmore$thirdPerson(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+        if(RenderUtils.shouldForceThirdPerson()) {
+            ci.cancel();
+        }
     }
 
     @Unique
