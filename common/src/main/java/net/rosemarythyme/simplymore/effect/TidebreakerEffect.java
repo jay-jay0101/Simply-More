@@ -3,17 +3,10 @@ package net.rosemarythyme.simplymore.effect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.Box;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
-
-import java.util.List;
 
 public class TidebreakerEffect extends StatusEffect {
 
@@ -46,12 +39,12 @@ public class TidebreakerEffect extends StatusEffect {
     }
 
     private void applyInsanityEffect(LivingEntity affectedEntity, ServerWorld serverWorld) {
-        Box box = MathUtils.createCubeBox(affectedEntity.getPos(), 3);
-        List<LivingEntity> targets = AttackUtils.cuboidAttack(affectedEntity, box);
-
-        for (LivingEntity target : targets) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.INSANITY), 160, 0), affectedEntity);
-        }
+//        Box box = MathUtils.createCubeBox(affectedEntity.getPos(), 3);
+//        List<LivingEntity> targets = AttackUtils.cuboidAttack(affectedEntity, box);
+//
+//        for (LivingEntity target : targets) {
+//            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.INSANITY), 160, 0), affectedEntity);
+//        }
     }
 
     @Override

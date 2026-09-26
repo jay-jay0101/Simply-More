@@ -25,9 +25,7 @@ import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.registry.EffectRegistry;
@@ -113,7 +111,7 @@ public class DripstoneSpikeEntity extends AbstractAbilityProjectileEntity implem
         if(!isFired) {
             moveBehind(owner);
 
-            if(!EntityUtils.isHolding(owner, ItemRegistry.CRUSTSPIRE.get())) {
+            if(!InventoryUtils.isHolding(owner, ItemRegistry.CRUSTSPIRE.get())) {
                 discard();
                 return;
             }
@@ -151,14 +149,14 @@ public class DripstoneSpikeEntity extends AbstractAbilityProjectileEntity implem
     }
 
     private void attemptRefund(LivingEntity owner) {
-        ItemStack stack = EntityUtils.getItemInEitherHand(ItemRegistry.CRUSTSPIRE.get(), owner);
+        ItemStack stack = InventoryUtils.getItemInEitherHand(ItemRegistry.CRUSTSPIRE.get(), owner);
         if(!stack.isEmpty()) {
             long worldTime = owner.getWorld().getTime();
             ActiveHitsComponent component = stack.getOrDefault(ItemComponentRegistry.ACTIVE_HITS.get(), new ActiveHitsComponent(0, worldTime));
             component = component.increment(1, 4, worldTime);
 
             if(component.value() >= CrustspireItem.SETTINGS.dripstoneRefund) {
-                MathUtils.addToCounterComponent(stack, CrustspireItem.SETTINGS.dripstoneRefundNum);
+                ItemStackUtils.addToCounterComponent(stack, CrustspireItem.SETTINGS.dripstoneRefundNum);
                 component = new ActiveHitsComponent(0, worldTime);
 
                 AudioVisualUtils.playSound(owner.getWorld(), owner.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.8f));

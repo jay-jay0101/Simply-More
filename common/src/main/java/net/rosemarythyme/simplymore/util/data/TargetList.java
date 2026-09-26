@@ -12,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 
 import java.util.Comparator;
 import java.util.List;
@@ -85,8 +86,8 @@ public record TargetList(Set<LivingEntity> targets) {
         return !isEmpty();
     }
 
-    public TargetList filterByTargetType(LivingEntity attacker, AttackUtils.AttackTarget targetType) {
-        return this.filter((entity) -> AttackUtils.canTarget(attacker, entity, targetType));
+    public TargetList filterByTargetType(LivingEntity attacker, TargetUtils.TargetType targetType) {
+        return this.filter((entity) -> TargetUtils.canTarget(attacker, entity, targetType));
     }
 
     public static TargetList empty() {

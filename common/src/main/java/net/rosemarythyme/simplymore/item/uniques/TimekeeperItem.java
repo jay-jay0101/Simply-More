@@ -19,9 +19,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.DayTimeComponent;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
@@ -44,7 +42,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem implements UniqueW
     @Override
     protected void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if(isFirstInTick && MathUtils.chance(attacker, SETTINGS.chance)) {
-            AttackUtils.getOwnedAbilities(attacker, AbstractPlanetaryEntity.class)
+            SummonUtils.getOwnedAbilities(attacker, AbstractPlanetaryEntity.class)
                     .forEach((planet) -> planet.setAge(planet.getAge() - SETTINGS.orbitDurationBonus));
 
             AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ACTIVATE_PLINTH_03.get()).setVolume(0.5f).randomisePitch(1.8f, 2f, attacker.getRandom()));
@@ -53,13 +51,13 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem implements UniqueW
                 case DAY -> {
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.WAX_ON, 10, 0.2f, 0.5f);
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FLASH, 1, 0f, 0f);
-                    AttackUtils.cubeAttack(attacker, attacker.getPos(), 35, AttackUtils.AttackTarget.ENEMIES)
+                    TargetUtils.cubeAttack(attacker, attacker.getPos(), 35, TargetUtils.TargetType.ENEMIES)
                             .applyEffect(StatusEffects.GLOWING, SETTINGS.effectTime, 0);
                 }
                 case NIGHT -> {
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.WAX_OFF, 10, 0.2f, 0.5f);
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FLASH, 1, 0f, 0f);
-                    AttackUtils.cubeAttack(attacker, attacker.getPos(), 35, AttackUtils.AttackTarget.ENEMIES)
+                    TargetUtils.cubeAttack(attacker, attacker.getPos(), 35, TargetUtils.TargetType.ENEMIES)
                             .applyEffect(StatusEffects.BLINDNESS, SETTINGS.effectTime, 0)
                             .applyEffect(StatusEffects.DARKNESS, SETTINGS.effectTime, 0);
                 }
@@ -70,7 +68,7 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem implements UniqueW
 
     @Override
     public boolean canActivate(WeaponAbilityContext context) {
-        return context.actor().isAlive() && AttackUtils.getOwnedEntities(context.actor(), AbstractPlanetaryEntity.class).isEmpty();
+        return context.actor().isAlive() && SummonUtils.getOwnedEntities(context.actor(), AbstractPlanetaryEntity.class).isEmpty();
     }
 
     @Override
@@ -78,11 +76,11 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem implements UniqueW
         AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundRegistry.ELEMENTAL_BOW_SCIFI_SHOOT_IMPACT_02.get()));
         AudioVisualUtils.applyScreenshake(context.world(), context.origin(), context.actor(), 12, 1.3f, 20);
         switch (getForm(context.actor().getStackInHand(context.hand()))) {
-            case DAY -> AttackUtils.spawnAbility(new SunEntity(context.actor(), true), context.actor());
-            case NIGHT -> AttackUtils.spawnAbility(new MoonEntity(context.actor(), true), context.actor());
+            case DAY -> SummonUtils.spawnAbility(new SunEntity(context.actor(), true), context.actor());
+            case NIGHT -> SummonUtils.spawnAbility(new MoonEntity(context.actor(), true), context.actor());
             case TIMELESS -> {
-                AttackUtils.spawnAbility(new SunEntity(context.actor(), false), context.actor());
-                AttackUtils.spawnAbility(new MoonEntity(context.actor(), false), context.actor());
+                SummonUtils.spawnAbility(new SunEntity(context.actor(), false), context.actor());
+                SummonUtils.spawnAbility(new MoonEntity(context.actor(), false), context.actor());
             }
         }
 

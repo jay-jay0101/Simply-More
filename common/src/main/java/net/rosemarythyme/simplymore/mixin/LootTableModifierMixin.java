@@ -45,49 +45,4 @@ public class LootTableModifierMixin {
             pool.with(ItemEntry.builder(item.get()));
         }
     }
-
-//    @Unique
-//    private static final Set<RegistrySupplier<? extends Item>> simplyMore$lootableSuppliers = Set.of(
-//            ItemRegistry.GREAT_SLITHER,
-//            ItemRegistry.MOLTEN_FLARE,
-//            ItemRegistry.GRANDFROST,
-//            ItemRegistry.MIMICRY_LONGSWORD,
-//            ItemRegistry.GLIMMERSTEP,
-//            ItemRegistry.THE_BLOOD_HARVESTER,
-//            ItemRegistry.MYRMEDGE,
-//            ItemRegistry.BLACK_PEARL,
-//            ItemRegistry.THE_VESSEL_BREACH,
-//            ItemRegistry.BLADE_OF_THE_GROTESQUE,
-//            ItemRegistry.VIPERS_CALL,
-//            ItemRegistry.TIMEKEEPER,
-//            ItemRegistry.MATTERBANE,
-//            ItemRegistry.SMOULDERING_RUIN,
-//            ItemRegistry.STASIS,
-//            ItemRegistry.TIDEBREAKER,
-//            ItemRegistry.RUYI_JINGU_BANG,
-//            ItemRegistry.RUPTURED_IDOL,
-//            ItemRegistry.BOAS_FANG,
-//            ItemRegistry.EARTHSHATTER,
-//            ItemRegistry.SOUL_FORESEER,
-//            ItemRegistry.SERPENTINE_VALOUR,
-//            ItemRegistry.LUSTROUS_MOXIE,
-//            ItemRegistry.BRASSTURN,
-//            ItemRegistry.CINDERGORGE,
-//            ItemRegistry.DEATHS_EYRIE,
-//            ItemRegistry.PERFORISCUS,
-//            ItemRegistry.REVVENGINE,
-//            ItemRegistry.EXEDRILL,
-//            ItemRegistry.CULTEREX
-//    );
-//    @Unique
-//    private static Set<Item> simplyMore$lootableItems = Set.of();
-//
-//    @ModifyReturnValue(method="isLootableUnique", at=@At("RETURN"))
-//    private static boolean simplyMore$isLootableUnique(boolean original, Item item) {
-//        if (simplyMore$lootableItems.isEmpty()) {
-//            simplyMore$lootableItems = simplyMore$lootableSuppliers.stream().map(java.util.function.Supplier::get).collect(Collectors.toSet());
-//        }
-//
-//        return original || simplyMore$lootableItems.contains(item.asItem());
-//    }
 }

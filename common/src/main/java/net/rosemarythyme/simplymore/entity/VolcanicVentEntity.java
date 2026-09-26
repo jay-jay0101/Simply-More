@@ -10,9 +10,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.MagmaseepItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.api.SpellScalingProfile;
@@ -55,7 +53,7 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
 
     @Override
     protected void serverTick(LivingEntity owner) {
-        TargetList blockingFlow = AttackUtils.cubeAttack(owner, this.getPos().offset(Direction.UP, 0.5f), 0.3f, AttackUtils.AttackTarget.ENEMIES);
+        TargetList blockingFlow = TargetUtils.cubeAttack(owner, this.getPos().offset(Direction.UP, 0.5f), 0.3f, TargetUtils.TargetType.ENEMIES);
         float range = MathUtils.clampedLerp(age, 0, 30, 0, MagmaseepItem.SETTINGS.lavaRainRange);
 
         visual(blockingFlow.isPopulated(), range);
@@ -71,30 +69,30 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
 
     private void spreadLava(LivingEntity owner) {
         if(age == 1) {
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos(), 0.2f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos(), 0.2f), owner);
         }
 
         if(age == 10) {
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.NORTH, 1), 0.13f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.EAST, 1), 0.13f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.WEST, 1), 0.13f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.SOUTH, 1), 0.13f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.NORTH, 1), 0.13f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.EAST, 1), 0.13f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.WEST, 1), 0.13f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.SOUTH, 1), 0.13f), owner);
         }
 
         if(age == 20) {
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(1, 0, 1), 0.06f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(-1, 0, 1), 0.06f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(1, 0, -1), 0.06f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(-1, 0, -1), 0.06f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.NORTH, 2), 0.06f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.EAST, 2), 0.06f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.WEST, 2), 0.06f), owner);
-            AttackUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.SOUTH, 2), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(1, 0, 1), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(-1, 0, 1), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(1, 0, -1), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().add(-1, 0, -1), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.NORTH, 2), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.EAST, 2), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.WEST, 2), 0.06f), owner);
+            SummonUtils.spawnAbility(new LavaLiquidEntity(owner, this.getPos().offset(Direction.SOUTH, 2), 0.06f), owner);
         }
     }
 
     private void lavaRain(LivingEntity owner, float range) {
-        AttackUtils.cylinderAttack(owner, this.getPos(), range, 5, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cylinderAttack(owner, this.getPos(), range, 5, TargetUtils.TargetType.ENEMIES)
                 .damage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, owner, 0, 1, MagmaseepItem.SETTINGS.lavaRainDamage), this.getDamageSources().inFire())
                 .setOnFireFor(2);
 
@@ -113,7 +111,7 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
         ServerWorld world = getServerWorld();
 
         timeSteppedOn = 0;
-        AttackUtils.cylinderAttack(owner, getPos(), MagmaseepItem.SETTINGS.lavaRainRange, 5, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cylinderAttack(owner, getPos(), MagmaseepItem.SETTINGS.lavaRainRange, 5, TargetUtils.TargetType.ENEMIES)
                 .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, owner, 0, 1, MagmaseepItem.SETTINGS.ventExplosionDamage), this.getDamageSources().inFire())
                 .knockback(getPos(), MagmaseepItem.SETTINGS.ventExplosionKnockback);
 

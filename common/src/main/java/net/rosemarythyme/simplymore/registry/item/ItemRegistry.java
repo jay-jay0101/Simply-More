@@ -21,7 +21,7 @@ import net.rosemarythyme.simplymore.item.uniques.joke.ThePanItem;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.*;
 import net.rosemarythyme.simplymore.registry.item.compat.MythicMetalsCompatRegistry;
 import net.rosemarythyme.simplymore.registry.item.compat.StickNStoneCompatRegistry;
-import net.rosemarythyme.simplymore.util.SimplyMoreToolMaterial;
+import net.rosemarythyme.simplymore.util.data.SimplyMoreToolMaterial;
 import net.sweenus.simplyswords.config.Config;
 import net.sweenus.simplyswords.item.component.AwakeningComponent;
 import net.sweenus.simplyswords.item.component.AwakeningRouteComponent;

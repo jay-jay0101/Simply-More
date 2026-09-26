@@ -12,12 +12,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.config.UniqueEffectConfig;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import org.joml.Vector3f;
-
-import java.util.List;
 
 public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
 
@@ -60,18 +57,18 @@ public class PoisonBoltAreaEffectCloudEntity extends AreaEffectCloudEntity {
         target = null;
         distance = 50;
 
-        List<LivingEntity> targets = AttackUtils.cuboidAttack(getOwner(), box);
-
-        // Find the closest owner in the box
-        for (LivingEntity livingEntity : targets) {
-            double entityDistance = livingEntity.distanceTo(this);
-            if (entityDistance > distance) {
-                continue;
-            }
-
-            target = livingEntity;
-            distance = entityDistance;
-        }
+//        List<LivingEntity> targets = AttackUtils.cuboidAttack(getOwner(), box);
+//
+//        // Find the closest owner in the box
+//        for (LivingEntity livingEntity : targets) {
+//            double entityDistance = livingEntity.distanceTo(this);
+//            if (entityDistance > distance) {
+//                continue;
+//            }
+//
+//            target = livingEntity;
+//            distance = entityDistance;
+//        }
 
         // Check if the version is less than 0
         if (version < 0) {

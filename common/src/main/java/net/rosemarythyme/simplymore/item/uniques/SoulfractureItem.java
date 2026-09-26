@@ -23,10 +23,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
-import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
@@ -53,7 +50,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
 
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
-        if(AttackUtils.canTarget(attacker, target, AttackUtils.AttackTarget.ENEMIES) && fragmentsFor(attacker, target).size() < 4) {
+        if(TargetUtils.canTarget(attacker, target, TargetUtils.TargetType.ENEMIES) && fragmentsFor(attacker, target).size() < 4) {
             if(MathUtils.chance(attacker, SETTINGS.chance)) {
                 fragmentSoul(attacker, target);
             }
@@ -61,7 +58,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
     }
 
     private void fragmentSoul(LivingEntity attacker, LivingEntity target) {
-        AttackUtils.spawnAbility(new SoulFragmentEntity(attacker, target.getEyePos(), target, attacker.getYaw() + 180), attacker);
+        SummonUtils.spawnAbility(new SoulFragmentEntity(attacker, target.getEyePos(), target, attacker.getYaw() + 180), attacker);
         AudioVisualUtils.playSound(target.getWorld(), target.getPos(), new Sound(SoundRegistry.DARK_SWORD_ATTACK_WITH_BLOOD_03.get()));
         AudioVisualUtils.playSound(target.getWorld(), target.getPos(), new Sound(SoundEvents.ENTITY_VEX_DEATH));
         AudioVisualUtils.particleAroundEntity(target, ParticleTypes.WARPED_SPORE, 20, 0.25f, 0.4f);
@@ -74,7 +71,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
     }
 
     private static TargetList allFragments(LivingEntity attacker) {
-        List<SoulFragmentEntity> targets = AttackUtils.getOwnedAbilities(attacker, SoulFragmentEntity.class);
+        List<SoulFragmentEntity> targets = SummonUtils.getOwnedAbilities(attacker, SoulFragmentEntity.class);
         return new TargetList(new HashSet<>(targets)).filterByOwnedBy(attacker);
     }
 
@@ -96,10 +93,10 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
     public boolean activate(WeaponAbilityContext context) {
         TargetList fragments = allFragments(context.actor());
 
-        TargetList fullyFracturedEnemies = AttackUtils.cubeAttack(context.actor(), context.actor().getPos(), 50, AttackUtils.AttackTarget.ENEMIES)
+        TargetList fullyFracturedEnemies = TargetUtils.cubeAttack(context.actor(), context.actor().getPos(), 50, TargetUtils.TargetType.ENEMIES)
                 .filter((target) -> fragmentsFor(context.actor(), target).size() >= 4);
 
-        TargetList closeEnemies = AttackUtils.cylinderAttack(context.actor(), context.actor().getPos(), SETTINGS.fragmentRadius, 3, AttackUtils.AttackTarget.ENEMIES)
+        TargetList closeEnemies = TargetUtils.cylinderAttack(context.actor(), context.actor().getPos(), SETTINGS.fragmentRadius, 3, TargetUtils.TargetType.ENEMIES)
                 .exclude(fullyFracturedEnemies);
 
         if (closeEnemies.isEmpty() && fragments.isEmpty() && fullyFracturedEnemies.isEmpty()) return false;
@@ -147,7 +144,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
 
         if(world.isClient || !(entity instanceof LivingEntity attacker) || !selected) return;
 
-        AttackUtils.cubeAttack(attacker, attacker.getPos(), 50, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cubeAttack(attacker, attacker.getPos(), 50, TargetUtils.TargetType.ENEMIES)
                 .onEach((targetE) -> {
                     int fragments = fragmentsFor(attacker, targetE).size();
                     TargetList target = new TargetList(targetE);

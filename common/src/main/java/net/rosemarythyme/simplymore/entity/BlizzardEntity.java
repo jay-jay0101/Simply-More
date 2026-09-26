@@ -11,8 +11,8 @@ import net.rosemarythyme.simplymore.item.uniques.GrandfrostItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class BlizzardEntity extends AbstractAbilityPlacementEntity {
@@ -37,7 +37,7 @@ public class BlizzardEntity extends AbstractAbilityPlacementEntity {
             player.getItemCooldownManager().set(ItemRegistry.GRANDFROST.get(), GrandfrostItem.SETTINGS.cooldown);
         }
 
-        AttackUtils.cylinderAttack(owner, this.getPos().offset(Direction.UP, 2), GrandfrostItem.SETTINGS.radius, 5, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cylinderAttack(owner, this.getPos().offset(Direction.UP, 2), GrandfrostItem.SETTINGS.radius, 5, TargetUtils.TargetType.ENEMIES)
                 .damage(GrandfrostItem.SETTINGS.blizzardDamage, owner.getDamageSources().freeze())
                 .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CHILL), GrandfrostItem.SETTINGS.chillTime, 1);
     }

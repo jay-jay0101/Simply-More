@@ -24,10 +24,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -93,7 +90,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             RegistryEntry<StatusEffect> starlight = StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT);
             if(!player.hasStatusEffect(starlight)) return;
 
-            AttackUtils.cuboidAttack(player, player.getPos().add(0d, 3d, 0d), UNIQUE_CONFIG.glimmerstep.explosionRange, 5, AttackUtils.AttackTarget.ENEMIES)
+            TargetUtils.cuboidAttack(player, player.getPos().add(0d, 3d, 0d), UNIQUE_CONFIG.glimmerstep.explosionRange, 5, TargetUtils.TargetType.ENEMIES)
                     .damage(UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight * player.getStatusEffect(starlight).getAmplifier(), player.getDamageSources().explosion(player, player));
 
             player.getItemCooldownManager().set(this, UNIQUE_CONFIG.glimmerstep.cooldown);

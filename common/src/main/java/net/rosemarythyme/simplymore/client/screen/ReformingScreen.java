@@ -24,7 +24,6 @@ public class ReformingScreen extends HandledScreen<ReformingScreenHandler> {
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        int halfSize = SPRITE_SIZE / 2;
         int centerX = this.x + this.backgroundWidth / 2;
         int centerY = this.y + this.backgroundHeight / 2;
 

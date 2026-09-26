@@ -23,8 +23,8 @@ import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.ItemStackUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
-import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.UniqueSwordItem;
 
@@ -73,7 +73,7 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     @Override
     public final boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if(!(attacker.getWorld() instanceof ServerWorld world)) return super.postHit(stack, target, attacker);
-        if(AwakeningApi.isAwakeningSystemEnabled() && !AwakeningApi.isAbilityUnlocked(stack)) return super.postHit(stack, target, attacker);
+        if(!ItemStackUtils.isStackAwakened(stack)) return super.postHit(stack, target, attacker);
 
         ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();
         ConsecutiveHitsComponent component = stack.get(hits);

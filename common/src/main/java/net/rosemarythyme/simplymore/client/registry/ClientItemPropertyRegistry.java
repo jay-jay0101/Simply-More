@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.ItemStackUtils;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 
 import java.util.Set;
@@ -21,7 +21,7 @@ import java.util.Set;
 public class ClientItemPropertyRegistry {
     public static void registerCounterItemProperty(Item item, Identifier id) {
         ItemPropertiesRegistry.register(item, id, (stack, client, entity, a) -> {
-            CounterComponent counter = MathUtils.getCounterComponent(stack);
+            CounterComponent counter = ItemStackUtils.getCounterComponent(stack);
 
             if (counter == null) return 0f;
 

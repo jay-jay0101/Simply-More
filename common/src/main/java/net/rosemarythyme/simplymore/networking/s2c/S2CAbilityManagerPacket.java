@@ -33,7 +33,7 @@ public record S2CAbilityManagerPacket(int ownerID, int duration, int currentDura
         return PAYLOAD_ID;
     }
 
-    public static void handle(S2CAbilityManagerPacket packet, NetworkManager.PacketContext context) {
+    public static void handle(S2CAbilityManagerPacket packet, NetworkManager.PacketContext ignored) {
         ClientWorld world = MinecraftClient.getInstance().world;
         LivingEntity owner = world == null ? null : (LivingEntity) world.getEntityById(packet.ownerID);
         ClientActiveAbilityManager.CLIENT.add(owner, ActiveAbilityManager.Type.values()[packet.typeOrdinal()], packet.duration(), packet.currentDuration());

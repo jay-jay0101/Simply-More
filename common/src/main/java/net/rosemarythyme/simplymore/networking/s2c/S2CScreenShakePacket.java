@@ -24,7 +24,7 @@ public record S2CScreenShakePacket(float intensity, int duration, boolean fromSe
         return PAYLOAD_ID;
     }
 
-    public static void handle(S2CScreenShakePacket packet, NetworkManager.PacketContext context) {
+    public static void handle(S2CScreenShakePacket packet, NetworkManager.PacketContext ignored) {
         ScreenshakeManager.add(packet.intensity, packet.duration, packet.fromSelf);
     }
 }

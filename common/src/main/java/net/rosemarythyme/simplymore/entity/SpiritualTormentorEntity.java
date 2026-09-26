@@ -118,7 +118,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
 
         Vec3d offset = MathUtils.getDirectionalVector(attackData.yaw, 0).multiply(1.2f);
 
-        AttackUtils.cubeAttack(owner, this.getPos().add(offset.getX(), 0.5f, offset.getZ()), 1.8f, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cubeAttack(owner, this.getPos().add(offset.getX(), 0.5f, offset.getZ()), 1.8f, TargetUtils.TargetType.ENEMIES)
                 .damage(MathHelper.lerp(this.getStrength(), IdolItem.DARKSENT.baseDamage, IdolItem.DARKSENT.maxDamage), AttackUtils.getHitSource(owner))
                 .filter(entity -> entity.getVelocity().getY() < IdolItem.DARKSENT.knockUpHeight)
                 .knockback(this, 0.4f)
@@ -193,9 +193,8 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
     }
 
     private void findTarget(LivingEntity owner) {
-        Optional<Pair<LivingEntity, Float>> targetDistance = AttackUtils.cuboidAttack(owner, this.getPos(), getAuraRange() * 2, 5, AttackUtils.AttackTarget.ENEMIES)
+        Optional<Pair<LivingEntity, Float>> targetDistance = TargetUtils.cuboidAttack(owner, this.getPos(), getAuraRange() * 2, 5, TargetUtils.TargetType.ENEMIES)
                 .filter(LivingEntity::isAlive)
-//                .filter(this::canSee)
                 .getByMax((target) -> target.distanceTo(this));
 
         if(targetDistance.isPresent()) {
@@ -240,7 +239,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
                 .and(PredicateUtils.BENEFICIAL_EFFECT)
                 .and(PredicateUtils.IS_INSTANT.negate());
 
-        AttackUtils.cylinderAttack(owner, this.getPos(), getAuraRange(), 10, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cylinderAttack(owner, this.getPos(), getAuraRange(), 10, TargetUtils.TargetType.ENEMIES)
                 .onEachEffect(predicate, (target, effect) -> {
                     if (EntityUtils.drainEffect(target, effect, IdolItem.DARKSENT.effectDrainRate)) {
                         int bonus = effect.getAmplifier() + 1;

@@ -10,10 +10,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.StasisItem;
 import net.rosemarythyme.simplymore.registry.DamageTypeRegistry;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.sweenus.simplyswords.api.SpellScalingProfile;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +50,7 @@ public class LightningPointEntity extends AbstractVisibleAbilityEntity {
 
             AudioVisualUtils.applyScreenshake(world, getPos(), owner, 40, 2.4f, 10);
 
-            AttackUtils.cylinderAttack(getOwner(), getPos().offset(Direction.UP, 50), StasisItem.SETTINGS.radius, 50, AttackUtils.AttackTarget.ENEMIES)
+            TargetUtils.cylinderAttack(getOwner(), getPos().offset(Direction.UP, 50), StasisItem.SETTINGS.radius, 50, TargetUtils.TargetType.ENEMIES)
                     .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.LIGHTNING, owner, 0, 1, StasisItem.SETTINGS.strikeDamage), DamageTypeRegistry.damageSourceOf(world, DamageTypeRegistry.LIGHTNING))
                     .onEach((target) -> spawnLightning(world, target.getPos(), target));
             discard();

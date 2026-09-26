@@ -21,10 +21,7 @@ import net.rosemarythyme.simplymore.entity.LightningPointEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.PlayerItemUseManager;
@@ -69,7 +66,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
         if(context.activationSource() == WeaponAbilityActivationSource.PLAYER) return false;
 
         for(int i = 0; i < SETTINGS.strikes; i++) {
-            AttackUtils.spawnAbility(new LightningPointEntity(context.actor(), context.origin(), i), context.actor());
+            SummonUtils.spawnAbility(new LightningPointEntity(context.actor(), context.origin(), i), context.actor());
         }
 
         return true;
@@ -81,7 +78,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
 
         if (remainingTicks == getMaxUseTime(stack, user) - 1) {
             for(int i = 0; i < SETTINGS.strikes; i++) {
-                AttackUtils.spawnAbility(new LightningPointEntity(user, user.getPos(), i), user);
+                SummonUtils.spawnAbility(new LightningPointEntity(user, user.getPos(), i), user);
             }
         }
 
@@ -98,7 +95,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
     @Override
     public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
         if(remainingDuration > 1) {
-            AttackUtils.getOwnedAbilities(user, LightningPointEntity.class).forEach(Entity::discard);
+            SummonUtils.getOwnedAbilities(user, LightningPointEntity.class).forEach(Entity::discard);
             return;
         }
 

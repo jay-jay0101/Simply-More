@@ -42,7 +42,7 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if(user.getWorld().isClient) return super.use(world, user, hand);
 
-        LivingEntity target = AttackUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, AttackUtils.AttackTarget.ENEMIES);
+        LivingEntity target = TargetUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, TargetUtils.TargetType.ENEMIES);
         if(target == null) return super.use(world, user, hand);
 
         user.getItemCooldownManager().set(this, UNIQUE_CONFIG.culterex.cooldown);

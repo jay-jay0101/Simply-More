@@ -58,9 +58,9 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
 
     @Override
     public boolean onPress(ItemStack stack, ServerWorld world, LivingEntity user) {
-        if(MathUtils.getCounterComponentProgress(stack) >= 1f) return false;
+        if(ItemStackUtils.getCounterComponentProgress(stack) >= 1f) return false;
 
-        MathUtils.addToCounterComponent(stack, 1);
+        ItemStackUtils.addToCounterComponent(stack, 1);
         new TargetList(user).applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.STUN), 10, 0);
 
         AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_BOW_PULL_BACK_LONG_VERSION_02.get()));
@@ -88,7 +88,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
         }
 
         Vec3d position = user.getEyePos().add(MathUtils.getNormalised2dVector(user.getYaw()).multiply(SETTINGS.range));
-        TargetList targets = AttackUtils.cubeAttack(user, position, SETTINGS.range, AttackUtils.AttackTarget.ENEMIES)
+        TargetList targets = TargetUtils.cubeAttack(user, position, SETTINGS.range, TargetUtils.TargetType.ENEMIES)
                 .filter(PredicateUtils.IS_NOT_BLOCKING);
 
         if(ticksUsed % 5 == 0) {
@@ -105,7 +105,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 3, 0.2f, 0);
         AudioVisualUtils.particleCube(world, position, ParticleTypes.SWEEP_ATTACK, 1, 0, 0);
 
-        int revs = MathUtils.getCounterComponent(stack).value();
+        int revs = ItemStackUtils.getCounterComponent(stack).value();
         targets.forceDamageWithEnchants(SETTINGS.damage, user)
                 .applyEffect(StatusEffects.SLOWNESS, SETTINGS.slownessTime, 1)
                 .pull(position, SETTINGS.pullStrength)
@@ -122,7 +122,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
     }
 
     private boolean consumeRev(LivingEntity user, ItemStack stack, ServerWorld world) {
-        if(MathUtils.getCounterComponentProgress(stack) <= 0) {
+        if(ItemStackUtils.getCounterComponentProgress(stack) <= 0) {
             user.stopUsingItem();
             return true;
         }
@@ -131,7 +131,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.SMOKE, 30, 0.3f, 0.3);
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FLAME, 30, 0.3f, 0.3);
 
-        MathUtils.addToCounterComponent(stack, -1);
+        ItemStackUtils.addToCounterComponent(stack, -1);
         return false;
     }
 
@@ -145,7 +145,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
 
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
-        applyExtraHitEffects(attacker, target, MathUtils.getCounterComponent(stack).value(), (float) HelperMethods.getEntityAttackDamage(attacker));
+        applyExtraHitEffects(attacker, target, ItemStackUtils.getCounterComponent(stack).value(), (float) HelperMethods.getEntityAttackDamage(attacker));
     }
 
     public void applyExtraHitEffects(LivingEntity attacker, LivingEntity target, int revs, float damage) {

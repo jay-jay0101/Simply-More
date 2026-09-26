@@ -70,11 +70,6 @@ public class StatusEffectRegistry {
                     )
     );
 
-    public static final RegistrySupplier<StatusEffect> MIMICRY_HAPPENING = registerEffect(
-            "mimicry_happening",
-            new MimicryEffect(StatusEffectCategory.BENEFICIAL,0)
-    );
-
     public static final RegistrySupplier<StatusEffect> HEX = registerEffect(
             "hex",
             new HexEffect(StatusEffectCategory.HARMFUL,10494192)

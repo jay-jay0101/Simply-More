@@ -16,9 +16,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.LustrousMoxieItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.sweenus.simplyswords.api.SpellScalingProfile;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +39,7 @@ public class LightbeamEntity extends AbstractVisibleAbilityEntity {
 
     @Override
     public int getLifespan() {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+        return MathUtils.PSEUDOINFINITE_DURATION;
     }
 
     public int getCharge() {
@@ -87,9 +85,9 @@ public class LightbeamEntity extends AbstractVisibleAbilityEntity {
         this.setPosition(this.getPos().add(motion));
 
         float size = MathUtils.clampedLerp(charge, 0, LustrousMoxieItem.SETTINGS.maxChargeTime, LustrousMoxieItem.SETTINGS.minSize, LustrousMoxieItem.SETTINGS.maxSize) - 1;
-        AttackUtils.boxAttack(owner, this.getBoundingBox().expand(size).stretch(motion), AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.boxAttack(owner, this.getBoundingBox().expand(size).stretch(motion), TargetUtils.TargetType.ENEMIES)
                 .applyEffect(StatusEffects.GLOWING, LustrousMoxieItem.SETTINGS.glowDuration, 0)
-                .onEach(e -> AttackUtils.getOwnedAbilities(owner, LightOrbEntity.class).stream().filter(o -> o.getPerson().isPresent() && o.getPerson().get().equals(e.getUuid())).toList().forEach(LightOrbEntity::explode))
+                .onEach(e -> SummonUtils.getOwnedAbilities(owner, LightOrbEntity.class).stream().filter(o -> o.getPerson().isPresent() && o.getPerson().get().equals(e.getUuid())).toList().forEach(LightOrbEntity::explode))
                 .damage(AttackUtils.scaleDamage(SpellScalingProfile.LIGHTNING, owner, 0, 1, LustrousMoxieItem.SETTINGS.beamDamage), owner.getDamageSources().indirectMagic(this, owner));
 
         duration--;

@@ -23,7 +23,7 @@ public class MimicryTimelineUtils {
         AudioVisualUtils.playSound(player.getWorld(), position, new Sound(SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK).setPitch(0.5f));
         AudioVisualUtils.particleCube((ServerWorld) player.getWorld(), position, ParticleTypes.SWEEP_ATTACK, 1, 0, 0);
 
-        return AttackUtils.cubeAttack(player, position, range, AttackUtils.AttackTarget.ENEMIES);
+        return TargetUtils.cubeAttack(player, position, range, TargetUtils.TargetType.ENEMIES);
     }
 
     public static TargetList spinAttack(LivingEntity entity, float range) {
@@ -37,7 +37,7 @@ public class MimicryTimelineUtils {
             AudioVisualUtils.playSound(world, entity.getPos(), new Sound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP).setPitch(entity.getRandom().nextBetween(9,14) / 10f));
         }
 
-        return AttackUtils.cylinderAttack(entity, entity.getPos(), range, 1.5f, AttackUtils.AttackTarget.ENEMIES);
+        return TargetUtils.cylinderAttack(entity, entity.getPos(), range, 1.5f, TargetUtils.TargetType.ENEMIES);
     }
 
     public static TargetList slamAttack(LivingEntity entity, float range) {
@@ -51,7 +51,7 @@ public class MimicryTimelineUtils {
         AudioVisualUtils.applyScreenshake(world, entity.getPos(), entity, 10, 2, 10);
         AudioVisualUtils.playSound(world, entity.getPos(), new Sound(SoundEvents.ENTITY_GENERIC_EXPLODE.value()).setVolume(0.5f));
 
-        return AttackUtils.cylinderAttack(entity, entity.getPos(), range, 3f, AttackUtils.AttackTarget.ENEMIES);
+        return TargetUtils.cylinderAttack(entity, entity.getPos(), range, 3f, TargetUtils.TargetType.ENEMIES);
     }
 
     public static TargetList stabAttack(LivingEntity entity, float range, float width) {
@@ -60,7 +60,7 @@ public class MimicryTimelineUtils {
         AudioVisualUtils.particleLine(world, entity.getEyePos(), entity.getYaw(), entity.getPitch(), range, ParticleTypes.CRIT, 0.3f, 1, 0f, 0f);
         AudioVisualUtils.playSound(world, entity.getPos(), new Sound(SoundEvents.ENTITY_PLAYER_ATTACK_STRONG).setVolume(0.5f));
 
-        return AttackUtils.lineAttack(entity , entity.getEyePos(), entity.getYaw(), entity.getPitch(), range, width, AttackUtils.AttackTarget.ENEMIES);
+        return TargetUtils.lineAttack(entity , entity.getEyePos(), entity.getYaw(), entity.getPitch(), range, width, TargetUtils.TargetType.ENEMIES);
     }
 
     public static void move(LivingEntity target, float horizontalStrength, float jumpStrength) {
@@ -70,7 +70,7 @@ public class MimicryTimelineUtils {
     }
 
     public static void startAnimation(LivingEntity player, int duration, MimicryVisualEntity.Animation animation) {
-        Optional<MimicryVisualEntity> visual = AttackUtils.getOwnedEntities(player, MimicryVisualEntity.class).stream().findAny();
+        Optional<MimicryVisualEntity> visual = SummonUtils.getOwnedEntities(player, MimicryVisualEntity.class).stream().findAny();
         if(visual.isPresent()) {
             visual.get().startAttack(duration, animation);
         }

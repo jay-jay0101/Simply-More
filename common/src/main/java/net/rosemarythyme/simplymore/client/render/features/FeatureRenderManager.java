@@ -13,19 +13,19 @@ import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.item.uniques.BrassturnItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.InventoryUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import net.sweenus.simplyswords.client.api.ObserverStatusEffectClientApi;
 
 public class FeatureRenderManager {
     public static void render(LivingEntity entity, MatrixStack stack, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player, Camera camera, RenderTickCounter tickCounter, ClientWorld world) {
-        if(EntityUtils.isHolding(entity, ItemRegistry.SOULFRACTURE.get())) {
+        if(InventoryUtils.isHolding(entity, ItemRegistry.SOULFRACTURE.get())) {
             SoulfractureAuraRenderer.render(entity, stack, vertexConsumers);
         }
 
-        if(EntityUtils.isHolding(entity, ItemRegistry.BLADE_OF_THE_GROTESQUE.get())) {
+        if(InventoryUtils.isHolding(entity, ItemRegistry.BLADE_OF_THE_GROTESQUE.get())) {
             BladeOfTheGrotesqueAuraRenderer.render(entity, stack, vertexConsumers, WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getBlockPos()));
         }
 
@@ -34,7 +34,7 @@ public class FeatureRenderManager {
         }
 
         if(ClientActiveAbilityManager.CLIENT.isInAbility(player, ActiveAbilityManager.Type.HARVEST)) {
-            if(AttackUtils.canTarget(player, entity, AttackUtils.AttackTarget.ENEMIES)) {
+            if(TargetUtils.canTarget(player, entity, TargetUtils.TargetType.ENEMIES)) {
                 BloodHarvesterSenseRenderer.render(entity, stack, vertexConsumers, camera);
             }
         }

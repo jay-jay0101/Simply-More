@@ -15,6 +15,7 @@ import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import org.jetbrains.annotations.NotNull;
@@ -121,7 +122,7 @@ public class SoulFragmentEntity extends AbstractCollectableEntity {
             AudioVisualUtils.particleAroundEntity(this, ParticleTypes.SOUL_FIRE_FLAME, 1, 0.05f, 0.01f);
         }
 
-        if(!EntityUtils.isHolding(owner, ItemRegistry.SOULFRACTURE.get())) {
+        if(!InventoryUtils.isHolding(owner, ItemRegistry.SOULFRACTURE.get())) {
             discard();
         }
     }

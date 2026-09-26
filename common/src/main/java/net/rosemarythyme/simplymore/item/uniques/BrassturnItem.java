@@ -27,9 +27,7 @@ import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.AwakeningApi;
@@ -78,7 +76,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     }
 
     public void changeOxidation(ItemStack stack, int change, LivingEntity entity) {
-        MathUtils.addToCounterComponent(stack, change);
+        ItemStackUtils.addToCounterComponent(stack, change);
         updateRotation(stack, entity.getWorld(), 1f);
     }
 
@@ -89,7 +87,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     @Override
     public boolean canActivate(WeaponAbilityContext context) {
         return context.actor().isAlive() &&
-                MathUtils.getCounterComponentProgress(context.actor().getStackInHand(context.hand())) > 0;
+                ItemStackUtils.getCounterComponentProgress(context.actor().getStackInHand(context.hand())) > 0;
     }
 
     @Override
@@ -111,7 +109,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if(world.isClient()) return;
 
-        if (MathUtils.getCounterComponent(stack).value() <= 0) {
+        if (ItemStackUtils.getCounterComponent(stack).value() <= 0) {
             user.stopUsingItem();
             return;
         }
@@ -127,14 +125,14 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     }
 
     public void spinGear(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        int useTime = AttackUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
+        int useTime = MathUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
 
         float extraSpeedMult = MathUtils.clampedLerp(useTime, 0, SETTINGS.scrapeTime * 16, 1f, GEAR_SPEED);
         updateRotation(stack, world, extraSpeedMult);
 
         if(useTime > 10) {
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.SWING_WOOSH.get()).setPitch(user.getRandom().nextBetween(8, 12) / 10f));
-            AttackUtils.cuboidAttack(user, user.getEyePos(), 1.75f, 1.5f, AttackUtils.AttackTarget.ENEMIES)
+            TargetUtils.cuboidAttack(user, user.getEyePos(), 1.75f, 1.5f, TargetUtils.TargetType.ENEMIES)
                     .damage(MathUtils.clampedLerp(extraSpeedMult, 0, GEAR_SPEED, SETTINGS.minDamage, SETTINGS.maxDamage), AttackUtils.getHitSource(user))
                     .knockback(user, MathUtils.clampedLerp(extraSpeedMult, 0, GEAR_SPEED, SETTINGS.minKnockback, SETTINGS.maxKnockback));
         }
@@ -146,13 +144,13 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
     }
 
     private void updateRotation(ItemStack stack, World world, float getRotationMultiplier) {
-        float speed = getRotationSpeed(MathUtils.getCounterComponentProgress(stack), getRotationMultiplier);
+        float speed = getRotationSpeed(ItemStackUtils.getCounterComponentProgress(stack), getRotationMultiplier);
         RotationComponent.update(stack, world, speed);
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+        return MathUtils.PSEUDOINFINITE_DURATION;
     }
 
     @Override
@@ -167,7 +165,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
 
     @Override
     public AttributeModifiersComponent getModifier(LivingEntity entity, ItemStack stack, AttributeModifiersComponent base) {
-        float oxidisationAmount = MathUtils.getCounterComponentProgress(stack);
+        float oxidisationAmount = ItemStackUtils.getCounterComponentProgress(stack);
         float stackAttackSpeed = (4 + ConfigWrapper.ATTRIBUTES.uniqueWeaponsSwingSpeed.brassturn_attack_speed) * AwakeningApi.getAttackSpeedMultiplier(stack);
         float maximumModifier = stackAttackSpeed - 0.6f;
 

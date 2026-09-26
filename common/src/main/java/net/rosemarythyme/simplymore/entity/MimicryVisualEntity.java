@@ -10,7 +10,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.MimicryTimelineUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import org.apache.commons.lang3.function.TriFunction;
@@ -105,7 +105,7 @@ public class MimicryVisualEntity extends AbstractVisibleAbilityEntity {
 
     @Override
     public int getLifespan() {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+        return MathUtils.PSEUDOINFINITE_DURATION;
     }
 
     @Override

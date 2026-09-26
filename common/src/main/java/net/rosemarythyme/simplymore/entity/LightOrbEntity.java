@@ -15,13 +15,11 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.LustrousMoxieItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -83,7 +81,7 @@ public class LightOrbEntity extends AbstractVisibleAbilityEntity {
 
         if(owner == null) return;
 
-        AttackUtils.cubeAttack(owner, getPos(), 3, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cubeAttack(owner, getPos(), 3, TargetUtils.TargetType.ENEMIES)
                 .forceDamage(LustrousMoxieItem.SETTINGS.explosionDamage, owner.getDamageSources().explosion(this, owner))
                 .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED), LustrousMoxieItem.SETTINGS.dazzleDuration, 0);
     }

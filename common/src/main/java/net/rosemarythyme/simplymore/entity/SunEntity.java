@@ -8,9 +8,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.TimekeeperItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -46,7 +46,7 @@ public class SunEntity extends AbstractPlanetaryEntity {
                 AudioVisualUtils.particleLine(getServerWorld(), this.getPos().offset(Direction.UP, 0.3f), attackYaw, 0, range, ParticleTypes.SMALL_FLAME, 0.25f, 15, 0.05f, 0.01f);
                 AudioVisualUtils.playSound(owner.getWorld(), this.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_FIRE_ATTACK_01.get()).randomisePitch(0.8f, 1.3f, owner.getRandom()).setVolume(0.15f));
 
-                AttackUtils.lineAttack(owner, this.getPos(), attackYaw, 0, range, 1, AttackUtils.AttackTarget.ENEMIES)
+                TargetUtils.lineAttack(owner, this.getPos(), attackYaw, 0, range, 1, TargetUtils.TargetType.ENEMIES)
                         .damage(TimekeeperItem.SETTINGS.orbitAuraDamage, owner.getDamageSources().onFire())
                         .setOnFireFor(Math.round(TimekeeperItem.SETTINGS.orbitEffectTime / 20f))
                         .applyEffect(StatusEffects.GLOWING, TimekeeperItem.SETTINGS.orbitEffectTime, 0);

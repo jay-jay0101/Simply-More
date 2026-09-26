@@ -21,10 +21,7 @@ import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -118,7 +115,7 @@ public class  DugBlockEntity extends AbstractAbilityProjectileEntity {
         } else {
             moveBehind(owner);
 
-            if(!EntityUtils.isHolding(owner, ItemRegistry.MOUNDSHIFTER.get())) {
+            if(!InventoryUtils.isHolding(owner, ItemRegistry.MOUNDSHIFTER.get())) {
                 discard();
             }
         }
@@ -158,7 +155,7 @@ public class  DugBlockEntity extends AbstractAbilityProjectileEntity {
 
     public void tryFire() {
         if(offset == 0 && (movementOverride == null || movementOverride.type != MovementOverride.Type.SHOOT)) {
-            movementOverride = new MovementOverride(this.getPos(), AttackUtils.PSEUDOINFINITE_DURATION, MovementOverride.Type.SHOOT);
+            movementOverride = new MovementOverride(this.getPos(), MathUtils.PSEUDOINFINITE_DURATION, MovementOverride.Type.SHOOT);
 
             Entity owner = getOwner();
             if(owner == null) return;

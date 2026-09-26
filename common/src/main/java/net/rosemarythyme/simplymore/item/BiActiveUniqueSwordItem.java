@@ -10,6 +10,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
@@ -23,7 +24,7 @@ public abstract class BiActiveUniqueSwordItem extends SimplyMoreUniqueSwordItem 
 
     @Override
     protected int getUniqueWeaponMaxUseTime(ItemStack stack, LivingEntity user) {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+        return MathUtils.PSEUDOINFINITE_DURATION;
     }
 
     @Override
@@ -47,7 +48,7 @@ public abstract class BiActiveUniqueSwordItem extends SimplyMoreUniqueSwordItem 
         if(!(world instanceof ServerWorld serverWorld)) return;
         if(!user.isUsingItem()) return;
 
-        int ticksUsed = AttackUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
+        int ticksUsed = MathUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
 
         int cooldown = 0;
         if(ticksUsed <= PRESS_HOLD_CUTOFF_TICKS) {
@@ -65,7 +66,7 @@ public abstract class BiActiveUniqueSwordItem extends SimplyMoreUniqueSwordItem 
         if(!user.isUsingItem()) return;
 
         if(WeaponAbilityCooldownManager.isCoolingDown(serverWorld, user, stack)) return;
-        int ticksUsed = AttackUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
+        int ticksUsed = MathUtils.getUseTicksFromInfiniteDuration(remainingUseTicks);
 
         if(ticksUsed > PRESS_HOLD_CUTOFF_TICKS) {
             whileHeld(stack, serverWorld, user, ticksUsed - PRESS_HOLD_CUTOFF_TICKS);

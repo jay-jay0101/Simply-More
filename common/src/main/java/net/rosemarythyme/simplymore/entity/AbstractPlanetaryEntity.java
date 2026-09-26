@@ -7,10 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.TimekeeperItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,10 +49,10 @@ public abstract class AbstractPlanetaryEntity extends AbstractVisibleAbilityEnti
 
         if(this.isActive()) {
             if(this.getAge() % 5 == 0) {
-                onHit(owner, AttackUtils.boxAttack(owner, this.getBoundingBox().expand(0.4f), AttackUtils.AttackTarget.ENEMIES));
+                onHit(owner, TargetUtils.boxAttack(owner, this.getBoundingBox().expand(0.4f), TargetUtils.TargetType.ENEMIES));
             }
 
-            if(!EntityUtils.isHolding(owner, ItemRegistry.TIMEKEEPER.get())) {
+            if(!InventoryUtils.isHolding(owner, ItemRegistry.TIMEKEEPER.get())) {
                    this.setAge(this.getLifespan());
             }
         }
@@ -64,7 +61,7 @@ public abstract class AbstractPlanetaryEntity extends AbstractVisibleAbilityEnti
 
         if(this.getAge() == this.getLifespan() + this.getOutroTicks() - 1) {
             AudioVisualUtils.applyScreenshake(getServerWorld(), owner.getPos(), owner, 12, 2f, 20);
-            AttackUtils.spawnAbility(new PlanetaryBurstEntity(owner, isTidallyLocked(), this.empowered), owner);
+            SummonUtils.spawnAbility(new PlanetaryBurstEntity(owner, isTidallyLocked(), this.empowered), owner);
         }
     }
 

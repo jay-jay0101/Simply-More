@@ -8,8 +8,8 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,7 +56,7 @@ public abstract class AbstractLiquidEntity extends AbstractVisibleAbilityEntity 
 
         LivingEntity owner = getOwner();
         if(owner == null) return;
-        hit(owner, AttackUtils.cuboidAttack(getOwner(),  getPos(), this.getBoundingBox().getLengthX(), height, AttackUtils.AttackTarget.OTHERS_AND_USER_POSITIVELY));
+        hit(owner, TargetUtils.cuboidAttack(getOwner(),  getPos(), this.getBoundingBox().getLengthX(), height, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY));
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {

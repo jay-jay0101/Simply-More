@@ -12,9 +12,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -61,7 +61,7 @@ public class KatanaItem extends MimicryItem implements TwoHandedWeapon {
         AudioVisualUtils.playSound(world, originalPos, sound);
         AudioVisualUtils.playSound(world, entity.getPos(), sound);
 
-        return AttackUtils.lineAttack(entity, originalPos, entity.getEyePos(), width, AttackUtils.AttackTarget.ENEMIES);
+        return TargetUtils.lineAttack(entity, originalPos, entity.getEyePos(), width, TargetUtils.TargetType.ENEMIES);
     }
 
     @Override

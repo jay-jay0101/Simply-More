@@ -17,7 +17,7 @@ public class ItemComponentRegistry {
                     .codec(CounterComponent.CODEC)
                     .packetCodec(CounterComponent.PACKET_CODEC).build());
 
-    public static final RegistrySupplier<ComponentType<RotationComponent>> ROTATION = COMPONENT_TYPES.register("cog_rotation",
+    public static final RegistrySupplier<ComponentType<RotationComponent>> ROTATION = COMPONENT_TYPES.register("rotation",
             () -> ComponentType.<RotationComponent>builder()
                     .codec(RotationComponent.CODEC)
                     .packetCodec(RotationComponent.PACKET_CODEC).build());

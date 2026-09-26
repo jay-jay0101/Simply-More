@@ -9,10 +9,10 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.rosemarythyme.simplymore.entity.SoulFragmentEntity;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.client.util.HudUtils;
+import net.rosemarythyme.simplymore.entity.SoulFragmentEntity;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.SummonUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,7 +46,7 @@ public class SoulfractureHud implements HudOverlay<Map<LivingEntity, Integer>> {
                 entity -> entity
         ));
 
-        List<SoulFragmentEntity> fragments = AttackUtils.getOwnedAbilities(player, SoulFragmentEntity.class);
+        List<SoulFragmentEntity> fragments = SummonUtils.getOwnedAbilities(player, SoulFragmentEntity.class);
 
         return fragments.stream()
                 .collect(Collectors.groupingBy(SoulFragmentEntity::getPerson))

@@ -11,7 +11,7 @@ public class RecipeTypeRegistry {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES =
             DeferredRegister.create(SimplyMore.ID, RegistryKeys.RECIPE_SERIALIZER);
 
-    public static final RegistrySupplier<MatterbaneClearRecipe.Serializer> UNIQUE_UPGRADE =
+    public static final RegistrySupplier<MatterbaneClearRecipe.Serializer> CLEAN_MATTERBANE =
             RECIPES.register(
                     "matterbane_clean",
                     MatterbaneClearRecipe.Serializer::new

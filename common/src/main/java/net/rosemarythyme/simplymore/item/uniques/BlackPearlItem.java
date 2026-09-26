@@ -27,10 +27,7 @@ import net.rosemarythyme.simplymore.entity.projectiles.CannonballEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.SoundEventRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.ConfigUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
@@ -95,7 +92,7 @@ public class BlackPearlItem extends SimplyMoreUniqueSwordItem implements UniqueW
         AudioVisualUtils.applyScreenshake(context.world(), context.origin(), context.actor(), 0.5f, 1.5f, 10);
         AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundEvents.ENTITY_TNT_PRIMED).setPitch(1.5f));
         AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST.value()).setPitch(0.3F));
-        AttackUtils.spawnProjectile(new CannonballEntity(context.actor(), context.actor().getEyePos().offset(Direction.DOWN, 4/16f), velocity.multiply(2)), context.actor());
+        SummonUtils.spawnProjectile(new CannonballEntity(context.actor(), context.actor().getEyePos().offset(Direction.DOWN, 4/16f), velocity.multiply(2)), context.actor());
         return true;
     }
 

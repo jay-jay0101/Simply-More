@@ -10,10 +10,7 @@ import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.item.uniques.CindergorgeItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -42,7 +39,7 @@ public class FlameFlingType extends ActiveAbilityType {
         LivingEntity owner = ability.owner();
         ServerWorld world = (ServerWorld) owner.getWorld();
 
-        ItemStack stack = EntityUtils.getActiveItem(owner, ItemRegistry.CINDERGORGE.get());
+        ItemStack stack = InventoryUtils.getActiveItem(owner, ItemRegistry.CINDERGORGE.get());
         if(stack == null) return super.tick(ability);
 
         float durationDelta = (float) ability.remainingDuration() / ability.duration();
@@ -63,7 +60,7 @@ public class FlameFlingType extends ActiveAbilityType {
         AudioVisualUtils.particleLine(world, owner.getEyePos().add(MathUtils.getDirectionalVector(rot, 0).multiply(0.5f)), rot, 0, CindergorgeItem.SETTINGS.range, ParticleTypes.FLAME, 0.75f, 20, 0.1f, 0.05f);
 
         if(ability.duration() % 5 == 0) {
-            AttackUtils.lineAttack(owner, owner.getEyePos(), rot, 0, CindergorgeItem.SETTINGS.range, 0.75, AttackUtils.AttackTarget.ENEMIES)
+            TargetUtils.lineAttack(owner, owner.getEyePos(), rot, 0, CindergorgeItem.SETTINGS.range, 0.75, TargetUtils.TargetType.ENEMIES)
                     .setOnFireFor(3)
                     .forceDamage(CindergorgeItem.SETTINGS.fireDamage, owner.getDamageSources().inFire());
         }

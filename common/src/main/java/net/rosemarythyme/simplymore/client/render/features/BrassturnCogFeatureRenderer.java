@@ -12,7 +12,7 @@ import net.minecraft.util.math.RotationAxis;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.models.BrassturnCogModel;
 import net.rosemarythyme.simplymore.item.components.RotationComponent;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.ItemStackUtils;
 
 public class BrassturnCogFeatureRenderer {
     public static final BrassturnCogModel MODEL = new BrassturnCogModel(BrassturnCogModel.getTexturedModelData().createModel());
@@ -26,7 +26,7 @@ public class BrassturnCogFeatureRenderer {
 
         VertexConsumer consumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(SimplyMore.identifier("textures/entity/objects/cog.png")));
 
-        int color = ColorHelper.Argb.lerp(MathUtils.getCounterComponentProgress(itemStack), 0xFFC54920, 0xFF499282);
+        int color = ColorHelper.Argb.lerp(ItemStackUtils.getCounterComponentProgress(itemStack), 0xFFC54920, 0xFF499282);
         MODEL.render(stack, consumer, light, OverlayTexture.DEFAULT_UV, color);
 
         stack.pop();

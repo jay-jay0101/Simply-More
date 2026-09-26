@@ -18,12 +18,9 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.legacy.CrowEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
@@ -57,7 +54,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
         if(!(attacker instanceof  PlayerEntity player) || player.getItemCooldownManager().isCoolingDown(this)) return;
 
         if (MathUtils.chance(attacker, UNIQUE_CONFIG.deaths_eyrie.chance)) {
-            int crows = MathUtils.getCounterComponent(stack).value();
+            int crows = ItemStackUtils.getCounterComponent(stack).value();
 
             int effectTime = UNIQUE_CONFIG.deaths_eyrie.baseBleedTime;
             effectTime += UNIQUE_CONFIG.deaths_eyrie.additionalBleedTime * crows;
@@ -65,7 +62,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
 
             target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), effectTime, amplifier));
 
-            MathUtils.addToCounterComponent(stack, 1);
+            ItemStackUtils.addToCounterComponent(stack, 1);
 
             AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundRegistry.DARK_SWORD_ENCHANT.get()));
         }
@@ -75,12 +72,12 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (user.getWorld().isClient) return super.use(world, user, hand);
 
-        LivingEntity target = AttackUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, AttackUtils.AttackTarget.ENEMIES);
+        LivingEntity target = TargetUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, TargetUtils.TargetType.ENEMIES);
         if(target == null) return super.use(world, user, hand);
 
         AudioVisualUtils.targetIndicator(target);
 
-        TargetList crows = AttackUtils.cubeAttack(user, user.getPos(), 50, AttackUtils.AttackTarget.ALLIES)
+        TargetList crows = TargetUtils.cubeAttack(user, user.getPos(), 50, TargetUtils.TargetType.ALLIES)
                 .filterByType(CrowEntity.class)
                 .filterByOwnedBy(user);
 
@@ -93,7 +90,7 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
         });
 
         if(crows.isPopulated()) {
-            MathUtils.setCounterComponentValue(user.getStackInHand(hand), 1);
+            ItemStackUtils.setCounterComponentValue(user.getStackInHand(hand), 1);
             user.getItemCooldownManager().set(this, UNIQUE_CONFIG.deaths_eyrie.cooldown);
         }
 
@@ -104,12 +101,12 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (world.isClient) return;
         if (!(entity instanceof PlayerEntity player)) return;
-        if (!EntityUtils.isHoldingInMainHand(player, stack)) return;
+        if (!InventoryUtils.isHoldingInMainHand(player, stack)) return;
         if (player.getItemCooldownManager().isCoolingDown(this)) return;
 
-        int crowStacks = MathUtils.getCounterComponent(stack).value();
+        int crowStacks = ItemStackUtils.getCounterComponent(stack).value();
 
-        TargetList crows = AttackUtils.cubeAttack(player, player.getPos(), 50, AttackUtils.AttackTarget.ALLIES)
+        TargetList crows = TargetUtils.cubeAttack(player, player.getPos(), 50, TargetUtils.TargetType.ALLIES)
                 .filterByType(CrowEntity.class)
                 .filterByOwnedBy(player);
 

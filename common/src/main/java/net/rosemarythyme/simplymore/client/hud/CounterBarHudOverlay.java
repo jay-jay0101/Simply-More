@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
 import net.rosemarythyme.simplymore.client.util.HudUtils;
+import net.rosemarythyme.simplymore.util.ItemStackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 
 public class CounterBarHudOverlay implements HudOverlay<Pair<Float, Long>> {
@@ -67,6 +68,6 @@ public class CounterBarHudOverlay implements HudOverlay<Pair<Float, Long>> {
 
     @Override
     public Pair<Float, Long> getHudData(ItemStack stack, ClientPlayerEntity player) {
-        return new Pair<>(MathUtils.getCounterComponentProgress(stack), player.getWorld().getTime());
+        return new Pair<>(ItemStackUtils.getCounterComponentProgress(stack), player.getWorld().getTime());
     }
 }

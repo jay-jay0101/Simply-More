@@ -20,7 +20,7 @@ public class PredicateUtils {
         return (effect) -> !ConfigUtils.isEffectBlacklisted(effect, set, shouldIncludeGlobal);
     }
 
-    public static Predicate<Entity> createForTargetType(LivingEntity attacker, AttackUtils.AttackTarget target) {
-        return (entity -> entity instanceof LivingEntity livingEntity && AttackUtils.canTarget(attacker, livingEntity, target));
+    public static Predicate<Entity> createForTargetType(LivingEntity attacker, TargetUtils.TargetType target) {
+        return (entity -> entity instanceof LivingEntity livingEntity && TargetUtils.canTarget(attacker, livingEntity, target));
     }
 }

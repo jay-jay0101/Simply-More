@@ -9,9 +9,9 @@ import net.rosemarythyme.simplymore.entity.projectiles.IceSpikeEntity;
 import net.rosemarythyme.simplymore.item.uniques.TimekeeperItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.SummonUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.registry.SoundRegistry;
@@ -43,7 +43,7 @@ public class MoonEntity extends AbstractPlanetaryEntity {
                 AudioVisualUtils.playSound(owner.getWorld(), this.getPos().offset(Direction.UP, 0.3f), new Sound(SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get()).randomisePitch(1.7f, 2f, owner.getRandom()).setVolume(0.15f));
 
                 float attackYaw = yaw + (36f * i);
-                AttackUtils.spawnProjectile(new IceSpikeEntity(owner, this.getPos(), attackYaw), owner);
+                SummonUtils.spawnProjectile(new IceSpikeEntity(owner, this.getPos(), attackYaw), owner);
             }
         }
     }

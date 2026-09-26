@@ -23,9 +23,9 @@ import net.rosemarythyme.simplymore.entity.IcewallEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.SummonUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
@@ -71,10 +71,10 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHand
 
     @Override
     public boolean activate(WeaponAbilityContext context) {
-        List<BlizzardEntity> blizzards = AttackUtils.getOwnedAbilities(context.actor(), BlizzardEntity.class);
+        List<BlizzardEntity> blizzards = SummonUtils.getOwnedAbilities(context.actor(), BlizzardEntity.class);
 
         if(blizzards.isEmpty()) {
-            if(!AttackUtils.spawnAbility(new BlizzardEntity(context.actor(), context.actor().getPos()), context.actor(), true)) return false;
+            if(!SummonUtils.spawnAbility(new BlizzardEntity(context.actor(), context.actor().getPos()), context.actor(), true)) return false;
             AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundRegistry.ELEMENTAL_SWORD_ICE_ATTACK_03.get()));
 
             int walls = (int) Math.ceil(SETTINGS.radius * Math.PI);
@@ -84,13 +84,13 @@ public class GrandfrostItem extends SimplyMoreUniqueSwordItem implements TwoHand
                 float yaw = arc * i;
                 Vec3d delta = MathUtils.getDirectionalVector(yaw, 0).multiply(SETTINGS.radius);
 
-                AttackUtils.spawnAbility(new IcewallEntity(context.actor(), context.origin().add(delta)), context.actor(), true);
+                SummonUtils.spawnAbility(new IcewallEntity(context.actor(), context.origin().add(delta)), context.actor(), true);
             }
 
             return context.activationSource() != WeaponAbilityActivationSource.PLAYER;
         }
 
-        List<IcewallEntity> walls = AttackUtils.getOwnedAbilities(context.actor(), IcewallEntity.class);
+        List<IcewallEntity> walls = SummonUtils.getOwnedAbilities(context.actor(), IcewallEntity.class);
 
         blizzards.forEach(Entity::discard);
         walls.forEach(IcewallEntity::lower);

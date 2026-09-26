@@ -18,9 +18,7 @@ import net.rosemarythyme.simplymore.entity.EruptionEntity;
 import net.rosemarythyme.simplymore.entity.VolcanicVentEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.SpellScalingProfile;
@@ -52,12 +50,12 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
             AudioVisualUtils.particleLine(world, attacker.getPos(), target.getPos(), ParticleTypes.SMOKE, 0.4, 15, 0.2f, 1f);
             AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.3f));
 
-            AttackUtils.lineAttack(attacker, attacker.getPos(), attacker.getYaw(), attacker.getPitch(), attacker.distanceTo(target),1, AttackUtils.AttackTarget.ENEMIES)
+            TargetUtils.lineAttack(attacker, attacker.getPos(), attacker.getYaw(), attacker.getPitch(), attacker.distanceTo(target),1, TargetUtils.TargetType.ENEMIES)
                     .knockback(attacker, SETTINGS.knockback)
                     .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, attacker, stack, 0, 1, SETTINGS.eruptionDamage), attacker.getDamageSources().inFire());
 
-            AttackUtils.spawnAbility(new EruptionEntity(attacker, attacker.getPos()), attacker);
-            AttackUtils.spawnAbility(new EruptionEntity(attacker, target.getPos()), attacker);
+            SummonUtils.spawnAbility(new EruptionEntity(attacker, attacker.getPos()), attacker);
+            SummonUtils.spawnAbility(new EruptionEntity(attacker, target.getPos()), attacker);
 
             AudioVisualUtils.applyScreenshake(world, attacker.getPos(), attacker, 12, 2.5f, 20);
         }
@@ -75,7 +73,7 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
 
     @Override
     public boolean activate(WeaponAbilityContext context) {
-        if(AttackUtils.spawnAbility(new VolcanicVentEntity(context.actor(), context.origin()), context.actor(), true)) {
+        if(SummonUtils.spawnAbility(new VolcanicVentEntity(context.actor(), context.origin()), context.actor(), true)) {
             AudioVisualUtils.applyScreenshake(context.world(), context.origin(), context.actor(), 12, 1, 10);
             AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.7f));
             return true;

@@ -27,6 +27,7 @@ import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -92,7 +93,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem implements U
     private void beginAbilityByStack(ItemStack stack, LivingEntity user) {
         Optional<MimicryForm> form = MimicryForm.getByItem(stack.getItem());
         if(form.isPresent()) {
-            int uniqueDuration = AttackUtils.PSEUDOINFINITE_DURATION - form.get().ordinal();
+            int uniqueDuration = MathUtils.PSEUDOINFINITE_DURATION - form.get().ordinal();
             ActiveAbilityManager.SERVER.start(user, ActiveAbilityManager.Type.MIMICRY, uniqueDuration);
 
             stack.set(ItemComponentRegistry.CHANGE.get(), true);
@@ -135,7 +136,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem implements U
         EntityUtils.cooldown(entity, newForm, SETTINGS.cooldown, false);
 
         ItemStack newStack = changeStack(stack, newForm);
-        EntityUtils.replaceStackInInventory(entity, stack, newStack);
+        InventoryUtils.replaceStackInInventory(entity, stack, newStack);
     }
 
     public boolean isFormAvailable(LivingEntity entity, ItemStack stack) {
@@ -153,7 +154,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem implements U
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         Optional<MimicryItem> type = getWeaponType(otherStack);
         if(type.isPresent() && isFormAvailable(player, new ItemStack(type.get())) && this.isFormAvailable(player, stack)) {
-            EntityUtils.replaceStackInInventory(player, stack, changeStack(stack, type.get()));
+            InventoryUtils.replaceStackInInventory(player, stack, changeStack(stack, type.get()));
             player.giveItemStack(otherStack);
             return true;
         }
@@ -180,7 +181,7 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem implements U
     }
 
     private void getFormFromInventory(Set<MimicryItem> allowedForms, PlayerEntity player) {
-        List<ItemStack> inventory = EntityUtils.getEntireInventory(player);
+        List<ItemStack> inventory = InventoryUtils.getEntireInventory(player);
         Set<MimicryItem> inventoryForms = new HashSet<>();
 
         for(ItemStack stack : inventory) {

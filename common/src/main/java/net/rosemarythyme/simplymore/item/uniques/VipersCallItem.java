@@ -21,7 +21,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.ConfigUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -47,7 +47,7 @@ public class VipersCallItem extends SimplyMoreUniqueSwordItem implements UniqueW
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if(world.getTime() % 5 != 0) return;
         if(!(entity instanceof LivingEntity livingEntity)) return;
-        if(!EntityUtils.isHoldingInMainHand(livingEntity, stack)) return;
+        if(!InventoryUtils.isHoldingInMainHand(livingEntity, stack)) return;
 
         for (StatusEffectInstance effect : List.copyOf(livingEntity.getStatusEffects())) {
             if (effect.getDuration() < 25) {

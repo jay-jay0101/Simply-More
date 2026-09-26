@@ -8,7 +8,8 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,7 +56,7 @@ public abstract class AbstractCollectableEntity extends AbstractVisibleAbilityEn
         if(this.getWorld().isClient) return;
 
         Map<LivingEntity, Integer> newTimes = new HashMap<>();
-        TargetList targets = AttackUtils.cubeAttack(getOwner(), getPos(), 1.5, AttackUtils.AttackTarget.OTHERS_AND_USER_POSITIVELY)
+        TargetList targets = TargetUtils.cubeAttack(getOwner(), getPos(), 1.5, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY)
                 .filter(this::canCollect)
                 .onEach((entity) -> {
                     int oldTime = times.getOrDefault(entity, 0);
@@ -89,7 +90,7 @@ public abstract class AbstractCollectableEntity extends AbstractVisibleAbilityEn
 
     @Override
     public int getLifespan() {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+        return MathUtils.PSEUDOINFINITE_DURATION;
     }
 
     abstract boolean canCollect(LivingEntity entity);

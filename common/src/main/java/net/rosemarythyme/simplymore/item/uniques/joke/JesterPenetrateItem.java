@@ -2,7 +2,6 @@ package net.rosemarythyme.simplymore.item.uniques.joke;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,7 +13,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.SimplyMoreSwordItem;
-import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.InventoryUtils;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.util.Styles;
 
@@ -35,10 +35,10 @@ public class JesterPenetrateItem extends SimplyMoreSwordItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if(!(entity instanceof LivingEntity livingEntity)) return;
 
-        if (world.getTime() % 20 == 0 && EntityUtils.isHoldingInMainHand(livingEntity, stack)) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 1));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0));
+        if (world.getTime() % 20 == 0 && InventoryUtils.isHoldingInMainHand(livingEntity, stack)) {
+            new TargetList(livingEntity).applyEffect(StatusEffects.STRENGTH, 20, 0)
+                    .applyEffect(StatusEffects.HASTE, 20, 1)
+                    .applyEffect(StatusEffects.SPEED, 20, 0);
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);

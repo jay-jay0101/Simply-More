@@ -2,7 +2,6 @@ package net.rosemarythyme.simplymore.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
@@ -11,9 +10,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
-import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
@@ -76,36 +72,6 @@ public class MathUtils {
         return direct.add(tangent.multiply(offsetPos * offset));
     }
 
-    public static CounterComponent getCounterComponent(ItemStack stack) {
-        if(!(stack.getItem() instanceof SimplyMoreUniqueSwordItem swordItem))
-            throw new IllegalArgumentException("MathUtils#getCounterComponent should not be called on a non-unique.");
-
-        CounterComponent component = stack.getComponents().get(ItemComponentRegistry.COUNTER.get());
-
-        return component == null
-                ? setCounterComponent(stack, swordItem.getDefaultCounterComponent())
-                : component;
-    }
-
-    public static float getCounterComponentProgress(ItemStack stack) {
-        CounterComponent component = getCounterComponent(stack);
-        return component.value() / (float) component.max();
-    }
-
-    public static CounterComponent setCounterComponent(ItemStack stack, CounterComponent component) {
-        stack.set(ItemComponentRegistry.COUNTER.get(), component);
-        return component;
-    }
-
-    public static CounterComponent addToCounterComponent(ItemStack stack, int value) {
-        CounterComponent component = getCounterComponent(stack);
-        return setCounterComponent(stack, component.add(value));
-    }
-
-    public static CounterComponent setCounterComponentValue(ItemStack stack, int value) {
-        CounterComponent component = getCounterComponent(stack);
-        return setCounterComponent(stack, component.set(value));
-    }
 
     public static Box createCuboidBox(Vec3d centre, double xOffset, double yOffset, double zOffset) {
         return new Box(
@@ -198,5 +164,10 @@ public class MathUtils {
         }
 
         return positions;
+    }
+
+    public static int PSEUDOINFINITE_DURATION = 9999999;
+    public static int getUseTicksFromInfiniteDuration(int duration) {
+        return PSEUDOINFINITE_DURATION - duration;
     }
 }

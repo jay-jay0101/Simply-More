@@ -4,30 +4,20 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.legacy.PoisonBoltAreaEffectCloudEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
-import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -51,42 +41,42 @@ public class SerpentineValourItem extends SimplyMoreUniqueSwordItem implements T
         }
     }
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!user.getWorld().isClient()) {
-            Box entitySearchBox = MathUtils.createCubeBox(user.getPos(), 5);
-
-            boolean hasEnemies = !AttackUtils.cuboidAttack(user, entitySearchBox).isEmpty();
-
-            int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
-
-            for (int j = 0; j < 4; j++) {
-
-                int offsetX = j % 2 == 0
-                        ? (j / 2 == 0 ? -1 : 1)
-                        : 0;
-
-                int offsetZ = j % 2 == 1
-                        ? (j / 2 == 0 ? -1 : 1)
-                        : 0;
-
-                PoisonBoltAreaEffectCloudEntity entity = new PoisonBoltAreaEffectCloudEntity(
-                        user.getWorld(),
-                        user.getX() + offsetX,  // Add the x-offset to the user's x-coordinate
-                        user.getY() + 2,           // Keep the y-coordinate constant (2 blocks above the user)
-                        user.getZ() + offsetZ,     // Add the z-offset to the user's z-coordinate
-                        user,
-                        poisonBoltAreaEffectCloudEntityBehavior
-                );
-
-                // Spawn the entity in the world
-                world.spawnEntity(entity);
-            }
-            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_VOICE_15.get(), SoundCategory.PLAYERS, 0.4f, 1);
-        }
-        user.getItemCooldownManager().set(this, skillCooldown);
-        return super.use(world, user, hand);
-    }
+//    @Override
+//    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+//        if (!user.getWorld().isClient()) {
+//            Box entitySearchBox = MathUtils.createCubeBox(user.getPos(), 5);
+//
+//            boolean hasEnemies = !AttackUtils.cuboidAttack(user, entitySearchBox).isEmpty();
+//
+//            int poisonBoltAreaEffectCloudEntityBehavior = hasEnemies ? -2 : 0;
+//
+//            for (int j = 0; j < 4; j++) {
+//
+//                int offsetX = j % 2 == 0
+//                        ? (j / 2 == 0 ? -1 : 1)
+//                        : 0;
+//
+//                int offsetZ = j % 2 == 1
+//                        ? (j / 2 == 0 ? -1 : 1)
+//                        : 0;
+//
+//                PoisonBoltAreaEffectCloudEntity entity = new PoisonBoltAreaEffectCloudEntity(
+//                        user.getWorld(),
+//                        user.getX() + offsetX,  // Add the x-offset to the user's x-coordinate
+//                        user.getY() + 2,           // Keep the y-coordinate constant (2 blocks above the user)
+//                        user.getZ() + offsetZ,     // Add the z-offset to the user's z-coordinate
+//                        user,
+//                        poisonBoltAreaEffectCloudEntityBehavior
+//                );
+//
+//                // Spawn the entity in the world
+//                world.spawnEntity(entity);
+//            }
+//            user.getWorld().playSound(null, user.getBlockPos(), SoundRegistry.MAGIC_SHAMANIC_VOICE_15.get(), SoundCategory.PLAYERS, 0.4f, 1);
+//        }
+//        user.getItemCooldownManager().set(this, skillCooldown);
+//        return super.use(world, user, hand);
+//    }
 
     @Override
     public FootfallParticles getFootfalls() {

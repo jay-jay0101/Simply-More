@@ -1,4 +1,4 @@
-package net.rosemarythyme.simplymore.util;
+package net.rosemarythyme.simplymore.util.data;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;

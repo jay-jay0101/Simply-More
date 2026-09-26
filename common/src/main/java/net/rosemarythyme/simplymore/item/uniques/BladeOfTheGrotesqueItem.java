@@ -28,9 +28,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -66,7 +64,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
     @Override
     public boolean activate(WeaponAbilityContext context) {
         ActiveAbilityManager.SERVER.start(context.actor(), ActiveAbilityManager.Type.STATUE, SETTINGS.selfStunTime);
-        AttackUtils.spawnAbility(new StatueEntity(context.actor(), context.origin(), context.actor().getYaw()), context.actor());
+        SummonUtils.spawnAbility(new StatueEntity(context.actor(), context.origin(), context.actor().getYaw()), context.actor());
 
         AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundEvents.UI_STONECUTTER_TAKE_RESULT));
         return context.activationSource() != WeaponAbilityActivationSource.PLAYER;
@@ -81,10 +79,10 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
 
         ActiveAbilityManager.SERVER.stop(attacker, ActiveAbilityManager.Type.STATUE);
 
-        AttackUtils.cubeAttack(attacker, attacker.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cubeAttack(attacker, attacker.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, TargetUtils.TargetType.ENEMIES)
                 .onEach(target -> {
                     ActiveAbilityManager.SERVER.start(target, ActiveAbilityManager.Type.PETRIFIED, SETTINGS.auraStunTime);
-                    AttackUtils.spawnAbility(new StatueEntity(target, target.getPos(), target.getYaw()), target);
+                    SummonUtils.spawnAbility(new StatueEntity(target, target.getPos(), target.getYaw()), target);
                 });
     }
 
@@ -117,7 +115,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
         if (world.isClient) return;
 
         if (entity instanceof LivingEntity user && selected) {
-            AttackUtils.cubeAttack(user, user.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, AttackUtils.AttackTarget.ENEMIES)
+            TargetUtils.cubeAttack(user, user.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, TargetUtils.TargetType.ENEMIES)
                     .incrementEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.GROTESQUE_WARD), 50, 1, UNIQUE_CONFIG.blade_of_the_grotesque.maxAuraWard);
         }
 

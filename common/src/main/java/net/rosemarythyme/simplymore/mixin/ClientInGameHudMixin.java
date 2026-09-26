@@ -17,8 +17,8 @@ import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.uniques.LustrousMoxieItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.util.ItemStackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
-import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.client.api.SimplySwordsClientAPI;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 import org.spongepowered.asm.mixin.Final;
@@ -68,7 +68,7 @@ public class ClientInGameHudMixin {
 
     @Unique
     private static boolean simplymore$isStackInvalid(ItemStack stack) {
-        return stack.isEmpty() || !(stack.getItem() instanceof HudOverlayItem) || (AwakeningApi.isAwakeningSystemEnabled() && !AwakeningApi.isAbilityUnlocked(stack));
+        return stack.isEmpty() || !(stack.getItem() instanceof HudOverlayItem) || !ItemStackUtils.isStackAwakened(stack);
     }
 
     @Unique

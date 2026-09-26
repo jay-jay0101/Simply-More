@@ -10,7 +10,8 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.item.uniques.mimicry.MimicryItem;
-import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.SummonUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 
 import java.util.List;
@@ -36,12 +37,12 @@ public class MimicryAbilityType extends ActiveAbilityType {
         if(form.isPresent()) {
             MimicryItem item = (MimicryItem) form.get().item.get();
 
-            int ticksUsed = AttackUtils.getUseTicksFromInfiniteDuration(ability.remainingDuration() + form.get().ordinal());
+            int ticksUsed = MathUtils.getUseTicksFromInfiniteDuration(ability.remainingDuration() + form.get().ordinal());
             if(item.usageTimeline(owner, ticksUsed)) return 0;
 
-            List<MimicryVisualEntity> entities = AttackUtils.getOwnedEntities(owner, MimicryVisualEntity.class);
+            List<MimicryVisualEntity> entities = SummonUtils.getOwnedEntities(owner, MimicryVisualEntity.class);
             if(entities.isEmpty()) {
-                AttackUtils.spawnAbility(new MimicryVisualEntity(owner, new ItemStack(item)), owner);
+                SummonUtils.spawnAbility(new MimicryVisualEntity(owner, new ItemStack(item)), owner);
             }
         }
 
@@ -57,7 +58,7 @@ public class MimicryAbilityType extends ActiveAbilityType {
     }
 
     public Optional<MimicryItem.MimicryForm> getForm(ActiveAbilityManager.ActiveAbility ability) {
-        int ordinal = AttackUtils.getUseTicksFromInfiniteDuration(ability.duration());
+        int ordinal = MathUtils.getUseTicksFromInfiniteDuration(ability.duration());
         return MimicryItem.MimicryForm.getByOrdinal(ordinal);
     }
 }

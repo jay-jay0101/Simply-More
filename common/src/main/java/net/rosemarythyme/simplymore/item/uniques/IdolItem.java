@@ -99,7 +99,7 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
         if(isFirstInTick) {
             if(tier.path == IdolPath.HOLYLIGHT) {
                 if(MathUtils.chance(attacker, HOLYLIGHT.chance)) {
-                    AttackUtils.cubeAttack(attacker, attacker.getPos(), HOLYLIGHT.blessingRange, AttackUtils.AttackTarget.ALLIES_AND_USER)
+                    TargetUtils.cubeAttack(attacker, attacker.getPos(), HOLYLIGHT.blessingRange, TargetUtils.TargetType.ALLIES_AND_USER)
                             .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING), HOLYLIGHT.blessingDuration, 0);
 
                     AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_HOLY_ATTACK_03.get()));
@@ -112,7 +112,7 @@ public class IdolItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponA
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FLAME, 10, 0.2f, 0.2f);
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FALLING_OBSIDIAN_TEAR, 100, 0.4f, 0f);
 
-                    AttackUtils.cubeAttack(attacker, attacker.getPos(), DARKSENT.curseRange, AttackUtils.AttackTarget.ENEMIES)
+                    TargetUtils.cubeAttack(attacker, attacker.getPos(), DARKSENT.curseRange, TargetUtils.TargetType.ENEMIES)
                             .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.FRAGILE), DARKSENT.curseDuration, DARKSENT.curseLevel - 1);
                 }
             }

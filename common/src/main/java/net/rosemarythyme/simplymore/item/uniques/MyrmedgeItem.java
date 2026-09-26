@@ -28,10 +28,7 @@ import net.rosemarythyme.simplymore.item.components.GrabbedComponent;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -73,7 +70,7 @@ public class MyrmedgeItem extends SimplyMoreUniqueSwordItem implements UniqueWea
 
         Entity target = HelperMethods.getTargetedEntity(context.actor(), 2);
         if(!(target instanceof LivingEntity livingEntity)) return false;
-        if(!AttackUtils.canTarget(context.actor(), livingEntity, AttackUtils.AttackTarget.ENEMIES)) return false;
+        if(!TargetUtils.canTarget(context.actor(), livingEntity, TargetUtils.TargetType.ENEMIES)) return false;
 
         ItemStack stack = context.actor().getStackInHand(context.hand());
         stack.set(ItemComponentRegistry.GRABBED.get(), new GrabbedComponent(target.getUuid(), context.world().getTime()));

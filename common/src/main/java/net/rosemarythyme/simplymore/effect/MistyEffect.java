@@ -11,11 +11,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Box;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.sweenus.simplyswords.registry.SoundRegistry;
-
-import java.util.List;
 
 public class MistyEffect extends StatusEffect {
 
@@ -82,23 +79,23 @@ public class MistyEffect extends StatusEffect {
             Box box = MathUtils.createCubeBox(player.getPos(), boxSize);
 
 
-            List<LivingEntity> targets = AttackUtils.cuboidAttack(player, box);
-            for (LivingEntity target : targets) {
-                if (!player.canSee(target)) {
-                    continue;
-                }
-                if (teleportTarget == null) {
-                    teleportTarget = target;
-
-                    int amplifier = (int) Math.ceil(target.getMaxHealth() / 5);
-                    if (amplifier > 20) {
-                        amplifier = 20;
-                    }
-                    amplifier--;
-                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WITHERING_FATE), 600, amplifier));
-                    target.damage(player.getDamageSources().playerAttack(player), 8);
-                }
-            }
+//            List<LivingEntity> targets = AttackUtils.cuboidAttack(player, box);
+//            for (LivingEntity target : targets) {
+//                if (!player.canSee(target)) {
+//                    continue;
+//                }
+//                if (teleportTarget == null) {
+//                    teleportTarget = target;
+//
+//                    int amplifier = (int) Math.ceil(target.getMaxHealth() / 5);
+//                    if (amplifier > 20) {
+//                        amplifier = 20;
+//                    }
+//                    amplifier--;
+//                    target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WITHERING_FATE), 600, amplifier));
+//                    target.damage(player.getDamageSources().playerAttack(player), 8);
+//                }
+//            }
         }
         return teleportTarget;
     }

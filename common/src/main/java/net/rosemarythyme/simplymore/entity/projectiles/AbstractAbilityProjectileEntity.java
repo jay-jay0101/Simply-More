@@ -13,10 +13,10 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
@@ -47,7 +47,7 @@ public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
             return;
         }
 
-        HitResult hitresult = ProjectileUtil.getCollision(this, PredicateUtils.createForTargetType(livingOwner, AttackUtils.AttackTarget.ENEMIES));
+        HitResult hitresult = ProjectileUtil.getCollision(this, PredicateUtils.createForTargetType(livingOwner, TargetUtils.TargetType.ENEMIES));
         if(hitresult.getType() != HitResult.Type.MISS) {
             if(canCollide(hitresult)) {
                 onHit(hitresult);

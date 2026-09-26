@@ -19,17 +19,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.projectiles.DugBlockEntity;
 import net.rosemarythyme.simplymore.entity.EarthquakeVisualEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.DugBlockEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
@@ -63,14 +60,14 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if(!isFirstInTick) return;
 
-        if(MathUtils.getCounterComponent(stack).value() >= SETTINGS.maxHeat) {
+        if(ItemStackUtils.getCounterComponent(stack).value() >= SETTINGS.maxHeat) {
             BlockHitResult result = EntityUtils.raycastDown(target, target.getPos(), world, 5);
             if(result.getType() == HitResult.Type.MISS) return;
 
-            MathUtils.setCounterComponentValue(stack, 0);
+            ItemStackUtils.setCounterComponentValue(stack, 0);
             createEarthquake(world, attacker, result.getPos());
         } else {
-            MathUtils.addToCounterComponent(stack, consecutiveHits > 2 ? 2 : 1);
+            ItemStackUtils.addToCounterComponent(stack, consecutiveHits > 2 ? 2 : 1);
         }
     }
 
@@ -81,11 +78,11 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
         AudioVisualUtils.playSound(world, pos, new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_02.get()).setPitch(0));
         AudioVisualUtils.playSound(world, pos, new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0));
 
-        AttackUtils.cuboidAttack(attacker, pos.offset(Direction.UP, 3), 8, 5, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cuboidAttack(attacker, pos.offset(Direction.UP, 3), 8, 5, TargetUtils.TargetType.ENEMIES)
                 .damage(AttackUtils.scaleDamage(SpellScalingProfile.NATURE, attacker, 1/9f, 1f, SETTINGS.earthquakeDamage), attacker.getDamageSources().explosion(attacker, attacker))
                 .knockback(pos, SETTINGS.earthquakeStrength);
 
-        AttackUtils.spawnAbility(new EarthquakeVisualEntity(attacker, pos), attacker);
+        SummonUtils.spawnAbility(new EarthquakeVisualEntity(attacker, pos), attacker);
 
         MathUtils.getPositionsOnFloor(world, BlockPos.ofFloored(pos), 8, 8, 3, 100)
                 .forEach(block -> AudioVisualUtils.dustPillar(world, block));
@@ -94,13 +91,13 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
 
         int offset = 0;
         for(BlockPos block : blocks) {
-            AttackUtils.spawnProjectile(new DugBlockEntity(attacker, block.toCenterPos(), world.getBlockState(block), offset++), attacker);
+            SummonUtils.spawnProjectile(new DugBlockEntity(attacker, block.toCenterPos(), world.getBlockState(block), offset++), attacker);
         }
     }
 
     @Override
     public void onSwing(ItemStack stack, ServerWorld world, LivingEntity user) {
-        AttackUtils.getOwnedProjectiles(user, DugBlockEntity.class)
+        SummonUtils.getOwnedProjectiles(user, DugBlockEntity.class)
                 .forEach(DugBlockEntity::tryFire);
 
         super.onSwing(stack, world, user);
@@ -169,7 +166,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
 
         if(includeEarthquake && user.isOnGround()) createEarthquake(world, source, pos);
 
-        AttackUtils.cubeAttack(source, pos, 3, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cubeAttack(source, pos, 3, TargetUtils.TargetType.ENEMIES)
                 .addVelocity(0, 1f, 0);
 
         if(source instanceof PlayerEntity player) {

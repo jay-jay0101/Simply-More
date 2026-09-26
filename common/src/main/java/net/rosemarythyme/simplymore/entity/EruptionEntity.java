@@ -8,9 +8,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.MagmaseepItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class EruptionEntity extends AbstractAbilityPlacementEntity {
@@ -33,7 +33,7 @@ public class EruptionEntity extends AbstractAbilityPlacementEntity {
     }
 
     private void blind(float range, LivingEntity owner) {
-        AttackUtils.cuboidAttack(owner, this.getPos(), range, 3f, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cuboidAttack(owner, this.getPos(), range, 3f, TargetUtils.TargetType.ENEMIES)
                 .applyEffect(StatusEffects.BLINDNESS, 30, 0);
     }
 

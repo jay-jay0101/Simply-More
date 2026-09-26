@@ -13,7 +13,7 @@ import net.rosemarythyme.simplymore.client.render.entity.MimicryVisualRenderer;
 import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
@@ -225,7 +225,7 @@ public class RenderUtils {
 
     public static float getModelRotationOverride(LivingEntity entity, float tickDelta, float original) {
         if(isSpinningWithCindergorge(entity)) {
-            return RotationComponent.getRotation(EntityUtils.getActiveItem(entity, ItemRegistry.CINDERGORGE.get()), entity.getWorld().getTime() + tickDelta);
+            return RotationComponent.getRotation(InventoryUtils.getActiveItem(entity, ItemRegistry.CINDERGORGE.get()), entity.getWorld().getTime() + tickDelta);
         }
 
         if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.MIMICRY)) {

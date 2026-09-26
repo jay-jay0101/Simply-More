@@ -20,9 +20,7 @@ import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.legacy.RiftEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -58,7 +56,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
         AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ENTITY_WARDEN_DIG).setPitch(2f));
 
         Vector3f color = this.getColor(user.getStackInHand(hand));
-        AttackUtils.spawnAbility(new RiftEntity(user, user.getPos().add(0d, 3d, 0d), color), user);
+        SummonUtils.spawnAbility(new RiftEntity(user, user.getPos().add(0d, 3d, 0d), color), user);
         user.getItemCooldownManager().set(this, UNIQUE_CONFIG.matterbane.cooldown);
 
         return super.use(world, user, hand);
@@ -75,7 +73,7 @@ public class MatterbaneItem extends SimplyMoreUniqueSwordItem {
             AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CONVERTED).setPitch(2f));
             AudioVisualUtils.particleLine(world, attacker.getEyePos(), attacker.getYaw(), attacker.getPitch(), UNIQUE_CONFIG.matterbane.range, new DustParticleEffect(color,2), 0.25d, 1, 0d, 0d);
 
-            AttackUtils.lineAttack(attacker, attacker.getEyePos(), attacker.getYaw(), attacker.getPitch(), UNIQUE_CONFIG.matterbane.range, 0.25f, AttackUtils.AttackTarget.ENEMIES)
+            TargetUtils.lineAttack(attacker, attacker.getEyePos(), attacker.getYaw(), attacker.getPitch(), UNIQUE_CONFIG.matterbane.range, 0.25f, TargetUtils.TargetType.ENEMIES)
                     .forceDamage(UNIQUE_CONFIG.matterbane.damage, attacker.getDamageSources().indirectMagic(attacker, attacker));
         }
     }

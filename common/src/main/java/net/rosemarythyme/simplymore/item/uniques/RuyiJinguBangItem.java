@@ -26,10 +26,7 @@ import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.item.interfaces.StackModifierItem;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
@@ -77,7 +74,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
         if(context.activationSource() == WeaponAbilityActivationSource.PLAYER) return false;
 
         ItemStack stack = context.actor().getStackInHand(context.hand());
-        float size = MathUtils.getCounterComponentProgress(stack);
+        float size = ItemStackUtils.getCounterComponentProgress(stack);
         if(size < 0.5f) {
             for(int i = 0; i < SETTINGS.maxGrowth / 2f; i++) {
                 grow(stack, context.actor());
@@ -91,30 +88,28 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
 
     @Override
     public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
-        float size = MathUtils.getCounterComponentProgress(stack);
-        if(AttackUtils.getUseTicksFromInfiniteDuration(remainingDuration) < 19) return;
+        float size = ItemStackUtils.getCounterComponentProgress(stack);
+        if(MathUtils.getUseTicksFromInfiniteDuration(remainingDuration) < 19) return;
         if(size < 0.5f) return;
 
-        double range = (size * (SETTINGS.maxSlamRange - 5)) + 5;
-        double width = (size * (SETTINGS.maxSlamWidth - 0.25)) + 0.25;
-        float damage = (size * (SETTINGS.maxSlamDamage - 5)) + 5;
+        float range = MathUtils.clampedLerp(size, 0f, 1f, 5f, (float) SETTINGS.maxSlamRange);
+        float width = MathUtils.clampedLerp(size, 0f, 1f, 0.25f, (float) SETTINGS.maxSlamWidth);
+        float damage = MathUtils.clampedLerp(size, 0f, 1f, 5f, (float) SETTINGS.maxSlamDamage);
         int sunderedArmor = Math.round(size * SETTINGS.maxSlamSunderedArmor);
 
-        AttackUtils.lineAttack(user, user.getEyePos(), user.getYaw(), user.getPitch(), range, width, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.lineAttack(user, user.getEyePos(), user.getYaw(), user.getPitch(), range, width, TargetUtils.TargetType.ENEMIES)
                 .damageWithEnchants(damage, user)
                 .addVelocity(0, -2, 0)
                 .incrementEffect(EffectRegistry.getReference(EffectRegistry.SUNDERED_ARMOR), SETTINGS.slamSunderedArmorDuration, sunderedArmor, 100);
 
         AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_02.get()));
         AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()));
-
         AudioVisualUtils.applyScreenshake(world, user.getPos(), user, range * 2, size * 4, 20);
-
         AudioVisualUtils.particleLine(world, user.getPos(), user.getYaw(), user.getPitch(), range, ParticleTypes.EXPLOSION, 1, 5, 0.25f, 0);
         AudioVisualUtils.explosionBlocksInLine(world, user.getPos(), user.getYaw(), user.getPitch(), range,3, 1, 3, 2, 0.5f, user.getRandom());
 
         EntityUtils.cooldown(user, this, SETTINGS.cooldown, true);
-        MathUtils.setCounterComponentValue(stack, 0);
+        ItemStackUtils.setCounterComponentValue(stack, 0);
     }
 
     @Override
@@ -134,7 +129,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
     }
 
     public static void grow(ItemStack stack, LivingEntity user) {
-        CounterComponent component = MathUtils.getCounterComponent(stack);
+        CounterComponent component = ItemStackUtils.getCounterComponent(stack);
         if(component == null) return;
         if(component.value() >= component.max()) return;
 
@@ -148,12 +143,12 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.WAX_ON, 20, 0.25f, 0.1f);
 
         AudioVisualUtils.playSound(user.getWorld(), user.getPos(), new Sound(SoundRegistry.ELEMENTAL_BOW_EARTH_SHOOT_IMPACT_03.get()));
-        MathUtils.addToCounterComponent(stack, 1);
+        ItemStackUtils.addToCounterComponent(stack, 1);
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+        return MathUtils.PSEUDOINFINITE_DURATION;
     }
 
     @Override
@@ -183,7 +178,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
 
     @Override
     public AttributeModifiersComponent getModifier(LivingEntity entity, ItemStack stack, AttributeModifiersComponent base) {
-        float size = MathUtils.getCounterComponentProgress(stack);
+        float size = ItemStackUtils.getCounterComponentProgress(stack);
 
         return base.with(
                 EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,

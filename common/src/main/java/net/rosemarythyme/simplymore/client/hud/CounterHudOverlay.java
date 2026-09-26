@@ -11,7 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
 import net.rosemarythyme.simplymore.client.util.HudUtils;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.ItemStackUtils;
 
 public class CounterHudOverlay implements HudOverlay<Pair<Integer, Integer>> {
     private final String translationKey;
@@ -46,7 +46,7 @@ public class CounterHudOverlay implements HudOverlay<Pair<Integer, Integer>> {
 
     @Override
     public Pair<Integer, Integer> getHudData(ItemStack stack, ClientPlayerEntity player) {
-        CounterComponent component = MathUtils.getCounterComponent(stack);
+        CounterComponent component = ItemStackUtils.getCounterComponent(stack);
         return new Pair<>(component.value() - component.min(), component.max() - component.min());
     }
 }

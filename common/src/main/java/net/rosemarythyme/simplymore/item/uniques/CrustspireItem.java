@@ -22,10 +22,7 @@ import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
@@ -52,14 +49,14 @@ public class CrustspireItem extends SimplyMoreUniqueSwordItem implements HudOver
 
     @Override
     public boolean canActivate(WeaponAbilityContext context) {
-        return MathUtils.getCounterComponent(context.actor().getStackInHand(context.hand())).value() > 0
+        return ItemStackUtils.getCounterComponent(context.actor().getStackInHand(context.hand())).value() > 0
                 && context.actor().isAlive();
     }
 
     @Override
     public boolean activate(WeaponAbilityContext context) {
-        MathUtils.setCounterComponentValue(context.actor().getStackInHand(context.hand()), 0);
-        AttackUtils.getOwnedProjectiles(context.actor(), DripstoneSpikeEntity.class).forEach(DripstoneSpikeEntity::fire);
+        ItemStackUtils.setCounterComponentValue(context.actor().getStackInHand(context.hand()), 0);
+        SummonUtils.getOwnedProjectiles(context.actor(), DripstoneSpikeEntity.class).forEach(DripstoneSpikeEntity::fire);
 
         context.actor().addVelocity(MathUtils.getDirectionalVector(context.actor().getYaw(), context.actor().getPitch()).multiply(-SETTINGS.recoil));
         context.actor().velocityModified = true;
@@ -82,7 +79,7 @@ public class CrustspireItem extends SimplyMoreUniqueSwordItem implements HudOver
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if (isFirstInTick && MathUtils.chance(attacker, SETTINGS.chance)) {
-            MathUtils.addToCounterComponent(stack, 1);
+            ItemStackUtils.addToCounterComponent(stack, 1);
 
             AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.8f));
             AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.DARK_SWORD_UNFOLD.get()));
@@ -108,17 +105,19 @@ public class CrustspireItem extends SimplyMoreUniqueSwordItem implements HudOver
         Vec3d pos = EntityUtils.rangeAroundPoint(owner.getEyePos().offset(Direction.UP, 1), owner, yaw, range);
 
         pos = EntityUtils.raycastUp(entity, pos, owner.getWorld(), 6).getPos();
-        AttackUtils.spawnProjectile(new FallingDripstoneSpikeEntity(owner, pos, owner.getRandom()), owner);
+        SummonUtils.spawnProjectile(new FallingDripstoneSpikeEntity(owner, pos, owner.getRandom()), owner);
 
         AudioVisualUtils.particleCube(world, pos, ParticleTypes.SMOKE, 5, 0.05f, 0f);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (!world.isClient && entity instanceof LivingEntity owner && EntityUtils.isActiveStack(owner, stack)) {
-            AttackUtils.ensureEnumeratedEntities(
+        if(world.isClient()) return;super.inventoryTick(stack, world, entity, slot, selected);
+
+        if (entity instanceof LivingEntity owner && InventoryUtils.getHeldAwakenedStack(owner, stack.getItem()).equals(stack)) {
+            SummonUtils.ensureEnumeratedEntities(
                     owner, DripstoneSpikeEntity.class,
-                    MathUtils.getCounterComponent(stack).value()
+                    ItemStackUtils.getCounterComponent(stack).value()
             );
         }
 

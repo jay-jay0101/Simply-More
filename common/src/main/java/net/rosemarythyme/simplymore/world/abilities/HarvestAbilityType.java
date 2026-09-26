@@ -10,7 +10,7 @@ import net.minecraft.sound.SoundEvents;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.EntityUtils;
+import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 
@@ -21,7 +21,7 @@ public class HarvestAbilityType extends ActiveAbilityType {
 
     @Override
     public boolean shouldContinue(ActiveAbilityManager.ActiveAbility ability) {
-        return EntityUtils.isHolding(ability.owner(), ItemRegistry.THE_BLOOD_HARVESTER.get());
+        return InventoryUtils.isHolding(ability.owner(), ItemRegistry.THE_BLOOD_HARVESTER.get());
     }
 
     @Override

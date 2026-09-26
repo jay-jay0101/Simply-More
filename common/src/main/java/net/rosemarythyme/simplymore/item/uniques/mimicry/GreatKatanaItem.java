@@ -58,7 +58,7 @@ public class GreatKatanaItem extends MimicryItem implements TwoHandedWeapon {
         AudioVisualUtils.playSound(player.getWorld(), position, new Sound(SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK).setPitch(0.5f));
         AudioVisualUtils.particleCube((ServerWorld) player.getWorld(), position, ParticleTypes.SWEEP_ATTACK, Math.round(radius * radius * 2 * 2), radius - 0.5f, 0);
 
-        return AttackUtils.cubeAttack(player, position, radius, AttackUtils.AttackTarget.ENEMIES);
+        return TargetUtils.cubeAttack(player, position, radius, TargetUtils.TargetType.ENEMIES);
     }
 
     @Override

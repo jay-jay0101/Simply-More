@@ -155,7 +155,7 @@ public class SpiritualGuardianEntity extends AbstractSpiritualEntity {
                 .and(PredicateUtils.HARMFUL_EFFECT)
                 .and(PredicateUtils.IS_INSTANT.negate());
 
-        AttackUtils.cylinderAttack(owner, this.getPos(), getAuraRange(), 10, AttackUtils.AttackTarget.ALLIES_AND_USER)
+        TargetUtils.cylinderAttack(owner, this.getPos(), getAuraRange(), 10, TargetUtils.TargetType.ALLIES_AND_USER)
                 .onEachEffect(predicate, (target, effect) -> {
                     if (EntityUtils.drainEffect(target, effect, IdolItem.HOLYLIGHT.effectDrainRate)) {
                         int bonus = effect.getAmplifier() + 1;

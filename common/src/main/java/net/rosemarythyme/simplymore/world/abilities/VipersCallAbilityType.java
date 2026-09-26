@@ -5,9 +5,9 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.particle.ParticleTypes;
 import net.rosemarythyme.simplymore.item.uniques.VipersCallItem;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.PredicateUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 
@@ -25,14 +25,14 @@ public class VipersCallAbilityType extends ActiveAbilityType {
         LivingEntity owner = ability.owner();
 
         AudioVisualUtils.particleAroundEntity(owner, ParticleTypes.SPORE_BLOSSOM_AIR, 3, 2f, 1f);
-        TargetList nearby = AttackUtils.cylinderAttack(owner, owner.getPos(), VipersCallItem.SETTINGS.auraRange, 4, AttackUtils.AttackTarget.OTHERS_AND_USER_POSITIVELY);
+        TargetList nearby = TargetUtils.cylinderAttack(owner, owner.getPos(), VipersCallItem.SETTINGS.auraRange, 4, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY);
 
         List<StatusEffectInstance> positive = new ArrayList<>();
         List<StatusEffectInstance> negative = new ArrayList<>();
 
         Predicate<StatusEffect> predicate = PredicateUtils.createForEffectBlacklist(VipersCallItem.SETTINGS.blacklist, VipersCallItem.SETTINGS.includeGlobalBlacklist);
         for (LivingEntity entity : nearby.targets()) {
-            if(AttackUtils.canTarget(owner, entity, AttackUtils.AttackTarget.ENEMIES)) {
+            if(TargetUtils.canTarget(owner, entity, TargetUtils.TargetType.ENEMIES)) {
                 for(StatusEffectInstance instance : List.copyOf(entity.getStatusEffects())) {
                     if(predicate.and(PredicateUtils.HARMFUL_EFFECT).test(instance.getEffectType().value())) {
                         negative.add(instance);
@@ -47,10 +47,10 @@ public class VipersCallAbilityType extends ActiveAbilityType {
             }
         }
 
-        nearby.filterByTargetType(owner, AttackUtils.AttackTarget.ALLIES_AND_USER)
+        nearby.filterByTargetType(owner, TargetUtils.TargetType.ALLIES_AND_USER)
                 .onEach((entity) -> positive.forEach(instance -> entity.addStatusEffect(new StatusEffectInstance(instance))));
 
-        nearby.filterByTargetType(owner, AttackUtils.AttackTarget.ENEMIES)
+        nearby.filterByTargetType(owner, TargetUtils.TargetType.ENEMIES)
                 .onEach((entity) -> negative.forEach(instance -> entity.addStatusEffect(new StatusEffectInstance(instance))));
 
         return super.tick(ability);

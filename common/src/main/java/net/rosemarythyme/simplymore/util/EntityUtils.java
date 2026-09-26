@@ -8,8 +8,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -36,17 +36,19 @@ import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
-import net.sweenus.simplyswords.api.AwakeningApi;
-import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
-import java.util.*;
 import java.util.stream.StreamSupport;
 
 public class EntityUtils {
-    private static final Map<LivingEntity, Long> SWING_CACHE = new HashMap<>();
+    public static boolean isPetOrMount(LivingEntity entity, LivingEntity other) {
+        return entity == other.getVehicle() ||
+                other == entity.getVehicle() ||
+                (entity instanceof TameableEntity ownableEntity && ownableEntity.getOwner() == other) ||
+                (other instanceof TameableEntity ownableEntity2 && ownableEntity2.getOwner() == entity);
+    }
 
     public static float getHealthPercentage(LivingEntity entity) {
         float maxHp = entity.getMaxHealth();
@@ -55,36 +57,9 @@ public class EntityUtils {
         return entity.getHealth() / entity.getMaxHealth();
     }
 
-    public static void replaceStackInInventory(LivingEntity entity, ItemStack oldStack, ItemStack newStack) {
-        if(entity instanceof PlayerEntity player) {
-            PlayerInventory inventory = player.getInventory();
-
-            int slot = inventory.getSlotWithStack(oldStack);
-            if(slot != -1) {
-                inventory.setStack(slot, newStack);
-                return;
-            }
-        }
-
-        if(entity.getStackInHand(Hand.MAIN_HAND) == oldStack) {
-            entity.setStackInHand(Hand.MAIN_HAND, newStack);
-        } else if (entity.getStackInHand(Hand.OFF_HAND) == oldStack) {
-            entity.setStackInHand(Hand.OFF_HAND, newStack);
-        }
-    }
-
-    public static List<ItemStack> getEntireInventory(PlayerEntity player) {
-        PlayerInventory inventory = player.getInventory();
-
-        List<ItemStack> stacks = new ArrayList<>(inventory.main);
-        stacks.addAll(inventory.offHand);
-        stacks.addAll(inventory.armor);
-        return stacks;
-    }
-
     public static void putAllItemsOnCooldown(LivingEntity target, int time) {
         if (target instanceof PlayerEntity playerTarget) {
-            for (ItemStack item : getEntireInventory(playerTarget)) {
+            for (ItemStack item : InventoryUtils.getEntireInventory(playerTarget)) {
                 if (!playerTarget.getItemCooldownManager().isCoolingDown(item.getItem())) {
                     playerTarget.getItemCooldownManager().set(item.getItem(), time);
                 }
@@ -104,22 +79,6 @@ public class EntityUtils {
             }
         } else {
             WeaponAbilityCooldownManager.setCooldown((ServerWorld) target.getWorld(), target, item.getDefaultStack(), time);
-        }
-    }
-
-    public static void putInCache(LivingEntity entity, long time) {
-        SWING_CACHE.put(entity, time);
-    }
-
-    public static long getCache(LivingEntity entity) {
-        return SWING_CACHE.getOrDefault(entity, 0L);
-    }
-
-    public static void cleanCache() {
-        for(Map.Entry<LivingEntity, Long> entry : new HashSet<>(SWING_CACHE.entrySet())) {
-            if(!entry.getKey().isAlive()) {
-                SWING_CACHE.remove(entry.getKey());
-            }
         }
     }
 
@@ -154,61 +113,6 @@ public class EntityUtils {
         entity.addStatusEffect(new StatusEffectInstance(effect, instance.getDuration(), Math.min(amplifier, maxAmplifier)));
     }
 
-    public static boolean isActiveStack(LivingEntity entity, ItemStack stack) {
-        if(entity.getStackInHand(Hand.MAIN_HAND).getItem() == stack.getItem()) {
-            return entity.getStackInHand(Hand.MAIN_HAND) == stack;
-        }
-
-        return isHolding(entity, stack);
-    }
-
-    public static ItemStack getItemInEitherHand(Item item, LivingEntity entity) {
-        ItemStack stack = entity.getStackInHand(Hand.MAIN_HAND);
-        if(stack.getItem() == item) return stack;
-
-        stack = entity.getStackInHand(Hand.OFF_HAND);
-        if(stack.getItem() == item) return stack;
-
-        return ItemStack.EMPTY;
-    }
-
-    public static ItemStack getActiveItem(LivingEntity entity, Item item) {
-        if(entity instanceof PlayerEntity) {
-            ItemStack stack = entity.getActiveItem();
-            return stack.getItem().equals(item) ? stack : ItemStack.EMPTY;
-        }
-
-        return getItemInEitherHand(item, entity);
-    }
-
-    public static boolean isHoldingInMainHand(LivingEntity entity, ItemStack stack) {
-        return entity.getStackInHand(Hand.MAIN_HAND).equals(stack);
-    }
-
-    public static boolean isHolding(LivingEntity entity, Item item) {
-        if(entity.getStackInHand(Hand.MAIN_HAND).getItem() == item) return true;
-        return !(item instanceof TwoHandedWeapon) && entity.getStackInHand(Hand.OFF_HAND).getItem() == item;
-    }
-
-    public static boolean isHolding(LivingEntity entity, ItemStack stack) {
-        if(entity.getStackInHand(Hand.MAIN_HAND) == stack) return true;
-        return !(stack.getItem() instanceof TwoHandedWeapon) && entity.getStackInHand(Hand.OFF_HAND) == stack;
-    }
-
-    public static boolean isHoldingAwakenedStack(LivingEntity entity, Item item) {
-        ItemStack stack = entity.getStackInHand(Hand.MAIN_HAND);
-        if(stack.getItem() == item && isStackAwakened(stack)) return true;
-
-        if(item instanceof TwoHandedWeapon) return false;
-
-        stack = entity.getStackInHand(Hand.OFF_HAND);
-        return stack.getItem() == item && isStackAwakened(stack);
-    }
-
-    public static boolean isStackAwakened(ItemStack stack) {
-        return !AwakeningApi.isAwakeningSystemEnabled() || AwakeningApi.isAbilityUnlocked(stack);
-    }
-
     public static void spawnAround(World world, LivingEntity entity, Vec3d pos, double horizontalRange, double verticalRange) {
         double deltaX = (world.getRandom().nextDouble() * horizontalRange * 2) - horizontalRange;
         double deltaY = (world.getRandom().nextDouble() * verticalRange * 2) - verticalRange;
@@ -237,7 +141,7 @@ public class EntityUtils {
     }
 
     private static void onHitTaken(LivingEntity livingEntity, DamageSource source, float amount) {
-        if (AttackUtils.isDamageSourceMelee(source) && isHoldingAwakenedStack(livingEntity, ItemRegistry.CINDERGORGE.get())) {
+        if (AttackUtils.isDamageSourceMelee(source) && InventoryUtils.isHoldingAwakenedStack(livingEntity, ItemRegistry.CINDERGORGE.get())) {
             if(source.getAttacker() instanceof LivingEntity attacker && MathUtils.chance(livingEntity, CindergorgeItem.SETTINGS.chance)) {
                 AudioVisualUtils.particleAroundEntity(livingEntity, ParticleTypes.FLAME, 10, 0.5f, 0.2f);
                 AudioVisualUtils.playSound(livingEntity.getWorld(), livingEntity.getPos(), new Sound(SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_IMPACT_03.get()).setVolume(0.5f));
@@ -248,7 +152,7 @@ public class EntityUtils {
         }
 
         final float damage = amount;
-        AttackUtils.getOwnedEntities(livingEntity, SpiritualGuardianEntity.class).forEach(guardian -> guardian.tryRetaliate(livingEntity, damage, source));
+        SummonUtils.getOwnedEntities(livingEntity, SpiritualGuardianEntity.class).forEach(guardian -> guardian.tryRetaliate(livingEntity, damage, source));
     }
 
     public static float modifyDamageTaken(LivingEntity livingEntity, DamageSource source, float original) {

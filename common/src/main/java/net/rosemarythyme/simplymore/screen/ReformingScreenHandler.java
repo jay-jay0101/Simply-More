@@ -43,12 +43,12 @@ public class ReformingScreenHandler extends ScreenHandler {
         return true;
     }
 
-    public void next(ButtonWidget button) {
+    public void next(ButtonWidget ignored) {
         if(choises.isEmpty()) return;
         index = Math.abs(++index) % choises.size();
     }
 
-    public void prev(ButtonWidget button) {
+    public void prev(ButtonWidget ignored) {
         if(choises.isEmpty()) return;
         index = Math.abs(--index) % choises.size();
     }

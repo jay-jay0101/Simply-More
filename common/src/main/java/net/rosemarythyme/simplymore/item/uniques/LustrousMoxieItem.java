@@ -22,9 +22,7 @@ import net.rosemarythyme.simplymore.entity.LightbeamEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.world.PlayerItemUseManager;
@@ -49,7 +47,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
         if(MathUtils.chance(attacker, SETTINGS.chance)) {
-            List<LightOrbEntity> orbs = AttackUtils.getOwnedAbilities(attacker, LightOrbEntity.class)
+            List<LightOrbEntity> orbs = SummonUtils.getOwnedAbilities(attacker, LightOrbEntity.class)
                             .stream().filter(orb -> orb.getPerson().isPresent() && orb.getPerson().get().equals(target.getUuid())).toList();
 
             AudioVisualUtils.playSound(world, target.getPos(), new Sound(SoundRegistry.ELEMENTAL_BOW_HOLY_SHOOT_IMPACT_03.get()));
@@ -59,7 +57,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
                 orbs.forEach(LightOrbEntity::explode);
                 AudioVisualUtils.playSound(world, target.getPos(), new Sound(SoundEvents.ITEM_TRIDENT_THUNDER.value()));
             } else {
-                AttackUtils.spawnAbility(new LightOrbEntity(attacker, target.getPos(), target, orbs.size()), attacker);
+                SummonUtils.spawnAbility(new LightOrbEntity(attacker, target.getPos(), target, orbs.size()), attacker);
             }
         }
     }
@@ -68,7 +66,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     public TypedActionResult<ItemStack> startPlayerAbility(World world, PlayerEntity user, Hand hand) {
         if(!(world instanceof ServerWorld serverWorld)) return TypedActionResult.pass(user.getStackInHand(hand));
 
-        List<LightbeamEntity> beams = AttackUtils.getOwnedAbilities(user, LightbeamEntity.class).stream().filter(LightbeamEntity::isFired).toList();
+        List<LightbeamEntity> beams = SummonUtils.getOwnedAbilities(user, LightbeamEntity.class).stream().filter(LightbeamEntity::isFired).toList();
         if(!beams.isEmpty()) {
             teleport(user, beams.getFirst());
             return TypedActionResult.pass(user.getStackInHand(hand));
@@ -119,7 +117,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return AttackUtils.PSEUDOINFINITE_DURATION;
+        return MathUtils.PSEUDOINFINITE_DURATION;
     }
 
     @Override
@@ -137,7 +135,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
         if(context.activationSource() == WeaponAbilityActivationSource.PLAYER) return false;
 
         LightbeamEntity beam = new LightbeamEntity(context.actor(), context.origin());
-        AttackUtils.spawnAbility(beam, context.actor());
+        SummonUtils.spawnAbility(beam, context.actor());
         beam.tryFire();
 
         AudioVisualUtils.playSound(context.world(), context.origin(), new Sound(SoundRegistry.MAGIC_SWORD_SPELL_02.get()).setPitch(0));
@@ -155,7 +153,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
     public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
         int chargeTime = getMaxUseTime(stack, user) - remainingDuration;
 
-        List<LightbeamEntity> beams = AttackUtils.getOwnedAbilities(user, LightbeamEntity.class);
+        List<LightbeamEntity> beams = SummonUtils.getOwnedAbilities(user, LightbeamEntity.class);
 
         if(chargeTime < 10) {
             beams.forEach(LightbeamEntity::stopFiring);
@@ -174,7 +172,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
         if(world.isClient) return;
 
         if (remainingTicks == getMaxUseTime(stack, user) - 1) {
-            AttackUtils.spawnAbility(new LightbeamEntity(user, user.getPos()), user);
+            SummonUtils.spawnAbility(new LightbeamEntity(user, user.getPos()), user);
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.MAGIC_SWORD_SPELL_02.get()).setPitch(0));
         }
     }

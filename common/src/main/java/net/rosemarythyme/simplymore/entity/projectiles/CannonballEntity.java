@@ -10,9 +10,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.BlackPearlItem;
 import net.rosemarythyme.simplymore.registry.EntityRegistry;
-import net.rosemarythyme.simplymore.util.AttackUtils;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ public class CannonballEntity extends AbstractAbilityProjectileEntity {
         AudioVisualUtils.particleAroundEntity(this, ParticleTypes.EXPLOSION, 1, 0, 0);
         AudioVisualUtils.particleAroundEntity(this, ParticleTypes.SMOKE, 100, 0, 0.5);
 
-        AttackUtils.cubeAttack(owner, getPos(), 4, AttackUtils.AttackTarget.ENEMIES)
+        TargetUtils.cubeAttack(owner, getPos(), 4, TargetUtils.TargetType.ENEMIES)
                 .damage(BlackPearlItem.SETTINGS.cannonballDamage, this.getDamageSources().explosion(this, owner))
                 .knockback(this.getPos(), BlackPearlItem.SETTINGS.cannonballKnockback);
     }
