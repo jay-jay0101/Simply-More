@@ -10,6 +10,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.item.uniques.BladeOfTheGrotesqueItem;
@@ -51,6 +52,11 @@ public class StatueEntity extends AbstractVisibleAbilityEntity {
         this.dataTracker.set(YAW, nbt.getFloat("yaw"));
     }
 
+    @Override
+    protected Text getDefaultName() {
+        if(this.ownerSnapshot == null) return Text.translatable("entity.simplymore.statue.unknown");
+        return Text.translatable("entity.simplymore.statue", this.ownerSnapshot.owner.getName());
+    }
 
     public record StatueData(LivingEntity owner, EntityType<?> type, NbtCompound compound) {
         public LivingEntity snapshot(World world) {

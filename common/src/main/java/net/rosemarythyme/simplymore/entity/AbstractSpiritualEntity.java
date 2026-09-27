@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -208,11 +207,6 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
     @Override
     public boolean isCustomNameVisible() {
         return false;
-    }
-
-    @Override
-    public Text getName() {
-        return Text.empty();
     }
 
     @Override

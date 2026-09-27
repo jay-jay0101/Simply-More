@@ -14,7 +14,6 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.EntityTrackerEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -107,11 +106,6 @@ public abstract class AbstractAbilityPlacementEntity extends LivingEntity implem
     @Override
     public boolean isCustomNameVisible() {
         return false;
-    }
-
-    @Override
-    public Text getName() {
-        return Text.empty();
     }
 
     @Override

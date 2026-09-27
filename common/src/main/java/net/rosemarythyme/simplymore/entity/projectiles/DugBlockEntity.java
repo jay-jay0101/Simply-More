@@ -13,6 +13,7 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
@@ -53,6 +54,10 @@ public class  DugBlockEntity extends AbstractAbilityProjectileEntity {
         private MovementOverride(Vec3d startPos, int duration, Type type) {
             this(startPos, duration, duration, type);
         }
+    }
+
+    protected Text getDefaultName() {
+        return Text.translatable("entity.minecraft.falling_block_type", this.getBlockState().getBlock().getName());
     }
 
     public BlockState getBlockState() {
