@@ -9,6 +9,10 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:soulstalker",
+			"required": false
+		},
+		{
 			"id": "simplymore:the_blood_harvester",
 			"required": false
 		},

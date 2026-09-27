@@ -9,6 +9,14 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:stormscale",
+			"required": false
+		},
+		{
+			"id": "simplyswords:ionbound_stormscale",
+			"required": false
+		},
+		{
 			"id": "sticknstone:wooden_glaive",
 			"required": false
 		},

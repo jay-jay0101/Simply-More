@@ -9,6 +9,14 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:wraithmaw",
+			"required": false
+		},
+		{
+			"id": "simplyswords:bloodwake",
+			"required": false
+		},
+		{
 			"id": "sticknstone:wooden_cutlass",
 			"required": false
 		},

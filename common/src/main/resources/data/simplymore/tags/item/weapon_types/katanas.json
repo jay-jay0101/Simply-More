@@ -9,6 +9,10 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:dreadwhisper",
+			"required": false
+		},
+		{
 			"id": "sticknstone:wooden_katana",
 			"required": false
 		},

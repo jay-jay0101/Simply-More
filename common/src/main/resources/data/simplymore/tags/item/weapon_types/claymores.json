@@ -9,6 +9,18 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:dawnquiver",
+			"required": false
+		},
+		{
+			"id": "simplyswords:riftmane",
+			"required": false
+		},
+		{
+			"id": "simplyswords:the_devourer",
+			"required": false
+		},
+		{
 			"id": "simplyswords:brimstone_claymore",
 			"required": false
 		},

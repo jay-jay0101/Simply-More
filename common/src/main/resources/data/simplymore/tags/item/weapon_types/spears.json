@@ -5,6 +5,10 @@
 			"required": false
 		},
 		{
+			"id": "simplyswords:gloampiercer",
+			"required": false
+		},
+		{
 			"id": "simplyswords:magispear",
 			"required": false
 		},
