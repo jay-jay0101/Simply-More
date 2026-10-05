@@ -105,7 +105,9 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
 
     @Override
     public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
-        int crows = MathUtils.getUseTicksFromInfiniteDuration(remainingDuration) / CROW_CHARGE_TIME;
+        if(stack == null) return;
+
+        int crows = Math.min(MathUtils.getUseTicksFromInfiniteDuration(remainingDuration) / CROW_CHARGE_TIME, ItemStackUtils.getCounterComponent(stack).value());
         spawnAbility(user, stack, crows);
 
         EntityUtils.cooldown(user, this, SETTINGS.cooldown, true);
