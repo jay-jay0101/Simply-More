@@ -32,7 +32,12 @@ public class PlayerItemUseManager {
         if(player.getActiveItem().getItem() != stack.getItem()) return;
 
         if(triggerStop) {
-            stack.getItem().onStoppedUsing(stack, player.getWorld(), player, player.getItemUseTimeLeft());
+            int useTicksLeft = player.getItemUseTimeLeft();
+            stack.getItem().onStoppedUsing(stack, player.getWorld(), player, useTicksLeft);
+
+            if(stack.getItem() instanceof StoppableAbilityItem stoppable && player.getWorld() instanceof ServerWorld world) {
+                stoppable.stop(stack, world, player, useTicksLeft);
+            }
         }
 
         CACHE.remove(player);

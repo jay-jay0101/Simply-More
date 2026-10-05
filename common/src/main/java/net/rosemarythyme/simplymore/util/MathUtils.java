@@ -56,7 +56,7 @@ public class MathUtils {
                 .concat("%");
     }
 
-    public static Vec3d getPosBehindEntity(LivingEntity owner, Entity entity, int ordinal, double offset, double behindRange) {
+    public static Vec3d getHoverPosBehindOwner(LivingEntity owner, Entity entity, int ordinal, double offset, double behindRange) {
         Vec3d direct = EntityUtils.rangeAroundPoint(owner.getEyePos().offset(Direction.UP, 0.5f), entity, owner.getYaw() + 180, (float) behindRange);
 
         float offsetPos;
@@ -68,10 +68,8 @@ public class MathUtils {
         }
 
         Vec3d tangent = MathUtils.getDirectionalVector(owner.getYaw() + 90, 0);
-
         return direct.add(tangent.multiply(offsetPos * offset));
     }
-
 
     public static Box createCuboidBox(Vec3d centre, double xOffset, double yOffset, double zOffset) {
         return new Box(

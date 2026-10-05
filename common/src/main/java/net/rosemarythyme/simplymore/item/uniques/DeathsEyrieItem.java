@@ -4,7 +4,6 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -14,113 +13,124 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.rosemarythyme.simplymore.entity.legacy.CrowEntity;
+import net.rosemarythyme.simplymore.entity.CrowEmitterEntity;
+import net.rosemarythyme.simplymore.entity.CrowEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
-import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
+import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
+import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.util.data.Sound;
-import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.TwoHandedWeapon;
+import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
-public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon {
+public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHandedWeapon, HudOverlayItem, UniqueWeaponActiveAbility, StoppableAbilityItem {
+    public static final DeathsEyrieItem.EffectSettings SETTINGS = UNIQUE_CONFIG.deaths_eyrie;
+    public static final int CROW_CHARGE_TIME = 8;
 
     @Override
     public CounterComponent getDefaultCounterComponent() {
-        return new CounterComponent(0, 5);
+        return new CounterComponent(0, SETTINGS.maxCrows, 1);
     }
-
-    public static final int MAX_CROWS = 5;
-
 
     public DeathsEyrieItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed);
     }
 
-
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
-        if(attacker.getWorld().isClient) return;
-        if(!(attacker instanceof  PlayerEntity player) || player.getItemCooldownManager().isCoolingDown(this)) return;
+        if(!isFirstInTick) return;
+        SummonUtils.getOwnedEntities(attacker, CrowEntity.class).forEach(c -> c.startAttack(target));
 
-        if (MathUtils.chance(attacker, UNIQUE_CONFIG.deaths_eyrie.chance)) {
-            int crows = ItemStackUtils.getCounterComponent(stack).value();
-
-            int effectTime = UNIQUE_CONFIG.deaths_eyrie.baseBleedTime;
-            effectTime += UNIQUE_CONFIG.deaths_eyrie.additionalBleedTime * crows;
-            int amplifier = (int) Math.floor(0.75f * (crows - 1));
-
-            target.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), effectTime, amplifier));
-
-            ItemStackUtils.addToCounterComponent(stack, 1);
-
+        if (MathUtils.chance(attacker, UNIQUE_CONFIG.deaths_eyrie.chance) && ItemStackUtils.getCounterComponentProgress(stack) < 1f) {
             AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundRegistry.DARK_SWORD_ENCHANT.get()));
+            ItemStackUtils.addToCounterComponent(stack, 1);
         }
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (user.getWorld().isClient) return super.use(world, user, hand);
+    public boolean canActivate(WeaponAbilityContext context) {
+        return context.actor().isAlive() && ItemStackUtils.getCounterComponentProgress(context.actor().getStackInHand(context.hand())) > 0f;
+    }
 
-        LivingEntity target = TargetUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, TargetUtils.TargetType.ENEMIES);
-        if(target == null) return super.use(world, user, hand);
+    @Override
+    public boolean activate(WeaponAbilityContext context) {
+        spawnAbility(context.actor(), context.actor().getStackInHand(context.hand()), 1);
+        return true;
+    }
 
-        AudioVisualUtils.targetIndicator(target);
+    @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingTicks) {
+        if(world.isClient) return;
 
-        TargetList crows = TargetUtils.cubeAttack(user, user.getPos(), 50, TargetUtils.TargetType.ALLIES)
-                .filterByType(CrowEntity.class)
-                .filterByOwnedBy(user);
-
-        int attackTime = UNIQUE_CONFIG.deaths_eyrie.crowAttackTimePerCrow * crows.size();
-
-        crows.onEachEnumerated((offset, entity) -> {
-            CrowEntity crow = (CrowEntity) entity;
-            crow.setAttackingUuid(target.getUuid());
-            crow.setAttackingTime(offset + attackTime);
-        });
-
-        if(crows.isPopulated()) {
-            ItemStackUtils.setCounterComponentValue(user.getStackInHand(hand), 1);
-            user.getItemCooldownManager().set(this, UNIQUE_CONFIG.deaths_eyrie.cooldown);
+        int maxUseTicks = ItemStackUtils.getCounterComponent(stack).value() * CROW_CHARGE_TIME + 1;
+        int minRemainingTicks = MathUtils.PSEUDOINFINITE_DURATION - maxUseTicks;
+        if (remainingTicks % CROW_CHARGE_TIME == 0 && remainingTicks >= minRemainingTicks) {
+            AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.DARK_SWORD_UNFOLD.get()).setVolume(0.5f).randomisePitch(0.4f, 1.6f, user.getRandom()));
         }
+    }
 
-        return super.use(world, user, hand);
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.BOW;
+    }
+
+    @Override
+    protected int getUniqueWeaponMaxUseTime(ItemStack stack, LivingEntity user) {
+        return MathUtils.PSEUDOINFINITE_DURATION;
+    }
+
+    private void spawnAbility(LivingEntity owner, ItemStack stack, int crows) {
+        float yaw = owner.getYaw();
+        Vec3d pos = EntityUtils.rangeAroundPoint(owner.getEyePos(), owner, yaw + 180f, 2f);
+
+        ItemStackUtils.addToCounterComponent(stack, -crows);
+        SummonUtils.spawnAbility(new CrowEmitterEntity(owner, pos, yaw, crows), owner);
+
+        AudioVisualUtils.playSound(owner.getWorld(), pos, new Sound(SoundRegistry.DARK_SWORD_BREAKS.get()));
+    }
+
+    @Override
+    public void stop(ItemStack stack, ServerWorld world, LivingEntity user, int remainingDuration) {
+        int crows = MathUtils.getUseTicksFromInfiniteDuration(remainingDuration) / CROW_CHARGE_TIME;
+        spawnAbility(user, stack, crows);
+
+        EntityUtils.cooldown(user, this, SETTINGS.cooldown, true);
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> startPlayerAbility(World world, PlayerEntity user, Hand hand) {
+        if(!(world instanceof ServerWorld serverWorld)) return TypedActionResult.pass(user.getStackInHand(hand));
+        return AttackUtils.holdToUse(serverWorld, user, hand);
+    }
+
+    @Override
+    public int getActivationCooldownTicks(ItemStack stack, WeaponAbilityContext context) {
+        return SETTINGS.cooldown;
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (world.isClient) return;
-        if (!(entity instanceof PlayerEntity player)) return;
-        if (!InventoryUtils.isHoldingInMainHand(player, stack)) return;
-        if (player.getItemCooldownManager().isCoolingDown(this)) return;
-
-        int crowStacks = ItemStackUtils.getCounterComponent(stack).value();
-
-        TargetList crows = TargetUtils.cubeAttack(player, player.getPos(), 50, TargetUtils.TargetType.ALLIES)
-                .filterByType(CrowEntity.class)
-                .filterByOwnedBy(player);
-
-        if(crows.size() > crowStacks) {
-            crows.kill();
-        } else if (crows.size() < crowStacks) {
-            int crowsToAdd = crowStacks - crows.size();
-
-            for (int i = 0; i < crowsToAdd; i++) {
-                EntityUtils.spawnAround(world, new CrowEntity(player, world), player.getEyePos().add(0d, 1d, 0d), 1.5d, 0d);
-            }
-        }
-
         super.inventoryTick(stack, world, entity, slot, selected);
+
+        if (world.isClient()) return;
+        if (!(entity instanceof LivingEntity owner)) return;
+        if (!InventoryUtils.isHoldingInMainHand(owner, stack) || !ItemStackUtils.isStackAwakened(stack)) return;
+
+        SummonUtils.ensureEnumeratedEntities(owner, CrowEntity.class, ItemStackUtils.getCounterComponent(stack).value());
     }
 
     @Override
@@ -134,12 +144,11 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip1").setStyle(Styles.ABILITY));
         tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip3").setStyle(Styles.TEXT));
+        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip3", SETTINGS.maxCrows).setStyle(Styles.TEXT));
         tooltip.add(Text.literal(" "));
         tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(Styles.RIGHT_CLICK));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip6").setStyle(Styles.TEXT));
-        tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip9").setStyle(Styles.TEXT));
+        tooltip.add(Text.translatable("item.simplymore.deaths_eyrie.tooltip4").setStyle(Styles.TEXT));
+        appendAbilityCooldownTooltip(tooltip, itemStack, SETTINGS.cooldown);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
     }
@@ -149,24 +158,21 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
             super(new ItemStackTooltipAppender(ItemRegistry.DEATHS_EYRIE));
         }
 
-
         @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float chance = 0.25f;
+        public float chance = 0.15f;
         @ValidatedInt.Restrict(min = 0)
-        public int baseBleedTime = 80;
-        @ValidatedInt.Restrict(min = 0)
-        public int additionalBleedTime = 20;
-        @ValidatedInt.Restrict(min = 0)
-        public int cooldown = 550;
-        @ValidatedInt.Restrict(min = 0)
-        public int crowBleedTime = 120;
-        @ValidatedInt.Restrict(min = 0)
-        public int crowBlindTime = 20;
-        @ValidatedInt.Restrict(min = 0)
-        public int crowAttackTimePerCrow = 30;
+        public int maxCrows = 5;
         @ValidatedFloat.Restrict(min = 0f)
-        public float crowDamage = 2.3f;
+        public float crowDamage = 1f;
+        @ValidatedInt.Restrict(min = 0)
+        public int woundedDuration = 10;
+        @ValidatedInt.Restrict(min = 0)
+        public int cooldown = 120;
+        @ValidatedInt.Restrict(min = 0)
+        public int durationPerCrow = 30;
         @ValidatedFloat.Restrict(min = 0f)
-        public float crowHeal = 0.3f;
+        public float damage = 8f;
+        @ValidatedInt.Restrict(min = 0)
+        public int effectTime = 100;
     }
 }

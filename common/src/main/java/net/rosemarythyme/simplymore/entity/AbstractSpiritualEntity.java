@@ -6,32 +6,21 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Arm;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.ai.SpiritNavigation;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-public abstract class AbstractSpiritualEntity extends MobEntity implements Ownable {
-    protected static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(AbstractSpiritualEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+public abstract class AbstractSpiritualEntity extends AbstractPetAbility implements Ownable {
     protected static final TrackedData<Integer> STRENGTH = DataTracker.registerData(AbstractSpiritualEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public final AnimationState idleArmsAnim = new AnimationState();
     protected int age = -20;
@@ -40,26 +29,12 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
         return age;
     }
 
-    @Override
-    public @Nullable Entity getOwner() {
-        Optional<UUID> uuid = this.dataTracker.get(OWNER);
-        if(uuid.isEmpty()) return null;
-
-        if(this.getWorld().isClient) return this.getWorld().getPlayerByUuid(uuid.get());
-        return ((ServerWorld) this.getWorld()).getEntity(uuid.get());
-    }
-
     public float getRiseFall() {
         if(age > 0) return MathUtils.clampedLerp(age, getLifespan(), getLifespan() + 20, 1f, 0f);
         return MathUtils.clampedLerp(age, -20, 0, 0f, 1f);
     }
 
     public abstract float getStrength();
-
-    @Override
-    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
-        return false;
-    }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -78,21 +53,12 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
     }
 
     @Override
-    public void kill() {}
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        return false;
-    }
-
-    @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
         builder.add(STRENGTH, 0);
-        builder.add(OWNER, Optional.empty());
     }
 
-    public AbstractSpiritualEntity(EntityType<? extends MobEntity> entityType, World world) {
+    public AbstractSpiritualEntity(EntityType<? extends AbstractPetAbility> entityType, World world) {
         super(entityType, world);
     }
 
@@ -101,10 +67,8 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
         return new SpiritNavigation(this, world);
     }
 
-    public AbstractSpiritualEntity(@NotNull LivingEntity owner, Vec3d position, EntityType<? extends MobEntity> entityType) {
-        super(entityType, owner.getWorld());
-        this.dataTracker.set(OWNER, Optional.of(owner.getUuid()));
-        this.refreshPositionAfterTeleport(position);
+    public AbstractSpiritualEntity(@NotNull LivingEntity owner, Vec3d position, EntityType<? extends AbstractPetAbility> entityType) {
+        super(owner, position, entityType);
     }
 
     public abstract boolean isAttacking();
@@ -162,70 +126,14 @@ public abstract class AbstractSpiritualEntity extends MobEntity implements Ownab
     @Override
     public void tick() {
         super.tick();
-        animate();
 
         age++;
         if(age > getLifespan()) {
             if(age > getLifespan() + 20) {
                 discard();
             }
-
-            return;
-        }
-
-        if(this.getWorld() instanceof ServerWorld world) {
-            Optional<UUID> uuid = this.dataTracker.get(OWNER);
-
-            if(uuid.isPresent() && world.getEntity(uuid.get()) instanceof LivingEntity owner) {
-                serverTick(owner);
-            } else {
-                discard();
-            }
         }
     }
-
-    @Override
-    public boolean canTakeDamage() {
-        return false;
-    }
-
-    @Override
-    public boolean canTarget(EntityType<?> type) {
-        return false;
-    }
-
-    @Override
-    public boolean shouldRenderName() {
-        return false;
-    }
-
-    @Override
-    public boolean canHit() {
-        return false;
-    }
-
-    @Override
-    public boolean isCustomNameVisible() {
-        return false;
-    }
-
-    @Override
-    public Iterable<ItemStack> getArmorItems() {
-        return List.of();
-    }
-
-    @Override
-    public ItemStack getEquippedStack(EquipmentSlot slot) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public Arm getMainArm() {
-        return Arm.RIGHT;
-    }
-
-    @Override
-    public void equipStack(EquipmentSlot slot, ItemStack stack) {}
 
     @Override
     public boolean isPushable() {

@@ -20,7 +20,9 @@ public class ClientEntityRendererRegistry {
         EntityModelLayerRegistry.register(IcewallModel.LAYER, IcewallModel::getTexturedModelData);
 
         EntityRendererRegistry.register(EntityRegistry.CROW, CrowEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.CROW_PROJECTILE, CrowProjectileEntityRenderer::new);
         EntityModelLayerRegistry.register(CrowEntityModel.LAYER, CrowEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.register(CrowProjectileEntityModel.LAYER, CrowProjectileEntityModel::getTexturedModelData);
 
         EntityRendererRegistry.register(EntityRegistry.GREAT_SLITHER_FANG, EvokerFangsEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.GHOST_FALLING_BLOCK, FallingBlockEntityRenderer::new);

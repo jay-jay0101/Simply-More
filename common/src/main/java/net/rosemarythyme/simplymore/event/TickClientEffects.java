@@ -14,7 +14,7 @@ public class TickClientEffects implements ClientTickEvent.Client {
         ClientActiveAbilityManager.CLIENT.clearCache();
         ClientActiveAbilityManager.CLIENT.tick();
 
-        if(instance.player != null && instance.player.age % 10 == 0) {
+        if(instance.player != null && instance.player.age % 4 == 0) {
             HudUtils.clearCache();
         }
     }

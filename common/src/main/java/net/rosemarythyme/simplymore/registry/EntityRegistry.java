@@ -31,6 +31,20 @@ public class EntityRegistry {
             "crow"
     );
 
+    public static final RegistrySupplier<EntityType<CrowEmitterEntity>> CROW_EMITTER =
+            registerMarkerEntity("crow_emitter", CrowEmitterEntity::new);
+
+    public static final RegistrySupplier<EntityType<CrowProjectileEntity>> CROW_PROJECTILE = registerType(
+            EntityType.Builder.<CrowProjectileEntity>create(CrowProjectileEntity::new, SpawnGroup.MISC)
+                    .dimensions(8/16f, 8/16f)
+                    .makeFireImmune()
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "crow_projectile"
+    );
+
     public static final RegistrySupplier<EntityType<CannonballEntity>> CANNONBALL = registerType(
             EntityType.Builder.<CannonballEntity>create(CannonballEntity::new, SpawnGroup.MISC)
                     .dimensions(10/16f, 10/16f)

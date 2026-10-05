@@ -42,6 +42,11 @@ public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
     private void serverTick() {
         Entity owner = getOwner();
 
+        if(age > getLifespan()) {
+            this.discard();
+            return;
+        }
+
         if(!(owner instanceof LivingEntity livingOwner) || !owner.isAlive() || owner.getWorld() != this.getWorld()) {
             this.discard();
             return;
@@ -55,11 +60,21 @@ public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
                 if(hitresult instanceof EntityHitResult entityHitResult) onEntityHit(entityHitResult);
                 if(hitresult instanceof BlockHitResult blockHitResult) onBlockHit(blockHitResult);
 
-                this.discard();
+                if(!shouldPierce(hitresult)) {
+                    this.discard();
+                }
             }
         }
 
         serverTick(livingOwner);
+    }
+
+    public int getLifespan() {
+        return 20 * 60;
+    }
+
+    protected boolean shouldPierce(HitResult result) {
+        return false;
     }
 
     protected boolean canCollide(HitResult result) {

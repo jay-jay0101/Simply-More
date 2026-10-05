@@ -135,7 +135,7 @@ public class  DugBlockEntity extends AbstractAbilityProjectileEntity {
     }
 
     private void moveBehind(LivingEntity owner) {
-        setPosition(MathUtils.getPosBehindEntity(owner, this, this.offset, 1.3f, 1f));
+        setPosition(MathUtils.getHoverPosBehindOwner(owner, this, this.offset, 1.3f, 1f));
         this.setRotation(owner.getYaw(), 0);
     }
 
@@ -178,7 +178,7 @@ public class  DugBlockEntity extends AbstractAbilityProjectileEntity {
     }
 
     private static void movementOnSpawn(DugBlockEntity block, LivingEntity owner) {
-        Vec3d targetPos = MathUtils.getPosBehindEntity(owner, block, block.offset, 1.3f, 1f);
+        Vec3d targetPos = MathUtils.getHoverPosBehindOwner(owner, block, block.offset, 1.3f, 1f);
 
         MovementOverride override = block.movementOverride;
         block.setPosition(override.startPos.lerp(targetPos, 1f - MathUtils.clampedLerp(override.remainingDuration, 0, override.duration, 0f, 1f)));

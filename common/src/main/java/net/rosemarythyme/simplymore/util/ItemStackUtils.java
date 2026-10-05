@@ -21,7 +21,7 @@ public class ItemStackUtils {
 
     public static float getCounterComponentProgress(ItemStack stack) {
         CounterComponent component = getCounterComponent(stack);
-        return component.value() / (float) component.max();
+        return (component.value() - component.min()) / (float) (component.max() - component.min());
     }
 
     public static CounterComponent setCounterComponent(ItemStack stack, CounterComponent component) {

@@ -9,6 +9,7 @@ import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class TargetUtils {
     public enum TargetType {
@@ -105,5 +106,12 @@ public class TargetUtils {
         }
 
         return targets;
+    }
+
+    public static LivingEntity getEntityByUUID(LivingEntity anchor, UUID uuid) {
+        if(uuid == null) return null;
+
+        return anchor.getWorld().getNonSpectatingEntities(LivingEntity.class, MathUtils.createCubeBox(anchor.getPos(), 120f))
+                .stream().filter((e) -> e.getUuid().equals(uuid)).findAny().orElse(null);
     }
 }

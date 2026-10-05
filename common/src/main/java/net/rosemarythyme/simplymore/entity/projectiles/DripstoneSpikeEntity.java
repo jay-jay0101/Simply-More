@@ -124,7 +124,7 @@ public class DripstoneSpikeEntity extends AbstractAbilityProjectileEntity implem
 
     private void moveBehind(LivingEntity owner) {
         this.setRotation(owner.getYaw(), -owner.getPitch());
-        this.setPosition(MathUtils.getPosBehindEntity(owner, this, this.getOrdinal(), 0.5f, 0.6f));
+        this.setPosition(MathUtils.getHoverPosBehindOwner(owner, this, this.getOrdinal(), 0.5f, 0.6f));
         this.setRotation(owner.getYaw(), 0);
     }
 

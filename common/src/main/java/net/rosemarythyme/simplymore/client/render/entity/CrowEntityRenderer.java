@@ -5,7 +5,7 @@ import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.models.CrowEntityModel;
-import net.rosemarythyme.simplymore.entity.legacy.CrowEntity;
+import net.rosemarythyme.simplymore.entity.CrowEntity;
 
 public class CrowEntityRenderer extends MobEntityRenderer<CrowEntity, CrowEntityModel> {
 

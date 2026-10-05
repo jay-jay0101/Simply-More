@@ -10,7 +10,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.rosemarythyme.simplymore.client.hud.HudOverlay;
-import net.rosemarythyme.simplymore.client.hud.HudOverlayItemRegistry;
+import net.rosemarythyme.simplymore.client.registry.HudOverlayItemRegistry;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.config.ClientConfig;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;

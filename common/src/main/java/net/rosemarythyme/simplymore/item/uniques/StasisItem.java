@@ -82,9 +82,8 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
             }
         }
 
-        ServerWorld serverWorld = (ServerWorld) world;
         if (remainingTicks % 4 == 0) {
-            AudioVisualUtils.playSound(serverWorld, user.getPos(), new Sound(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER).setVolume(0.5f));
+            AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER).setVolume(0.5f));
         }
 
         if (remainingTicks < 1 && user instanceof PlayerEntity player) {

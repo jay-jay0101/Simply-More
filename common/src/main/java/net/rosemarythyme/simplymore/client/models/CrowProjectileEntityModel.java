@@ -8,11 +8,11 @@ import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.animations.CrowAnimations;
-import net.rosemarythyme.simplymore.entity.CrowEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.CrowProjectileEntity;
 import org.joml.Vector3f;
 
-public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
-	public static final EntityModelLayer LAYER = new EntityModelLayer(SimplyMore.identifier("crow"), "all");
+public class CrowProjectileEntityModel extends SinglePartEntityModel<CrowProjectileEntity> {
+	public static final EntityModelLayer LAYER = new EntityModelLayer(SimplyMore.identifier("crow_projectile"), "all");
 
 	private final ModelPart root;
 	private final ModelPart all;
@@ -22,7 +22,7 @@ public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
 	private final ModelPart leg0;
 	private final ModelPart head;
 	private final ModelPart body;
-	public CrowEntityModel(ModelPart root) {
+	public CrowProjectileEntityModel(ModelPart root) {
 		this.root = root.getChild("root");
 		this.all = this.root.getChild("all");
 		this.wing0 = this.all.getChild("wing0");
@@ -63,17 +63,9 @@ public class CrowEntityModel extends SinglePartEntityModel<CrowEntity> {
 	}
 
 	@Override
-	public void setAngles(CrowEntity entity, float limbAngle, float limbDistance, float delta, float headYaw, float headPitch) {
+	public void setAngles(CrowProjectileEntity entity, float limbAngle, float limbDistance, float delta, float headYaw, float headPitch) {
 		this.getPart().traverse().forEach(ModelPart::resetTransform);
-
-		this.head.pitch = headPitch * (float) (Math.PI / 180.0);
-		this.head.yaw = headYaw * (float) (Math.PI / 180.0);
-
-		if(entity.isAttacking()) {
-			AnimationHelper.animate(this, CrowAnimations.SWOOP, 0L, 1.0F, new Vector3f());
-		} else {
-			this.updateAnimation(entity.flapAnim, CrowAnimations.FLAP, delta,2f);
-		}
+		AnimationHelper.animate(this, CrowAnimations.SWOOP, 0L, 1.0F, new Vector3f());
 	}
 
 	@Override

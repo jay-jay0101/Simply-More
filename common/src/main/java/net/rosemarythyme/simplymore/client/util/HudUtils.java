@@ -44,6 +44,14 @@ public class HudUtils {
         }
     }
 
+    public static void renderUnderSquares(DrawContext context, int totalSquares, int squaresMarked, int color) {
+        int dx = (totalSquares - 1) * -SQUARE_BORDER_SIZE;
+        int x = dx - SQUARE_BORDER_SIZE;
+        int y = SQUARE_BORDER_SIZE + 2;
+
+        context.fill(x, y, x + (squaresMarked * SQUARE_BORDER_SIZE * 2), y + 2, color);
+    }
+
     public static final int PROGRESS_BAR_WIDTH = 100;
     public static final int PROGRESS_BAR_HEIGHT = 10;
     public static void renderProgressBar(DrawContext context, float progress, int borderColor, int backgroundColor, int filledColor) {

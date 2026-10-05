@@ -9,7 +9,7 @@ import dev.architectury.utils.EnvExecutor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
-import net.rosemarythyme.simplymore.client.hud.HudOverlayItemRegistry;
+import net.rosemarythyme.simplymore.client.registry.HudOverlayItemRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientEntityRendererRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientItemPropertyRegistry;
 import net.rosemarythyme.simplymore.client.registry.ClientTooltipRegistry;

@@ -1,6 +1,7 @@
-package net.rosemarythyme.simplymore.client.hud;
+package net.rosemarythyme.simplymore.client.registry;
 
 import net.minecraft.item.Item;
+import net.rosemarythyme.simplymore.client.hud.*;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +17,8 @@ public class HudOverlayItemRegistry {
         OVERLAYS.put(ItemRegistry.RUYI_JINGU_BANG.get(), new CounterBarHudOverlay("item.simplymore.ruyi_jingu_bang.overlay", 0xFFAA6C39, 0x88D3AF37, 0xFFD3AF37, 0xFFAE8625));
         OVERLAYS.put(ItemRegistry.CRUSTSPIRE.get(), new CounterHudOverlay("item.simplymore.crustspire.overlay", 0xFF281B0D, 0xFF895129, 0xFF654321));
         OVERLAYS.put(ItemRegistry.BRASSTURN.get(), new BrassturnHud("item.simplymore.brassturn.overlay", 0xFF984F38, 0xFF3A6A58, 0x88D3795A, 0x884b9583, 0xFFA55940, 0xFF499282, 0xFFA55940, 0xFF499282));
-        OVERLAYS.put(ItemRegistry.REVVENGINE.get(), new CounterHudOverlay("item.simplymore.revvengine.overlay", 0xFF1D1D1D, 0xFFF7b25b, 0xFF6D6D6D));
+        OVERLAYS.put(ItemRegistry.REVVENGINE.get(), new CounterHudOverlay("item.simplymore.revvengine.overlay", 0xFF1D1D1D, 0xFFF7B25B, 0xFF6D6D6D));
+        OVERLAYS.put(ItemRegistry.DEATHS_EYRIE.get(), new DeathsEyrieHud("item.simplymore.deaths_eyrie.overlay", 0xFF2E2E2E, 0xFFD4D4D4, 0xFFFFFFFF, 0xFF6E6E6E));
     }
 
     @Nullable
