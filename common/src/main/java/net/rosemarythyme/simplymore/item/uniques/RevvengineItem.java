@@ -153,8 +153,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
         float hpPercentage = EntityUtils.getHealthPercentage(attacker) - revPercentages;
 
         if (hpPercentage <= SETTINGS.inflictWoundedHealthPercentage) {
-            new TargetList(target)
-                    .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.revvengine.woundedTime, 0);
+            new TargetList(target).applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED), UNIQUE_CONFIG.revvengine.woundedTime, 0);
         }
 
         if (hpPercentage <= SETTINGS.doubleDamageHealthPercentage && MathUtils.chance(attacker, SETTINGS.doubleDamageChance)) {

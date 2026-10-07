@@ -4,10 +4,12 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.world.abilities.fire.FireTypeAbility;
 
 import java.util.*;
 
 public class ClientActiveAbilityManager extends ActiveAbilityManager {
+    private static final int FIRE_BUFFER = 5;
     public static final ClientActiveAbilityManager CLIENT = new ClientActiveAbilityManager();
 
     @Override
@@ -19,7 +21,8 @@ public class ClientActiveAbilityManager extends ActiveAbilityManager {
             if(ability.owner() == null) continue;
 
             ability = ability.setRemainingDuration(ability.remainingDuration() - 1);
-            if(ability.remainingDuration() > 0) {
+            int bufferTime = ability.type().implementation instanceof FireTypeAbility ? -FIRE_BUFFER : 0;
+            if(ability.remainingDuration() > bufferTime) {
                 remaining.add(ability);
             }
         }
@@ -65,9 +68,7 @@ public class ClientActiveAbilityManager extends ActiveAbilityManager {
             return rangeStrength * durationStrength;
         }).max();
 
-        float value = 0f;
-        if(strength.isPresent()) value = (float) strength.getAsDouble();
-
+        float value = strength.isPresent() ? (float) strength.getAsDouble(): 0f;
         STRENGTH_CACHE.put(type, value);
         return value;
     }

@@ -1,0 +1,14 @@
+{
+  "parent": "simplyswords:item/template_longdagger",
+  "textures": {
+    "layer0": "simplymore:item/uniques/desolate_ruin_flame",
+    "layer1": "simplymore:item/uniques/desolate_ruin"
+  },
+  "display": {
+    "gui": {
+      "rotation": [0,0,0],
+      "translation": [-1,0,0],
+      "scale": [1.1, 1.1, 1.1]
+    }
+  }
+}

@@ -3,8 +3,6 @@ package net.rosemarythyme.simplymore.util;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
@@ -65,10 +63,6 @@ public class AudioVisualUtils {
         BlockStateParticleEffect particle = new BlockStateParticleEffect(ParticleTypes.DUST_PILLAR, world.getBlockState(pos));
         Vec3d particlePos = pos.toBottomCenterPos().offset(Direction.UP, 1);
         world.spawnParticles(particle, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 40, 0.2f, 0, 0.2f, 0);
-    }
-
-    public static void targetIndicator(LivingEntity target) {
-        target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 10));
     }
 
     public static void particleLine(ServerWorld world, Vec3d startPos, float yaw, float pitch, double length, ParticleEffect particleType, double spread, int count, double delta, double speed) {

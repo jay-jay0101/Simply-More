@@ -8,11 +8,13 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Pair;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.util.AttackUtils;
-import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.util.TargetUtils;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.abilities.fire.FireTypeAbility;
 
 import java.util.Comparator;
 import java.util.List;
@@ -36,6 +38,10 @@ public record TargetList(Set<LivingEntity> targets) {
 
     public TargetList filter(Predicate<LivingEntity> predicate) {
         return new TargetList(targets.stream().filter(predicate).collect(Collectors.toSet()));
+    }
+
+    public TargetList startAbility(ActiveAbilityManager.Type type, int duration) {
+        return this.onEach((target) -> ActiveAbilityManager.SERVER.start(target, type, duration));
     }
 
     public Optional<LivingEntity> getAny() {
@@ -116,8 +122,12 @@ public record TargetList(Set<LivingEntity> targets) {
     }
 
     public TargetList applyEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier) {
+        return this.applyEffect(effect, duration, amplifier, false);
+    }
+
+    public TargetList applyEffect(RegistryEntry<StatusEffect> effect, int duration, int amplifier, boolean hidden) {
         return this.onEach((target) -> target.addStatusEffect(
-                new StatusEffectInstance(effect, duration, amplifier))
+                new StatusEffectInstance(effect, duration, amplifier, hidden, hidden))
         );
     }
 
@@ -130,10 +140,6 @@ public record TargetList(Set<LivingEntity> targets) {
 
     public TargetList onEachEffect(BiConsumer<LivingEntity, StatusEffectInstance> consumer) {
         return this.onEachEffect((ignored) -> true, consumer);
-    }
-
-    public TargetList targetIndicator() {
-        return this.onEach(AudioVisualUtils::targetIndicator);
     }
 
     public TargetList addVelocity(double x, double y, double z) {
@@ -176,6 +182,14 @@ public record TargetList(Set<LivingEntity> targets) {
 
     public TargetList setOnFireFor(float seconds) {
         return this.onEach((entity) -> entity.setOnFireFor(seconds));
+    }
+
+    public TargetList setOnFireFor(float seconds, ActiveAbilityManager.Type fireType) {
+        if(!(fireType.implementation instanceof FireTypeAbility)) throw new RuntimeException("Ability: " + fireType + " not a fire type");
+
+        int ticks = MathHelper.ceil(seconds * 20f);
+        return this.setOnFireFor(seconds)
+                .startAbility(fireType, ticks + 1);
     }
 
     public TargetList damage(float amount, DamageSource source) {

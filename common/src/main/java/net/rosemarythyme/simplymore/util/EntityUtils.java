@@ -16,6 +16,7 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -113,6 +114,20 @@ public class EntityUtils {
         entity.addStatusEffect(new StatusEffectInstance(effect, instance.getDuration(), Math.min(amplifier, maxAmplifier)));
     }
 
+    public static void backstab(LivingEntity attacker, LivingEntity target) {
+        Vec3d pos = EntityUtils.rangeAroundPoint(target.getPos(), attacker, target.getYaw() + 180, 1.25f);
+
+        if(attacker instanceof ServerPlayerEntity player) {
+            player.networkHandler.requestTeleport(pos.getX(), pos.getY(), pos.getZ(), target.getYaw(), 0);
+        } else {
+            attacker.setPosition(pos);
+            attacker.setAngles(target.getYaw(), 0);
+        }
+
+        attacker.setVelocity(Vec3d.ZERO);
+        attacker.velocityModified = true;
+    }
+
     public static void spawnAround(World world, LivingEntity entity, Vec3d pos, double horizontalRange, double verticalRange) {
         double deltaX = (world.getRandom().nextDouble() * horizontalRange * 2) - horizontalRange;
         double deltaY = (world.getRandom().nextDouble() * verticalRange * 2) - verticalRange;
@@ -149,6 +164,10 @@ public class EntityUtils {
                 new TargetList(attacker).damage(CindergorgeItem.SETTINGS.thornsDamage, livingEntity.getDamageSources().inFire())
                         .setOnFireFor(CindergorgeItem.SETTINGS.thornsFireDuration);
             }
+        }
+
+        if(ActiveAbilityManager.SERVER.isInAbility(livingEntity, ActiveAbilityManager.Type.WRAITH)) {
+            ActiveAbilityManager.SERVER.stop(livingEntity, ActiveAbilityManager.Type.WRAITH);
         }
 
         final float damage = amount;
@@ -203,6 +222,10 @@ public class EntityUtils {
         }
 
         return true;
+    }
+
+    public static boolean shouldOverrideFireImmunity(LivingEntity target) {
+        return ActiveAbilityManager.SERVER.isInAbility(target, ActiveAbilityManager.Type.WHITE_FIRE);
     }
 
     public static boolean isWithinCylinder(LivingEntity entity, Vec3d centerPos, double horizontalRange, double verticalRange) {

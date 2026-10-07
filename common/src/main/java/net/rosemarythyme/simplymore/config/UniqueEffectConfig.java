@@ -40,7 +40,7 @@ public class UniqueEffectConfig extends Config {
     public SerpentineValourItem.EffectSettings serpentine_valour = new SerpentineValourItem.EffectSettings();
     public ThePanItem.EffectSettings the_pan = new ThePanItem.EffectSettings();
     public IdolItem.EffectSettings idols = new IdolItem.EffectSettings();
-    public SmoulderingRuinItem.EffectSettings smouldering_ruin = new SmoulderingRuinItem.EffectSettings();
+    public DesolateRuinItem.EffectSettings desolate_ruin = new DesolateRuinItem.EffectSettings();
     public SoulfractureItem.EffectSettings soulfracture = new SoulfractureItem.EffectSettings();
     public StasisItem.EffectSettings stasis = new StasisItem.EffectSettings();
     public TheBloodHarvesterItem.EffectSettings the_blood_harvester = new TheBloodHarvesterItem.EffectSettings();

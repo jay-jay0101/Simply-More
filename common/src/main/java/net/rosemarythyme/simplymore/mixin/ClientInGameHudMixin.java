@@ -9,9 +9,11 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.client.hud.HudOverlay;
 import net.rosemarythyme.simplymore.client.registry.HudOverlayItemRegistry;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
+import net.rosemarythyme.simplymore.client.util.TextureUtils;
 import net.rosemarythyme.simplymore.config.ClientConfig;
 import net.rosemarythyme.simplymore.config.ConfigWrapper;
 import net.rosemarythyme.simplymore.item.interfaces.HudOverlayItem;
@@ -46,6 +48,20 @@ public class ClientInGameHudMixin {
     public void simplmore$thirdPerson(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if(RenderUtils.shouldForceThirdPerson()) {
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "drawHeart", at= @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0, shift = At.Shift.AFTER))
+    public void simplmore$heart(DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half, CallbackInfo ci) {
+        if(type == InGameHud.HeartType.ABSORBING) return;
+
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+        if(player == null) return;
+        if(!player.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DECAYING))) return;
+
+        if(half || type == InGameHud.HeartType.CONTAINER) {
+            Identifier texture = TextureUtils.getDecayingHeartTexture(half, blinking);
+            context.drawGuiTexture(texture, x, y, 9, 9);
         }
     }
 

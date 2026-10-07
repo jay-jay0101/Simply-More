@@ -7,6 +7,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.rosemarythyme.simplymore.networking.s2c.S2CAbilityManagerPacket;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.abilities.*;
+import net.rosemarythyme.simplymore.world.abilities.fire.WhiteFireType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +42,13 @@ public class ActiveAbilityManager {
         GRASPING(new GraspingAbilityType()),
         MIMICRY(new MimicryAbilityType()),
         RAGE(new RageAbilityType()),
-        FLAME_FLINGER(new FlameFlingType()),
+        FLAME_FLINGER(new FlameFlingAbilityType()),
+        WRAITH(new WraithAbilityType()),
+
+        WHITE_FIRE(new WhiteFireType()),
         ;
 
-        final ActiveAbilityType implementation;
+        public final ActiveAbilityType implementation;
         Type(ActiveAbilityType implementation) {
             this.implementation = implementation;
         }
@@ -75,8 +79,8 @@ public class ActiveAbilityManager {
         Optional<ActiveAbility> ability = get(owner, type);
         if(ability.isEmpty()) return;
 
-        remove(owner, type, true);
         type.implementation.onFinish(ability.get());
+        remove(owner, type, true);
     }
 
     protected void add(LivingEntity owner, Type type, int duration, int currentDuration) {

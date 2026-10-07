@@ -2,16 +2,23 @@ package net.rosemarythyme.simplymore.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.RotationAxis;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+
+import java.util.Optional;
 
 @Mixin(EntityRenderDispatcher.class)
 public class ClientEntityRenderDispatcherMixin<T extends Entity> {
@@ -25,5 +32,15 @@ public class ClientEntityRenderDispatcherMixin<T extends Entity> {
 
         original.call(instance, entity, yaw, tickDelta, matrices, vertexConsumers, light);
         matrices.pop();
+    }
+
+    @ModifyVariable(method = "renderFire", at = @At(value = "STORE"), ordinal = 2)
+    private Sprite simplymore$modifyFire(Sprite original, @Local int l, @Local(argsOnly = true) Entity entity) {
+        if(!(entity instanceof LivingEntity target)) return original;
+
+        Optional<Pair<SpriteIdentifier, SpriteIdentifier>> override = RenderUtils.getFireOverride(target);
+        if(override.isEmpty()) return original;
+
+        return (l % 2 == 0 ? override.get().getLeft() : override.get().getRight()).getSprite();
     }
 }

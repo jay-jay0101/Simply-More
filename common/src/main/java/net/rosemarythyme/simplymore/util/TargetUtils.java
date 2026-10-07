@@ -1,13 +1,16 @@
 package net.rosemarythyme.simplymore.util;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.sweenus.simplyswords.item.custom.StealSwordItem;
 import net.sweenus.simplyswords.util.HelperMethods;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -50,6 +53,15 @@ public class TargetUtils {
         return targetType.canHitPetOrMount || !EntityUtils.isPetOrMount(attacker, target);
     }
 
+    public static Optional<LivingEntity> findTarget(LivingEntity attacker, float range, TargetType type) {
+        if(attacker instanceof PlayerEntity player) {
+            return Optional.ofNullable(StealSwordItem.findLenientTarget(player, range, PredicateUtils.createForLivingTargetType(attacker, type)));
+        } else if (attacker instanceof MobEntity mob) {
+            return Optional.ofNullable(mob.getTarget());
+        }
+
+        return Optional.empty();
+    }
 
     public static TargetList cylinderAttack(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, TargetType targetType) {
         double horizontalDistance = horizontalRange * horizontalRange;
@@ -57,14 +69,6 @@ public class TargetUtils {
         return cuboidAttack(attacker, centerPos, horizontalRange, verticalRange, targetType).filter(
                 (target) -> target.squaredDistanceTo(new Vec3d(centerPos.x, target.getY(), centerPos.z)) < horizontalDistance
         );
-    }
-
-    public static LivingEntity getTargetedEntity(LivingEntity attacker, float range, TargetType targetType) {
-        Entity entity = HelperMethods.getTargetedEntity(attacker, range);
-        if(!(entity instanceof LivingEntity target)) return null;
-        if(canTarget(attacker, target, targetType)) return target;
-
-        return null;
     }
 
     public static TargetList cuboidAttack(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, TargetType targetType) {

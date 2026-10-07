@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-
 	@ModifyReturnValue(at= @At("RETURN"), method = "disablesShield")
 	private boolean simplymore$shouldBreakShields(boolean original) {
 		WeaponImplicitComponent component = ((LivingEntity)(Object)this).getWeaponStack().get(ComponentTypeRegistry.WEAPON_IMPLICIT.get());
@@ -40,6 +39,11 @@ public abstract class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "heal", cancellable = true)
 	private void simplymore$heal(float amount, CallbackInfo info) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
+
+		if(livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DECAYING))) {
+			info.cancel();
+		}
+
 		if(livingEntity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.WOUNDED))) {
 			float f = livingEntity.getHealth();
 			if (f > 0.0F) {

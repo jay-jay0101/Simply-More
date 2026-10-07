@@ -23,4 +23,8 @@ public class PredicateUtils {
     public static Predicate<Entity> createForTargetType(LivingEntity attacker, TargetUtils.TargetType target) {
         return (entity -> entity instanceof LivingEntity livingEntity && TargetUtils.canTarget(attacker, livingEntity, target));
     }
+
+    public static Predicate<LivingEntity> createForLivingTargetType(LivingEntity attacker, TargetUtils.TargetType target) {
+        return (entity -> TargetUtils.canTarget(attacker, entity, target));
+    }
 }

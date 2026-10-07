@@ -4,17 +4,23 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
+import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.RotationAxis;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.render.entity.MimicryVisualRenderer;
 import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
 import net.rosemarythyme.simplymore.item.components.RotationComponent;
+import net.rosemarythyme.simplymore.item.uniques.DesolateRuinItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
 import org.joml.Vector2f;
@@ -248,5 +254,38 @@ public class RenderUtils {
     public static boolean shouldForceThirdPerson() {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         return player != null && player.getItemUseTime() > 3 && player.getActiveItem().getItem().equals(ItemRegistry.CINDERGORGE.get());
+    }
+
+    public static Optional<Pair<SpriteIdentifier, SpriteIdentifier>> getFireOverride(LivingEntity entity) {
+        if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.WHITE_FIRE))
+            return fireOf("white");
+
+        return Optional.empty();
+    }
+
+    private static Optional<Pair<SpriteIdentifier, SpriteIdentifier>> fireOf(String name) {
+        return Optional.of(new Pair<>(
+                new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, SimplyMore.identifier("block/fire/" + name + "_0")),
+                new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, SimplyMore.identifier("block/fire/" + name + "_1"))
+        ));
+    }
+
+    public record TargetData(int color, LivingEntity target) {
+        public static TargetData of(int color, ClientPlayerEntity player, float range, TargetUtils.TargetType type) {
+            Optional<LivingEntity> target = TargetUtils.findTarget(player, range, type);
+            if(target.isEmpty()) return DEFAULT;
+
+            return new TargetData(color, target.get());
+        }
+
+        public static final TargetData DEFAULT = new TargetData(0x0, null);
+    }
+
+    public static TargetData getTarget(ClientPlayerEntity player) {
+        if(ClientActiveAbilityManager.CLIENT.isInAbility(player, ActiveAbilityManager.Type.WRAITH)) {
+            return TargetData.of(0xFFFFFFFF, player, DesolateRuinItem.SETTINGS.range, TargetUtils.TargetType.ENEMIES);
+        }
+
+        return TargetData.DEFAULT;
     }
 }

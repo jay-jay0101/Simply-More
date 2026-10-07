@@ -239,12 +239,18 @@ public class ItemRegistry {
             )
     );
 
+    public static final RegistrySupplier<Item> DESOLATE_RUIN = ITEMS.register(
+            "desolate_ruin",
+            () -> new DesolateRuinItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.desolateruin_damage_modifier,
+                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.desolateruin_attack_speed
+            )
+    );
+
+    @Deprecated
     public static final RegistrySupplier<Item> SMOULDERING_RUIN = ITEMS.register(
             "smouldering_ruin",
-            () -> new SmoulderingRuinItem(SimplyMoreToolMaterial.SIMPLY_MORE_UNIQUE,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsDamage.smoulderingruin_damage_modifier,
-                    ATTRIBUTES_CONFIG.uniqueWeaponsSwingSpeed.smoulderingruin_attack_speed
-            )
+            () -> new RemovedItem(() -> new ItemStack(DESOLATE_RUIN.get()))
     );
 
     public static final RegistrySupplier<Item> STASIS = ITEMS.register(
@@ -737,7 +743,7 @@ public class ItemRegistry {
         addToItemGroup(VIPERS_CALL);
         addToItemGroup(TIMEKEEPER);
         addToItemGroup(MATTERBANE);
-        addToItemGroup(SMOULDERING_RUIN);
+        addToItemGroup(DESOLATE_RUIN);
         addToItemGroup(STASIS);
         addToItemGroup(TIDEBREAKER);
         addToItemGroup(RUYI_JINGU_BANG);

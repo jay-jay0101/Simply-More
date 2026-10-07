@@ -120,6 +120,11 @@ public class DeathsEyrieItem extends SimplyMoreUniqueSwordItem implements TwoHan
     }
 
     @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        return useFromDefaultInput(world, user, hand);
+    }
+
+    @Override
     public int getActivationCooldownTicks(ItemStack stack, WeaponAbilityContext context) {
         return SETTINGS.cooldown;
     }

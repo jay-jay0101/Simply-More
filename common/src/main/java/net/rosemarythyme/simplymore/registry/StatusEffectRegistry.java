@@ -127,18 +127,9 @@ public class StatusEffectRegistry {
                     )
     );
 
-    public static final RegistrySupplier<StatusEffect> WITHERING_FATE = registerEffect(
-            "withering_fate",
-            new StatusEffect(StatusEffectCategory.HARMFUL,2818819)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_MAX_HEALTH,
-                            SimplyMore.identifier("withering_fate"),
-                            -1, EntityAttributeModifier.Operation.ADD_VALUE)
-    );
-
-    public static final RegistrySupplier<StatusEffect> MISTIFIED = registerEffect(
-            "mistified",
-            new MistyEffect(StatusEffectCategory.BENEFICIAL,0)
+    public static final RegistrySupplier<StatusEffect> DECAYING = registerEffect(
+            "decaying",
+            new DecayingEffect(StatusEffectCategory.HARMFUL,0x2B0303)
     );
 
     public static final RegistrySupplier<StatusEffect> INSANITY = registerEffect(

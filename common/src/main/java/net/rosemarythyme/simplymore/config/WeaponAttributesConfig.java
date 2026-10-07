@@ -79,7 +79,7 @@ public class WeaponAttributesConfig extends Config {
         public int viperscall_damage_modifier = 0;
         public int timekeeper_damage_modifier = 2;
         public int matterbane_damage_modifier = 3;
-        public int smoulderingruin_damage_modifier = 1;
+        public int desolateruin_damage_modifier = 1;
         public int stasis_damage_modifier = 2;
         public int tidebreaker_damage_modifier = 3;
         public int ruyijingubang_damage_modifier = 3;
@@ -114,7 +114,7 @@ public class WeaponAttributesConfig extends Config {
         public float viperscall_attack_speed = -3.0f;
         public float timekeeper_attack_speed = -2.0f;
         public float matterbane_attack_speed = -2.4f;
-        public float smoulderingruin_attack_speed = -1.7f;
+        public float desolateruin_attack_speed = -1.7f;
         public float stasis_attack_speed = -2.0f;
         public float tidebreaker_attack_speed = -1.9f;
         public float ruyijingubang_attack_speed = -2.0f;

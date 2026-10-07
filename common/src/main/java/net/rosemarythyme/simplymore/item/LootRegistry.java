@@ -18,7 +18,7 @@ public class LootRegistry {
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.VIPERS_CALL.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.TIMEKEEPER.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.MATTERBANE.get(), 1);
-        SimplySwordsAPI.registerUniqueLoot(ItemRegistry.SMOULDERING_RUIN.get(), 1);
+        SimplySwordsAPI.registerUniqueLoot(ItemRegistry.DESOLATE_RUIN.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.STASIS.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.TIDEBREAKER.get(), 1);
         SimplySwordsAPI.registerUniqueLoot(ItemRegistry.RUYI_JINGU_BANG.get(), 1);

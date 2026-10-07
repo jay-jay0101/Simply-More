@@ -1,0 +1,31 @@
+{
+    "attributes": {
+        "two_handed": false,
+        "category": "warglaive",
+        "attacks": [
+            {
+                "hitbox": "HORIZONTAL_PLANE",
+                "damage_multiplier": 1,
+                "angle": 120,
+                "upswing": 0.5,
+                "animation": "simplyswords:warglaive_slash_horizontal_right",
+                "swing_sound": {
+                    "id": "simplyswords:elemental_sword_fire_attack_03",
+                    "volume": 0.4
+                }
+            },
+            {
+                "hitbox": "HORIZONTAL_PLANE",
+                "damage_multiplier": 1,
+                "angle": 120,
+                "upswing": 0.5,
+                "animation": "simplyswords:warglaive_slash_horizontal_left",
+                "swing_sound": {
+                    "id": "simplyswords:elemental_sword_fire_attack_03",
+                    "volume": 0.4
+                }
+            }
+        ],
+        "range_bonus": -0.5
+    }
+}

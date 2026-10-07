@@ -6,11 +6,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.Biome;
 import net.rosemarythyme.simplymore.client.render.features.FeatureRenderManager;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
@@ -24,33 +21,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-import java.util.List;
-
 @Mixin(WorldRenderer.class)
 public abstract class ClientWorldRendererMixin {
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;draw()V"))
     private void simplymore$auras(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci, @Local VertexConsumerProvider.Immediate vertexConsumers) {
-        ClientPlayerEntity player = MinecraftClient.getInstance().player;
-        ClientWorld world = MinecraftClient.getInstance().world;
-        if(world == null || player == null) return;
-
-        MatrixStack stack = new MatrixStack();
-        Vec3d cameraPos = camera.getPos();
-
-        List<LivingEntity> closeEntities = world.getEntitiesByClass(LivingEntity.class, player.getBoundingBox().expand(32), LivingEntity::isAlive);
-
-        for (LivingEntity entity : closeEntities) {
-            stack.push();
-            Vec3d pos = entity.getLerpedPos(tickCounter.getTickDelta(false));
-            stack.translate(
-                    pos.x - cameraPos.x,
-                    pos.y - cameraPos.y,
-                    pos.z - cameraPos.z
-            );
-
-            FeatureRenderManager.render(entity, stack, vertexConsumers, player, camera, tickCounter, world);
-            stack.pop();
-        }
+        FeatureRenderManager.renderFeatures(camera, tickCounter, vertexConsumers);
     }
 
     @ModifyArgs(method = "renderSky", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V", ordinal = 0))

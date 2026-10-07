@@ -47,6 +47,11 @@ public abstract class ClientLivingEntityRendererMixin<T extends LivingEntity> {
             return;
         }
 
+        if(ClientActiveAbilityManager.CLIENT.isInAbility(livingEntity, ActiveAbilityManager.Type.WRAITH)) {
+            ci.cancel();
+            return;
+        }
+
         double drillDuration = ClientActiveAbilityManager.CLIENT.getCurrentDuration(livingEntity, ActiveAbilityManager.Type.DRILL);
         if (livingEntity.getFirstPassenger() instanceof LivingEntity passenger)
             drillDuration = Math.max(drillDuration, ClientActiveAbilityManager.CLIENT.getCurrentDuration(passenger, ActiveAbilityManager.Type.DRILL));
@@ -67,6 +72,8 @@ public abstract class ClientLivingEntityRendererMixin<T extends LivingEntity> {
 
     @ModifyReturnValue(method = "getShadowRadius(Lnet/minecraft/entity/LivingEntity;)F", at = @At("TAIL"))
     private float simplymore$removeShadow(float original, LivingEntity entity) {
+        if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.WRAITH)) return 0f;
+
         double currentDuration = ClientActiveAbilityManager.CLIENT.getCurrentDuration(entity, ActiveAbilityManager.Type.DRILL);
         if (entity.getFirstPassenger() instanceof LivingEntity passenger)
             currentDuration = Math.max(currentDuration, ClientActiveAbilityManager.CLIENT.getCurrentDuration(passenger, ActiveAbilityManager.Type.DRILL));

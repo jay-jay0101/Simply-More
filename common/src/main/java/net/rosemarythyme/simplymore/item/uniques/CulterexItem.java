@@ -42,11 +42,11 @@ public class CulterexItem extends SimplyMoreUniqueSwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if(user.getWorld().isClient) return super.use(world, user, hand);
 
-        LivingEntity target = TargetUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, TargetUtils.TargetType.ENEMIES);
+        LivingEntity target = null;
+//        LivingEntity target = TargetUtils.getTargetedEntity(user, UNIQUE_CONFIG.culterex.range, TargetUtils.TargetType.ENEMIES);
         if(target == null) return super.use(world, user, hand);
 
         user.getItemCooldownManager().set(this, UNIQUE_CONFIG.culterex.cooldown);
-        AudioVisualUtils.targetIndicator(target);
         AudioVisualUtils.particleAroundEntity(target, ParticleTypes.SOUL, 100, 0, 0.25f);
 
         Sound sound = new Sound(SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM).setPitch(0.65f);

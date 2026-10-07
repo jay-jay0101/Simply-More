@@ -12,12 +12,14 @@
     "ClientGameRendererMixin",
     "ClientHeldItemRendererMixin",
     "ClientInGameHudMixin",
+    "ClientInGameOverlayRendererMixin",
     "ClientLivingEntityRendererMixin",
     "ClientPlayerEntityRendererMixin",
     "ClientWorldRendererMixin"
   ],
   "mixins": [
     "ContainedRemnantItemMixin",
+    "EntityMixin",
     "HelperMethodsMixin",
     "LivingEntityMixin",
     "LootTableModifierMixin",
