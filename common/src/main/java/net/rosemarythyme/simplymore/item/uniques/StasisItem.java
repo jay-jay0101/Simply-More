@@ -86,7 +86,7 @@ public class StasisItem extends SimplyMoreUniqueSwordItem implements UniqueWeapo
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER).setVolume(0.5f));
         }
 
-        if (remainingTicks < 1 && user instanceof PlayerEntity player) {
+        if (remainingTicks <= 1 && user instanceof PlayerEntity player) {
             PlayerItemUseManager.stop(player, stack, true);
         }
     }

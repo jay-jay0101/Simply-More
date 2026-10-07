@@ -5,12 +5,15 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractPlanetaryEntity;
 import net.rosemarythyme.simplymore.entity.MoonEntity;
@@ -64,6 +67,11 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem implements UniqueW
                 case TIMELESS -> AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.SQUID_INK, 10, 0.2f, 0.5f);
             }
         }
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        return useFromDefaultInput(world, user, hand);
     }
 
     @Override

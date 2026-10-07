@@ -73,7 +73,7 @@ public class DesolateRuinItem extends SimplyMoreUniqueSwordItem implements Uniqu
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return useUniqueWeapon(world, user, hand);
+        return useFromDefaultInput(world, user, hand);
     }
 
     @Override

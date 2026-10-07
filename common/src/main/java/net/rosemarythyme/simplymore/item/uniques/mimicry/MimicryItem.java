@@ -31,6 +31,7 @@ import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.PlayerItemUseManager;
 import net.sweenus.simplyswords.api.AwakeningApi;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
@@ -82,6 +83,15 @@ public abstract class MimicryItem extends SimplyMoreUniqueSwordItem implements U
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         return useFromDefaultInput(world, user, hand);
+    }
+
+    @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingTicks) {
+        if(world.isClient) return;
+
+        if (remainingTicks <= 1 && user instanceof PlayerEntity player) {
+            PlayerItemUseManager.stop(player, stack, true);
+        }
     }
 
     @Override
