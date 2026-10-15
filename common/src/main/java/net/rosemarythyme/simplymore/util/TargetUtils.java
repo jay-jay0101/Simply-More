@@ -1,8 +1,11 @@
 package net.rosemarythyme.simplymore.util;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.rosemarythyme.simplymore.util.data.TargetList;
@@ -117,5 +120,16 @@ public class TargetUtils {
 
         return anchor.getWorld().getNonSpectatingEntities(LivingEntity.class, MathUtils.createCubeBox(anchor.getPos(), 120f))
                 .stream().filter((e) -> e.getUuid().equals(uuid)).findAny().orElse(null);
+    }
+
+    public static LivingEntity getEntityByUUID(MinecraftServer server, UUID uuid) {
+        if(uuid == null) return null;
+
+        for (ServerWorld world : server.getWorlds()) {
+            Entity entity = world.getEntity(uuid);
+            if (entity instanceof LivingEntity target) return target;
+        }
+
+        return null;
     }
 }

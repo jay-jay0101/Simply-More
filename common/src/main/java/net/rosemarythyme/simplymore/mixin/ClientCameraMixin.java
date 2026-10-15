@@ -9,7 +9,7 @@ import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

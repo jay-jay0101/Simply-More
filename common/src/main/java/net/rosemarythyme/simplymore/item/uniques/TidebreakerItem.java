@@ -1,40 +1,46 @@
 package net.rosemarythyme.simplymore.item.uniques;
 
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Style;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.entity.WaterLiquidEntity;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
+import net.rosemarythyme.simplymore.util.*;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
+import net.rosemarythyme.simplymore.util.data.TargetList;
+import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
+import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
 
 
-public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
-
-    int skillCooldown = UNIQUE_CONFIG.tidebreaker.cooldown;
-    int lastHitTime;
-    LivingEntity lastHit;
+public class TidebreakerItem extends SimplyMoreUniqueSwordItem implements UniqueWeaponActiveAbility {
+    public static TidebreakerItem.EffectSettings SETTINGS = UNIQUE_CONFIG.tidebreaker;
 
     public TidebreakerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed) {
         super(toolMaterial, attackDamage, attackSpeed);
@@ -42,76 +48,109 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {
-        if (!attacker.getWorld().isClient()) {
-            if (MathUtils.chance(attacker, UNIQUE_CONFIG.tidebreaker.chance)) {
-                if (!attacker.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.TIDEBREAKER))) {
-                    attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.getReference(StatusEffectRegistry.TIDEBREAKER), UNIQUE_CONFIG.tidebreaker.cloudTime, 0), attacker);
-                }
-            }
+        if(MathUtils.chance(attacker, SETTINGS.chance)) {
+            new TargetList(target).incrementEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.LUNACY), SETTINGS.lunacyDuration, 1, 9);
+            AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ENTITY_WARDEN_ATTACK_IMPACT).randomisePitch(0.1f, 0.25f, attacker.getRandom()));
+        }
 
-            lastHitTime = 0;
-            lastHit = target;
+        if (canTeleport(attacker, target)) {
+            float yaw = MathUtils.getYawAndPitch(MathUtils.normalisedDirectionBetween(target.getEyePos(), attacker.getEyePos(), false)).getLeft();
+            yaw += attacker.getRandom().nextBoolean() ? SETTINGS.teleportAngle : -SETTINGS.teleportAngle;
 
+            float range = (float) attacker.getPos().distanceTo(new Vec3d(target.getX(), attacker.getY(), target.getZ()));
+            Vec3d teleportPosition = EntityUtils.rangeAroundPoint(target.getPos(), attacker, yaw, (float) Math.min(range, SETTINGS.maxTeleportRange));
+            teleport(attacker, teleportPosition, yaw);
         }
     }
 
+    private boolean canTeleport(LivingEntity attacker, LivingEntity target) {
+        if(!MathUtils.chance(attacker, SETTINGS.teleportChance)) return false;
+        if (!(attacker instanceof PlayerEntity)) return true;
+        if (!attacker.isSneaking()) return false;
+
+        LivingEntity lookingAt = TargetUtils.findTarget(attacker, (float) SETTINGS.maxTeleportRange, TargetUtils.TargetType.ENEMIES).orElse(null);
+        return target.equals(lookingAt);
+    }
+
+    private void teleport(LivingEntity attacker, Vec3d pos, float yaw) {
+        ServerWorld world = (ServerWorld) attacker.getWorld();
+        teleportFx(attacker);
+
+        float eyeHeight = attacker.getEyeHeight(attacker.getPose());
+        AudioVisualUtils.particleLine(world, attacker.getEyePos(), pos.offset(Direction.UP, eyeHeight), ParticleTypes.RAIN, 0.25f, 5, 0.1f, 0);
+
+        attacker.teleport(world, pos.getX(), pos.getY(), pos.getZ(), PositionFlag.getFlags(0b11111), yaw + 180f, 0);
+        teleportFx(attacker);
+    }
+
+    private void teleportFx(LivingEntity attacker) {
+        AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.RAIN, 40, 0.25f, 0.1f);
+        AudioVisualUtils.playSound(attacker.getWorld(), attacker.getPos(), new Sound(SoundEvents.ITEM_BUCKET_EMPTY).randomisePitch(0f, 0.25f, attacker.getRandom()));
+    }
+
+    @Override
+    public boolean canActivate(WeaponAbilityContext context) {
+        return context.actor().isAlive() && context.actor().isOnGround();
+    }
+
+    @Override
+    public boolean activate(WeaponAbilityContext context) {
+        spawnWater(context.actor());
+        return true;
+    }
+
+    @Override
+    public int getActivationCooldownTicks(ItemStack stack, WeaponAbilityContext context) {
+        return 100;
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> startPlayerAbility(World world, PlayerEntity user, Hand hand) {
+        if(!(world instanceof ServerWorld serverWorld)) return TypedActionResult.fail(user.getStackInHand(hand));
+        return AttackUtils.holdToUse(serverWorld, user, hand);
+    }
+
+    private void spawnWater(LivingEntity user) {
+        if(!(user.getWorld() instanceof ServerWorld world)) return;
+        if(!user.isOnGround()) return;
+
+        AudioVisualUtils.playSound(user.getWorld(), user.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_WATER_ATTACK_01.get()).randomisePitch(0.75f, 1.25f, user.getRandom()));
+        AudioVisualUtils.applyScreenshake(world, user.getPos(), user, 12, 2, 15);
+        SummonUtils.spawnAbility(new WaterLiquidEntity(user, user.getPos(), 1), user, true);
+    }
+
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.SPEAR;
+    }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (user.getWorld().isClient())
-            return super.use(world, user, hand);
-
-        if (lastHit == null
-                || !lastHit.isAlive()
-                || lastHit.getWorld() != user.getWorld()
-                || lastHit.distanceTo(user) > UNIQUE_CONFIG.tidebreaker.range)
-            return super.use(world, user, hand);
-
-        if (shouldTeleport(user, lastHit)) {
-            swapUserAndTarget(user, lastHit);
-            resetLastHit();
-            user.getItemCooldownManager().set(this, skillCooldown);
-        }
-
-
-        return super.use(world, user, hand);
-    }
-
-    private boolean shouldTeleport(PlayerEntity user, LivingEntity target) {
-        return target.getWorld() == user.getWorld() && target.distanceTo(user) <= UNIQUE_CONFIG.tidebreaker.range;
-    }
-
-    private void swapUserAndTarget(PlayerEntity user, LivingEntity target) {
-        World world = user.getWorld();
-        ServerWorld serverWorld = (ServerWorld) world;
-
-        double targetX = target.getX();
-        double targetY = target.getY();
-        double targetZ = target.getZ();
-
-        double userX = user.getX();
-        double userY = user.getY();
-        double userZ = user.getZ();
-
-        user.teleport(targetX, targetY, targetZ, false);
-        target.teleport(userX, userY, userZ, false);
-
-        world.playSound(null, targetX, targetY, targetZ, SoundRegistry.ELEMENTAL_BOW_WATER_SHOOT_IMPACT_02.get(), SoundCategory.PLAYERS, 1, 1);
-        world.playSound(null, userX, userY, userZ, SoundRegistry.ELEMENTAL_BOW_WATER_SHOOT_IMPACT_02.get(), SoundCategory.PLAYERS, 1, 1);
-
-        serverWorld.spawnParticles(ParticleTypes.SPLASH, targetX, targetY, targetZ, 300, 2, 0, 2, 0);
-        serverWorld.spawnParticles(ParticleTypes.SPLASH, userX, userY, userZ, 300, 2, 0, 2, 0);
+        return useFromDefaultInput(world, user, hand);
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (!world.isClient) {
-            lastHitTime++;
+    protected int getUniqueWeaponMaxUseTime(ItemStack stack, LivingEntity user) {
+        return MathUtils.PSEUDOINFINITE_DURATION;
+    }
 
-            if (lastHitTime > UNIQUE_CONFIG.tidebreaker.teleportTime)
-                resetLastHit();
+    @Override
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        EntityUtils.cooldown(user, stack.getItem(), 10, false);
+    }
+
+    @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        if(!EntityUtils.isOnGround(user)) {
+            BlockHitResult result = EntityUtils.raycastDown(user, user.getPos(), user.getWorld(), 3);
+            if(result.getType() != HitResult.Type.MISS) {
+                user.refreshPositionAfterTeleport(result.getPos());
+            }
         }
-        super.inventoryTick(stack, world, entity, slot, selected);
+
+        if(remainingUseTicks % SETTINGS.ticksBetweenWater == 0) {
+            spawnWater(user);
+        }
     }
 
     @Override
@@ -121,25 +160,17 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
 
     @Override
     public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType type) {
-        Style textStyle = Styles.TEXT;
-        Style abilityStyle = Styles.ABILITY;
-        Style rightClickStyle = Styles.RIGHT_CLICK;
-
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip1").setStyle(abilityStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip2").setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip1").setStyle(Styles.ABILITY));
+        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip2").setStyle(Styles.TEXT));
         tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(rightClickStyle));
-        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip5",
-                MathUtils.translateTicks(UNIQUE_CONFIG.tidebreaker.teleportTime),
-                UNIQUE_CONFIG.tidebreaker.range).setStyle(textStyle));
+        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip3").setStyle(Styles.TEXT));
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("item.simplyswords.onrightclick").setStyle(Styles.RIGHT_CLICK));
+        tooltip.add(Text.translatable("item.simplymore.tidebreaker.tooltip4").setStyle(Styles.TEXT));
+        appendAbilityCooldownTooltip(tooltip, itemStack, 10);
 
         super.appendTooltip(itemStack, tooltipContext, tooltip, type);
-    }
-    
-    // Made this a separate method to make it easier to understand what is going on for a reader of the code
-    private void resetLastHit() {
-        lastHit = null;
     }
 
     public static class EffectSettings extends TooltipSettings {
@@ -147,15 +178,23 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem {
             super(new ItemStackTooltipAppender(ItemRegistry.TIDEBREAKER));
         }
 
-        @ValidatedInt.Restrict(min = 0)
-        public int cooldown = 400;
+        @ValidatedFloat.Restrict(min = 0)
+        public float teleportAngle = 40;
         @ValidatedFloat.Restrict(min = 0f, max = 1f)
-        public float chance = 0.25f;
+        public float chance = 0.15f;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float teleportChance = 0.75f;
         @ValidatedInt.Restrict(min = 0)
-        public int cloudTime = 300;
+        public int lunacyDuration = 300;
+        @ValidatedDouble.Restrict(min = 0)
+        public double maxTeleportRange = 7;
         @ValidatedInt.Restrict(min = 0)
-        public int range = 15;
+        public int ticksBetweenWater = 30;
         @ValidatedInt.Restrict(min = 0)
-        public int teleportTime = 200;
+        public int waterRange = 9;
+        @ValidatedFloat.Restrict(min = 0f)
+        public float waterDamage = 4f;
+        @ValidatedFloat.Restrict(min = 0f, max = 1f)
+        public float waterKnockback = 0.75f;
     }
 }

@@ -25,7 +25,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> WOUNDED = registerEffect(
             "wounded",
-            new StatusEffect(StatusEffectCategory.HARMFUL,7865862)
+            new StatusEffect(StatusEffectCategory.HARMFUL,0x780606)
     );
 
     public static final RegistrySupplier<StatusEffect> IMPLICIT_MINING_FATIGUE = registerEffect(
@@ -40,7 +40,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> IMPLICIT_STUN = registerEffect(
             "implicit_stun",
-            new StunEffect(StatusEffectCategory.HARMFUL,8948877)
+            new StunEffect(StatusEffectCategory.HARMFUL,0x888C8D)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             SimplyMore.identifier("implicit_stun_attack_speed"),
@@ -56,7 +56,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> STUN = registerEffect(
             "stun",
-            new StunEffect(StatusEffectCategory.HARMFUL,8948877)
+            new StunEffect(StatusEffectCategory.HARMFUL,0x888C8D)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             SimplyMore.identifier("stun_attack_speed"),
@@ -72,17 +72,17 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> HEX = registerEffect(
             "hex",
-            new HexEffect(StatusEffectCategory.HARMFUL,10494192)
+            new HexEffect(StatusEffectCategory.HARMFUL,0xA020F0)
     );
 
     public static final RegistrySupplier<StatusEffect> STARLIGHT = registerEffect(
             "starlight",
-            new StarlightEffect(StatusEffectCategory.BENEFICIAL,11393254)
+            new StarlightEffect(StatusEffectCategory.BENEFICIAL,0xADD8E6)
     );
 
     public static final RegistrySupplier<StatusEffect> SOUL_HEALTH = registerEffect(
             "soul_health",
-            new StatusEffect(StatusEffectCategory.BENEFICIAL,7865862).addAttributeModifier(
+            new StatusEffect(StatusEffectCategory.BENEFICIAL,0x780606).addAttributeModifier(
                     EntityAttributes.GENERIC_MAX_HEALTH,
                     SimplyMore.identifier("soul_health"),
                     2,
@@ -93,7 +93,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> BLOOM = registerEffect(
             "bloom",
-            new BloomEffect(StatusEffectCategory.BENEFICIAL,7865862)
+            new BloomEffect(StatusEffectCategory.BENEFICIAL,0x780606)
     );
 
     public static final RegistrySupplier<StatusEffect> LIGHTWEIGHT = registerEffect(
@@ -103,17 +103,17 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> VENOM = registerEffect(
             "venom",
-            new VenomPoisonEffect(StatusEffectCategory.HARMFUL,7350627)
+            new VenomPoisonEffect(StatusEffectCategory.HARMFUL,0x702963)
     );
 
     public static final RegistrySupplier<StatusEffect> CHILL = registerEffect(
             "chill",
-            new ChillEffect(StatusEffectCategory.HARMFUL,10875635)
+            new ChillEffect(StatusEffectCategory.HARMFUL,0xA5F2F3)
     );
 
     public static final RegistrySupplier<StatusEffect> GROTESQUE_WARD = registerEffect(
             "grotesque_ward",
-            new StatusEffect(StatusEffectCategory.HARMFUL, 1023141)
+            new StatusEffect(StatusEffectCategory.HARMFUL, 0xF9CA5)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ATTACK_DAMAGE,
                             SimplyMore.identifier("grotesque_ward_damage"),
@@ -132,28 +132,14 @@ public class StatusEffectRegistry {
             new DecayingEffect(StatusEffectCategory.HARMFUL,0x2B0303)
     );
 
-    public static final RegistrySupplier<StatusEffect> INSANITY = registerEffect(
-            "insanity",
-            new InsanityEffect(StatusEffectCategory.HARMFUL,700)
-                    .addAttributeModifier(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            SimplyMore.identifier("insanity_damage"),
-                            -3, EntityAttributeModifier.Operation.ADD_VALUE
-                    ).addAttributeModifier(
-                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            SimplyMore.identifier("insanity_speed"),
-                            -0.03,
-                            EntityAttributeModifier.Operation.ADD_VALUE)
-    );
-
-    public static final RegistrySupplier<StatusEffect> TIDEBREAKER = registerEffect(
-            "tidebreaker_rain",
-            new TidebreakerEffect(StatusEffectCategory.BENEFICIAL,700)
+    public static final RegistrySupplier<StatusEffect> LUNACY = registerEffect(
+            "lunacy",
+            new LunacyEffect(StatusEffectCategory.HARMFUL,0x800080)
     );
 
     public static final RegistrySupplier<StatusEffect> BLESSING = registerEffect(
             "blessing",
-            new StatusEffect(StatusEffectCategory.BENEFICIAL,16709211)
+            new StatusEffect(StatusEffectCategory.BENEFICIAL,0xFEF65B)
     );
 
     public static final RegistrySupplier<StatusEffect> FRAGILE = registerEffect(
@@ -163,7 +149,7 @@ public class StatusEffectRegistry {
 
     public static final RegistrySupplier<StatusEffect> ARMOUR_CRUNCH = registerEffect(
             "armor_crunch",
-            new StatusEffect(StatusEffectCategory.HARMFUL,9849600)
+            new StatusEffect(StatusEffectCategory.HARMFUL,0x964B00)
                     .addAttributeModifier(
                             EntityAttributes.GENERIC_ARMOR,
                             SimplyMore.identifier("armor_crunch"),

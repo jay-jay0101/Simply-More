@@ -28,6 +28,7 @@ public class ClientEntityRendererRegistry {
         EntityRendererRegistry.register(EntityRegistry.GHOST_FALLING_BLOCK, FallingBlockEntityRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.LAVA, LavaEntityRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.WATER, WaterEntityRenderer::new);
 
         EntityModelLayerRegistry.register(CannonballModel.LAYER, CannonballModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.CANNONBALL, CannonballRenderer::new);

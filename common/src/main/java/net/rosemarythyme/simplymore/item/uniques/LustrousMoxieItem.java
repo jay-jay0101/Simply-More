@@ -96,7 +96,7 @@ public class LustrousMoxieItem extends SimplyMoreUniqueSwordItem implements TwoH
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.WAX_OFF, 40, 0.25f, 0);
         AudioVisualUtils.playSound(user.getWorld(), user.getPos(), new Sound(SoundRegistry.SWING_OMEN_ONE.get()).setPitch(2));
 
-        user.teleport((ServerWorld) user.getWorld(), pos.getX(), pos.getY(), pos.getZ(), PositionFlag.getFlags(6), user.getYaw(), user.getPitch());
+        user.teleport((ServerWorld) user.getWorld(), pos.getX(), pos.getY(), pos.getZ(), PositionFlag.getFlags(0b00111), user.getYaw(), user.getPitch());
 
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FIREWORK, 100, 0.25f, 0.2f);
         AudioVisualUtils.particleAroundEntity(user, ParticleTypes.FLASH, 1, 0, 0f);

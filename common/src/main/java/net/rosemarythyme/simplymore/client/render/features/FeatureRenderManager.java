@@ -19,7 +19,7 @@ import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import net.sweenus.simplyswords.client.api.ObserverStatusEffectClientApi;
 
 import java.util.List;

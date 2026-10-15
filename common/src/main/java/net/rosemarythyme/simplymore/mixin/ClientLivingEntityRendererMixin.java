@@ -8,10 +8,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.client.render.entity.StatueRenderer;
+import net.rosemarythyme.simplymore.client.world.PlayerLunacyManager;
 import net.rosemarythyme.simplymore.item.uniques.MoundshifterItem;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -47,6 +48,12 @@ public abstract class ClientLivingEntityRendererMixin<T extends LivingEntity> {
             return;
         }
 
+        PlayerLunacyManager.PlayerLunacyData<?> lunacyData = PlayerLunacyManager.get(livingEntity);
+        if(lunacyData != null && lunacyData.type() == PlayerLunacyManager.Type.INVISIBLE) {
+            ci.cancel();
+            return;
+        }
+
         if(ClientActiveAbilityManager.CLIENT.isInAbility(livingEntity, ActiveAbilityManager.Type.WRAITH)) {
             ci.cancel();
             return;
@@ -73,6 +80,9 @@ public abstract class ClientLivingEntityRendererMixin<T extends LivingEntity> {
     @ModifyReturnValue(method = "getShadowRadius(Lnet/minecraft/entity/LivingEntity;)F", at = @At("TAIL"))
     private float simplymore$removeShadow(float original, LivingEntity entity) {
         if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.WRAITH)) return 0f;
+
+        PlayerLunacyManager.PlayerLunacyData<?> lunacyData = PlayerLunacyManager.get(entity);
+        if(lunacyData != null && lunacyData.type() == PlayerLunacyManager.Type.INVISIBLE) return 0f;
 
         double currentDuration = ClientActiveAbilityManager.CLIENT.getCurrentDuration(entity, ActiveAbilityManager.Type.DRILL);
         if (entity.getFirstPassenger() instanceof LivingEntity passenger)

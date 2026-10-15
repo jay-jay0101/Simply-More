@@ -7,7 +7,9 @@ import net.minecraft.entity.mob.MobEntity;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.util.EntityUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
+import net.rosemarythyme.simplymore.world.MobLunacyManager;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,8 +32,13 @@ public abstract class MobEntityMixin {
 		MobEntity entity = (MobEntity) (Object) this;
 
 		if(entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED))) {
-			entity.setTarget(null);
-			entity.setAttacking(false);
+			simplymore$updateTarget(entity, null);
+			return;
+		}
+
+		MobLunacyManager.MobLunacyData lunacy = MobLunacyManager.get(entity);
+		if(lunacy != null) {
+			simplymore$updateTarget(entity, lunacy.target().orElse(null));
 		}
 	}
 
@@ -40,11 +47,22 @@ public abstract class MobEntityMixin {
 		MobEntity entity = (MobEntity) (Object) this;
 
 		if(entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED))) {
-			entity.setTarget(null);
-			entity.setAttacking(false);
+			simplymore$updateTarget(entity, null);
+			return null;
+		}
+
+		MobLunacyManager.MobLunacyData lunacy = MobLunacyManager.get(entity);
+		if(lunacy != null && lunacy.target().isEmpty()) {
+			simplymore$updateTarget(entity, null);
 			return null;
 		}
 
 		return original;
+	}
+
+	@Unique
+	private void simplymore$updateTarget(MobEntity entity, LivingEntity target) {
+		entity.setTarget(target);
+		entity.setAttacking(target != null);
 	}
 }

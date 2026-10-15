@@ -24,7 +24,7 @@ public abstract class AbstractLiquidEntityRenderer extends EntityRenderer<Abstra
         float height = entity.getLiquidHeight();
         Sprite sprite = MinecraftClient.getInstance().getBakedModelManager().getAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).getSprite(getTexture(entity));
         matrices.push();
-        matrices.translate(-0.5f, 0, -0.5f);
+        matrices.translate(-0.5f, 0.02f, -0.5f);
 
         VertexConsumer vc = vertexConsumers.getBuffer(RenderLayer.getTranslucentMovingBlock());
         MatrixStack.Entry matrix = matrices.peek();

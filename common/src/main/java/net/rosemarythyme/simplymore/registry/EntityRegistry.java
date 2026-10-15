@@ -86,6 +86,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<LavaLiquidEntity>> LAVA =
             registerMarkerEntity("lava", LavaLiquidEntity::new, 1f, 1f);
 
+    public static final RegistrySupplier<EntityType<WaterLiquidEntity>> WATER =
+            registerMarkerEntity("water", WaterLiquidEntity::new, 1f, 1f);
+
     public static final RegistrySupplier<EntityType<EruptionEntity>> ERUPTION =
             registerMarkerEntity("eruption", EruptionEntity::new);
 

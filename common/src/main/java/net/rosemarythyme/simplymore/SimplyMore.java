@@ -20,7 +20,7 @@ import net.rosemarythyme.simplymore.item.LootRegistry;
 import net.rosemarythyme.simplymore.registry.*;
 import net.rosemarythyme.simplymore.registry.item.*;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class SimplyMore {

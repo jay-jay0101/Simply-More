@@ -9,7 +9,7 @@ import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.item.uniques.VipersCallItem;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 
 public class VipersCallAuraRenderer {
     public static void render(LivingEntity entity, MatrixStack stack, VertexConsumerProvider vertexConsumerProvider) {

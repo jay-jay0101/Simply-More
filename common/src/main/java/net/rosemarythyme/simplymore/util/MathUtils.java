@@ -2,13 +2,13 @@ package net.rosemarythyme.simplymore.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 
 import java.text.DecimalFormat;
@@ -138,7 +138,7 @@ public class MathUtils {
         return -clampedLerp(age, entity.getLifespan(), entity.getLifespan() + entity.getOutroTicks(), 0f, 1f);
     }
 
-    public static Set<BlockPos> getPositionsOnFloor(ServerWorld world, BlockPos center, int horizontalRange, int aboveRange, int belowRange, int num) {
+    public static Set<BlockPos> getPositionsOnFloor(World world, BlockPos center, int horizontalRange, int aboveRange, int belowRange, int num) {
         int attempts = num * 5;
         Set<BlockPos> positions = new HashSet<>();
 

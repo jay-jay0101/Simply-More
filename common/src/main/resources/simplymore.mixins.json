@@ -9,6 +9,7 @@
     "ClientBipedEntityRendererMixin",
     "ClientCameraMixin",
     "ClientEntityRenderDispatcherMixin",
+    "ClientEntityRendererMixin",
     "ClientGameRendererMixin",
     "ClientHeldItemRendererMixin",
     "ClientInGameHudMixin",

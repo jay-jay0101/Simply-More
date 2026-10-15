@@ -11,7 +11,7 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 
 public record S2CAbilityManagerPacket(int ownerID, int duration, int currentDuration, int typeOrdinal) implements CustomPayload {
     public static final Identifier PACKET_ID = SimplyMore.identifier("ability");

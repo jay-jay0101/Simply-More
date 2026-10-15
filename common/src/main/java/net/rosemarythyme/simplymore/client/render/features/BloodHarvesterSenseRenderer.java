@@ -10,7 +10,7 @@ import net.minecraft.util.math.ColorHelper;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.world.ClientActiveAbilityManager;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 
 public class BloodHarvesterSenseRenderer {
     public static RenderLayer layer = RenderLayer.of(

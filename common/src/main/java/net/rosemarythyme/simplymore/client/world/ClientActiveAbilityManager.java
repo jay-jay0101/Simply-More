@@ -1,9 +1,10 @@
-package net.rosemarythyme.simplymore.world;
+package net.rosemarythyme.simplymore.client.world;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.rosemarythyme.simplymore.util.MathUtils;
+import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.rosemarythyme.simplymore.world.abilities.fire.FireTypeAbility;
 
 import java.util.*;
