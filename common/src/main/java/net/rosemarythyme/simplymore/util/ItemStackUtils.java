@@ -1,5 +1,7 @@
 package net.rosemarythyme.simplymore.util;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;
 import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.item.components.CounterComponent;
@@ -41,5 +43,14 @@ public class ItemStackUtils {
 
     public static boolean isStackAwakened(ItemStack stack) {
         return !AwakeningApi.isAwakeningSystemEnabled() || AwakeningApi.isAbilityUnlocked(stack);
+    }
+
+    public static int getColorDec(ItemStack stack) {
+        return getColorDec(stack, 0xFFFFFF);
+    }
+
+    public static int getColorDec(ItemStack stack, int fallback) {
+        DyedColorComponent color = stack.get(DataComponentTypes.DYED_COLOR);
+        return color == null ? fallback : color.rgb();
     }
 }

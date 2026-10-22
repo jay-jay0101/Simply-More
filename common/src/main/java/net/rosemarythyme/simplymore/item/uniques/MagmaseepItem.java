@@ -50,7 +50,7 @@ public class MagmaseepItem extends SimplyMoreUniqueSwordItem implements TwoHande
             AudioVisualUtils.particleLine(world, attacker.getPos(), target.getPos(), ParticleTypes.SMOKE, 0.4, 15, 0.2f, 1f);
             AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0.3f));
 
-            TargetUtils.lineAttack(attacker, attacker.getPos(), attacker.getYaw(), attacker.getPitch(), attacker.distanceTo(target),1, TargetUtils.TargetType.ENEMIES)
+            TargetUtils.lineSelect(attacker, attacker.getPos(), attacker.getYaw(), attacker.getPitch(), attacker.distanceTo(target),1, TargetUtils.TargetType.ENEMIES)
                     .knockback(attacker, SETTINGS.knockback)
                     .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, attacker, stack, 0, 1, SETTINGS.eruptionDamage), attacker.getDamageSources().inFire());
 

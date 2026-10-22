@@ -61,7 +61,7 @@ public class KatanaItem extends MimicryItem implements TwoHandedWeapon {
         AudioVisualUtils.playSound(world, originalPos, sound);
         AudioVisualUtils.playSound(world, entity.getPos(), sound);
 
-        return TargetUtils.lineAttack(entity, originalPos, entity.getEyePos(), width, TargetUtils.TargetType.ENEMIES);
+        return TargetUtils.lineSelect(entity, originalPos, entity.getEyePos(), width, TargetUtils.TargetType.ENEMIES);
     }
 
     @Override

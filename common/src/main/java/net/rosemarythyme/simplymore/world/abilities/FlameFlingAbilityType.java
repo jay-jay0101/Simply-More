@@ -60,7 +60,7 @@ public class FlameFlingAbilityType extends ActiveAbilityType {
         AudioVisualUtils.particleLine(world, owner.getEyePos().add(MathUtils.getDirectionalVector(rot, 0).multiply(0.5f)), rot, 0, CindergorgeItem.SETTINGS.range, ParticleTypes.FLAME, 0.75f, 20, 0.1f, 0.05f);
 
         if(ability.duration() % 5 == 0) {
-            TargetUtils.lineAttack(owner, owner.getEyePos(), rot, 0, CindergorgeItem.SETTINGS.range, 0.75, TargetUtils.TargetType.ENEMIES)
+            TargetUtils.lineSelect(owner, owner.getEyePos(), rot, 0, CindergorgeItem.SETTINGS.range, 0.75, TargetUtils.TargetType.ENEMIES)
                     .setOnFireFor(3)
                     .forceDamage(CindergorgeItem.SETTINGS.fireDamage, owner.getDamageSources().inFire());
         }

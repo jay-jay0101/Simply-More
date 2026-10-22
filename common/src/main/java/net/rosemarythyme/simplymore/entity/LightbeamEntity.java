@@ -85,7 +85,7 @@ public class LightbeamEntity extends AbstractVisibleAbilityEntity {
         this.setPosition(this.getPos().add(motion));
 
         float size = MathUtils.clampedLerp(charge, 0, LustrousMoxieItem.SETTINGS.maxChargeTime, LustrousMoxieItem.SETTINGS.minSize, LustrousMoxieItem.SETTINGS.maxSize) - 1;
-        TargetUtils.boxAttack(owner, this.getBoundingBox().expand(size).stretch(motion), TargetUtils.TargetType.ENEMIES)
+        TargetUtils.boxSelect(owner, this.getBoundingBox().expand(size).stretch(motion), TargetUtils.TargetType.ENEMIES)
                 .applyEffect(StatusEffects.GLOWING, LustrousMoxieItem.SETTINGS.glowDuration, 0)
                 .onEach(e -> SummonUtils.getOwnedAbilities(owner, LightOrbEntity.class).stream().filter(o -> o.getPerson().isPresent() && o.getPerson().get().equals(e.getUuid())).toList().forEach(LightOrbEntity::explode))
                 .damage(AttackUtils.scaleDamage(SpellScalingProfile.LIGHTNING, owner, 0, 1, LustrousMoxieItem.SETTINGS.beamDamage), owner.getDamageSources().indirectMagic(this, owner));

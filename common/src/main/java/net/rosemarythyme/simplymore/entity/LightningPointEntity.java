@@ -50,7 +50,7 @@ public class LightningPointEntity extends AbstractVisibleAbilityEntity {
 
             AudioVisualUtils.applyScreenshake(world, getPos(), owner, 40, 2.4f, 10);
 
-            TargetUtils.cylinderAttack(getOwner(), getPos().offset(Direction.UP, 50), StasisItem.SETTINGS.radius, 50, TargetUtils.TargetType.ENEMIES)
+            TargetUtils.cylinderSelect(getOwner(), getPos().offset(Direction.UP, 50), StasisItem.SETTINGS.radius, 50, TargetUtils.TargetType.ENEMIES)
                     .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.LIGHTNING, owner, 0, 1, StasisItem.SETTINGS.strikeDamage), DamageTypeRegistry.damageSourceOf(world, DamageTypeRegistry.LIGHTNING))
                     .onEach((target) -> spawnLightning(world, target.getPos(), target));
             discard();

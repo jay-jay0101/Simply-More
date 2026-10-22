@@ -56,6 +56,17 @@ public class EntityRegistry {
             "cannonball"
     );
 
+    public static final RegistrySupplier<EntityType<AntimatterParticleEntity>> ANTIMATTER_PARTICLE = registerType(
+            EntityType.Builder.<AntimatterParticleEntity>create(AntimatterParticleEntity::new, SpawnGroup.MISC)
+                    .dimensions(4/16f, 4/16f)
+                    .makeFireImmune()
+                    .eyeHeight(0F)
+                    .maxTrackingRange(6)
+                    .trackingTickInterval(1)
+                    .disableSummon(),
+            "antimatter"
+    );
+
     public static final RegistrySupplier<EntityType<GhostFallingBlockEntity>> GHOST_FALLING_BLOCK = registerType(
             EntityType.Builder.<GhostFallingBlockEntity>create(GhostFallingBlockEntity::new, SpawnGroup.MISC)
                     .dimensions(1f, 1f),

@@ -33,7 +33,7 @@ public class EruptionEntity extends AbstractAbilityPlacementEntity {
     }
 
     private void blind(float range, LivingEntity owner) {
-        TargetUtils.cuboidAttack(owner, this.getPos(), range, 3f, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cuboidSelect(owner, this.getPos(), range, 3f, TargetUtils.TargetType.ENEMIES)
                 .applyEffect(StatusEffects.BLINDNESS, 30, 0);
     }
 

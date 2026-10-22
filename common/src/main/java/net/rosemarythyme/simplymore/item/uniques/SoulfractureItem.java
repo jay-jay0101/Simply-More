@@ -93,10 +93,10 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
     public boolean activate(WeaponAbilityContext context) {
         TargetList fragments = allFragments(context.actor());
 
-        TargetList fullyFracturedEnemies = TargetUtils.cubeAttack(context.actor(), context.actor().getPos(), 50, TargetUtils.TargetType.ENEMIES)
+        TargetList fullyFracturedEnemies = TargetUtils.cubeSelect(context.actor(), context.actor().getPos(), 50, TargetUtils.TargetType.ENEMIES)
                 .filter((target) -> fragmentsFor(context.actor(), target).size() >= 4);
 
-        TargetList closeEnemies = TargetUtils.cylinderAttack(context.actor(), context.actor().getPos(), SETTINGS.fragmentRadius, 3, TargetUtils.TargetType.ENEMIES)
+        TargetList closeEnemies = TargetUtils.cylinderSelect(context.actor(), context.actor().getPos(), SETTINGS.fragmentRadius, 3, TargetUtils.TargetType.ENEMIES)
                 .exclude(fullyFracturedEnemies);
 
         if (closeEnemies.isEmpty() && fragments.isEmpty() && fullyFracturedEnemies.isEmpty()) return false;
@@ -144,7 +144,7 @@ public class SoulfractureItem extends SimplyMoreUniqueSwordItem implements TwoHa
 
         if(world.isClient || !(entity instanceof LivingEntity attacker) || !selected) return;
 
-        TargetUtils.cubeAttack(attacker, attacker.getPos(), 50, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cubeSelect(attacker, attacker.getPos(), 50, TargetUtils.TargetType.ENEMIES)
                 .onEach((targetE) -> {
                     int fragments = fragmentsFor(attacker, targetE).size();
                     TargetList target = new TargetList(targetE);

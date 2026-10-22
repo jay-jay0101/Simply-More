@@ -4,25 +4,28 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.RotationAxis;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.render.entity.MimicryVisualRenderer;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import net.rosemarythyme.simplymore.entity.MimicryVisualEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.AntimatterParticleEntity;
 import net.rosemarythyme.simplymore.item.components.RotationComponent;
 import net.rosemarythyme.simplymore.item.uniques.DesolateRuinItem;
+import net.rosemarythyme.simplymore.item.uniques.MatterbaneItem;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
@@ -265,27 +268,63 @@ public class RenderUtils {
 
     private static Optional<Pair<SpriteIdentifier, SpriteIdentifier>> fireOf(String name) {
         return Optional.of(new Pair<>(
-                new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, SimplyMore.identifier("block/fire/" + name + "_0")),
-                new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, SimplyMore.identifier("block/fire/" + name + "_1"))
+                new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, SimplyMore.identifier("block/fire/" + name + "_0")),
+                new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, SimplyMore.identifier("block/fire/" + name + "_1"))
         ));
     }
 
-    public record TargetData(int color, LivingEntity target) {
-        public static TargetData of(int color, ClientPlayerEntity player, float range, TargetUtils.TargetType type) {
-            Optional<LivingEntity> target = TargetUtils.findTarget(player, range, type);
+    public record TargetData(int color, Entity target, boolean isHorizontal) {
+        public static TargetData of(int color, boolean isHorizontal, ClientPlayerEntity player, float range, TargetUtils.TargetType type) {
+            Optional<LivingEntity> target = TargetUtils.findLivingTarget(player, range, type);
             if(target.isEmpty()) return DEFAULT;
 
-            return new TargetData(color, target.get());
+            return new TargetData(color, target.get(), isHorizontal);
         }
 
-        public static final TargetData DEFAULT = new TargetData(0x0, null);
+        public static TargetData ofMatterbane(boolean isHorizontal, ClientPlayerEntity player, float range) {
+            Optional<Entity> target = TargetUtils.findTarget(player, range, entity -> entity instanceof AntimatterParticleEntity && ((AntimatterParticleEntity) entity).canEmpower(player));
+
+            if(target.isEmpty()) return DEFAULT;
+            if(!(target.get() instanceof AntimatterParticleEntity particle)) return DEFAULT;
+
+            return new TargetData(0xFF000000 | particle.getColor(), particle, isHorizontal);
+        }
+
+        public static final TargetData DEFAULT = new TargetData(0x0, null, true);
     }
 
     public static TargetData getTarget(ClientPlayerEntity player) {
         if(ClientActiveAbilityManager.CLIENT.isInAbility(player, ActiveAbilityManager.Type.WRAITH)) {
-            return TargetData.of(0xFFFFFFFF, player, DesolateRuinItem.SETTINGS.range, TargetUtils.TargetType.ENEMIES);
+            return TargetData.of(0xFFFFFFFF, true, player, DesolateRuinItem.SETTINGS.range, TargetUtils.TargetType.ENEMIES);
+        }
+
+        if(player.isHolding(ItemRegistry.MATTERBANE.get()) && !player.getItemCooldownManager().isCoolingDown(ItemRegistry.MATTERBANE.get())) {
+            return TargetData.ofMatterbane(false, player, MatterbaneItem.SETTINGS.particleEmpowermentRange);
         }
 
         return TargetData.DEFAULT;
+    }
+
+    public static int changeSaturation(int color, float saturationBoost) {
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = color & 0xFF;
+
+        int lum = (r + b + g) / 3;
+        int sat = Math.round(256 * saturationBoost);
+
+        r = Math.max(0, lum + (((r - lum) * sat) >> 8));
+        g = Math.max(0, lum + (((g - lum) * sat) >> 8));
+        b = Math.max(0, lum + (((b - lum) * sat) >> 8));
+
+        int hueLum = Math.max(r, Math.max(b, g));
+        if(hueLum > 255) {
+            float lumMultiplier = 255f / hueLum;
+            r = Math.round(r * lumMultiplier);
+            g = Math.round(g * lumMultiplier);
+            b = Math.round(b * lumMultiplier);
+        }
+
+        return (r << 16) | (g << 8) | b;
     }
 }

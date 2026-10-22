@@ -25,7 +25,7 @@ public class VipersCallAbilityType extends ActiveAbilityType {
         LivingEntity owner = ability.owner();
 
         AudioVisualUtils.particleAroundEntity(owner, ParticleTypes.SPORE_BLOSSOM_AIR, 3, 2f, 1f);
-        TargetList nearby = TargetUtils.cylinderAttack(owner, owner.getPos(), VipersCallItem.SETTINGS.auraRange, 4, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY);
+        TargetList nearby = TargetUtils.cylinderSelect(owner, owner.getPos(), VipersCallItem.SETTINGS.auraRange, 4, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY);
 
         List<StatusEffectInstance> positive = new ArrayList<>();
         List<StatusEffectInstance> negative = new ArrayList<>();

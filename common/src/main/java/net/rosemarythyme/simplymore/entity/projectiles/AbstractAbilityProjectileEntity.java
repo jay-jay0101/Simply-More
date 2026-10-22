@@ -1,5 +1,6 @@
 package net.rosemarythyme.simplymore.entity.projectiles;
 
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -7,17 +8,22 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.networking.s2c.S2CChangeAbilityAgePacket;
 import net.rosemarythyme.simplymore.util.AudioVisualUtils;
 import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.PredicateUtils;
 import net.rosemarythyme.simplymore.util.TargetUtils;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
     public AbstractAbilityProjectileEntity(@NotNull LivingEntity owner, Vec3d position, Vec3d velocity, EntityType<? extends AbstractAbilityProjectileEntity> entityType) {
@@ -67,6 +73,15 @@ public abstract class AbstractAbilityProjectileEntity extends ProjectileEntity {
         }
 
         serverTick(livingOwner);
+    }
+
+    public void setAge(int age, boolean sync) {
+        this.age = age;
+
+        if(!sync || !(this.getWorld() instanceof ServerWorld world)) return;
+
+        List<ServerPlayerEntity> players = world.getPlayers().stream().filter((player) -> player.squaredDistanceTo(getPos()) < 60 * 60).toList();
+        NetworkManager.sendToPlayers(players, new S2CChangeAbilityAgePacket(this.getId(), age));
     }
 
     public int getLifespan() {

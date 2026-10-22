@@ -19,9 +19,10 @@ public class SimplySwordsAPIMixin {
         if(!(stack.getItem() instanceof SimplyMoreUniqueSwordItem unique)) return;
 
         long time = SwingCacheManager.getCache(user);
-        if(world.getTime() > time + 10) {
-            unique.onSwing(stack, world, user);
+        if(unique.onSwing(stack, world, user, world.getTime() - time)) {
             SwingCacheManager.putInCache(user, world.getTime());
         }
+
+        unique.updateSwingComponent(stack);
     }
 }

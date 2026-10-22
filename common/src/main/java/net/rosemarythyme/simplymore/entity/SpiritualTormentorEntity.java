@@ -118,7 +118,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
 
         Vec3d offset = MathUtils.getDirectionalVector(attackData.yaw, 0).multiply(1.2f);
 
-        TargetUtils.cubeAttack(owner, this.getPos().add(offset.getX(), 0.5f, offset.getZ()), 1.8f, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cubeSelect(owner, this.getPos().add(offset.getX(), 0.5f, offset.getZ()), 1.8f, TargetUtils.TargetType.ENEMIES)
                 .damage(MathHelper.lerp(this.getStrength(), IdolItem.DARKSENT.baseDamage, IdolItem.DARKSENT.maxDamage), AttackUtils.getHitSource(owner))
                 .filter(entity -> entity.getVelocity().getY() < IdolItem.DARKSENT.knockUpHeight)
                 .knockback(this, 0.4f)
@@ -142,7 +142,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
         } else {
             this.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, attackData.target.getPos());
 
-            float yaw = MathUtils.getYawAndPitch(MathUtils.normalisedDirectionBetween(attackData.originalPos, attackData.target.getPos(), false)).getLeft();
+            float yaw = MathUtils.getYawAndPitchBetween(attackData.originalPos, attackData.target.getPos()).getLeft();
             this.attackData = new AttackData(attackData.target, yaw, attackData.originalPos, attackData.intendedRange);
 
             if(time == IdolItem.DARKSENT.timeBeforeCharge) {
@@ -193,7 +193,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
     }
 
     private void findTarget(LivingEntity owner) {
-        Optional<Pair<LivingEntity, Float>> targetDistance = TargetUtils.cuboidAttack(owner, this.getPos(), getAuraRange() * 2, 5, TargetUtils.TargetType.ENEMIES)
+        Optional<Pair<LivingEntity, Float>> targetDistance = TargetUtils.cuboidSelect(owner, this.getPos(), getAuraRange() * 2, 5, TargetUtils.TargetType.ENEMIES)
                 .filter(LivingEntity::isAlive)
                 .getByMax((target) -> target.distanceTo(this));
 
@@ -239,7 +239,7 @@ public class SpiritualTormentorEntity extends AbstractSpiritualEntity {
                 .and(PredicateUtils.BENEFICIAL_EFFECT)
                 .and(PredicateUtils.IS_INSTANT.negate());
 
-        TargetUtils.cylinderAttack(owner, this.getPos(), getAuraRange(), 10, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cylinderSelect(owner, this.getPos(), getAuraRange(), 10, TargetUtils.TargetType.ENEMIES)
                 .onEachEffect(predicate, (target, effect) -> {
                     if (EntityUtils.drainEffect(target, effect, IdolItem.DARKSENT.effectDrainRate)) {
                         int bonus = effect.getAmplifier() + 1;

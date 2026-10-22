@@ -78,7 +78,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
         AudioVisualUtils.playSound(world, pos, new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_02.get()).setPitch(0));
         AudioVisualUtils.playSound(world, pos, new Sound(SoundRegistry.ELEMENTAL_SWORD_EARTH_ATTACK_03.get()).setPitch(0));
 
-        TargetUtils.cuboidAttack(attacker, pos.offset(Direction.UP, 3), 8, 5, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cuboidSelect(attacker, pos.offset(Direction.UP, 3), 8, 5, TargetUtils.TargetType.ENEMIES)
                 .damage(AttackUtils.scaleDamage(SpellScalingProfile.NATURE, attacker, 1/9f, 1f, SETTINGS.earthquakeDamage), attacker.getDamageSources().explosion(attacker, attacker))
                 .knockback(pos, SETTINGS.earthquakeStrength);
 
@@ -96,11 +96,11 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
     }
 
     @Override
-    public void onSwing(ItemStack stack, ServerWorld world, LivingEntity user) {
-        SummonUtils.getOwnedProjectiles(user, DugBlockEntity.class)
-                .forEach(DugBlockEntity::tryFire);
+    public boolean onSwing(ItemStack stack, ServerWorld world, LivingEntity user, long timeSinceLastActivation) {
+        if(timeSinceLastActivation < 10) return false;
 
-        super.onSwing(stack, world, user);
+        SummonUtils.getOwnedProjectiles(user, DugBlockEntity.class).forEach(DugBlockEntity::tryFire);
+        return true;
     }
 
     @Override
@@ -166,7 +166,7 @@ public class MoundshifterItem extends SimplyMoreUniqueSwordItem implements Uniqu
 
         if(includeEarthquake && user.isOnGround()) createEarthquake(world, source, pos);
 
-        TargetUtils.cubeAttack(source, pos, 3, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cubeSelect(source, pos, 3, TargetUtils.TargetType.ENEMIES)
                 .addVelocity(0, 1f, 0);
 
         if(source instanceof PlayerEntity player) {

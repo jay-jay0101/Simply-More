@@ -68,7 +68,7 @@ public class TidebreakerItem extends SimplyMoreUniqueSwordItem implements Unique
         if (!(attacker instanceof PlayerEntity)) return true;
         if (!attacker.isSneaking()) return false;
 
-        LivingEntity lookingAt = TargetUtils.findTarget(attacker, (float) SETTINGS.maxTeleportRange, TargetUtils.TargetType.ENEMIES).orElse(null);
+        LivingEntity lookingAt = TargetUtils.findLivingTarget(attacker, (float) SETTINGS.maxTeleportRange, TargetUtils.TargetType.ENEMIES).orElse(null);
         return target.equals(lookingAt);
     }
 

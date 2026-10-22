@@ -56,7 +56,7 @@ public abstract class AbstractLiquidEntity extends AbstractVisibleAbilityEntity 
 
         LivingEntity owner = getOwner();
         if(owner == null) return;
-        hit(owner, TargetUtils.cuboidAttack(getOwner(), getPos(), this.getBoundingBox().getLengthX(), height, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY));
+        hit(owner, TargetUtils.cuboidSelect(getOwner(), getPos(), this.getBoundingBox().getLengthX(), height, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY));
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {

@@ -32,6 +32,8 @@ public class ClientEntityRendererRegistry {
 
         EntityModelLayerRegistry.register(CannonballModel.LAYER, CannonballModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.CANNONBALL, CannonballRenderer::new);
+        EntityModelLayerRegistry.register(AntimatterParticleModel.LAYER, AntimatterParticleModel::getTexturedModelData);
+        EntityRendererRegistry.register(EntityRegistry.ANTIMATTER_PARTICLE, AntimatterParticleRenderer::new);
 
         EntityModelLayerRegistry.register(LightOrbModel.LAYER, LightOrbModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.LIGHT_ORB, LightOrbEntityRenderer::new);

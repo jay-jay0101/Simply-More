@@ -19,7 +19,7 @@ public class MobLunacyManager {
         public static MobLunacyData create(MobEntity entity) {
             if(LUNACY_MAP.containsKey(entity.getUuid())) return LUNACY_MAP.get(entity.getUuid());
 
-            TargetList list = TargetUtils.cubeAttack(entity, entity.getPos(), 50, TargetUtils.TargetType.ALLIES);
+            TargetList list = TargetUtils.cubeSelect(entity, entity.getPos(), 50, TargetUtils.TargetType.ALLIES);
             Optional<LivingEntity> target = entity.getRandom().nextBoolean() ? list.getAny() : Optional.empty();
 
             return new MobLunacyData(target, LunacyEffect.LUNACY_SUBEFFECT_DURATION);

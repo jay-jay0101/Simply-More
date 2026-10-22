@@ -69,7 +69,7 @@ public class PlayerLunacyManager {
         int interim = 30 + 100 - (10 * level);
 
         if(instance.getDuration() % interim == 19) {
-            TargetList targets = TargetUtils.cubeAttack(player, player.getPos(), 25, TargetUtils.TargetType.OTHERS_POSITIVELY)
+            TargetList targets = TargetUtils.cubeSelect(player, player.getPos(), 25, TargetUtils.TargetType.OTHERS_POSITIVELY)
                 .filter((entity) -> !LUNACY_MAP.containsKey(entity.getUuid()));
 
             int count = (int) Math.ceil(targets.size() * level  / 100f);

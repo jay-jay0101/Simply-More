@@ -68,7 +68,7 @@ public class EarthshatterItem extends SimplyMoreUniqueSwordItem implements TwoHa
 
             player.getItemCooldownManager().set(this, UNIQUE_CONFIG.earthshatter.cooldown);
 
-            TargetUtils.cuboidAttack(player, player.getPos().add(0d, 1.5d, 0d), 3.5d, 4d, TargetUtils.TargetType.ENEMIES)
+            TargetUtils.cuboidSelect(player, player.getPos().add(0d, 1.5d, 0d), 3.5d, 4d, TargetUtils.TargetType.ENEMIES)
                     .damage(15, player.getDamageSources().playerAttack(player))
                     .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.ARMOUR_CRUNCH), UNIQUE_CONFIG.earthshatter.slamEffectTime, 2)
                     .applyEffect(StatusEffects.WEAKNESS, UNIQUE_CONFIG.earthshatter.slamEffectTime, 1)

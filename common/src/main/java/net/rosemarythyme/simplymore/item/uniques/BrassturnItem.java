@@ -132,7 +132,7 @@ public class BrassturnItem extends SimplyMoreUniqueSwordItem implements StackMod
 
         if(useTime > 10) {
             AudioVisualUtils.playSound(world, user.getPos(), new Sound(SoundRegistry.SWING_WOOSH.get()).setPitch(user.getRandom().nextBetween(8, 12) / 10f));
-            TargetUtils.cuboidAttack(user, user.getEyePos(), 1.75f, 1.5f, TargetUtils.TargetType.ENEMIES)
+            TargetUtils.cuboidSelect(user, user.getEyePos(), 1.75f, 1.5f, TargetUtils.TargetType.ENEMIES)
                     .damage(MathUtils.clampedLerp(extraSpeedMult, 0, GEAR_SPEED, SETTINGS.minDamage, SETTINGS.maxDamage), AttackUtils.getHitSource(user))
                     .knockback(user, MathUtils.clampedLerp(extraSpeedMult, 0, GEAR_SPEED, SETTINGS.minKnockback, SETTINGS.maxKnockback));
         }

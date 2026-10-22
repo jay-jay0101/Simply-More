@@ -49,7 +49,7 @@ public abstract class AbstractPlanetaryEntity extends AbstractVisibleAbilityEnti
 
         if(this.isActive()) {
             if(this.getAge() % 5 == 0) {
-                onHit(owner, TargetUtils.boxAttack(owner, this.getBoundingBox().expand(0.4f), TargetUtils.TargetType.ENEMIES));
+                onHit(owner, TargetUtils.boxSelect(owner, this.getBoundingBox().expand(0.4f), TargetUtils.TargetType.ENEMIES));
             }
 
             if(!InventoryUtils.isHolding(owner, ItemRegistry.TIMEKEEPER.get())) {

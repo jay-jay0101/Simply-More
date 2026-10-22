@@ -97,7 +97,7 @@ public class RuyiJinguBangItem extends SimplyMoreUniqueSwordItem implements Uniq
         float damage = MathUtils.clampedLerp(size, 0f, 1f, 5f, (float) SETTINGS.maxSlamDamage);
         int sunderedArmor = Math.round(size * SETTINGS.maxSlamSunderedArmor);
 
-        TargetUtils.lineAttack(user, user.getEyePos(), user.getYaw(), user.getPitch(), range, width, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.lineSelect(user, user.getEyePos(), user.getYaw(), user.getPitch(), range, width, TargetUtils.TargetType.ENEMIES)
                 .damageWithEnchants(damage, user)
                 .addVelocity(0, -2, 0)
                 .incrementEffect(EffectRegistry.getReference(EffectRegistry.SUNDERED_ARMOR), SETTINGS.slamSunderedArmorDuration, sunderedArmor, 100);

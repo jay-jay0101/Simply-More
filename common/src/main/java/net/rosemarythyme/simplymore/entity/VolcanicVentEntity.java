@@ -53,7 +53,7 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
 
     @Override
     protected void serverTick(LivingEntity owner) {
-        TargetList blockingFlow = TargetUtils.cubeAttack(owner, this.getPos().offset(Direction.UP, 0.5f), 0.3f, TargetUtils.TargetType.ENEMIES);
+        TargetList blockingFlow = TargetUtils.cubeSelect(owner, this.getPos().offset(Direction.UP, 0.5f), 0.3f, TargetUtils.TargetType.ENEMIES);
         float range = MathUtils.clampedLerp(age, 0, 30, 0, MagmaseepItem.SETTINGS.lavaRainRange);
 
         visual(blockingFlow.isPopulated(), range);
@@ -92,7 +92,7 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
     }
 
     private void lavaRain(LivingEntity owner, float range) {
-        TargetUtils.cylinderAttack(owner, this.getPos(), range, 5, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cylinderSelect(owner, this.getPos(), range, 5, TargetUtils.TargetType.ENEMIES)
                 .damage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, owner, 0, 1, MagmaseepItem.SETTINGS.lavaRainDamage), this.getDamageSources().inFire())
                 .setOnFireFor(2);
 
@@ -111,7 +111,7 @@ public class VolcanicVentEntity extends AbstractCollidableAbilityEntity {
         ServerWorld world = getServerWorld();
 
         timeSteppedOn = 0;
-        TargetUtils.cylinderAttack(owner, getPos(), MagmaseepItem.SETTINGS.lavaRainRange, 5, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cylinderSelect(owner, getPos(), MagmaseepItem.SETTINGS.lavaRainRange, 5, TargetUtils.TargetType.ENEMIES)
                 .forceDamage(AttackUtils.scaleDamage(SpellScalingProfile.FIRE, owner, 0, 1, MagmaseepItem.SETTINGS.ventExplosionDamage), this.getDamageSources().inFire())
                 .knockback(getPos(), MagmaseepItem.SETTINGS.ventExplosionKnockback);
 

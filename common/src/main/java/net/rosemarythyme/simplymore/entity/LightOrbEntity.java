@@ -81,7 +81,7 @@ public class LightOrbEntity extends AbstractVisibleAbilityEntity {
 
         if(owner == null) return;
 
-        TargetUtils.cubeAttack(owner, getPos(), 3, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cubeSelect(owner, getPos(), 3, TargetUtils.TargetType.ENEMIES)
                 .forceDamage(LustrousMoxieItem.SETTINGS.explosionDamage, owner.getDamageSources().explosion(this, owner))
                 .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.DAZZLED), LustrousMoxieItem.SETTINGS.dazzleDuration, 0);
     }

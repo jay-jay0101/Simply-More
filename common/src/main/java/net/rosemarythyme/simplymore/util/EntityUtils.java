@@ -27,6 +27,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AbstractSpiritualEntity;
 import net.rosemarythyme.simplymore.entity.SpiritualGuardianEntity;
@@ -36,7 +37,6 @@ import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.data.Sound;
 import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
@@ -137,8 +137,19 @@ public class EntityUtils {
         world.spawnEntity(entity);
     }
 
+    public static Vec3d cubicRangeAroundPoint(Vec3d pos, Entity entity, float yaw, float pitch, float boxRadius) {
+        Vec3d direction = MathUtils.getDirectionalVector(yaw, pitch);
+        double maxPos = MathUtils.getMaxAbsLength(direction);
+
+        return rangeAroundPoint(pos, entity, yaw, pitch, (float)(boxRadius / maxPos));
+    }
+
     public static Vec3d rangeAroundPoint(Vec3d pos, Entity entity, float yaw, float idealRange) {
-        Vec3d targetPos = pos.add(MathUtils.getDirectionalVector(yaw, 0).multiply(idealRange));
+        return rangeAroundPoint(pos, entity, yaw, 0, idealRange);
+    }
+
+    public static Vec3d rangeAroundPoint(Vec3d pos, Entity entity, float yaw, float pitch, float idealRange) {
+        Vec3d targetPos = pos.add(MathUtils.getDirectionalVector(yaw, pitch).multiply(idealRange));
         BlockHitResult hit = entity.getWorld().raycast(new RaycastContext(pos, targetPos, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ShapeContext.of(entity)));
 
         return hit.getPos();

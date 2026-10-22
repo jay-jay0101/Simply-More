@@ -9,6 +9,7 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
+import net.rosemarythyme.simplymore.entity.projectiles.AbstractAbilityProjectileEntity;
 
 public record S2CChangeAbilityAgePacket(int id, int age) implements CustomPayload {
     public static final Identifier PACKET_ID = SimplyMore.identifier("change_age");
@@ -28,6 +29,8 @@ public record S2CChangeAbilityAgePacket(int id, int age) implements CustomPayloa
         Entity entity = context.getPlayer().getWorld().getEntityById(packet.id);
         if(entity instanceof AbstractAbilityPlacementEntity ability) {
             ability.setAge(packet.age, false);
+        } else if (entity instanceof AbstractAbilityProjectileEntity projectile) {
+            projectile.setAge(packet.age, false);
         }
     }
 }

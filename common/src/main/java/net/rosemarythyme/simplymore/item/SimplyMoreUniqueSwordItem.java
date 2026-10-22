@@ -62,7 +62,11 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
-    public void onSwing(ItemStack stack, ServerWorld world, LivingEntity user) {
+    public boolean onSwing(ItemStack stack, ServerWorld world, LivingEntity user, long timeSinceLastActivation) {
+        return false;
+    }
+
+    public final void updateSwingComponent(ItemStack stack) {
         ComponentType<ConsecutiveHitsComponent> hits = ItemComponentRegistry.CONSECUTIVE_HITS.get();
         ConsecutiveHitsComponent component = stack.get(hits);
 

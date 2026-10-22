@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class TargetUtils {
     public enum TargetType {
@@ -56,7 +57,41 @@ public class TargetUtils {
         return targetType.canHitPetOrMount || !EntityUtils.isPetOrMount(attacker, target);
     }
 
-    public static Optional<LivingEntity> findTarget(LivingEntity attacker, float range, TargetType type) {
+    public static Optional<Entity> findTarget(LivingEntity attacker, float range, Predicate<Entity> predicate) {
+        if(attacker instanceof PlayerEntity player) {
+            return findLenientTarget(player, range, predicate);
+        } else if (attacker instanceof MobEntity mob) {
+            return Optional.ofNullable(mob.getTarget());
+        }
+
+        return Optional.empty();
+    }
+
+    private static Optional<Entity> findLenientTarget(PlayerEntity player, double range, Predicate<Entity> targetPredicate) {
+        if(player == null || targetPredicate == null) return Optional.empty();
+
+        Vec3d origin = player.getEyePos();
+        Vec3d end = origin.add(player.getRotationVec(1.0F).normalize().multiply(range));
+        Box searchBox = player.getBoundingBox().stretch(player.getRotationVec(1.0F).normalize().multiply(range)).expand(range);
+        Optional<Entity> closestTarget = Optional.empty();
+        double closestDistance = range * range;
+
+        for(Entity entity : player.getWorld().getOtherEntities(player, searchBox, targetPredicate)) {
+            Optional<Vec3d> hitPos = entity.getBoundingBox().expand(0.75f).raycast(origin, end);
+            if (hitPos.isPresent()) {
+                double distance = origin.squaredDistanceTo(hitPos.get());
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestTarget = Optional.of(entity);
+                }
+            }
+        }
+
+        return closestTarget;
+    }
+
+
+    public static Optional<LivingEntity> findLivingTarget(LivingEntity attacker, float range, TargetType type) {
         if(attacker instanceof PlayerEntity player) {
             return Optional.ofNullable(StealSwordItem.findLenientTarget(player, range, PredicateUtils.createForLivingTargetType(attacker, type)));
         } else if (attacker instanceof MobEntity mob) {
@@ -66,25 +101,25 @@ public class TargetUtils {
         return Optional.empty();
     }
 
-    public static TargetList cylinderAttack(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, TargetType targetType) {
+    public static TargetList cylinderSelect(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, TargetType targetType) {
         double horizontalDistance = horizontalRange * horizontalRange;
 
-        return cuboidAttack(attacker, centerPos, horizontalRange, verticalRange, targetType).filter(
+        return cuboidSelect(attacker, centerPos, horizontalRange, verticalRange, targetType).filter(
                 (target) -> target.squaredDistanceTo(new Vec3d(centerPos.x, target.getY(), centerPos.z)) < horizontalDistance
         );
     }
 
-    public static TargetList cuboidAttack(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, TargetType targetType) {
+    public static TargetList cuboidSelect(LivingEntity attacker, Vec3d centerPos, double horizontalRange, double verticalRange, TargetType targetType) {
         Box box = MathUtils.createCuboidBox(centerPos, horizontalRange, verticalRange, horizontalRange);
-        return boxAttack(attacker, box, targetType);
+        return boxSelect(attacker, box, targetType);
     }
 
-    public static TargetList cubeAttack(LivingEntity attacker, Vec3d centerPos, double range, TargetType targetType) {
+    public static TargetList cubeSelect(LivingEntity attacker, Vec3d centerPos, double range, TargetType targetType) {
         Box box = MathUtils.createCubeBox(centerPos, range);
-        return boxAttack(attacker, box, targetType);
+        return boxSelect(attacker, box, targetType);
     }
 
-    public static TargetList boxAttack(LivingEntity attacker, Box box, TargetType targetType) {
+    public static TargetList boxSelect(LivingEntity attacker, Box box, TargetType targetType) {
         if (attacker == null) return TargetList.empty();
 
         List<LivingEntity> targets = attacker.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
@@ -94,22 +129,22 @@ public class TargetUtils {
         );
     }
 
-    public static TargetList lineAttack(LivingEntity attacker, Vec3d startPos, Vec3d endPos, double width, TargetType targetType) {
+    public static TargetList lineSelect(LivingEntity attacker, Vec3d startPos, Vec3d endPos, double width, TargetType targetType) {
         Vec3d delta = endPos.subtract(startPos);
-        return lineAttack(attacker, startPos, delta.normalize(), delta.length(), width, targetType);
+        return lineSelect(attacker, startPos, delta.normalize(), delta.length(), width, targetType);
     }
 
-    public static TargetList lineAttack(LivingEntity attacker, Vec3d startPos, float yaw, float pitch, double length, double width, TargetType targetType) {
-        return lineAttack(attacker, startPos, MathUtils.getDirectionalVector(yaw, pitch), length, width, targetType);
+    public static TargetList lineSelect(LivingEntity attacker, Vec3d startPos, float yaw, float pitch, double length, double width, TargetType targetType) {
+        return lineSelect(attacker, startPos, MathUtils.getDirectionalVector(yaw, pitch), length, width, targetType);
     }
 
-    private static TargetList lineAttack(LivingEntity attacker, Vec3d startPos, Vec3d direction, double length, double width, TargetType targetType) {
+    private static TargetList lineSelect(LivingEntity attacker, Vec3d startPos, Vec3d direction, double length, double width, TargetType targetType) {
         int count = (int) Math.ceil(length / width);
 
         TargetList targets = TargetList.empty();
         for (int i = 0; i <= count; i++) {
             Vec3d pos = startPos.add(direction.multiply(i * width));
-            targets = targets.include(cubeAttack(attacker, pos, width, targetType));
+            targets = targets.include(cubeSelect(attacker, pos, width, targetType));
         }
 
         return targets;

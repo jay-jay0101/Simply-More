@@ -34,7 +34,7 @@ public class CannonballEntity extends AbstractAbilityProjectileEntity {
         AudioVisualUtils.particleAroundEntity(this, ParticleTypes.EXPLOSION, 1, 0, 0);
         AudioVisualUtils.particleAroundEntity(this, ParticleTypes.SMOKE, 100, 0, 0.5);
 
-        TargetUtils.cubeAttack(owner, getPos(), 4, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cubeSelect(owner, getPos(), 4, TargetUtils.TargetType.ENEMIES)
                 .damage(BlackPearlItem.SETTINGS.cannonballDamage, this.getDamageSources().explosion(this, owner))
                 .knockback(this.getPos(), BlackPearlItem.SETTINGS.cannonballKnockback);
     }

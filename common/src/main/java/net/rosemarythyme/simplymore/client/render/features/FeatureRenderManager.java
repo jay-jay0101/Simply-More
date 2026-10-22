@@ -8,10 +8,12 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
+import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
 import net.rosemarythyme.simplymore.item.uniques.BrassturnItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
@@ -33,10 +35,10 @@ public class FeatureRenderManager {
         MatrixStack stack = new MatrixStack();
         Vec3d cameraPos = camera.getPos();
 
-        List<LivingEntity> closeEntities = world.getEntitiesByClass(LivingEntity.class, player.getBoundingBox().expand(32), LivingEntity::isAlive);
+        List<Entity> closeEntities = world.getEntitiesByClass(Entity.class, player.getBoundingBox().expand(32), Entity::isAlive);
         RenderUtils.TargetData target = RenderUtils.getTarget(player);
 
-        for (LivingEntity entity : closeEntities) {
+        for (Entity entity : closeEntities) {
             stack.push();
 
             Vec3d pos = entity.getLerpedPos(tickCounter.getTickDelta(false));
@@ -46,7 +48,10 @@ public class FeatureRenderManager {
                     pos.z - cameraPos.z
             );
 
-            FeatureRenderManager.render(entity, stack, vertexConsumers, player, camera, tickCounter, world);
+            if(entity instanceof LivingEntity livingEntity) {
+                FeatureRenderManager.render(livingEntity, stack, vertexConsumers, player, camera, tickCounter, world);
+            }
+
             if(entity.equals(target.target())) {
                 FeatureRenderManager.tryRenderTarget(entity, target, stack, vertexConsumers);
             }
@@ -98,9 +103,13 @@ public class FeatureRenderManager {
         }
     }
 
-    public static void tryRenderTarget(LivingEntity entity, RenderUtils.TargetData data, MatrixStack stack, VertexConsumerProvider vertexConsumers) {
+    public static void tryRenderTarget(Entity entity, RenderUtils.TargetData data, MatrixStack stack, VertexConsumerProvider vertexConsumers) {
         if(data.target().equals(entity)) {
-            TargetRenderer.render(data, stack, vertexConsumers);
+            if(data.isHorizontal()) {
+                TargetRenderer.renderHorizontal(data, stack, vertexConsumers);
+            } else {
+                TargetRenderer.renderVertical(data, stack, vertexConsumers);
+            }
         }
     }
 }

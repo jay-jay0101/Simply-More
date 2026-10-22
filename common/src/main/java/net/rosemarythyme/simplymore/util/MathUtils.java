@@ -3,13 +3,11 @@ package net.rosemarythyme.simplymore.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
+import org.joml.Vector3f;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
@@ -45,9 +43,24 @@ public class MathUtils {
         return (normalisedInput * outputRange) + outputMinimum;
     }
 
+    public static float wave(float input, float interim, float outputMinimum, float outputMaximum) {
+        float center = (outputMinimum + outputMaximum) / 2;
+        float range = (outputMaximum - outputMinimum) / 2;
+
+        return (float) Math.sin(input * Math.PI * 2 / interim) * range + center;
+    }
+
     public static String translateTicks(int ticks) {
         float seconds = ticks / 20f;
         return new DecimalFormat("#.##").format(seconds);
+    }
+
+    public static Vector3f colorToVector(int color) {
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = color & 0xFF;
+
+        return new Vector3f(r / 255f, g / 255f, b / 255f);
     }
 
     public static String toPercentage(float decimal) {
@@ -95,6 +108,31 @@ public class MathUtils {
 
     public static Box createCubeBox(Vec3d centre, double offset) {
         return createCuboidBox(centre, offset, offset, offset);
+    }
+
+    public static double getMaxAbsLength(Vec3d direction) {
+        return Math.max(
+                Math.abs(direction.getX()),
+                Math.max(
+                        Math.abs(direction.getY()),
+                        Math.abs(direction.getZ())
+                )
+        );
+    }
+
+    public static double cubicDistance(Vec3d posA, Vec3d posB) {
+        return Math.max(
+                Math.abs(posA.getX() - posB.getX()),
+                Math.max(
+                        Math.abs(posA.getY() - posB.getY()),
+                        Math.abs(posA.getZ() - posB.getZ())
+                )
+        );
+    }
+
+    public static Pair<Float, Float> getYawAndPitchBetween(Vec3d pointA, Vec3d pointB) {
+        Vec3d direction = normalisedDirectionBetween(pointA, pointB, true);
+        return getYawAndPitch(direction);
     }
 
     public static Vec3d normalisedDirectionBetween(Vec3d pointA, Vec3d pointB, boolean includeY) {

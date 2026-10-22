@@ -79,7 +79,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
 
         ActiveAbilityManager.SERVER.stop(attacker, ActiveAbilityManager.Type.STATUE);
 
-        TargetUtils.cubeAttack(attacker, attacker.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cubeSelect(attacker, attacker.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, TargetUtils.TargetType.ENEMIES)
                 .onEach(target -> {
                     ActiveAbilityManager.SERVER.start(target, ActiveAbilityManager.Type.PETRIFIED, SETTINGS.auraStunTime);
                     SummonUtils.spawnAbility(new StatueEntity(target, target.getPos(), target.getYaw()), target);
@@ -115,7 +115,7 @@ public class BladeOfTheGrotesqueItem extends SimplyMoreUniqueSwordItem implement
         if (world.isClient) return;
 
         if (entity instanceof LivingEntity user && selected) {
-            TargetUtils.cubeAttack(user, user.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, TargetUtils.TargetType.ENEMIES)
+            TargetUtils.cubeSelect(user, user.getPos(), UNIQUE_CONFIG.blade_of_the_grotesque.auraRange, TargetUtils.TargetType.ENEMIES)
                     .incrementEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.GROTESQUE_WARD), 50, 1, UNIQUE_CONFIG.blade_of_the_grotesque.maxAuraWard);
         }
 

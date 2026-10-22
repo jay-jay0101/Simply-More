@@ -90,7 +90,7 @@ public class GlimmerstepItem extends SimplyMoreUniqueSwordItem {
             RegistryEntry<StatusEffect> starlight = StatusEffectRegistry.getReference(StatusEffectRegistry.STARLIGHT);
             if(!player.hasStatusEffect(starlight)) return;
 
-            TargetUtils.cuboidAttack(player, player.getPos().add(0d, 3d, 0d), UNIQUE_CONFIG.glimmerstep.explosionRange, 5, TargetUtils.TargetType.ENEMIES)
+            TargetUtils.cuboidSelect(player, player.getPos().add(0d, 3d, 0d), UNIQUE_CONFIG.glimmerstep.explosionRange, 5, TargetUtils.TargetType.ENEMIES)
                     .damage(UNIQUE_CONFIG.glimmerstep.explosionDamagePerStarlight * player.getStatusEffect(starlight).getAmplifier(), player.getDamageSources().explosion(player, player));
 
             player.getItemCooldownManager().set(this, UNIQUE_CONFIG.glimmerstep.cooldown);

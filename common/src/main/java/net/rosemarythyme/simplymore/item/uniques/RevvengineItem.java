@@ -88,7 +88,7 @@ public class RevvengineItem extends BiActiveUniqueSwordItem implements TwoHanded
         }
 
         Vec3d position = user.getEyePos().add(MathUtils.getNormalised2dVector(user.getYaw()).multiply(SETTINGS.range));
-        TargetList targets = TargetUtils.cubeAttack(user, position, SETTINGS.range, TargetUtils.TargetType.ENEMIES)
+        TargetList targets = TargetUtils.cubeSelect(user, position, SETTINGS.range, TargetUtils.TargetType.ENEMIES)
                 .filter(PredicateUtils.IS_NOT_BLOCKING);
 
         if(ticksUsed % 5 == 0) {

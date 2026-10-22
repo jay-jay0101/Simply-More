@@ -56,7 +56,7 @@ public abstract class AbstractCollectableEntity extends AbstractVisibleAbilityEn
         if(this.getWorld().isClient) return;
 
         Map<LivingEntity, Integer> newTimes = new HashMap<>();
-        TargetList targets = TargetUtils.cubeAttack(getOwner(), getPos(), 1.5, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY)
+        TargetList targets = TargetUtils.cubeSelect(getOwner(), getPos(), 1.5, TargetUtils.TargetType.OTHERS_AND_USER_POSITIVELY)
                 .filter(this::canCollect)
                 .onEach((entity) -> {
                     int oldTime = times.getOrDefault(entity, 0);

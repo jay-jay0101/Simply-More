@@ -54,13 +54,13 @@ public class TimekeeperItem extends SimplyMoreUniqueSwordItem implements UniqueW
                 case DAY -> {
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.WAX_ON, 10, 0.2f, 0.5f);
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FLASH, 1, 0f, 0f);
-                    TargetUtils.cubeAttack(attacker, attacker.getPos(), 35, TargetUtils.TargetType.ENEMIES)
+                    TargetUtils.cubeSelect(attacker, attacker.getPos(), 35, TargetUtils.TargetType.ENEMIES)
                             .applyEffect(StatusEffects.GLOWING, SETTINGS.effectTime, 0);
                 }
                 case NIGHT -> {
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.WAX_OFF, 10, 0.2f, 0.5f);
                     AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FLASH, 1, 0f, 0f);
-                    TargetUtils.cubeAttack(attacker, attacker.getPos(), 35, TargetUtils.TargetType.ENEMIES)
+                    TargetUtils.cubeSelect(attacker, attacker.getPos(), 35, TargetUtils.TargetType.ENEMIES)
                             .applyEffect(StatusEffects.BLINDNESS, SETTINGS.effectTime, 0)
                             .applyEffect(StatusEffects.DARKNESS, SETTINGS.effectTime, 0);
                 }

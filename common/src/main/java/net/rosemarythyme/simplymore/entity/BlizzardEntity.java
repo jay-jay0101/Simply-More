@@ -37,7 +37,7 @@ public class BlizzardEntity extends AbstractAbilityPlacementEntity {
             player.getItemCooldownManager().set(ItemRegistry.GRANDFROST.get(), GrandfrostItem.SETTINGS.cooldown);
         }
 
-        TargetUtils.cylinderAttack(owner, this.getPos().offset(Direction.UP, 2), GrandfrostItem.SETTINGS.radius, 5, TargetUtils.TargetType.ENEMIES)
+        TargetUtils.cylinderSelect(owner, this.getPos().offset(Direction.UP, 2), GrandfrostItem.SETTINGS.radius, 5, TargetUtils.TargetType.ENEMIES)
                 .damage(GrandfrostItem.SETTINGS.blizzardDamage, owner.getDamageSources().freeze())
                 .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CHILL), GrandfrostItem.SETTINGS.chillTime, 1);
     }

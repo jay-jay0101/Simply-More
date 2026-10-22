@@ -46,7 +46,7 @@ public class IcewallEntity extends AbstractCollidableAbilityEntity {
         AudioVisualUtils.particleCube(getServerWorld(), this.getPos().offset(Direction.UP, 1), ParticleTypes.SNOWFLAKE, 10, 0.2f, 0.2f);
 
         if(age < 0) {
-            TargetUtils.boxAttack(owner, this.getBoundingBox(), TargetUtils.TargetType.ENEMIES)
+            TargetUtils.boxSelect(owner, this.getBoundingBox(), TargetUtils.TargetType.ENEMIES)
                     .damage(GrandfrostItem.SETTINGS.knockUpDamage, owner.getDamageSources().explosion(this, owner))
                     .applyEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.CHILL), GrandfrostItem.SETTINGS.chillTime, 0)
                     .addVelocity(0, GrandfrostItem.SETTINGS.knockUp, 0);

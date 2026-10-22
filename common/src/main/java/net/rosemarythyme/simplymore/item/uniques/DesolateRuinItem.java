@@ -93,7 +93,7 @@ public class DesolateRuinItem extends SimplyMoreUniqueSwordItem implements Uniqu
     }
 
     private boolean tryBackstab(LivingEntity attacker) {
-        Optional<LivingEntity> possibleTarget = TargetUtils.findTarget(attacker, SETTINGS.range, TargetUtils.TargetType.ENEMIES);
+        Optional<LivingEntity> possibleTarget = TargetUtils.findLivingTarget(attacker, SETTINGS.range, TargetUtils.TargetType.ENEMIES);
         if(possibleTarget.isEmpty()) return false;
         LivingEntity target = possibleTarget.get();
 
