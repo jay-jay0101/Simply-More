@@ -31,13 +31,10 @@ import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import net.rosemarythyme.simplymore.entity.AbstractAbilityPlacementEntity;
 import net.rosemarythyme.simplymore.entity.AbstractSpiritualEntity;
 import net.rosemarythyme.simplymore.entity.SpiritualGuardianEntity;
-import net.rosemarythyme.simplymore.item.uniques.CindergorgeItem;
+import net.rosemarythyme.simplymore.item.SimplyMoreUniqueSwordItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
-import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.data.Sound;
-import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.HelperMethods;
 import net.sweenus.simplyswords.world.WeaponAbilityCooldownManager;
 
@@ -166,43 +163,42 @@ public class EntityUtils {
                 || entity.hasStatusEffect(StatusEffectRegistry.getReference(StatusEffectRegistry.IMPLICIT_STUN));
     }
 
-    private static void onHitTaken(LivingEntity livingEntity, DamageSource source, float amount) {
-        if (AttackUtils.isDamageSourceMelee(source) && InventoryUtils.isHoldingAwakenedStack(livingEntity, ItemRegistry.CINDERGORGE.get())) {
-            if(source.getAttacker() instanceof LivingEntity attacker && MathUtils.chance(livingEntity, CindergorgeItem.SETTINGS.chance)) {
-                AudioVisualUtils.particleAroundEntity(livingEntity, ParticleTypes.FLAME, 10, 0.5f, 0.2f);
-                AudioVisualUtils.playSound(livingEntity.getWorld(), livingEntity.getPos(), new Sound(SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_IMPACT_03.get()).setVolume(0.5f));
-
-                new TargetList(attacker).damage(CindergorgeItem.SETTINGS.thornsDamage, livingEntity.getDamageSources().inFire())
-                        .setOnFireFor(CindergorgeItem.SETTINGS.thornsFireDuration);
-            }
-        }
+    private static void onHitTaken(LivingEntity livingEntity, DamageSource source, final float amount) {
+        triggerUniqueWhenHit(livingEntity, source, amount);
 
         if(ActiveAbilityManager.SERVER.isInAbility(livingEntity, ActiveAbilityManager.Type.WRAITH)) {
             ActiveAbilityManager.SERVER.stop(livingEntity, ActiveAbilityManager.Type.WRAITH);
         }
 
-        final float damage = amount;
-        SummonUtils.getOwnedEntities(livingEntity, SpiritualGuardianEntity.class).forEach(guardian -> guardian.tryRetaliate(livingEntity, damage, source));
+        SummonUtils.getOwnedEntities(livingEntity, SpiritualGuardianEntity.class).forEach(guardian -> guardian.tryRetaliate(livingEntity, amount, source));
+    }
+
+    private static void triggerUniqueWhenHit(LivingEntity target, DamageSource source, float amount) {
+        if (!(source.getAttacker() instanceof LivingEntity attacker)) return;
+        if (!(target.getWorld() instanceof ServerWorld world)) return;
+
+        for (ItemStack stack : target.getHandItems()) {
+            if (stack.getItem() instanceof SimplyMoreUniqueSwordItem swordItem && ItemStackUtils.isStackAwakened(stack)) {
+                swordItem.whenHit(stack, target, attacker, world, amount, source);
+            }
+        }
     }
 
     public static float modifyDamageTaken(LivingEntity livingEntity, DamageSource source, float original) {
         onHitTaken(livingEntity, source, original);
+        boolean bypassesInvulnerability = source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY);
 
         if(ActiveAbilityManager.SERVER.isInAbility(livingEntity, ActiveAbilityManager.Type.RAGE)) {
-            if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-                return 0;
-            }
+            if(!bypassesInvulnerability) return 0;
         }
 
         RegistryEntry<StatusEffect> blessing = StatusEffectRegistry.getReference(StatusEffectRegistry.BLESSING);
-        if(livingEntity.hasStatusEffect(blessing)) {
-            if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-                AudioVisualUtils.particleAroundEntity(livingEntity, ParticleTypes.WAX_ON, 100, 0.2f, 10);
-                AudioVisualUtils.playSound(livingEntity.getWorld(), livingEntity.getPos(), new Sound(SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value()).setPitch(1.4f));
+        if(livingEntity.hasStatusEffect(blessing) && !bypassesInvulnerability) {
+            AudioVisualUtils.particleAroundEntity(livingEntity, ParticleTypes.WAX_ON, 100, 0.2f, 10);
+            AudioVisualUtils.playSound(livingEntity.getWorld(), livingEntity.getPos(), new Sound(SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value()).setPitch(1.4f));
 
-                livingEntity.removeStatusEffect(blessing);
-                return 0;
-            }
+            livingEntity.removeStatusEffect(blessing);
+            return 0;
         }
 
         RegistryEntry<StatusEffect> fragile = StatusEffectRegistry.getReference(StatusEffectRegistry.FRAGILE);

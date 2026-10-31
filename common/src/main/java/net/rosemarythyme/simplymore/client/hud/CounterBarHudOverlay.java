@@ -39,7 +39,7 @@ public class CounterBarHudOverlay implements HudOverlay<Pair<Float, Long>> {
         MatrixStack matrices = context.getMatrices();
         matrices.push();
 
-        float progress = MathUtils.clampedLerp(player.getWorld().getTime() + tickCounter.getTickDelta(false), time, time + 10, prevData.getLeft(), data.getLeft());
+        float progress = MathUtils.clampedLerp(player.getWorld().getTime() + tickCounter.getTickDelta(false), time, time + 4, prevData.getLeft(), data.getLeft());
         HudUtils.renderProgressBar(context, progress, getBorderColor(data.getLeft()), getBackgroundColor(data.getLeft()), getFillColor(data.getLeft()));
 
         TextRenderer renderer = MinecraftClient.getInstance().textRenderer;

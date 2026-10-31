@@ -62,5 +62,7 @@ public class ClientEntityRendererRegistry {
         EntityModelLayerRegistry.register(SunEntityModel.LAYER, SunEntityModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.SUN, SunEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.MOON, MoonEntityRenderer::new);
+
+        EntityRendererRegistry.register(EntityRegistry.FLOWER_FIELD, FlowerFieldRenderer::new);
     }
 }

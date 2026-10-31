@@ -195,6 +195,9 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<RiftEntity>> RIFT =
             registerMarkerEntity("rift", RiftEntity::new);
 
+    public static final RegistrySupplier<EntityType<FlowerFieldEntity>> FLOWER_FIELD =
+            registerMarkerEntity("flower_field", FlowerFieldEntity::new, 1f, 0.25f);
+
     public static <T extends Entity> RegistrySupplier<EntityType<T>> registerType(EntityType.Builder<T> builder, String name) {
         Identifier id = SimplyMore.identifier(name);
         return ENTITIES.register(id, () -> builder.build(id.toString()));

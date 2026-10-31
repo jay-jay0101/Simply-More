@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.item;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -96,6 +97,8 @@ public abstract class SimplyMoreUniqueSwordItem extends UniqueSwordItem {
     }
 
     protected void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, int consecutiveHits, boolean isFirstInTick) {}
+
+    public void whenHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, float amount, DamageSource source) {}
 
     public CounterComponent getDefaultCounterComponent() {
         return new CounterComponent(0, 0);

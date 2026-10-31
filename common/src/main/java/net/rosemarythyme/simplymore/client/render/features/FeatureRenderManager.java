@@ -13,15 +13,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
-import net.rosemarythyme.simplymore.SimplyMore;
 import net.rosemarythyme.simplymore.client.util.RenderUtils;
+import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import net.rosemarythyme.simplymore.item.uniques.BrassturnItem;
 import net.rosemarythyme.simplymore.registry.StatusEffectRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.InventoryUtils;
 import net.rosemarythyme.simplymore.util.TargetUtils;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
-import net.rosemarythyme.simplymore.client.world.ClientActiveAbilityManager;
 import net.sweenus.simplyswords.client.api.ObserverStatusEffectClientApi;
 
 import java.util.List;
@@ -61,12 +60,18 @@ public class FeatureRenderManager {
     }
 
     public static void render(LivingEntity entity, MatrixStack stack, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player, Camera camera, RenderTickCounter tickCounter, ClientWorld world) {
+        int light = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getBlockPos());
+
         if(InventoryUtils.isHolding(entity, ItemRegistry.SOULFRACTURE.get())) {
             SoulfractureAuraRenderer.render(entity, stack, vertexConsumers);
         }
 
         if(InventoryUtils.isHolding(entity, ItemRegistry.BLADE_OF_THE_GROTESQUE.get())) {
-            BladeOfTheGrotesqueAuraRenderer.render(entity, stack, vertexConsumers, WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getBlockPos()));
+            BladeOfTheGrotesqueAuraRenderer.render(entity, stack, vertexConsumers, light);
+        }
+
+        if(InventoryUtils.isHolding(entity, ItemRegistry.PERFORISCUS.get())) {
+            BloomFlowerRenderer.render(entity, stack, vertexConsumers, world, tickCounter.getTickDelta(false), light);
         }
 
         if(ClientActiveAbilityManager.CLIENT.isInAbility(entity, ActiveAbilityManager.Type.VIPERS_CALL)) {

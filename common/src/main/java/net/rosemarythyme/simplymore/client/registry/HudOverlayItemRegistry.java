@@ -19,6 +19,7 @@ public class HudOverlayItemRegistry {
         OVERLAYS.put(ItemRegistry.BRASSTURN.get(), new BrassturnHud("item.simplymore.brassturn.overlay", 0xFF984F38, 0xFF3A6A58, 0x88D3795A, 0x884b9583, 0xFFA55940, 0xFF499282, 0xFFA55940, 0xFF499282));
         OVERLAYS.put(ItemRegistry.REVVENGINE.get(), new CounterHudOverlay("item.simplymore.revvengine.overlay", 0xFF1D1D1D, 0xFFF7B25B, 0xFF6D6D6D));
         OVERLAYS.put(ItemRegistry.DEATHS_EYRIE.get(), new DeathsEyrieHud("item.simplymore.deaths_eyrie.overlay", 0xFF2E2E2E, 0xFFD4D4D4, 0xFFFFFFFF, 0xFF6E6E6E));
+        OVERLAYS.put(ItemRegistry.PERFORISCUS.get(), new CounterBarHudOverlay("item.simplymore.perforiscus.overlay", 0xFF793d78, 0xFF90508F, 0xFFDB9EDA, 0xFF90508F));
     }
 
     @Nullable

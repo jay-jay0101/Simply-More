@@ -90,12 +90,6 @@ public class StatusEffectRegistry {
             )
     );
 
-
-    public static final RegistrySupplier<StatusEffect> BLOOM = registerEffect(
-            "bloom",
-            new BloomEffect(StatusEffectCategory.BENEFICIAL,0x780606)
-    );
-
     public static final RegistrySupplier<StatusEffect> LIGHTWEIGHT = registerEffect(
             "lightweight",
             new FallDamageImmunityEffect(StatusEffectCategory.BENEFICIAL, 0xBFBFBF)

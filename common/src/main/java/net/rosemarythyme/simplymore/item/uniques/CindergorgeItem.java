@@ -3,6 +3,7 @@ package net.rosemarythyme.simplymore.item.uniques;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -20,13 +21,18 @@ import net.rosemarythyme.simplymore.item.interfaces.StoppableAbilityItem;
 import net.rosemarythyme.simplymore.registry.item.ItemComponentRegistry;
 import net.rosemarythyme.simplymore.registry.item.ItemRegistry;
 import net.rosemarythyme.simplymore.util.AttackUtils;
+import net.rosemarythyme.simplymore.util.AudioVisualUtils;
+import net.rosemarythyme.simplymore.util.MathUtils;
 import net.rosemarythyme.simplymore.util.data.FootfallParticles;
+import net.rosemarythyme.simplymore.util.data.Sound;
+import net.rosemarythyme.simplymore.util.data.TargetList;
 import net.rosemarythyme.simplymore.world.ActiveAbilityManager;
 import net.sweenus.simplyswords.api.WeaponAbilityActivationSource;
 import net.sweenus.simplyswords.api.WeaponAbilityContext;
 import net.sweenus.simplyswords.config.settings.ItemStackTooltipAppender;
 import net.sweenus.simplyswords.config.settings.TooltipSettings;
 import net.sweenus.simplyswords.item.interfaces.UniqueWeaponActiveAbility;
+import net.sweenus.simplyswords.registry.SoundRegistry;
 import net.sweenus.simplyswords.util.Styles;
 
 import java.util.List;
@@ -69,6 +75,18 @@ public class CindergorgeItem extends SimplyMoreUniqueSwordItem implements Unique
         if (remainingTicks == getMaxUseTime(stack, user) - 1) {
             startAbility(user, stack);
         }
+    }
+
+    @Override
+    public void whenHit(ItemStack stack, LivingEntity target, LivingEntity attacker, ServerWorld world, float amount, DamageSource source) {
+        if (!AttackUtils.isDamageSourceMelee(source)) return;
+        if (!MathUtils.chance(target, CindergorgeItem.SETTINGS.chance)) return;
+
+        AudioVisualUtils.particleAroundEntity(attacker, ParticleTypes.FLAME, 10, 0.5f, 0.2f);
+        AudioVisualUtils.playSound(world, attacker.getPos(), new Sound(SoundRegistry.ELEMENTAL_BOW_FIRE_SHOOT_IMPACT_03.get()).setVolume(0.5f));
+
+        new TargetList(attacker).damage(CindergorgeItem.SETTINGS.thornsDamage, attacker.getDamageSources().inFire())
+                .setOnFireFor(CindergorgeItem.SETTINGS.thornsFireDuration);
     }
 
     @Override

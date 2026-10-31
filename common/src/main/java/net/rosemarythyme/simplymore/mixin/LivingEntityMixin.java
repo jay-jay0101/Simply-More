@@ -32,7 +32,6 @@ public abstract class LivingEntityMixin {
 	@ModifyVariable(at = @At("HEAD"), method = "applyDamage", argsOnly = true, ordinal = 0)
 	private float simplymore$modifyDamageTaken(float original, DamageSource source) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
-
 		return EntityUtils.modifyDamageTaken(livingEntity, source, original);
 	}
 

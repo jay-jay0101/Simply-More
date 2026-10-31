@@ -23,6 +23,7 @@
   "entity.simplymore.dripstone_spike": "Dripstone Spike",
   "entity.simplymore.falling_dripstone_spike": "Falling Dripstone",
   "entity.simplymore.ice_spike": "Ice Shard",
+  "entity.simplymore.flower_field": "Flower Field",
 
   "death.attack.simplymore.bleed": "%s lost too much blood",
   "death.attack.simplymore.bleed.player": "%s lost too much blood whilst trying to escape %s",
@@ -412,8 +413,10 @@
 
   "item.simplymore.perforiscus": "Perforiscus",
   "item.simplymore.perforiscus.tooltip1": "Unique Effect: Wither and Bloom",
-  "item.simplymore.perforiscus.tooltip2": "Each hit with this weapon will grant a stack of bloom, up to 15. The more bloom stacks you have, your defenses will be gradually buffed.",
-  "item.simplymore.perforiscus.tooltip5": "Consume 8 stacks of bloom to create a flower field around you. Allies stood inside of the field are buffed.",
+  "item.simplymore.perforiscus.tooltip2": "Each hit with this weapon will cause you to progressively bloom. The further bloomed you are, you gain regenerative and defensive bonuses.",
+  "item.simplymore.perforiscus.tooltip3": "Consecutive hits cause you to bloom faster. Bloom deteriates when hit.",
+  "item.simplymore.perforiscus.tooltip4": "Consume %s%% bloom to create a flower field around you. Allies stood inside of the field begin to regenerate rapidly.",
+  "item.simplymore.perforiscus.overlay": "Bloom %s",
 
   "item.simplymore.revvengine": "Revvengine",
   "item.simplymore.revvengine.tooltip1": "Unique Effect: Kickback",
@@ -1160,8 +1163,15 @@
   "simplymore.unique_effect.deaths_eyrie.effectTime": "Charge effect duration",
 
   "simplymore.unique_effect.perforiscus": "§6[Perforiscus]§7",
-  "simplymore.unique_effect.perforiscus.bloomTime": "Blood duration",
-  "simplymore.unique_effect.perforiscus.cooldown": "Floral Field cooldown",
+  "simplymore.unique_effect.perforiscus.minGrowth": "Growth on hit",
+  "simplymore.unique_effect.perforiscus.maxGrowth": "Maximum growth on hit",
+  "simplymore.unique_effect.perforiscus.growthPerConsecutiveHit": "Growth on hit combo bonus",
+  "simplymore.unique_effect.perforiscus.growthLoss": "Growth lost when hit",
+  "simplymore.unique_effect.perforiscus.summonGrowthUsage": "Floral field growth usage",
+  "simplymore.unique_effect.perforiscus.cooldown": "Cooldown",
+  "simplymore.unique_effect.perforiscus.duration": "Floral field usage",
+  "simplymore.unique_effect.perforiscus.range": "Floral field range",
+  "simplymore.unique_effect.perforiscus.healInterval": "Floral field heal interval",
 
   "simplymore.unique_effect.revvengine": "§6[Revvengine]§7",
   "simplymore.unique_effect.revvengine.maxDamageBonus": "Kickback max damage bonus",

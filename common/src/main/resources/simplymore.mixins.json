@@ -5,8 +5,8 @@
   "refmap": "simplymore-refmap.json",
   "minVersion": "0.8",
   "client": [
+    "ArmorFeatureRendererMixin",
     "ClientBackgroundRendererMixin",
-    "ClientBipedEntityRendererMixin",
     "ClientCameraMixin",
     "ClientEntityRenderDispatcherMixin",
     "ClientEntityRendererMixin",
